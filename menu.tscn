@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://c6ji2387qq42r"]
+
+[ext_resource type="Script" path="res://buttonsmenu.gd" id="1_814jb"]
+[ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_i4evy"]
+[ext_resource type="PackedScene" uid="uid://db8yny8uiwun1" path="res://background.tscn" id="2_xh8be"]
+
+[node name="menu" type="Node2D"]
+
+[node name="Background" parent="." instance=ExtResource("2_xh8be")]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+theme = ExtResource("2_i4evy")
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 1
+offset_left = 526.0
+offset_top = 180.0
+offset_right = 746.0
+offset_bottom = 509.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 215.0
+offset_bottom = 324.0
+alignment = 1
+
+[node name="Play" type="Button" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+text = "$play"
+script = ExtResource("1_814jb")
+
+[node name="Settings" type="Button" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+text = "$settings"
+script = ExtResource("1_814jb")
+
+[connection signal="pressed" from="Control/Panel/VBoxContainer/Play" to="Control/Panel/VBoxContainer/Play" method="_on_pressed"]
+[connection signal="pressed" from="Control/Panel/VBoxContainer/Settings" to="Control/Panel/VBoxContainer/Play" method="_on_settings_pressed"]

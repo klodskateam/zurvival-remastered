@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://cbybcj5ptpq0p"]
+
+[ext_resource type="Script" path="res://bullet.gd" id="1_3cfm8"]
+[ext_resource type="Texture2D" uid="uid://cox6fvw581qif" path="res://Resources/bullet.png" id="1_vc2jq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_58xte"]
+radius = 8.0
+
+[node name="bullet" type="RigidBody2D" groups=["danger_zombie"]]
+collision_layer = 8
+collision_mask = 0
+mass = 0.001
+gravity_scale = 0.0
+script = ExtResource("1_3cfm8")
+
+[node name="Bullet" type="Sprite2D" parent="."]
+texture = ExtResource("1_vc2jq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_58xte")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(1.1, 1.1)
+shape = SubResource("CircleShape2D_58xte")

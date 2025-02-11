@@ -1,0 +1,51 @@
+extends Sprite2D
+
+const BG1 = [
+	preload("res://bgs/1.png"),
+	"mw10b1909"
+]
+const BG2 = [
+	preload("res://bgs/2.png"),
+	"mw10b1909"
+]
+const BG3 = [
+	preload("res://bgs/3.png"),
+	"mw10b1909"
+]
+const BG4 = [
+	preload("res://bgs/4.png"),
+	"mw10b1909"
+]
+const BG5 = [
+	preload("res://bgs/5.png"),
+	"mw10b1909"
+]
+const BG6 = [
+	preload("res://bgs/6.png"),
+	"mw10b1909"
+]
+const images = 6
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	if randi_range(1, images) == 1:
+		texture = BG1[0]
+		$Label.text = tr("$createdby") + " " + BG1[1]
+	if randi_range(1, images) == 2:
+		texture = BG2[0]
+		$Label.text = tr("$createdby") + " " + BG2[1]
+	if randi_range(1, images) == 3:
+		texture = BG3[0]
+		$Label.text = tr("$createdby") + " " + BG3[1]
+	if randi_range(1, images) == 4:
+		texture = BG4[0]
+		$Label.text = tr("$createdby") + " " + BG4[1]
+	if randi_range(1, images) == 5:
+		texture = BG5[0]
+		$Label.text = tr("$createdby") + " " + BG5[1]
+	if randi_range(1, images) == 6:
+		texture = BG6[0]
+		$Label.text = tr("$createdby") + " " + BG6[1]
+	
+	
+func _process(delta: float) -> void:
+	pass

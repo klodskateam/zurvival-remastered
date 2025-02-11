@@ -1,0 +1,10 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://d2wr8qi0mdxxq"]
+
+[ext_resource type="FontFile" uid="uid://mol2p0edntwv" path="res://Resources/Montserrat-Regular.ttf" id="1_r3vpi"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3va1a"]
+bg_color = Color(0.29964, 0.520377, 0.218746, 1)
+
+[resource]
+default_font = ExtResource("1_r3vpi")
+Panel/styles/panel = SubResource("StyleBoxFlat_3va1a")

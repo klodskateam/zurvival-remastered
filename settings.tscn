@@ -1,0 +1,85 @@
+[gd_scene load_steps=6 format=3 uid="uid://cqqovs65rrlkp"]
+
+[ext_resource type="PackedScene" uid="uid://db8yny8uiwun1" path="res://background.tscn" id="1_jxt1c"]
+[ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_4p2vr"]
+[ext_resource type="Script" path="res://buttonsmenu.gd" id="2_8mcqh"]
+[ext_resource type="Script" path="res://settings_lang.gd" id="3_vfm0g"]
+[ext_resource type="Script" path="res://settings_fullscreen_check.gd" id="4_vftto"]
+
+[node name="Settings" type="Node2D"]
+
+[node name="Background" parent="." instance=ExtResource("1_jxt1c")]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("2_4p2vr")
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 423.0
+offset_top = 115.0
+offset_right = 777.0
+offset_bottom = 541.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SettingsSave" type="Button" parent="Control/Panel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 9.0
+offset_right = 347.0
+offset_bottom = 40.0
+text = "$save"
+script = ExtResource("2_8mcqh")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 42.0
+offset_right = 347.0
+offset_bottom = 416.0
+alignment = 1
+
+[node name="GraphSet" type="Label" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+text = "$graphicssettings"
+
+[node name="SettingsFullscreenCheck" type="CheckButton" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+text = "$fullscreen"
+alignment = 2
+script = ExtResource("4_vftto")
+
+[node name="Sep1" type="HSeparator" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="OtherSet" type="Label" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+text = "$other"
+
+[node name="SettingsLang" type="OptionButton" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("3_vfm0g")
+
+[node name="HelpLabel" type="Label" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+text = "$machinetranslat"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HelpLink" type="LinkButton" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+text = "$help"
+uri = "https://docs.google.com/spreadsheets/d/10nJpHIyzW4pYl8AntARom_AEJRsaro7GnVSTUdT4Tl0/edit?usp=sharing"
+
+[connection signal="pressed" from="Control/Panel/SettingsSave" to="Control/Panel/SettingsSave" method="_on_settings_back_pressed"]
+[connection signal="toggled" from="Control/Panel/VBoxContainer/SettingsFullscreenCheck" to="Control/Panel/VBoxContainer/SettingsFullscreenCheck" method="_on_toggled"]
+[connection signal="item_selected" from="Control/Panel/VBoxContainer/SettingsLang" to="Control/Panel/VBoxContainer/SettingsLang" method="_on_item_selected"]

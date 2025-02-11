@@ -1,0 +1,16 @@
+id,en,ru,be,ch,sp,fi,bel
+$stamina,Stamina,Выносливость,Цягавітасць,耐力,Resistencia,,Ciahavitaść
+$play,Play,Играть,Гуляць,游戏,Jugar,Pelaa,Huliać
+$bullets,Ammo,Пули,Абойма,子弹,Balas,,Abojma
+$settings,Settings,Настройки,Налады,设置,Ajustes,Asetukset,Nalady
+$health,HP,Здоровье,Здароўе,健康,Salud,HP,Zdaroŭje
+$createdby,Made by,Сделано,Зроблена,制作：,Hecho por,Tehty,Zrobliena
+$save,Save,Сохранить,Захаваць,节省,Guardar,,Zachavać
+$fullscreen,Fullscreen (F11),Полноэкранный режим (F11),Поўнаэкранны рэжым (F11),全屏模式 (F11),Modo de pantalla completa (F11),Fullscreen (F11),Poŭnaekranny režym (F11)
+$graphicssettings,Graphical settings,Настройки графики,Настройкі графікі,图形设置,Ajustes gráficos,,Nastrojki hrafiki
+$other,Other,Другие,Іншыя,其他,Otros,Muu,Inšyja
+$machinetranslat,"The language you have chosen has been translated through Google Translate and DeepL, so there may be errors. If you know the language, you can help us by clicking here!",Помочь с переводом игры,Перакладаць дапамагаў Google Translate. Дапамагчы з перакладам.,您选择的语言已通过 Google 翻译和 Deepl 翻译，因此可能存在错误。如果您懂该语言，可以点击此处帮助我们！,"El idioma que has elegido ha sido traducido a través de Google Translate y Deepl, por lo que puede haber errores. Si conoces el idioma, ¡puedes ayudarnos haciendo clic aquí!","Kieli mikä sinä valitsit, oli tehty kääntäjän ja ""Google Translate"" avulla. Jos näit virhen, lähetta meille palauteen klikkamaala sinne.",Pieraklad byŭ zroblieny z dapamohaj Google Pierakladčyk i sajta https://seveleu.com/lacinka/converter-ru
+$pausemenu,Pause menu,Меню паузы,Меню паўзы,暂停菜单,Menú Pausa,,Mieniu paŭzy
+$resume,Resume,Продолжить,Працягнуць,待续,Continuación,Jatkaa peliä,Praciahnuć
+$quit,Quit,Выход,Вынахад,输出,Salida,Poistua,Vynachad
+$pausetext,Press ESC to continue,Нажмите ESC чтобы продолжить,Націсніце ESC каб працягнуць,按 ESC 继续,Pulse ESC para continuar,Paina ESC jatkaaksesi,Naciśnicie ESC kab praciahnuć

@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://bgd4is08hm4yv"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_16hic"]
+[ext_resource type="Texture2D" uid="uid://c0gntm575ocrj" path="res://Resources/person.png" id="2_fef5v"]
+[ext_resource type="AudioStream" uid="uid://b5mni24787o6i" path="res://Sound/pistol.wav" id="3_ft5c5"]
+[ext_resource type="AudioStream" uid="uid://d1h3atxwyd1p0" path="res://Sound/pistol-reload.wav" id="4_51cx5"]
+[ext_resource type="AudioStream" uid="uid://c6m8ni3m64iqm" path="res://Sound/no_ammo.wav" id="5_by3vp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7ksh0"]
+radius = 39.0
+
+[node name="player" type="CharacterBody2D" groups=["player"]]
+position = Vector2(1, 0)
+script = ExtResource("1_16hic")
+
+[node name="Person" type="Sprite2D" parent="."]
+texture = ExtResource("2_fef5v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-4, -2)
+shape = SubResource("CircleShape2D_7ksh0")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(-3, -57)
+
+[node name="ShootSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ft5c5")
+
+[node name="ReloadSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_51cx5")
+
+[node name="EmptySound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_by3vp")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_top = 0
+limit_right = 5000
+limit_bottom = 5000
+limit_smoothed = true
+position_smoothing_enabled = true

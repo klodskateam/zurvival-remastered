@@ -1,0 +1,99 @@
+[gd_scene load_steps=6 format=3 uid="uid://bshfbsu15v3v1"]
+
+[ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="1_3mkkl"]
+[ext_resource type="Texture2D" uid="uid://nnwpet7egxrr" path="res://Resources/ui_stuff_lol/speed.png" id="2_iev70"]
+[ext_resource type="Texture2D" uid="uid://66com61wgllf" path="res://Resources/ui_stuff_lol/bullets.png" id="3_qg45p"]
+[ext_resource type="Texture2D" uid="uid://nmdal2gs2k1d" path="res://Resources/ui_stuff_lol/health.png" id="4_4pw5h"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_y7fw5"]
+font_size = 48
+
+[node name="UI" type="CanvasLayer"]
+
+[node name="SpeedBar" type="ProgressBar" parent="."]
+offset_left = 30.0
+offset_top = 29.0
+offset_right = 230.0
+offset_bottom = 59.0
+theme = ExtResource("1_3mkkl")
+show_percentage = false
+
+[node name="Speed" type="Label" parent="SpeedBar"]
+layout_mode = 0
+offset_top = 3.0
+offset_right = 200.0
+offset_bottom = 26.0
+text = "Выносливость: 100/100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpeedIcon" type="Sprite2D" parent="SpeedBar"]
+position = Vector2(-15, 15)
+scale = Vector2(0.21875, 0.210937)
+texture = ExtResource("2_iev70")
+
+[node name="BulletsBar" type="ProgressBar" parent="."]
+offset_left = 30.0
+offset_top = 60.0
+offset_right = 230.0
+offset_bottom = 87.0
+theme = ExtResource("1_3mkkl")
+max_value = 12.0
+value = 12.0
+show_percentage = false
+
+[node name="Bullets" type="Label" parent="BulletsBar"]
+layout_mode = 0
+offset_top = 2.0
+offset_right = 200.0
+offset_bottom = 25.0
+theme = ExtResource("1_3mkkl")
+text = "Пули: 12/12"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BulletsIcon" type="Sprite2D" parent="BulletsBar"]
+position = Vector2(-15, 13.5)
+scale = Vector2(0.21875, 0.210937)
+texture = ExtResource("3_qg45p")
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = 30.0
+offset_top = 1.0
+offset_right = 230.0
+offset_bottom = 28.0
+theme = ExtResource("1_3mkkl")
+value = 12.0
+show_percentage = false
+
+[node name="Health" type="Label" parent="HealthBar"]
+layout_mode = 0
+offset_top = 2.0
+offset_right = 200.0
+offset_bottom = 25.0
+theme = ExtResource("1_3mkkl")
+text = "Здоровье: 12/12"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthIcon" type="Sprite2D" parent="HealthBar"]
+position = Vector2(-15, 13.5)
+scale = Vector2(0.21875, 0.210937)
+texture = ExtResource("4_4pw5h")
+
+[node name="Score" type="Label" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -334.0
+offset_top = -60.0
+offset_right = -3.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("1_3mkkl")
+text = "0"
+label_settings = SubResource("LabelSettings_y7fw5")
+horizontal_alignment = 2
+vertical_alignment = 2

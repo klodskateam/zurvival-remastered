@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://d1es6dbs7uaad"]
+
+[ext_resource type="Script" path="res://pause_manager.gd" id="1_6olua"]
+[ext_resource type="Texture2D" uid="uid://c0gku65b6ujhb" path="res://Resources/grass.png" id="1_ictw6"]
+[ext_resource type="PackedScene" uid="uid://bgd4is08hm4yv" path="res://player.tscn" id="1_thl6f"]
+[ext_resource type="Script" path="res://timer.gd" id="3_ar85b"]
+[ext_resource type="PackedScene" uid="uid://bshfbsu15v3v1" path="res://ui.tscn" id="4_t63fs"]
+[ext_resource type="PackedScene" uid="uid://rk6x2yf4sydr" path="res://pause.tscn" id="6_5dskx"]
+[ext_resource type="PackedScene" uid="uid://cow6451posxft" path="res://spawner.tscn" id="7_8yshx"]
+
+[node name="game" type="Node2D"]
+
+[node name="PauseManager" type="Node" parent="."]
+process_mode = 3
+script = ExtResource("1_6olua")
+
+[node name="grass" type="Sprite2D" parent="."]
+texture_repeat = 2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_ictw6")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 10000, 10000)
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+script = ExtResource("3_ar85b")
+
+[node name="UI" parent="." instance=ExtResource("4_t63fs")]
+
+[node name="Pause" parent="." instance=ExtResource("6_5dskx")]
+process_mode = 2
+
+[node name="Spawner7" parent="." instance=ExtResource("7_8yshx")]
+position = Vector2(-132, 5099)
+
+[node name="Spawner5" parent="." instance=ExtResource("7_8yshx")]
+position = Vector2(5238, 5178)
+
+[node name="Spawner4" parent="." instance=ExtResource("7_8yshx")]
+position = Vector2(5202, -228)
+
+[node name="Spawner" parent="." instance=ExtResource("7_8yshx")]
+position = Vector2(-90, -92)
+
+[node name="player" parent="." instance=ExtResource("1_thl6f")]
+position = Vector2(2494, 1858)
+
+[connection signal="timeout" from="Timer" to="Timer" method="_on_timeout"]
