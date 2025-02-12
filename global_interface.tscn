@@ -94,5 +94,4 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("6_v6hbc")
 
-[connection signal="button_down" from="joysticks/Button_shoot" to="joysticks/Button_shoot" method="_on_button_down"]
-[connection signal="button_up" from="joysticks/Button_shoot" to="joysticks/Button_shoot" method="_on_button_up"]
+[connection signal="pressed" from="joysticks/Button_shoot" to="joysticks/Button_shoot" method="_on_pressed"]
