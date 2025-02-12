@@ -15,12 +15,13 @@ config/version="2.0DEV"
 run/main_scene="res://menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+boot_splash/image="res://Resources/_placeholder.png"
 
 [autoload]
 
 GlobalInterface="*res://global_interface.tscn"
 Global="*res://global.gd"
-MouseController="*res://mouse_controller.gd"
+MouseController="res://mouse_controller.gd"
 
 [display]
 
@@ -114,6 +115,10 @@ fullscreenkey={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194342,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
 
 [internationalization]
 

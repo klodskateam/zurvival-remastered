@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://d1es6dbs7uaad"]
+[gd_scene load_steps=9 format=3 uid="uid://d1es6dbs7uaad"]
 
 [ext_resource type="Script" path="res://pause_manager.gd" id="1_6olua"]
 [ext_resource type="Texture2D" uid="uid://c0gku65b6ujhb" path="res://Resources/grass.png" id="1_ictw6"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bshfbsu15v3v1" path="res://ui.tscn" id="4_t63fs"]
 [ext_resource type="PackedScene" uid="uid://rk6x2yf4sydr" path="res://pause.tscn" id="6_5dskx"]
 [ext_resource type="PackedScene" uid="uid://cow6451posxft" path="res://spawner.tscn" id="7_8yshx"]
+[ext_resource type="PackedScene" uid="uid://dl2wmmrupyjx5" path="res://mobile_control.tscn" id="8_g33am"]
 
 [node name="game" type="Node2D"]
 
@@ -45,5 +46,7 @@ position = Vector2(-90, -92)
 
 [node name="player" parent="." instance=ExtResource("1_thl6f")]
 position = Vector2(2494, 1858)
+
+[node name="mobile_control" parent="." instance=ExtResource("8_g33am")]
 
 [connection signal="timeout" from="Timer" to="Timer" method="_on_timeout"]
