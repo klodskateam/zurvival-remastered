@@ -14,7 +14,6 @@ const langtooltips = [
 ]
 
 func _ready() -> void:
-
 	
 	langs = TranslationServer.get_loaded_locales()
 	print(langs)
@@ -23,7 +22,8 @@ func _ready() -> void:
 		add_item(langnames[n], -1)
 		var sus = n + 1
 		set_item_tooltip(n, langtooltips[n])
-		
+	
+	selected = TranslationServer.get_loaded_locales().find(TranslationServer.get_locale(), 0)
 	
 func _on_item_selected(index: int) -> void:
 	TranslationServer.set_locale(langs[index])

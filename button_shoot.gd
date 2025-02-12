@@ -16,5 +16,5 @@ func _on_button_reload_pressed() -> void:
 	$"../../../game/player".bullets_reload()
 
 func _ready() -> void:
-	if OS.get_name() != "Android":
+	if (OS.get_name() != "Android"):
 		$"..".queue_free()
