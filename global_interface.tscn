@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bjhdpftxb5ure"]
+[gd_scene load_steps=9 format=3 uid="uid://bjhdpftxb5ure"]
 
 [ext_resource type="FontFile" uid="uid://mol2p0edntwv" path="res://Resources/Montserrat-Regular.ttf" id="1_m6tno"]
 [ext_resource type="Script" path="res://fps.gd" id="2_om5kj"]
 [ext_resource type="Script" path="res://info.gd" id="3_ahfpr"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="4_svpah"]
+[ext_resource type="Texture2D" uid="uid://66com61wgllf" path="res://Resources/ui_stuff_lol/bullets.png" id="5_105fw"]
+[ext_resource type="Script" path="res://button_shoot.gd" id="6_v6hbc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fp4rs"]
 font = ExtResource("1_m6tno")
@@ -41,7 +43,17 @@ horizontal_alignment = 2
 autowrap_mode = 2
 script = ExtResource("3_ahfpr")
 
-[node name="VirtualJoystick" parent="." instance=ExtResource("4_svpah")]
+[node name="joysticks" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VirtualJoystick" parent="joysticks" instance=ExtResource("4_svpah")]
+layout_mode = 1
 offset_top = -300.0
 offset_bottom = 0.0
 joystick_mode = 1
@@ -50,7 +62,8 @@ action_right = "right"
 action_up = "up"
 action_down = "down"
 
-[node name="VirtualJoystick2" parent="." instance=ExtResource("4_svpah")]
+[node name="VirtualJoystick2" parent="joysticks" instance=ExtResource("4_svpah")]
+layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_right = 1.0
@@ -61,3 +74,25 @@ offset_bottom = 0.0
 grow_horizontal = 0
 joystick_mode = 1
 use_input_actions = false
+
+[node name="Button_shoot" type="Button" parent="joysticks"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -343.0
+offset_top = -351.0
+offset_right = -265.0
+offset_bottom = -273.0
+grow_horizontal = 0
+grow_vertical = 0
+icon = ExtResource("5_105fw")
+flat = true
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("6_v6hbc")
+
+[connection signal="button_down" from="joysticks/Button_shoot" to="joysticks/Button_shoot" method="_on_button_down"]
+[connection signal="button_up" from="joysticks/Button_shoot" to="joysticks/Button_shoot" method="_on_button_up"]

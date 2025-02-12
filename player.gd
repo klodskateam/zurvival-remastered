@@ -78,8 +78,8 @@ func _physics_process(delta: float):
 	
 	
 func _process(delta: float):
-	if $"../../GlobalInterface/VirtualJoystick2" and $"../../GlobalInterface/VirtualJoystick2".is_pressed:
-		rotation = $"../../GlobalInterface/VirtualJoystick2".output.angle()
+	if $"../../GlobalInterface/joysticks/VirtualJoystick2" and $"../../GlobalInterface/joysticks/VirtualJoystick2".is_pressed:
+		rotation = $"../../GlobalInterface/joysticks/VirtualJoystick2".output.angle()
 		rotate(PI / 2)
 	
 func _input(event):
