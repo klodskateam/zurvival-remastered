@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bjhdpftxb5ure"]
+[gd_scene load_steps=10 format=3 uid="uid://bjhdpftxb5ure"]
 
 [ext_resource type="FontFile" uid="uid://mol2p0edntwv" path="res://Resources/Montserrat-Regular.ttf" id="1_m6tno"]
 [ext_resource type="Script" path="res://fps.gd" id="2_om5kj"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="4_svpah"]
 [ext_resource type="Texture2D" uid="uid://66com61wgllf" path="res://Resources/ui_stuff_lol/bullets.png" id="5_105fw"]
 [ext_resource type="Script" path="res://button_shoot.gd" id="6_v6hbc"]
+[ext_resource type="Texture2D" uid="uid://nnwpet7egxrr" path="res://Resources/ui_stuff_lol/speed.png" id="7_oi7m6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fp4rs"]
 font = ExtResource("1_m6tno")
@@ -82,16 +83,53 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -343.0
-offset_top = -351.0
-offset_right = -265.0
-offset_bottom = -273.0
+offset_left = -379.0
+offset_top = -301.0
+offset_right = -301.0
+offset_bottom = -223.0
 grow_horizontal = 0
 grow_vertical = 0
+mouse_filter = 1
 icon = ExtResource("5_105fw")
-flat = true
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("6_v6hbc")
+
+[node name="Button_reload" type="Button" parent="joysticks"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -379.0
+offset_top = -212.0
+offset_right = -301.0
+offset_bottom = -134.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 1
+text = "RELOAD"
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("6_v6hbc")
+
+[node name="Button_sprint" type="Button" parent="joysticks"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = -380.0
+offset_right = 81.0
+offset_bottom = -302.0
+grow_vertical = 0
+mouse_filter = 1
+toggle_mode = true
+icon = ExtResource("7_oi7m6")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("6_v6hbc")
 
 [connection signal="pressed" from="joysticks/Button_shoot" to="joysticks/Button_shoot" method="_on_pressed"]
+[connection signal="toggled" from="joysticks/Button_sprint" to="joysticks/Button_shoot" method="_on_button_sprint_toggled"]
