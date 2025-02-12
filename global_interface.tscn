@@ -58,7 +58,6 @@ layout_mode = 1
 offset_top = -300.0
 offset_bottom = 0.0
 mouse_filter = 2
-joystick_mode = 1
 action_left = "left"
 action_right = "right"
 action_up = "up"
@@ -75,7 +74,6 @@ offset_right = 0.0
 offset_bottom = 0.0
 grow_horizontal = 0
 mouse_filter = 2
-joystick_mode = 1
 use_input_actions = false
 
 [node name="Button_shoot" type="Button" parent="joysticks"]
