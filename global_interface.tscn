@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bjhdpftxb5ure"]
+[gd_scene load_steps=7 format=3 uid="uid://bjhdpftxb5ure"]
 
 [ext_resource type="FontFile" uid="uid://mol2p0edntwv" path="res://Resources/Montserrat-Regular.ttf" id="1_m6tno"]
 [ext_resource type="Script" path="res://fps.gd" id="2_om5kj"]
 [ext_resource type="Script" path="res://info.gd" id="3_ahfpr"]
+[ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="4_svpah"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fp4rs"]
 font = ExtResource("1_m6tno")
@@ -39,3 +40,22 @@ label_settings = SubResource("LabelSettings_iprx4")
 horizontal_alignment = 2
 autowrap_mode = 2
 script = ExtResource("3_ahfpr")
+
+[node name="VirtualJoystick" parent="." instance=ExtResource("4_svpah")]
+offset_top = -300.0
+offset_bottom = 0.0
+action_left = "left"
+action_right = "right"
+action_up = "up"
+action_down = "down"
+
+[node name="VirtualJoystick2" parent="." instance=ExtResource("4_svpah")]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_top = -300.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 0
+use_input_actions = false
