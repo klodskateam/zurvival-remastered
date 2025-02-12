@@ -90,11 +90,7 @@ func _input(event):
 		
 	
 	if event.is_action_pressed("reload"):
-		if (BULLETS == 0) and (ZAPAS_BULLETS >= 12):
-			BULLETS = MAX_BULLETS
-			ZAPAS_BULLETS -= 12
-			$ReloadSound.pitch_scale = randf_range(0.9, 1.1)
-			$ReloadSound.play()
+		bullets_reload()
 		
 func shoot():
 	if BULLETS != 0:
@@ -113,3 +109,10 @@ func shoot():
 		$EmptySound.play()
 		DELAY = 0
 		print(DELAY)
+		
+func bullets_reload():
+	if (BULLETS == 0) and (ZAPAS_BULLETS >= 12):
+		BULLETS = MAX_BULLETS
+		ZAPAS_BULLETS -= 12
+		$ReloadSound.pitch_scale = randf_range(0.9, 1.1)
+		$ReloadSound.play()
