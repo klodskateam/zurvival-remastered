@@ -134,6 +134,5 @@ expand_icon = true
 script = ExtResource("6_v6hbc")
 
 [connection signal="pressed" from="joysticks/Button_shoot" to="joysticks/Button_shoot" method="_on_pressed"]
-[connection signal="button_down" from="joysticks/Button_reload" to="joysticks/Button_shoot" method="_on_button_reload_button_down"]
-[connection signal="button_up" from="joysticks/Button_reload" to="joysticks/Button_shoot" method="_on_button_reload_button_up"]
+[connection signal="pressed" from="joysticks/Button_reload" to="joysticks/Button_shoot" method="_on_button_reload_pressed"]
 [connection signal="toggled" from="joysticks/Button_sprint" to="joysticks/Button_shoot" method="_on_button_sprint_toggled"]
