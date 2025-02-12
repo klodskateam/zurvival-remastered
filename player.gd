@@ -69,15 +69,15 @@ func _physics_process(delta: float):
 			VINOSLIVOST += 0.1
 			$Camera2D.zoom = Vector2(1, 1)
 	
-	if (Global.FORCEMOBILECONTROL == false) or OS.get_name() == "Android":
+	if (Global.FORCEMOBILECONTROL == false) or (OS.get_name() != "Android"):
 		look_at(get_global_mouse_position())
-	rotate(PI / 2)
+		rotate(PI / 2)
 	if DELAY <= 1:
 		DELAY += 0.075
 		print(DELAY)
 	
 	
-func _process(delta: float) -> void:
+func _process(delta: float):
 	if $"../../GlobalInterface/VirtualJoystick2" and $"../../GlobalInterface/VirtualJoystick2".is_pressed:
 		rotation = $"../../GlobalInterface/VirtualJoystick2".output.angle()
 		rotate(PI / 2)
@@ -85,22 +85,9 @@ func _process(delta: float) -> void:
 func _input(event):
 	
 	if event.is_action_pressed("shoot"):
-		if BULLETS != 0:
-			if DELAY >= 1:
-				var bullet = P_BULLET.instantiate()
-				bullet.global_position = $Marker2D.global_position
-				bullet.global_rotation = global_rotation
-				# bullet.add_constant_force(get_global_mouse_position() - bullet.global_position)
-				get_parent().add_child(bullet)
-				BULLETS -= 1
-				$ShootSound.pitch_scale = randf_range(0.9, 1.1)
-				$ShootSound.play()
-				DELAY = 0
-				print(DELAY)
-		else:
-			$EmptySound.play()
-			DELAY = 0
-			print(DELAY)
+		if (Global.FORCEMOBILECONTROL == false) or (OS.get_name() != "Android"):
+			shoot()
+		
 	
 	if event.is_action_pressed("reload"):
 		if (BULLETS == 0) and (ZAPAS_BULLETS >= 12):
@@ -109,3 +96,20 @@ func _input(event):
 			$ReloadSound.pitch_scale = randf_range(0.9, 1.1)
 			$ReloadSound.play()
 		
+func shoot():
+	if BULLETS != 0:
+		if DELAY >= 1:
+			var bullet = P_BULLET.instantiate()
+			bullet.global_position = $Marker2D.global_position
+			bullet.global_rotation = global_rotation
+			# bullet.add_constant_force(get_global_mouse_position() - bullet.global_position)
+			get_parent().add_child(bullet)
+			BULLETS -= 1
+			$ShootSound.pitch_scale = randf_range(0.9, 1.1)
+			$ShootSound.play()
+			DELAY = 0
+			print(DELAY)
+	else:
+		$EmptySound.play()
+		DELAY = 0
+		print(DELAY)

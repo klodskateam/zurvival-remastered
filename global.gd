@@ -2,7 +2,7 @@ extends Node
 
 var VERSION = ProjectSettings.get_setting("application/config/version")
 var FULLSCREEN = false
-var FORCEMOBILECONTROL = false
+var FORCEMOBILECONTROL = true
 
 const SAVE_PATH = "user://save.cfg"
 var CONFIG = ConfigFile.new()
