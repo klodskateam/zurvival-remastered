@@ -69,7 +69,8 @@ func _physics_process(delta: float):
 			VINOSLIVOST += 0.1
 			$Camera2D.zoom = Vector2(1, 1)
 	
-	look_at(get_global_mouse_position())
+	if (Global.FORCEMOBILECONTROL == false) or OS.get_name() == "Android":
+		look_at(get_global_mouse_position())
 	rotate(PI / 2)
 	if DELAY <= 1:
 		DELAY += 0.075
