@@ -16,7 +16,7 @@ run/main_scene="res://menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 boot_splash/image="res://Resources/_placeholder.png"
 boot_splash/fullsize=false
-config/icon="res://icon.svg"
+config/icon="res://Resources/bullets.png"
 
 [autoload]
 
