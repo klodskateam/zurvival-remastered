@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+
 @onready var score: Label = $"../UI/Score"
 
 @onready var kaktameto: Label = $"../UI/SpeedBar/Speed"
@@ -13,19 +14,19 @@ extends CharacterBody2D
 
 
 var VINOSLIVOST = 100
-var MAX_VINOSLIVOST = 100
+@export var MAX_VINOSLIVOST = 100
 var SPEED = 300
 var BULLETS = 12
 var ZAPAS_BULLETS = 48
 var DELAY = 0
 var HEALTH = 100
-var MAX_HEALTH = 100
-var MAX_BULLETS = 12
+@export var MAX_HEALTH = 100
+@export var MAX_BULLETS = 12
 var SCORE = 0
 
-const REGULAR_SPEED = 300
-const RUN_SPEED = 400
-const P_BULLET = preload("res://bullet.tscn")
+@export var REGULAR_SPEED = 300
+@export var RUN_SPEED = 400
+@export var P_BULLET = preload("res://bullet.tscn")
 
 func _physics_process(delta: float):
 	#TranslationServer.set_locale("be")
@@ -69,7 +70,7 @@ func _physics_process(delta: float):
 			VINOSLIVOST += 0.1
 			$Camera2D.zoom = Vector2(1, 1)
 	
-	if (Global.FORCEMOBILECONTROL == false) or (OS.get_name() != "Android"):
+	if (OS.get_name() != "Android"):
 		look_at(get_global_mouse_position())
 		rotate(PI / 2)
 	if DELAY <= 1:
@@ -78,14 +79,22 @@ func _physics_process(delta: float):
 	
 	
 func _process(delta: float):
-	if $"../../GlobalInterface/joysticks/VirtualJoystick2" and $"../../GlobalInterface/joysticks/VirtualJoystick2".is_pressed:
-		rotation = $"../../GlobalInterface/joysticks/VirtualJoystick2".output.angle()
-		rotate(PI / 2)
+	if (OS.get_name() == "Android"):
+		if $"../../GlobalInterface/joysticks/VirtualJoystick2" and $"../../GlobalInterface/joysticks/VirtualJoystick2".is_pressed:
+			rotation = $"../../GlobalInterface/joysticks/VirtualJoystick2".output.angle()
+			rotate(PI / 2)
+	if (HEALTH <= 0) and ($Person != null):
+		get_tree().paused = true # да хули оно не робит😭😭😭
+		$Person.queue_free()
+		$"../GameOver".show()
+		$"../GameOver".set_scores()
+		
+		
 	
 func _input(event):
 	
 	if event.is_action_pressed("shoot"):
-		if (Global.FORCEMOBILECONTROL == false) or (OS.get_name() != "Android"):
+		if (OS.get_name() != "Android"):
 			shoot()
 		
 	

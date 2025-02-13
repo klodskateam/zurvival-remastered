@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://d1es6dbs7uaad"]
+[gd_scene load_steps=9 format=3 uid="uid://d1es6dbs7uaad"]
 
 [ext_resource type="Script" path="res://pause_manager.gd" id="1_6olua"]
 [ext_resource type="Texture2D" uid="uid://c0gku65b6ujhb" path="res://Resources/grass.png" id="1_ictw6"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bshfbsu15v3v1" path="res://ui.tscn" id="4_t63fs"]
 [ext_resource type="PackedScene" uid="uid://rk6x2yf4sydr" path="res://pause.tscn" id="6_5dskx"]
 [ext_resource type="PackedScene" uid="uid://cow6451posxft" path="res://spawner.tscn" id="7_8yshx"]
+[ext_resource type="PackedScene" uid="uid://uo6qjyv0h20n" path="res://game_over.tscn" id="8_nlu6b"]
 
 [node name="game" type="Node2D"]
 
@@ -27,6 +28,8 @@ autostart = true
 script = ExtResource("3_ar85b")
 
 [node name="UI" parent="." instance=ExtResource("4_t63fs")]
+
+[node name="GameOver" parent="." instance=ExtResource("8_nlu6b")]
 
 [node name="Pause" parent="." instance=ExtResource("6_5dskx")]
 process_mode = 2
