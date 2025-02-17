@@ -16,16 +16,16 @@ theme = ExtResource("2_i4evy")
 [node name="Panel" type="Panel" parent="Control"]
 layout_mode = 1
 offset_left = 526.0
-offset_top = 180.0
+offset_top = 239.0
 offset_right = 746.0
-offset_bottom = 509.0
+offset_bottom = 474.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel"]
 layout_mode = 0
 offset_left = 5.0
-offset_top = 5.0
+offset_top = 12.0
 offset_right = 215.0
-offset_bottom = 324.0
+offset_bottom = 228.0
 alignment = 1
 
 [node name="Play" type="Button" parent="Control/Panel/VBoxContainer"]
