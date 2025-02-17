@@ -12,9 +12,9 @@ font_size = 48
 
 [node name="SpeedBar" type="ProgressBar" parent="."]
 offset_left = 30.0
-offset_top = 29.0
+offset_top = 33.0
 offset_right = 230.0
-offset_bottom = 59.0
+offset_bottom = 63.0
 theme = ExtResource("1_3mkkl")
 show_percentage = false
 
@@ -34,9 +34,9 @@ texture = ExtResource("2_iev70")
 
 [node name="BulletsBar" type="ProgressBar" parent="."]
 offset_left = 30.0
-offset_top = 60.0
+offset_top = 66.0
 offset_right = 230.0
-offset_bottom = 87.0
+offset_bottom = 93.0
 theme = ExtResource("1_3mkkl")
 max_value = 12.0
 value = 12.0
@@ -53,24 +53,24 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="BulletsIcon" type="Sprite2D" parent="BulletsBar"]
-position = Vector2(-15, 13.5)
-scale = Vector2(0.21875, 0.210937)
+position = Vector2(-16, 13.5)
+scale = Vector2(0.234375, 0.210937)
 texture = ExtResource("3_qg45p")
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 offset_left = 30.0
-offset_top = 1.0
+offset_top = 3.0
 offset_right = 230.0
-offset_bottom = 28.0
+offset_bottom = 30.0
 theme = ExtResource("1_3mkkl")
 value = 12.0
 show_percentage = false
 
 [node name="Health" type="Label" parent="HealthBar"]
 layout_mode = 0
-offset_top = 2.0
+offset_top = 3.0
 offset_right = 200.0
-offset_bottom = 25.0
+offset_bottom = 26.0
 theme = ExtResource("1_3mkkl")
 text = "Здоровье: 12/12"
 horizontal_alignment = 1

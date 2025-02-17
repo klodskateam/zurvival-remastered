@@ -54,13 +54,17 @@ func _physics_process(delta: float):
 	health_bar.max_value = MAX_HEALTH
 	health_bar.value = HEALTH
 	
-	if Input.is_action_pressed("run"):
+	if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")):
 		print(SPEED)
 		print(VINOSLIVOST)
+		if (VINOSLIVOST >= 40):
+			var RUN_SPEED = 350
+		else:
+			var RUN_SPEED = 400
 		if (VINOSLIVOST >= 0):
 			SPEED = RUN_SPEED
-			$Camera2D.zoom = Vector2(0.99, 0.99)
-			VINOSLIVOST -= 0.1
+			$Camera2D.zoom = Vector2(0.98, 0.98)
+			VINOSLIVOST -= 0.34
 		else:
 			SPEED = REGULAR_SPEED
 			$Camera2D.zoom = Vector2(1, 1)
@@ -69,6 +73,7 @@ func _physics_process(delta: float):
 		if (VINOSLIVOST <= MAX_VINOSLIVOST) and (SPEED != RUN_SPEED):
 			VINOSLIVOST += 0.1
 			$Camera2D.zoom = Vector2(1, 1)
+		
 	
 	if (OS.get_name() != "Android"):
 		look_at(get_global_mouse_position())
