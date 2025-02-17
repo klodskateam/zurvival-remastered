@@ -58,12 +58,13 @@ func _physics_process(delta: float):
 		print(SPEED)
 		print(VINOSLIVOST)
 		if (VINOSLIVOST >= 40):
-			var RUN_SPEED = 350
+			var RUN_SPEED = 340
+			$Camera2D.zoom = Vector2(0.99, 0.99)
 		else:
+			$Camera2D.zoom = Vector2(0.98, 0.98)
 			var RUN_SPEED = 400
 		if (VINOSLIVOST >= 0):
 			SPEED = RUN_SPEED
-			$Camera2D.zoom = Vector2(0.98, 0.98)
 			VINOSLIVOST -= 0.34
 		else:
 			SPEED = REGULAR_SPEED
