@@ -1,7 +1,7 @@
 extends Sprite2D
 var BGTIME = 0
 const BG1 = [
-	preload("res://bgs/8.png"),
+	preload("res://bgs/1.png"),
 	"mw10b1909"
 ]
 const BG2 = [
