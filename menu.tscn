@@ -26,6 +26,7 @@ offset_left = 5.0
 offset_top = 12.0
 offset_right = 215.0
 offset_bottom = 228.0
+theme = ExtResource("2_i4evy")
 alignment = 1
 
 [node name="Play" type="Button" parent="Control/Panel/VBoxContainer"]
