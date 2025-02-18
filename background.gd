@@ -39,10 +39,10 @@ func _ready() -> void:
 	
 	
 func _process(delta: float) -> void:
-	BGTIME += delta
+	BGTIME += delta # люблю костыли
 	if BGTIME >= 5:
 		BGTIME -= 5
-		if randi_range(1, images) == 1:
+		if randi_range(1, images) == 1: # хотелось бы рандомнее, а то показывается один фон несколько раз
 			texture = BG1[0]
 			$Label.text = tr("$createdby") + " " + BG1[1]
 		if randi_range(1, images) == 2:
