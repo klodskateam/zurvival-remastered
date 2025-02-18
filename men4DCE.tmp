@@ -42,9 +42,9 @@ script = ExtResource("1_814jb")
 [node name="Exit" type="Button" parent="Control/Panel/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_i4evy")
-text = "$quit"
+text = "$exit"
 script = ExtResource("1_814jb")
 
 [connection signal="pressed" from="Control/Panel/VBoxContainer/Play" to="Control/Panel/VBoxContainer/Play" method="_on_play_pressed"]
 [connection signal="pressed" from="Control/Panel/VBoxContainer/Settings" to="Control/Panel/VBoxContainer/Play" method="_on_settings_pressed"]
-[connection signal="pressed" from="Control/Panel/VBoxContainer/Exit" to="Control/Panel/VBoxContainer/Exit" method="_on_exit_pressed"]
+[connection signal="pressed" from="Control/Panel/VBoxContainer/Exit" to="Control/Panel/VBoxContainer/Exit" method="_on_pressed"]

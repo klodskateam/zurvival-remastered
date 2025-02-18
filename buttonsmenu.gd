@@ -5,8 +5,8 @@ extends Button
 
 var config = ConfigFile.new()
 
-func _on_pressed():
-	print("GAME")
+func _on_play_pressed():
+	print("GAME1")
 	get_tree().change_scene_to_file(GAME)
 
 func _on_settings_pressed():
@@ -18,3 +18,7 @@ func _on_settings_back_pressed():
 	config.set_value("settings", "lang", TranslationServer.get_loaded_locales()[$"../VBoxContainer/SettingsLang".selected])
 	config.save(Global.SAVE_PATH)
 	get_tree().change_scene_to_file("res://menu.tscn")
+	
+func _on_exit_pressed():
+	get_tree().quit()
+	pass
