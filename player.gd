@@ -57,12 +57,12 @@ func _physics_process(delta: float):
 	if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")):
 		print(SPEED)
 		print(VINOSLIVOST)
-		if (VINOSLIVOST >= 40):
-			RUN_SPEED = 340
-			$Camera2D.zoom = Vector2(0.99, 0.99)
-		else:
+		if (VINOSLIVOST >= 40):	
 			$Camera2D.zoom = Vector2(0.98, 0.98)
 			RUN_SPEED = 400
+		else:
+			RUN_SPEED = 340
+			$Camera2D.zoom = Vector2(0.99, 0.99)
 		if (VINOSLIVOST >= 0):
 			SPEED = RUN_SPEED
 			VINOSLIVOST -= 0.34

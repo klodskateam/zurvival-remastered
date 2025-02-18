@@ -1,7 +1,7 @@
 extends Sprite2D
 
 const BG1 = [
-	preload("res://bgs/1.png"),
+	preload("res://bgs/8.png"),
 	"mw10b1909"
 ]
 const BG2 = [
@@ -24,7 +24,15 @@ const BG6 = [
 	preload("res://bgs/6.png"),
 	"mw10b1909"
 ]
-const images = 6
+const BG7 = [
+	preload("res://bgs/7.png"),
+	"mw10b1909"
+]
+const BG8 = [
+	preload("res://bgs/8.png"),
+	"mw10b1909"
+]
+const images = 8
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if randi_range(1, images) == 1:
@@ -45,6 +53,12 @@ func _ready() -> void:
 	if randi_range(1, images) == 6:
 		texture = BG6[0]
 		$Label.text = tr("$createdby") + " " + BG6[1]
+	if randi_range(1, images) == 7:
+		texture = BG7[0]
+		$Label.text = tr("$createdby") + " " + BG7[1]
+	if randi_range(1, images) == 8:
+		texture = BG8[0]
+		$Label.text = tr("$createdby") + " " + BG8[1]		
 	
 	
 func _process(delta: float) -> void:
