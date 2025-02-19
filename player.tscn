@@ -39,3 +39,4 @@ limit_right = 5000
 limit_bottom = 5000
 limit_smoothed = true
 position_smoothing_enabled = true
+rotation_smoothing_enabled = true

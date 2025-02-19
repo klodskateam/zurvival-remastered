@@ -1,7 +1,7 @@
 extends Sprite2D
-
+var BGTIME = 0
 const BG1 = [
-	preload("res://bgs/8.png"),
+	preload("res://bgs/1.png"),
 	"mw10b1909"
 ]
 const BG2 = [
@@ -35,31 +35,35 @@ const BG8 = [
 const images = 8
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if randi_range(1, images) == 1:
-		texture = BG1[0]
-		$Label.text = tr("$createdby") + " " + BG1[1]
-	if randi_range(1, images) == 2:
-		texture = BG2[0]
-		$Label.text = tr("$createdby") + " " + BG2[1]
-	if randi_range(1, images) == 3:
-		texture = BG3[0]
-		$Label.text = tr("$createdby") + " " + BG3[1]
-	if randi_range(1, images) == 4:
-		texture = BG4[0]
-		$Label.text = tr("$createdby") + " " + BG4[1]
-	if randi_range(1, images) == 5:
-		texture = BG5[0]
-		$Label.text = tr("$createdby") + " " + BG5[1]
-	if randi_range(1, images) == 6:
-		texture = BG6[0]
-		$Label.text = tr("$createdby") + " " + BG6[1]
-	if randi_range(1, images) == 7:
-		texture = BG7[0]
-		$Label.text = tr("$createdby") + " " + BG7[1]
-	if randi_range(1, images) == 8:
-		texture = BG8[0]
-		$Label.text = tr("$createdby") + " " + BG8[1]		
+	pass
 	
 	
 func _process(delta: float) -> void:
-	pass
+	BGTIME += delta # люблю костыли
+	if BGTIME >= 5:
+		BGTIME -= 5
+		if randi_range(1, images) == 1: # хотелось бы рандомнее, а то показывается один фон несколько раз
+			texture = BG1[0]
+			$Label.text = tr("$createdby") + " " + BG1[1]
+		if randi_range(1, images) == 2:
+			texture = BG2[0]
+			$Label.text = tr("$createdby") + " " + BG2[1]
+		if randi_range(1, images) == 3:
+			texture = BG3[0]
+			$Label.text = tr("$createdby") + " " + BG3[1]
+		if randi_range(1, images) == 4:
+			texture = BG4[0]
+			$Label.text = tr("$createdby") + " " + BG4[1]
+		if randi_range(1, images) == 5:
+			texture = BG5[0]
+			$Label.text = tr("$createdby") + " " + BG5[1]
+		if randi_range(1, images) == 6:
+			texture = BG6[0]
+			$Label.text = tr("$createdby") + " " + BG6[1]
+		if randi_range(1, images) == 7:
+			texture = BG7[0]
+			$Label.text = tr("$createdby") + " " + BG7[1]
+		if randi_range(1, images) == 8:
+			texture = BG8[0]
+			$Label.text = tr("$createdby") + " " + BG8[1]		
+		
