@@ -10,5 +10,5 @@ func set_scores():
 
 
 func _on_go_to_menu_pressed() -> void:
-	get_tree().paused = false
+	$"../PauseManager".PAUSE = false
 	get_tree().change_scene_to_file("res://menu.tscn")

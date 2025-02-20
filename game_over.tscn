@@ -4,6 +4,7 @@
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_tclbe"]
 
 [node name="GameOver" type="CanvasLayer"]
+process_mode = 1
 script = ExtResource("1_ji23y")
 
 [node name="Panel" type="Panel" parent="."]

@@ -30,6 +30,7 @@ script = ExtResource("3_ar85b")
 [node name="UI" parent="." instance=ExtResource("4_t63fs")]
 
 [node name="GameOver" parent="." instance=ExtResource("8_nlu6b")]
+process_mode = 2
 
 [node name="Pause" parent="." instance=ExtResource("6_5dskx")]
 process_mode = 2

@@ -90,7 +90,7 @@ func _process(delta: float):
 			rotation = $"../../GlobalInterface/joysticks/VirtualJoystick2".output.angle()
 			rotate(PI / 2)
 	if (HEALTH <= 0) and ($Person != null):
-		get_tree().paused = true # да хули оно не робит😭😭😭
+		$"../PauseManager".PAUSE = true
 		$Person.queue_free()
 		$"../GameOver".show()
 		$"../GameOver".set_scores()
