@@ -6,6 +6,10 @@ var FULLSCREEN = false
 const SAVE_PATH = "user://save.cfg"
 var CONFIG = ConfigFile.new()
 
+
+var ZCOINS = 0
+
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("fullscreenkey"):
 		if FULLSCREEN == false:
@@ -20,3 +24,5 @@ func _ready() -> void:
 	TranslationServer.set_locale(CONFIG.get_value("settings", "lang"))
 	if CONFIG.get_value("settings", "fullscreen") == true:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+		
+	ZCOINS = CONFIG.get_value("save", "zcoins")

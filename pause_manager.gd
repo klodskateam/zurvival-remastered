@@ -14,7 +14,6 @@ func _input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	if PAUSE == true:
 		get_tree().paused = true
-		
 	else:
 		get_tree().paused = false
 

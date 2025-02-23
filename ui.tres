@@ -1,10 +1,23 @@
-[gd_resource type="Theme" load_steps=3 format=3 uid="uid://d2wr8qi0mdxxq"]
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://d2wr8qi0mdxxq"]
 
 [ext_resource type="FontFile" uid="uid://mol2p0edntwv" path="res://Resources/Montserrat-Regular.ttf" id="1_r3vpi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3va1a"]
 bg_color = Color(0.29964, 0.520377, 0.218746, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3uw5e"]
+bg_color = Color(0.25633, 0.441406, 0.191391, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.0415816, 0.246094, 0, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
 [resource]
 default_font = ExtResource("1_r3vpi")
 Panel/styles/panel = SubResource("StyleBoxFlat_3va1a")
+ScrollContainer/styles/panel = SubResource("StyleBoxFlat_3uw5e")

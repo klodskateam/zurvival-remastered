@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3 uid="uid://bpgtpnc1odi4f"]
+
+[ext_resource type="PackedScene" uid="uid://db8yny8uiwun1" path="res://background.tscn" id="1_gxgwd"]
+[ext_resource type="Script" path="res://gamemode.gd" id="1_x7xra"]
+[ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_7rmfm"]
+
+[node name="gamemode" type="Node2D"]
+script = ExtResource("1_x7xra")
+
+[node name="Background" parent="." instance=ExtResource("1_gxgwd")]
+position = Vector2(640, 360)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_7rmfm")
+
+[node name="Panel" type="Panel" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -199.0
+offset_top = -193.0
+offset_right = 199.0
+offset_bottom = 193.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Control/Panel"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 32.0
+offset_right = 396.0
+offset_bottom = 249.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/Panel/ScrollContainer"]
+custom_minimum_size = Vector2(390, 0)
+layout_mode = 2
+alignment = 1
+
+[node name="Button" type="Button" parent="UI/Control/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Стандартный"
