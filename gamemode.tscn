@@ -1,14 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://bpgtpnc1odi4f"]
+[gd_scene load_steps=5 format=3 uid="uid://bpgtpnc1odi4f"]
 
 [ext_resource type="PackedScene" uid="uid://db8yny8uiwun1" path="res://background.tscn" id="1_gxgwd"]
 [ext_resource type="Script" path="res://gamemode.gd" id="1_x7xra"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_7rmfm"]
+[ext_resource type="PackedScene" uid="uid://20ujgybixt7t" path="res://buttongamemode.tscn" id="4_uitb6"]
 
 [node name="gamemode" type="Node2D"]
 script = ExtResource("1_x7xra")
 
 [node name="Background" parent="." instance=ExtResource("1_gxgwd")]
-position = Vector2(640, 360)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -47,6 +47,37 @@ custom_minimum_size = Vector2(390, 0)
 layout_mode = 2
 alignment = 1
 
-[node name="Button" type="Button" parent="UI/Control/Panel/ScrollContainer/VBoxContainer"]
+[node name="Button" parent="UI/Control/Panel/ScrollContainer/VBoxContainer" instance=ExtResource("4_uitb6")]
 layout_mode = 2
-text = "Стандартный"
+text = "Магазин"
+
+[node name="HSeparator" type="HSeparator" parent="UI/Control/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Control/Panel"]
+layout_mode = 0
+offset_right = 398.0
+offset_bottom = 31.0
+theme_override_font_sizes/font_size = 24
+text = "$gamemodeselect"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="UI/Control/Panel"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 26.0
+offset_bottom = 31.0
+text = "<-"
+
+[node name="Button2" type="Button" parent="UI/Control/Panel"]
+layout_mode = 0
+offset_left = 226.0
+offset_top = 354.0
+offset_right = 395.0
+offset_bottom = 383.0
+text = "$play
+"
+
+[connection signal="pressed" from="UI/Control/Panel/Button" to="." method="_on_button_pressed"]

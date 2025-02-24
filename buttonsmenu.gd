@@ -1,6 +1,6 @@
 extends Button
 
-@onready var GAME = "res://game.tscn"
+@onready var GAME = "res://gamemode.tscn"
 @onready var SETTINGS = "res://settings.tscn"
 
 var config = ConfigFile.new()
