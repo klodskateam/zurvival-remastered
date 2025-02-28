@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://8t6e4ir44ffr"]
+
+[ext_resource type="Texture2D" uid="uid://c0vrkliq3jy8k" path="res://placeholder.png" id="1_cvts5"]
+
+[node name="Item" type="Button"]
+custom_minimum_size = Vector2(150, 150)
+text = "Test"
+icon = ExtResource("1_cvts5")
+flat = true
+autowrap_mode = 3
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true

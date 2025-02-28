@@ -1,21 +1,26 @@
 id,en,ru,be,ch,sp,fi,bel
 $stamina,Stamina,Выносливость,Цягавітасць,耐力,Resistencia,,Ciahavitaść
 $play,Play,Играть,Гуляць,游戏,Jugar,Pelaa,Huliać
-$bullets,Ammo,Пули,Абойма,子弹,Balas,,Abojma
+$bullets,Ammo,Пули,Кулі,子弹,Balas,,Kuli
 $settings,Settings,Настройки,Налады,设置,Ajustes,Asetukset,Nalady
 $health,HP,Здоровье,Здароўе,健康,Salud,HP,Zdaroŭje
 $createdby,Made by,Сделано,Зроблена,制作：,Hecho por,Teki,Zrobliena
-$save,Save,Сохранить,Захаваць,节省,Guardar,,Zachavać
+$save,Save,Сохранить,Захаваць,节省,Guardar,Tallenna,Zachavać
 $fullscreen,Fullscreen (F11),Полноэкранный режим (F11),Поўнаэкранны рэжым (F11),全屏模式 (F11),Modo de pantalla completa (F11),Kokonäyttö (F11),Poŭnaekranny režym (F11)
 $graphicssettings,Graphical settings,Настройки графики,Настройкі графікі,图形设置,Ajustes gráficos,,Nastrojki hrafiki
 $other,Other,Другие,Іншыя,其他,Otros,Muu,Inšyja
-$machinetranslat,"The language you have chosen has been translated through Google Translate and DeepL, so there may be errors. If you know the language, you can help us by clicking here!",Помочь с переводом игры,Перакладаць дапамагаў Google Translate. Дапамагчы з перакладам.,您选择的语言已通过 Google 翻译和 Deepl 翻译，因此可能存在错误。如果您懂该语言，可以点击此处帮助我们！,"El idioma que has elegido ha sido traducido a través de Google Translate y Deepl, por lo que puede haber errores. Si conoces el idioma, ¡puedes ayudarnos haciendo clic aquí!","Kieli mikä sinä valitsit, oli tehty kääntäjän ja ""Google Translate"" avulla. Jos näit virhen, lähetta meille palauteen klikkamaala sinne.",Pieraklad byŭ zroblieny z dapamohaj Google Pierakladčyk i sajta https://seveleu.com/lacinka/converter-ru. Dapamahčy z pierakladam?
+$machinetranslat,"The language you have chosen has been translated through Google Translate and DeepL, so there may be errors. If you know the language, you can help us by clicking here!",Помочь с переводом игры,Перакладаць дапамагаў Google Translate. Дапамагчы з перакладам.,您选择的语言已通过 Google 翻译和 Deepl 翻译，因此可能存在错误。如果您懂该语言，可以点击此处帮助我们！,"El idioma que has elegido ha sido traducido a través de Google Translate y Deepl, por lo que puede haber errores. Si conoces el idioma, ¡puedes ayudarnos haciendo clic aquí!","Kieli jonka sinä valitsit oli tehty kääntäjän ja ""Google Translate"" avulla. Koska tämä käännös on ensimmäinen versio, siellä voi todella olla virheitä. Jos näet virhen, lähettä meille palautetta!",Pieraklad byŭ zroblieny z dapamohaj Google Pierakladčyk i sajta https://seveleu.com/lacinka/converter-ru. Dapamahčy z pierakladam?
 $pausemenu,Pause menu,Меню паузы,Меню паўзы,暂停菜单,Menú Pausa,Pysäytysvalikko,Mieniu paŭzy
 $resume,Resume,Продолжить,Працягнуць,待续,Continuación,Jatkaa peliä,Praciahnuć
 $quit,Quit,Выход,Вынахад,输出,Salida,Poistua,Vynachad
 $pausetext,Press ESC to continue,Нажмите ESC чтобы продолжить,Націсніце ESC каб працягнуць,按 ESC 继续,Pulse ESC para continuar,Paina ESC jatkaaksesi,Naciśnicie ESC kab praciahnuć
-$help,Help,Помочь с переводом игры,Дапамагчы,帮助,Ayuda,,Dapamahčy
+$help,Help,Помочь с переводом игры,Дапамагчы,帮助,Ayuda,Auttaa pelin kääntämiseen!,Dapamahčy
 $youdead,You are dead!,Вы умерли!,Вы памерлі!,你死定了！,¡Estás muerto!,Olet kuollut!,Vy pamierli!
 $score,Score,Счёт,Рахунак,查看,Controlar,Pistemäärä,Rachunak
 $bestscore,Best score,Лучший счёт,Лепшы рахунак,最佳成绩,Mejor puntuación,Paras pistemäärä,Liepšy rachunak
 $gotomenu,Go to menu,В меню,Выйсці ў меню,退出到菜单,Salir al menú,Poistu valikkoon,Vyjsci ŭ mieniu
+$placeholdergmname,Choose an gamemode,Выберите режим,,,,Valitse pelin,
+$placeholdergmdesc,Choose an gamemode to find out more.,Выберите режим чтобы узнать больше,,,,"Valitse pelin, että saa tietoa pelistä.",
+$gamemodeselect,Choose an gamemode,Выберите режим,,,,Valitse pelin,
+$standardmodename,,Стандартный режим,,,,,
+$standardmodedesc,,"Самый стандартный режим, что ещё говорить?",,,,,

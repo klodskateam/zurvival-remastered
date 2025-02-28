@@ -23,6 +23,8 @@ config/icon="res://Resources/bullets.png"
 GlobalInterface="*res://global_interface.tscn"
 Global="*res://global.gd"
 MouseController="res://mouse_controller.gd"
+ModLoader="*res://mod_loader.gd"
+ErrorManager="*res://error_manager.gd"
 
 [display]
 
