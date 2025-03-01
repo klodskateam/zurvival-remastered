@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=4 format=3 uid="uid://d2wr8qi0mdxxq"]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://d2wr8qi0mdxxq"]
 
 [ext_resource type="FontFile" uid="uid://mol2p0edntwv" path="res://Resources/Montserrat-Regular.ttf" id="1_r3vpi"]
 
@@ -17,7 +17,36 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lq1h7"]
+bg_color = Color(0.231215, 0.40625, 0.1698, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 5.0
+expand_margin_top = 35.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+shadow_size = 3
+shadow_offset = Vector2(5, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_snsow"]
+bg_color = Color(0.368851, 0.628906, 0.277603, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 5.0
+expand_margin_top = 35.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+shadow_size = 3
+shadow_offset = Vector2(5, 5)
+
 [resource]
 default_font = ExtResource("1_r3vpi")
 Panel/styles/panel = SubResource("StyleBoxFlat_3va1a")
 ScrollContainer/styles/panel = SubResource("StyleBoxFlat_3uw5e")
+Window/fonts/title_font = ExtResource("1_r3vpi")
+Window/styles/embedded_border = SubResource("StyleBoxFlat_lq1h7")
+Window/styles/embedded_unfocused_border = SubResource("StyleBoxFlat_snsow")

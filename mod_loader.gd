@@ -18,10 +18,9 @@ func _ready() -> void:
 			var modpath = "user://mods/" + modslist[sus]
 			ErrorManager.moderror("Error in " + modpath)
 		else:
-			var susplus1 = sus + 1
-			for sussy in tmp_mod[susplus1]["adds"].size():
-				if tmp_mod[susplus1]["adds"][sussy]["type"] == "aim":
-					MODCOSMICITEMS.insert(MODCOSMICITEMS.size(), tmp_mod[susplus1]["adds"][sussy])
+			for sussy in tmp_mod["adds"].size():
+				if tmp_mod["adds"][sussy]["type"] == "aim":
+					MODCOSMICITEMS.insert(MODCOSMICITEMS.size(), tmp_mod["adds"][sussy])
 		print(MODCOSMICITEMS)
 		
 
