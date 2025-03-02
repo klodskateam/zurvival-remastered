@@ -42,5 +42,5 @@ func _on_play_button_pressed() -> void:
 	get_tree().change_scene_to_file(GMCHANGE_TO)
 	
 func change_info():
-	$UI/Control/Panel/gamemodename.text = "placeholder"
-	$UI/Control/Panel/gamemodedesc.text = "placeholder"
+	$UI/Control/Panel/gamemodename.text = str(GMNAME)
+	$UI/Control/Panel/gamemodedesc.text = str(GMDESC)
