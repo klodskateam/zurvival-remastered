@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_4k4lh"]
 [ext_resource type="Texture2D" uid="uid://bkpnsht3sftmq" path="res://icon.svg" id="2_44wa8"]
-[ext_resource type="Script" path="res://addons/virtual_joystick/test/player.gd" id="3_dsmxw"]
+[ext_resource type="Script" uid="uid://bhcto1qw0rkik" path="res://addons/virtual_joystick/test/player.gd" id="3_dsmxw"]
 
 [node name="Test" type="Node2D"]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cow6451posxft"]
 
-[ext_resource type="Script" path="res://zondre_spawner.gd" id="1_hnhnj"]
+[ext_resource type="Script" uid="uid://b8oti275frp5n" path="res://zondre_spawner.gd" id="1_hnhnj"]
 [ext_resource type="Texture2D" uid="uid://crqpy6n5f8ekg" path="res://Resources/_placeholder.png" id="1_vd2ua"]
 
 [node name="Spawner" type="Sprite2D"]

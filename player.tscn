@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bgd4is08hm4yv"]
 
-[ext_resource type="Script" path="res://player.gd" id="1_16hic"]
+[ext_resource type="Script" uid="uid://dkbllljttt738" path="res://player.gd" id="1_16hic"]
 [ext_resource type="Texture2D" uid="uid://c0gntm575ocrj" path="res://Resources/person.png" id="2_fef5v"]
 [ext_resource type="AudioStream" uid="uid://b5mni24787o6i" path="res://Sound/pistol.wav" id="3_ft5c5"]
 [ext_resource type="AudioStream" uid="uid://d1h3atxwyd1p0" path="res://Sound/pistol-reload.wav" id="4_51cx5"]

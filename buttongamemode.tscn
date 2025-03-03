@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://20ujgybixt7t"]
 
-[ext_resource type="Script" path="res://buttongamemode.gd" id="1_2y1ho"]
+[ext_resource type="Script" uid="uid://bmxlqa5s8fk72" path="res://buttongamemode.gd" id="1_2y1ho"]
 
 [node name="Button" type="Button"]
 text = "Стандартный"

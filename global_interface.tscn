@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=3 uid="uid://bjhdpftxb5ure"]
 
 [ext_resource type="FontFile" uid="uid://mol2p0edntwv" path="res://Resources/Montserrat-Regular.ttf" id="1_m6tno"]
-[ext_resource type="Script" path="res://fps.gd" id="2_om5kj"]
-[ext_resource type="Script" path="res://info.gd" id="3_ahfpr"]
+[ext_resource type="Script" uid="uid://c0d2xpmyrlmvn" path="res://fps.gd" id="2_om5kj"]
+[ext_resource type="Script" uid="uid://dxl2qyx2jdxuw" path="res://info.gd" id="3_ahfpr"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="4_svpah"]
 [ext_resource type="Texture2D" uid="uid://66com61wgllf" path="res://Resources/ui_stuff_lol/bullets.png" id="5_105fw"]
-[ext_resource type="Script" path="res://button_shoot.gd" id="6_v6hbc"]
+[ext_resource type="Script" uid="uid://dmvvj5dnsyh3p" path="res://button_shoot.gd" id="6_v6hbc"]
 [ext_resource type="Texture2D" uid="uid://nnwpet7egxrr" path="res://Resources/ui_stuff_lol/speed.png" id="7_oi7m6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fp4rs"]
