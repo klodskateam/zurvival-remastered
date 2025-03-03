@@ -42,7 +42,7 @@ func _physics_process(delta: float):
 		
 	score.text = str(SCORE)
 	
-	kaktameto.text = tr("$stamina") + ": " + str(round(VINOSLIVOST)) + "/" + str(MAX_VINOSLIVOST)
+	kaktameto.text = tr("$stamina") + ": " + str(round(int(VINOSLIVOST))) + "/" + str(MAX_VINOSLIVOST)
 	kaktameto_bar.max_value = MAX_VINOSLIVOST
 	kaktameto_bar.value = VINOSLIVOST
 
