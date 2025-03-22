@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://fngud3skahgr"]
 
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="1_neny1"]
-[ext_resource type="Script" uid="uid://eyda17q3w8va" path="res://windows/moderror.gd" id="2_3cml4"]
+[ext_resource type="Script" uid="uid://dj5h5y2kbtj4u" path="res://windows/moderror.gd" id="2_3cml4"]
 [ext_resource type="Texture2D" uid="uid://bkr2itdd5vcdt" path="res://Resources/erroricon/Fatcow-Farm-Fresh-Plugin-error.32.png" id="2_rcico"]
 
 [node name="Window" type="Window"]

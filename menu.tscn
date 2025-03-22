@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c6ji2387qq42r"]
 
-[ext_resource type="Script" uid="uid://2bvrwha2lhlt" path="res://buttonsmenu.gd" id="1_814jb"]
+[ext_resource type="Script" uid="uid://cfscol8gm18p3" path="res://buttonsmenu.gd" id="1_814jb"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_i4evy"]
 [ext_resource type="PackedScene" uid="uid://db8yny8uiwun1" path="res://background.tscn" id="2_xh8be"]
 
@@ -39,6 +39,11 @@ layout_mode = 2
 text = "$settings"
 script = ExtResource("1_814jb")
 
+[node name="Mods" type="Button" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+text = "$mods"
+script = ExtResource("1_814jb")
+
 [node name="Exit" type="Button" parent="Control/Panel/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_i4evy")
@@ -47,4 +52,5 @@ script = ExtResource("1_814jb")
 
 [connection signal="pressed" from="Control/Panel/VBoxContainer/Play" to="Control/Panel/VBoxContainer/Play" method="_on_play_pressed"]
 [connection signal="pressed" from="Control/Panel/VBoxContainer/Settings" to="Control/Panel/VBoxContainer/Play" method="_on_settings_pressed"]
+[connection signal="pressed" from="Control/Panel/VBoxContainer/Mods" to="Control/Panel/VBoxContainer/Play" method="_on_settings_pressed"]
 [connection signal="pressed" from="Control/Panel/VBoxContainer/Exit" to="Control/Panel/VBoxContainer/Exit" method="_on_exit_pressed"]

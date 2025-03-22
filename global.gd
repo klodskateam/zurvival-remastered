@@ -25,4 +25,5 @@ func _ready() -> void:
 	if CONFIG.get_value("settings", "fullscreen") == true:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 		
-	ZCOINS = CONFIG.get_value("save", "zcoins")
+	if CONFIG.get_value("save", "zcoins") == true:
+		ZCOINS = CONFIG.get_value("save", "zcoins")

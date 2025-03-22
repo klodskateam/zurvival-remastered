@@ -1,0 +1,80 @@
+[gd_scene load_steps=5 format=3 uid="uid://ds56116ok1cdi"]
+
+[ext_resource type="PackedScene" uid="uid://db8yny8uiwun1" path="res://background.tscn" id="1_nlh3i"]
+[ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_gjigg"]
+[ext_resource type="Script" uid="uid://cfscol8gm18p3" path="res://buttonsmenu.gd" id="3_jciqn"]
+[ext_resource type="Texture2D" uid="uid://c0vrkliq3jy8k" path="res://placeholder.png" id="4_yji3y"]
+
+[node name="Settings" type="Node2D"]
+
+[node name="Background" parent="." instance=ExtResource("1_nlh3i")]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("2_gjigg")
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 423.0
+offset_top = 115.0
+offset_right = 777.0
+offset_bottom = 541.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SettingsSave" type="Button" parent="Control/Panel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 9.0
+offset_right = 347.0
+offset_bottom = 40.0
+text = "$close"
+script = ExtResource("3_jciqn")
+
+[node name="VBoxContainer" type="ScrollContainer" parent="Control/Panel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 42.0
+offset_right = 347.0
+offset_bottom = 416.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(334.55, 369.75)
+layout_mode = 2
+
+[node name="PanelContainer" type="HBoxContainer" parent="Control/Panel/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="icon" type="TextureRect" parent="Control/Panel/VBoxContainer/VBoxContainer/PanelContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("4_yji3y")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel/VBoxContainer/VBoxContainer/PanelContainer"]
+custom_minimum_size = Vector2(266.66, 0)
+layout_mode = 2
+
+[node name="name" type="Label" parent="Control/Panel/VBoxContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Test Mod"
+autowrap_mode = 2
+justification_flags = 161
+
+[node name="desc" type="Label" parent="Control/Panel/VBoxContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Самый тестовый мод из ваще возможных"
+autowrap_mode = 2
+
+[connection signal="pressed" from="Control/Panel/SettingsSave" to="Control/Panel/SettingsSave" method="_on_settings_back_pressed"]
