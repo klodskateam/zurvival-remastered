@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://db8yny8uiwun1"]
 
 [ext_resource type="Texture2D" uid="uid://dtx8bje4ie0ja" path="res://bgs/1.png" id="1_vrd3a"]
-[ext_resource type="Script" uid="uid://c345qfw4mdg8u" path="res://background.gd" id="2_pv48m"]
+[ext_resource type="Script" uid="uid://baotmr4fuvmav" path="res://background.gd" id="2_pv48m"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="3_d4myy"]
 
 [node name="Background" type="Sprite2D"]

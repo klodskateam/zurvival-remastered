@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://d1es6dbs7uaad"]
 
-[ext_resource type="Script" uid="uid://qm1dh2h33geh" path="res://pause_manager.gd" id="1_6olua"]
+[ext_resource type="Script" uid="uid://ba1djtv0bo560" path="res://pause_manager.gd" id="1_6olua"]
 [ext_resource type="Texture2D" uid="uid://c0gku65b6ujhb" path="res://Resources/grass.png" id="1_ictw6"]
 [ext_resource type="PackedScene" uid="uid://bgd4is08hm4yv" path="res://player.tscn" id="1_thl6f"]
-[ext_resource type="Script" uid="uid://ci5an67eusm3l" path="res://timer.gd" id="3_ar85b"]
+[ext_resource type="Script" uid="uid://c0mpd1abcunko" path="res://timer.gd" id="3_ar85b"]
 [ext_resource type="PackedScene" uid="uid://bshfbsu15v3v1" path="res://ui.tscn" id="4_t63fs"]
 [ext_resource type="PackedScene" uid="uid://rk6x2yf4sydr" path="res://pause.tscn" id="6_5dskx"]
 [ext_resource type="PackedScene" uid="uid://cow6451posxft" path="res://spawner.tscn" id="7_8yshx"]
