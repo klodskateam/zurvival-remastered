@@ -23,5 +23,5 @@ $placeholdergmname,Choose an gamemode,Выберите режим,,,,Valitse pel
 $placeholdergmdesc,Choose an gamemode to learn more.,Выберите режим чтобы узнать больше,,,,"Valitse pelin, että saa lisää tietoa.",
 $gamemodeselect,Choose an gamemode,Выберите режим,,,,Valitse pelin,
 $standardmodename,Standard mode,Стандартный режим,,,,Tavallinen peli,
-$standardmodedesc,"It's just the same old standard mode, what else to say about it?","Самый стандартный режим, что ещё говорить?",,,,"Samanlainen ja tiety tavallinen peli, voikko tästä sanoa mitään?",
+$standardmodedesc,Classic gamemode that you know and love.,"Самый стандартный режим, что ещё говорить?",,,,Klassikko! Tavallinen peli.,
 $moderror,Mod error!,Ошибка мода!,,,,Mod:isä tapahtui virhe!,
