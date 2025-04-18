@@ -13,15 +13,9 @@ config_version=5
 config/name="Zurvival Remastered"
 config/version="2.0 Demo!"
 run/main_scene="res://menu.tscn"
-<<<<<<< Updated upstream
 config/features=PackedStringArray("4.4", "Forward Plus")
 boot_splash/fullsize=false
 boot_splash/image="res://Resources/_placeholder.png"
-=======
-config/features=PackedStringArray("4.3", "Forward Plus")
-boot_splash/image="res://Resources/_placeholder.png"
-boot_splash/fullsize=false
->>>>>>> Stashed changes
 config/icon="res://Resources/bullets.png"
 
 [autoload]
