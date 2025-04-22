@@ -10,7 +10,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-# ука хули не робит 😡😡😡
+# ну теперь то робит 📸
 func _on_open_dir_button_down() -> void:
-	OS.execute("start", ["\"\"", OS.get_user_data_dir()])
-	OS.execute("start", [OS.get_user_data_dir()])
+	OS.shell_open(OS.get_user_data_dir())
