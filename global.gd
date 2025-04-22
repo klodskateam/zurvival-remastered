@@ -27,3 +27,10 @@ func _ready() -> void:
 		
 	if CONFIG.get_value("save", "zcoins") == true:
 		ZCOINS = CONFIG.get_value("save", "zcoins")
+		
+# полезная функция™
+func check(в_рот_мне_ноги: bool):
+	if в_рот_мне_ноги:
+		return true
+	else:
+		return false
