@@ -12,4 +12,4 @@ func _process(delta: float) -> void:
 
 # ну теперь то робит 📸
 func _on_open_dir_button_down() -> void:
-	OS.shell_open(OS.get_user_data_dir())
+	OS.shell_open(OS.get_user_data_dir() + "/mods")
