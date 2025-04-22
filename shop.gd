@@ -50,12 +50,12 @@ func _ready() -> void:
 		newbtn.text = COSMICITEMS[sus]["name"]
 		if COSMICITEMS[sus]["ismod"] == true:
 			if str(COSMICITEMS[sus]["sprite"]).begins_with("res://"):
-				load(COSMICITEMS[sus]["sprite"])
+				newbtn.icon = load(COSMICITEMS[sus]["sprite"])
 			else:
 				var imagenew = Image.new()
 				imagenew.load(COSMICITEMS[sus]["sprite"])
-				var textimg = ImageTexture.new()
-				textimg.create_from_image(imagenew)
+				print(imagenew)
+				var textimg = ImageTexture.create_from_image(imagenew)
 				newbtn.icon = imagenew
 		else:
 			newbtn.icon = COSMICITEMS[sus]["sprite"]
