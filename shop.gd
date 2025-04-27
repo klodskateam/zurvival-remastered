@@ -52,11 +52,7 @@ func _ready() -> void:
 			if str(COSMICITEMS[sus]["sprite"]).begins_with("res://"):
 				newbtn.icon = load(COSMICITEMS[sus]["sprite"])
 			else:
-				var imagenew = Image.new()
-				imagenew.load(COSMICITEMS[sus]["sprite"])
-				print(imagenew)
-				var textimg = ImageTexture.create_from_image(imagenew)
-				newbtn.icon = imagenew
+				newbtn.icon = ModLoader.get_mod_img(COSMICITEMS[sus]["sprite"])
 		else:
 			newbtn.icon = COSMICITEMS[sus]["sprite"]
 		

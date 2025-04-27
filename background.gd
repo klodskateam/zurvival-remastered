@@ -58,3 +58,7 @@ func _process(delta: float) -> void:
 			$Label.text = tr("$createdby") + " " + BG7[1]
 
 		
+
+
+func _on_mods_pressed() -> void:
+	pass # Replace with function body.

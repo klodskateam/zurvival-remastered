@@ -22,3 +22,7 @@ func _on_settings_back_pressed():
 func _on_exit_pressed():
 	get_tree().quit()
 	pass
+
+
+func _on_mods_pressed() -> void:
+	get_tree().change_scene_to_file("res://mods.tscn")

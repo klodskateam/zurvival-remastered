@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://cycy75qd356tu"]
+
+[ext_resource type="Script" uid="uid://uwnk64yquu8v" path="res://mod_item.gd" id="1_h62yh"]
+[ext_resource type="Texture2D" uid="uid://c0vrkliq3jy8k" path="res://placeholder.png" id="1_swq2b"]
+
+[node name="modItem" type="HBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+script = ExtResource("1_h62yh")
+
+[node name="icon" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("1_swq2b")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(266.66, 0)
+layout_mode = 2
+
+[node name="name" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Test Mod"
+autowrap_mode = 2
+justification_flags = 161
+
+[node name="desc" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Самый тестовый мод из ваще возможных"
+autowrap_mode = 2
