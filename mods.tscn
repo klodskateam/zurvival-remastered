@@ -30,6 +30,7 @@ offset_right = 777.0
 offset_bottom = 541.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_gjigg")
 
 [node name="SettingsSave" type="Button" parent="Control/Panel"]
 layout_mode = 0
