@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dn12aa5x7hr5v"]
 
 [ext_resource type="Texture2D" uid="uid://bwomm7xxvmngu" path="res://Resources/zondre.png" id="1_ch0u4"]
-[ext_resource type="Script" uid="uid://b20poryuwif0i" path="res://zondre.gd" id="1_kk7w6"]
+[ext_resource type="Script" uid="uid://cyak5r4dne40" path="res://zondre.gd" id="1_kk7w6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_t8bhi"]
 radius = 38.0

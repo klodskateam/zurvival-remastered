@@ -40,3 +40,14 @@ layout_mode = 2
 
 [node name="Item" parent="CanvasLayer/Control/ScrollContainer/HBoxContainer" instance=ExtResource("4_8ipye")]
 layout_mode = 2
+
+[node name="Button" type="Button" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 1102.0
+offset_top = 660.0
+offset_right = 1264.0
+offset_bottom = 704.0
+theme = ExtResource("3_g44lh")
+text = "$close"
+
+[connection signal="pressed" from="CanvasLayer/Control/Button" to="." method="_on_shopclose_pressed"]
