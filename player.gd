@@ -76,9 +76,9 @@ func _physics_process(delta: float):
 		if (VINOSLIVOST <= MAX_VINOSLIVOST) and (SPEED != RUN_SPEED):
 			VINOSLIVOST += 0.1
 			$Camera2D.zoom = Vector2(1, 1)
-	if (VINOSLIVOST <= 45) and !Input.is_action_pressed("run"):
+	if (VINOSLIVOST <= 35) and !Input.is_action_pressed("run"):
 		RUNLOCK = 1
-	if (VINOSLIVOST >= 45):
+	if (VINOSLIVOST >= 35):
 		RUNLOCK = 0
 		
 		

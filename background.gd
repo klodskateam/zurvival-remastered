@@ -36,9 +36,9 @@ const BG8 = [
 const images = 8
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if randi_range(1, images) == 1: # хотелось бы рандомнее, а то показывается один фон несколько раз
-		texture = BG1[0]
-		$Label.text = tr("$createdby") + " " + BG1[1]
+	if randi_range(1, images) == 1:
+			texture = BG1[0]
+			$Label.text = tr("$createdby") + " " + BG1[1]
 	if randi_range(1, images) == 2:
 			texture = BG2[0]
 			$Label.text = tr("$createdby") + " " + BG2[1]
@@ -59,7 +59,7 @@ func _ready() -> void:
 			$Label.text = tr("$createdby") + " " + BG7[1]
 	if randi_range(1, images) == 8:
 			texture = BG8[0]
-			Label.text = tr("$createdby") + " " + BG8[1]
+			$Label.text = tr("$createdby") + " " + BG8[1]
 
 
 	
