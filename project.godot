@@ -139,3 +139,4 @@ locale/translations=PackedStringArray("res://Translation/translations.be.transla
 
 renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true
+anti_aliasing/quality/msaa_2d=1
