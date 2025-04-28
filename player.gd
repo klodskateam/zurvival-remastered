@@ -15,7 +15,7 @@ extends CharacterBody2D
 
 var VINOSLIVOST = 100
 @export var MAX_VINOSLIVOST = 100
-var SPEED = 300
+var SPEED = 325
 var BULLETS = 12
 var ZAPAS_BULLETS = 48
 var DELAY = 0
@@ -23,6 +23,7 @@ var HEALTH = 100
 @export var MAX_HEALTH = 100
 @export var MAX_BULLETS = 12
 var SCORE = 0
+var RUNLOCK = 0
 
 @export var REGULAR_SPEED = 300
 @export var RUN_SPEED = 400
@@ -54,26 +55,36 @@ func _physics_process(delta: float):
 	health_bar.max_value = MAX_HEALTH
 	health_bar.value = HEALTH
 	
-	if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")):
+	if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
 		print(SPEED)
 		print(VINOSLIVOST)
 		if (VINOSLIVOST >= 40):	
-			RUN_SPEED = 400
+			RUN_SPEED = 410
 			$Camera2D.zoom = Vector2(0.98, 0.98)
 		else:
-			RUN_SPEED = 340
-			$Camera2D.zoom = Vector2(0.985, 0.985)
+			RUN_SPEED = 345
+			$Camera2D.zoom = Vector2(0.987, 0.987)
 		if (VINOSLIVOST >= 0):
 			SPEED = RUN_SPEED
 			VINOSLIVOST -= 0.34
 		else:
 			SPEED = REGULAR_SPEED
 			$Camera2D.zoom = Vector2(1, 1)
+			RUNLOCK = 1
 	else:
 		SPEED = REGULAR_SPEED
 		if (VINOSLIVOST <= MAX_VINOSLIVOST) and (SPEED != RUN_SPEED):
 			VINOSLIVOST += 0.1
 			$Camera2D.zoom = Vector2(1, 1)
+	if (VINOSLIVOST <= 45) and !Input.is_action_pressed("run"):
+		RUNLOCK = 1
+	else:
+		RUNLOCK = 0
+	if (VINOSLIVOST >= 45):
+		RUNLOCK = 0
+	else:
+		RUNLOCK = 1
+		
 		
 	
 	if (OS.get_name() != "Android"):
