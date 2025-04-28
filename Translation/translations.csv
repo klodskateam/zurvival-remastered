@@ -1,31 +1,38 @@
-id,en,ru,be,ch,sp,fi,bel
-$stamina,Stamina,Выносливость,Цягавітасць,耐力,Resistencia,Energia,Ciahavitaść
-$play,Play,Играть,Гуляць,游戏,Jugar,Pelaa,Huliać
-$bullets,Ammo,Пули,Кулі,子弹,Balas,Ammukset,Kuli
-$settings,Settings,Настройки,Налады,设置,Ajustes,Asetukset,Nalady
-$health,HP,Здоровье,Здароўе,健康,Salud,HP,Zdaroŭje
-$createdby,Made by,Сделано,Зроблена,制作：,Hecho por,Teki,Zrobliena
-$save,Save,Сохранить,Захаваць,节省,Guardar,Tallenna,Zachavać
-$fullscreen,Fullscreen (F11),Полноэкранный режим (F11),Поўнаэкранны рэжым (F11),全屏模式 (F11),Modo de pantalla completa (F11),Kokonäyttö (F11),Poŭnaekranny režym (F11)
-$graphicssettings,Graphical settings,Настройки графики,Настройкі графікі,图形设置,Ajustes gráficos,Grafiikka-asetukset,Nastrojki hrafiki
-$other,Other,Другие,Іншыя,其他,Otros,Muu,Inšyja
-$machinetranslat,"The language you have chosen has been translated through Google Translate and DeepL, so there may be errors. If you know the language, you can help us by clicking here!",Помочь с переводом игры,Перакладаць дапамагаў Google Translate. Дапамагчы з перакладам.,您选择的语言已通过 Google 翻译和 Deepl 翻译，因此可能存在错误。如果您懂该语言，可以点击此处帮助我们！,"El idioma que has elegido ha sido traducido a través de Google Translate y Deepl, por lo que puede haber errores. Si conoces el idioma, ¡puedes ayudarnos haciendo clic aquí!","Kieli jonka sinä valitsit oli tehty kääntäjän ja ""Google Translate"" avulla. Koska tämä käännös on ensimmäinen versio, siellä voi todella olla virheitä. Jos näet virhen, lähettä meille palautetta!",Pieraklad byŭ zroblieny z dapamohaj Google Pierakladčyk i sajta https://seveleu.com/lacinka/converter-ru. Dapamahčy z pierakladam?
-$pausemenu,Pause menu,Меню паузы,Меню паўзы,暂停菜单,Menú Pausa,Pysäytysvalikko,Mieniu paŭzy
-$resume,Resume,Продолжить,Працягнуць,待续,Continuación,Jatkaa peliä,Praciahnuć
-$quit,Quit,Выход,Вынахад,输出,Salida,Poistua,Vynachad
-$pausetext,Press ESC to continue,Нажмите ESC чтобы продолжить,Націсніце ESC каб працягнуць,按 ESC 继续,Pulse ESC para continuar,Paina ESC jatkaaksesi,Naciśnicie ESC kab praciahnuć
-$help,Help,Помочь с переводом игры,Дапамагчы,帮助,Ayuda,Auttaa pelin kääntämiseen!,Dapamahčy
-$youdead,You have died!,Вы умерли!,Вы памерлі!,你死定了！,¡Estás muerto!,Olet kuollut!,Vy pamierli!
-$score,Score,Счёт,Рахунак,查看,Controlar,Pistemäärä,Rachunak
-$bestscore,Best score,Лучший счёт,Лепшы рахунак,最佳成绩,Mejor puntuación,Paras pistemäärä,Liepšy rachunak
-$gotomenu,Go to menu,В меню,Выйсці ў меню,退出到菜单,Salir al menú,Poistu valikkoon,Vyjsci ŭ mieniu
-$placeholdergmname,Choose an gamemode,Выберите режим,,,,Valitse pelin,
-$placeholdergmdesc,Choose an gamemode to learn more.,Выберите режим чтобы узнать больше,,,,"Valitse pelin, että saa lisää tietoa.",
-$gamemodeselect,Choose an gamemode,Выберите режим,,,,Valitse pelin,
-$standardmodename,Standard mode,Стандартный режим,,,,Tavallinen peli,
-$standardmodedesc,Classic gamemode that you know and love.,"Самый стандартный режим, что ещё говорить?",,,,Klassikko! Tavallinen peli.,
-$moderror,Mod error!,Ошибка мода!,,,,Mod:isä tapahtui virhe!,
-$modnameerror,Mod name missing,Название не установлено,,,,Nimi ei lisätty,
-$moddescerror,Mod description missing,Описание не установлено,,,,Seloste ei lisätty,
-$mods,Mods,Моды,,,,Modit,
-$close,Close,Закрыть,,,,Sulje,
+id,en,ru,be,ch,sp,fi,bel,emoji
+$$$tutorial,"To correct or create a line, right-click on it and create a comment. After a while the translation will be accepted or, on the contrary, rejected.","Для того, чтобы корректировать или создать строку, нажмите на неё правой кнопкой мыши и создайте комментарий. Через некоторое время перевод будет принят или наоборот, отклонён.","Для таго, каб карэктаваць ці стварыць радок, націсніце на яе правай кнопкай мышы і стварыце каментар. Праз некаторы час перавод будзе прыняты ці наадварот, адхілены.",要修改或创建一行，请右击该行并创建注释。一段时间后，翻译将被接受或拒绝。,"Para corregir o crear una línea, haz clic con el botón derecho del ratón sobre ella y crea un comentario. Al cabo de un rato, la traducción será aceptada o, por el contrario, rechazada.","Jos haluat korjata tai luoda rivin, napsauta sitä hiiren kakkospainikkeella ja luo kommentti. Hetken kuluttua käännös hyväksytään tai päinvastoin hylätään.","Dlia taho, kab karektavać ci stvaryć radok, nacisnicie na jaje pravaj knopkaj myšy i stvarycie kamientar. Praz niekatory čas pieravod budzie pryniaty ci naadvarot, adchilieny.","✍ ⚖️ ✍ ⏸, ▶️-🖊 🔛 ⚫️ & ✍ 🏤. ⏮ ⏪, 📨 🔜 🚫 ⚖️ 🚫."
+$$$langname,English,Русский,Беларуская,中文,Español,Suomalainen,Bielaruskaja lacinka,🦲
+$$$englishname,English,Russian,Belarussian,Chinese,Spanish,Finnish,Belarusian Latin,Emoji
+$$$--,-,-,-,-,-,-,-,-
+$stamina,Stamina,Выносливость,Цягавітасць,耐力,Resistencia,Energia,Ciahavitaść,💪
+$play,Play,Играть,Гуляць,游戏,Jugar,Pelaa,Huliać,🤾
+$bullets,Ammo,Пули,Кулі,子弹,Balas,Ammukset,Kuli,🚅
+$settings,Settings,Настройки,Налады,设置,Ajustes,Asetukset,Nalady,⚒
+$health,HP,Здоровье,Здароўе,健康,Salud,HP,Zdaroŭje,🏥
+$createdby,Made by,Сделано,Зроблена,制作：,Hecho por,Teki,Zrobliena,⚒ 
+$save,Save,Сохранить,Захаваць,节省,Guardar,Tallenna,Zachavać,🖊
+$fullscreen,Fullscreen (F11),Полноэкранный режим (F11),Поўнаэкранны рэжым (F11),全屏模式 (F11),Modo de pantalla completa (F11),Kokonäyttö (F11),Poŭnaekranny režym (F11),🌕-🖥 📳 (F1⃣1⃣)
+$graphicssettings,Graphical settings,Настройки графики,Настройкі графікі,图形设置,Ajustes gráficos,Grafiikka-asetukset,Nastrojki hrafiki,🖥 ⚒
+$other,Other,Другие,Іншыя,其他,Otros,Muu,Inšyja,🎏
+$machinetranslat,"The language you have chosen has been translated through Google Translate and DeepL, so there may be errors. If you know the language, you can help us by clicking here!",Помочь с переводом игры,Перакладаць дапамагаў Google Translate. Дапамагчы з перакладам.,您选择的语言已通过 Google 翻译和 Deepl 翻译，因此可能存在错误。如果您懂该语言，可以点击此处帮助我们！,"El idioma que has elegido ha sido traducido a través de Google Translate y Deepl, por lo que puede haber errores. Si conoces el idioma, ¡puedes ayudarnos haciendo clic aquí!","Kieli jonka sinä valitsit oli tehty kääntäjän ja ""Google Translate"" avulla. Koska tämä käännös on ensimmäinen versio, siellä voi todella olla virheitä. Jos näet virhen, lähettä meille palautetta!",Pieraklad byŭ zroblieny z dapamohaj Google Pierakladčyk i sajta https://seveleu.com/lacinka/converter-ru. Dapamahčy z pierakladam?,"The Emoji language was created using Yandex Translator. This is a joke language, so it may not display well on mobile devices."
+$pausemenu,Pause menu,Меню паузы,Меню паўзы,暂停菜单,Menú Pausa,Pysäytysvalikko,Mieniu paŭzy,⏸ 🍣
+$resume,Resume,Продолжить,Працягнуць,待续,Continuación,Jatkaa peliä,Praciahnuć,😣
+$quit,Quit,Выход,Вынахад,输出,Salida,Poistua,Vynachad,🚪
+$pausetext,Press ESC to continue,Нажмите ESC чтобы продолжить,Націсніце ESC каб працягнуць,按 ESC 继续,Pulse ESC para continuar,Paina ESC jatkaaksesi,Naciśnicie ESC kab praciahnuć,⏸ 5⃣ 😣
+$help,Help,Помочь с переводом игры,Дапамагчы,帮助,Ayuda,Auttaa pelin kääntämiseen!,Dapamahčy,ℹ ⏮ ✍ 🕹
+$youdead,You have died!,Вы умерли!,Вы памерлі!,你死定了！,¡Estás muerto!,Olet kuollut!,Vy pamierli!,👆 ☠️ ❗
+$score,Score,Счёт,Рахунак,查看,Controlar,Pistemäärä,Rachunak,🏧
+$bestscore,Best score,Лучший счёт,Лепшы рахунак,最佳成绩,Mejor puntuación,Paras pistemäärä,Liepšy rachunak,🏆 💯
+$gotomenu,Go to menu,В меню,Выйсці ў меню,退出到菜单,Salir al menú,Poistu valikkoon,Vyjsci ŭ mieniu,🍣
+$placeholdergmname,Choose an gamemode,Выберите режим,Абярыце рэжым,选择模式,Seleccione el modo,Valitse pelin,Abiarycie režym,🖊 📳
+$placeholdergmdesc,Choose an gamemode to learn more.,Выберите режим чтобы узнать больше,Абярыце рэжым каб даведацца больш,选择模式以了解更多信息,Seleccione el modo para saber más,"Valitse pelin, että saa lisää tietoa.",Abiarycie režym kab daviedacca boĺš,🖊 📳 💡 🌅
+$gamemodeselect,Choose an gamemode,Выберите режим,Абярыце рэжым,选择模式,Seleccione el modo,Valitse pelin,Abiarycie režym,🖊 📳
+$standardmodename,Standard mode,Стандартный режим,Стандартны рэжым,标准模式,Modo estándar,Tavallinen peli,Standartny režym,🐩 📳
+$standardmodedesc,Classic gamemode that you know and love.,"Самый стандартный режим, что ещё говорить?","Самы стандартны рэжым, што яшчэ казаць?",最标准的模式，我还能说什么？,"El modo más estándar, ¿qué más decir?",Klassikko! Tavallinen peli.,"Samy standartny režym, što jašče kazać?","🌅 🐩 📳, ⚫️❔ 🙆 💪 👤 💬 ❓"
+$moderror,Mod error!,Ошибка мода!,Памылка мода!,模组错误！,Error de moda!,Mod:isä tapahtui virhe!,Pamylka moda!,👗 ❌ ❗
+$modnameerror,Mod name missing,Название не установлено,Назва не ўстаноўлена,名称未设置,Nombre no establecido,Nimi ei lisätty,Nazva nie ŭstanoŭliena,📛 🚫 ⚒
+$moddescerror,Mod description missing,Описание не установлено,Апісанне не ўстаноўлена,描述未设置,Descripción no instalada,Seloste ei lisätty,Apisańnie nie ŭstanoŭliena,📛 🚫 ⚒
+$mods,Mods,Моды,Моды,模组,Modas,Modit,Mody,🧟‍♂
+$close,Close,Закрыть,Зачыніць,关闭,Cerrar,Sulje,Začynić,🔐
+$modtexterror,The text is not set,Текст не установлен,Тэкст не ўстаноўлены,文本未设置,Texto no instalado,Tekstiä ei ole asetettu,Tekst nie ŭstanoŭlieny,✍ 🚫 ⚒
+$actionserror,Actions not set,События не установлены,Падзеі не ўстаноўлены,事件未设置,Eventos no establecidos,Tapahtumia ei ole asetettu,Padziei nie ŭstanoŭlieny,🎉 🚫 ⚒
+$message,Message,Сообщение,Паведамленне,信息,Mensaje,Viesti,Paviedamlieńnie,📧
