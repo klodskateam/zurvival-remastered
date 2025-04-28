@@ -1,56 +1,78 @@
-[gd_scene load_steps=4 format=3 uid="uid://c6ji2387qq42r"]
+[gd_scene load_steps=5 format=3 uid="uid://c6ji2387qq42r"]
 
 [ext_resource type="Script" uid="uid://2bvrwha2lhlt" path="res://buttonsmenu.gd" id="1_814jb"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_i4evy"]
 [ext_resource type="PackedScene" uid="uid://db8yny8uiwun1" path="res://background.tscn" id="2_xh8be"]
+[ext_resource type="Script" uid="uid://deyhfds4n3ph0" path="res://create_mod_buttons.gd" id="3_ytr4m"]
 
 [node name="menu" type="Node2D"]
 
 [node name="Background" parent="." instance=ExtResource("2_xh8be")]
 
-[node name="Control" type="Control" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("2_i4evy")
 
-[node name="Panel" type="Panel" parent="Control"]
+[node name="Panel" type="Panel" parent="CanvasLayer/Control"]
+custom_minimum_size = Vector2(0, 230)
 layout_mode = 1
-offset_left = 526.0
-offset_top = 239.0
-offset_right = 746.0
-offset_bottom = 474.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.0
+offset_top = -117.5
+offset_right = 110.0
+offset_bottom = 117.5
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel"]
-layout_mode = 0
-offset_left = 5.0
-offset_top = 12.0
-offset_right = 215.0
-offset_bottom = 231.0
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/Panel"]
+custom_minimum_size = Vector2(0, 230)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = -3.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("2_i4evy")
 alignment = 1
+script = ExtResource("3_ytr4m")
 
-[node name="Play" type="Button" parent="Control/Panel/VBoxContainer"]
+[node name="Play" type="Button" parent="CanvasLayer/Control/Panel/VBoxContainer"]
 layout_mode = 2
 text = "$play"
 script = ExtResource("1_814jb")
 
-[node name="Settings" type="Button" parent="Control/Panel/VBoxContainer"]
+[node name="Settings" type="Button" parent="CanvasLayer/Control/Panel/VBoxContainer"]
 layout_mode = 2
 text = "$settings"
 script = ExtResource("1_814jb")
 
-[node name="Mods" type="Button" parent="Control/Panel/VBoxContainer"]
+[node name="Mods" type="Button" parent="CanvasLayer/Control/Panel/VBoxContainer"]
 layout_mode = 2
 text = "$mods"
 script = ExtResource("1_814jb")
 
-[node name="Exit" type="Button" parent="Control/Panel/VBoxContainer"]
+[node name="Exit" type="Button" parent="CanvasLayer/Control/Panel/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_i4evy")
 text = "$quit"
 script = ExtResource("1_814jb")
 
-[connection signal="pressed" from="Control/Panel/VBoxContainer/Play" to="Control/Panel/VBoxContainer/Play" method="_on_play_pressed"]
-[connection signal="pressed" from="Control/Panel/VBoxContainer/Settings" to="Control/Panel/VBoxContainer/Play" method="_on_settings_pressed"]
-[connection signal="pressed" from="Control/Panel/VBoxContainer/Mods" to="Control/Panel/VBoxContainer/Mods" method="_on_mods_pressed"]
-[connection signal="pressed" from="Control/Panel/VBoxContainer/Exit" to="Control/Panel/VBoxContainer/Exit" method="_on_exit_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Panel/VBoxContainer/Play" to="CanvasLayer/Control/Panel/VBoxContainer/Play" method="_on_play_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Panel/VBoxContainer/Settings" to="CanvasLayer/Control/Panel/VBoxContainer/Play" method="_on_settings_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Panel/VBoxContainer/Mods" to="CanvasLayer/Control/Panel/VBoxContainer/Mods" method="_on_mods_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Panel/VBoxContainer/Exit" to="CanvasLayer/Control/Panel/VBoxContainer/Exit" method="_on_exit_pressed"]
