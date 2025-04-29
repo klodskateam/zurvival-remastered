@@ -1,6 +1,6 @@
 extends RigidBody2D
 
-const SPEED = 1450
+const SPEED = 1425
 const DAMAGE = 100
 
 func _physics_process(delta):

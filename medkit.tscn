@@ -11,11 +11,13 @@ collision_layer = 4
 script = ExtResource("1_kvb0d")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
 position = Vector2(-2.27374e-13, -2.38419e-07)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_krsd0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 1
 shape = SubResource("CircleShape2D_ryj3i")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
