@@ -135,6 +135,10 @@ locale/translations=PackedStringArray("res://Translation/translations.be.transla
 2d_physics/layer_4="bullet"
 2d_physics/layer_5="system"
 
+[physics]
+
+common/physics_ticks_per_second=90
+
 [rendering]
 
 renderer/rendering_method="mobile"

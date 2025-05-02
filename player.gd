@@ -87,7 +87,7 @@ func _physics_process(delta: float):
 		look_at(get_global_mouse_position())
 		rotate(PI / 2)
 	if DELAY <= 1:
-		DELAY += 0.075
+		DELAY += 5.3 * delta
 		print(DELAY)
 	
 	
@@ -135,6 +135,7 @@ func shoot():
 func bullets_reload():
 	if (BULLETS == 0) and (ZAPAS_BULLETS >= 12):
 		BULLETS = MAX_BULLETS
+		DELAY = 0
 		ZAPAS_BULLETS -= 12
 		$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
 		$ReloadSound.play()
