@@ -123,7 +123,7 @@ func shoot():
 			# bullet.add_constant_force(get_global_mouse_position() - bullet.global_position)
 			get_parent().add_child(bullet)
 			BULLETS -= 1
-			$ShootSound.pitch_scale = randf_range(0.9, 1.1)
+			$ShootSound.pitch_scale = randf_range(0.93, 1.06)
 			$ShootSound.play()
 			DELAY = 0
 			print(DELAY)
@@ -136,5 +136,5 @@ func bullets_reload():
 	if (BULLETS == 0) and (ZAPAS_BULLETS >= 12):
 		BULLETS = MAX_BULLETS
 		ZAPAS_BULLETS -= 12
-		$ReloadSound.pitch_scale = randf_range(0.9, 1.1)
+		$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
 		$ReloadSound.play()
