@@ -15,6 +15,7 @@ config/version="2.0 Demo!"
 run/main_scene="res://menu.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 boot_splash/fullsize=false
+boot_splash/use_filter=false
 boot_splash/image="res://Resources/_placeholder.png"
 config/icon="res://Resources/bullets.png"
 
@@ -143,4 +144,4 @@ common/physics_ticks_per_second=90
 
 renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true
-anti_aliasing/quality/msaa_2d=1
+anti_aliasing/quality/screen_space_aa=1
