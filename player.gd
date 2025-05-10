@@ -1,5 +1,5 @@
 extends CharacterBody2D
-
+class_name Player
 
 @onready var score: Label = $"../UI/Score"
 
@@ -24,6 +24,7 @@ var HEALTH = 100
 @export var MAX_BULLETS = 12
 var SCORE = 0
 var RUNLOCK = 0
+@export var ded: bool = false
 
 @export var REGULAR_SPEED = 300
 @export var RUN_SPEED = 400
@@ -98,6 +99,7 @@ func _process(delta: float):
 			rotate(PI / 2)
 	if (HEALTH <= 0) and ($Person != null):
 		$"../PauseManager".PAUSE = true
+		$"../PauseManager".PAUSELOCK = true
 		$Person.queue_free()
 		$"../GameOver".show()
 		$"../GameOver".set_scores()

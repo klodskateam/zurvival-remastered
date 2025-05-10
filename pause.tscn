@@ -1,7 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://rk6x2yf4sydr"]
+[gd_scene load_steps=13 format=3 uid="uid://rk6x2yf4sydr"]
 
+[ext_resource type="Shader" uid="uid://4e5td3doxjwy" path="res://blur.gdshader" id="1_05lnj"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="1_m8y0o"]
-[ext_resource type="Script" uid="uid://cx3o5bcicskhe" path="res://pausemenu.gd" id="2_64k0p"]
+[ext_resource type="Script" uid="uid://bfn6hxnshtgvt" path="res://pausemenu.gd" id="2_64k0p"]
+[ext_resource type="FontFile" uid="uid://mol2p0edntwv" path="res://Resources/Montserrat-Regular.ttf" id="4_jg8ls"]
+[ext_resource type="Script" uid="uid://c0d2xpmyrlmvn" path="res://fps.gd" id="5_u063c"]
+[ext_resource type="Script" uid="uid://dxl2qyx2jdxuw" path="res://info.gd" id="6_56vcw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m0a22"]
+resource_local_to_scene = true
+shader = ExtResource("1_05lnj")
+shader_parameter/blur = 3.07
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_w2ufp"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_xow8s"]
 font_size = 32
@@ -9,7 +20,33 @@ font_size = 32
 [sub_resource type="LabelSettings" id="LabelSettings_h7hc0"]
 font_size = 20
 
+[sub_resource type="LabelSettings" id="LabelSettings_21xor"]
+font = ExtResource("4_jg8ls")
+font_color = Color(1, 1, 0, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_a1xvq"]
+font = ExtResource("4_jg8ls")
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 1)
+
 [node name="Pause" type="CanvasLayer"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_m0a22")
+anchors_preset = -1
+anchor_left = -0.132902
+anchor_top = -0.548341
+anchor_right = 0.837411
+anchor_bottom = 0.396103
+offset_left = 169.114
+offset_top = 393.806
+offset_right = 209.114
+offset_bottom = 433.806
+texture = SubResource("CanvasTexture_w2ufp")
+metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 8
@@ -56,5 +93,26 @@ vertical_alignment = 1
 layout_mode = 2
 text = "$quit"
 script = ExtResource("2_64k0p")
+
+[node name="fps" type="Label" parent="."]
+offset_left = 1150.0
+offset_right = 1280.0
+offset_bottom = 23.0
+text = "fps"
+label_settings = SubResource("LabelSettings_21xor")
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("5_u063c")
+
+[node name="info" type="Label" parent="."]
+offset_left = 878.0
+offset_top = 23.0
+offset_right = 1280.0
+offset_bottom = 311.0
+text = "Zurvival Remastered, version 2.0DEV"
+label_settings = SubResource("LabelSettings_a1xvq")
+horizontal_alignment = 2
+autowrap_mode = 2
+script = ExtResource("6_56vcw")
 
 [connection signal="pressed" from="Panel/VBoxContainer/Quit" to="Panel/VBoxContainer/Quit" method="_on_pressed"]
