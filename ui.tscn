@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://bshfbsu15v3v1"]
+[gd_scene load_steps=7 format=3 uid="uid://bshfbsu15v3v1"]
 
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="1_3mkkl"]
+[ext_resource type="Texture2D" uid="uid://ccrwp3ybxv88m" path="res://Resources/vignette_black.png" id="1_ibotj"]
 [ext_resource type="Texture2D" uid="uid://nnwpet7egxrr" path="res://Resources/ui_stuff_lol/speed.png" id="2_iev70"]
 [ext_resource type="Texture2D" uid="uid://66com61wgllf" path="res://Resources/ui_stuff_lol/bullets.png" id="3_qg45p"]
 [ext_resource type="Texture2D" uid="uid://nmdal2gs2k1d" path="res://Resources/ui_stuff_lol/health.png" id="4_4pw5h"]
@@ -9,6 +10,11 @@
 font_size = 48
 
 [node name="UI" type="CanvasLayer"]
+
+[node name="VignetteBlack" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(640, 360)
+texture = ExtResource("1_ibotj")
 
 [node name="SpeedBar" type="ProgressBar" parent="."]
 offset_left = 30.0

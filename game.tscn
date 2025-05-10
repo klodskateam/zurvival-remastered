@@ -11,6 +11,8 @@
 
 [node name="game" type="Node2D"]
 
+[node name="UI" parent="." instance=ExtResource("4_t63fs")]
+
 [node name="PauseManager" type="Node" parent="."]
 process_mode = 3
 script = ExtResource("1_6olua")
@@ -27,8 +29,6 @@ region_rect = Rect2(0, 0, 10000, 10000)
 [node name="Timer" type="Timer" parent="."]
 autostart = true
 script = ExtResource("3_ar85b")
-
-[node name="UI" parent="." instance=ExtResource("4_t63fs")]
 
 [node name="GameOver" parent="." instance=ExtResource("8_nlu6b")]
 process_mode = 2

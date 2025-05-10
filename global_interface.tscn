@@ -22,8 +22,10 @@ shadow_color = Color(0, 0, 0, 1)
 
 [node name="Global Interface" type="CanvasLayer"]
 process_mode = 3
+layer = 5
 
 [node name="fps" type="Label" parent="."]
+z_index = 5
 offset_left = 1150.0
 offset_right = 1280.0
 offset_bottom = 23.0
@@ -34,6 +36,7 @@ vertical_alignment = 1
 script = ExtResource("2_om5kj")
 
 [node name="info" type="Label" parent="."]
+z_index = 5
 offset_left = 878.0
 offset_top = 23.0
 offset_right = 1280.0

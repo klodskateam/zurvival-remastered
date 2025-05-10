@@ -42,7 +42,6 @@ offset_top = 393.806
 offset_right = 209.114
 offset_bottom = 433.806
 texture = SubResource("CanvasTexture_ccer4")
-metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 8
