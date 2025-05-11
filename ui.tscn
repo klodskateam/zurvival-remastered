@@ -8,24 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://66com61wgllf" path="res://Resources/ui_stuff_lol/bullets.png" id="3_qg45p"]
 [ext_resource type="Texture2D" uid="uid://nmdal2gs2k1d" path="res://Resources/ui_stuff_lol/health.png" id="4_4pw5h"]
 
-[sub_resource type="Animation" id="Animation_y4yjw"]
-resource_name = "lowhealth_anim"
-length = 3.5
-loop_mode = 1
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1, 3.5),
-"transitions": PackedFloat32Array(0.707106, 1.93187, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(1.10312, 1.16111), Vector2(1.00078, 1)]
-}
-
 [sub_resource type="Animation" id="Animation_waa4j"]
 length = 0.001
 tracks/0/type = "value"
@@ -39,6 +21,24 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_y4yjw"]
+resource_name = "lowhealth_anim"
+length = 3.5
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 3.4),
+"transitions": PackedFloat32Array(0.517632, 2.14354, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.10312, 1.16111), Vector2(1.00078, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ok7cu"]
