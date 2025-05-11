@@ -1,11 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://uo6qjyv0h20n"]
+[gd_scene load_steps=6 format=3 uid="uid://uo6qjyv0h20n"]
 
 [ext_resource type="Script" uid="uid://dposi8j5m0gxl" path="res://game_over.gd" id="1_ji23y"]
 [ext_resource type="Shader" uid="uid://4e5td3doxjwy" path="res://blur.gdshader" id="2_ccer4"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_tclbe"]
-[ext_resource type="FontFile" uid="uid://mol2p0edntwv" path="res://Resources/Montserrat-Regular.ttf" id="4_28vn7"]
-[ext_resource type="Script" uid="uid://c0d2xpmyrlmvn" path="res://fps.gd" id="5_k2vha"]
-[ext_resource type="Script" uid="uid://dxl2qyx2jdxuw" path="res://info.gd" id="6_fkf4o"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8u835"]
 resource_local_to_scene = true
@@ -13,18 +10,6 @@ shader = ExtResource("2_ccer4")
 shader_parameter/blur = 3.07
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ccer4"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_3u7xm"]
-font = ExtResource("4_28vn7")
-font_color = Color(1, 1, 0, 1)
-outline_size = 5
-outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_woa3c"]
-font = ExtResource("4_28vn7")
-outline_size = 5
-outline_color = Color(0, 0, 0, 1)
-shadow_color = Color(0, 0, 0, 1)
 
 [node name="GameOver" type="CanvasLayer"]
 process_mode = 1
@@ -94,26 +79,5 @@ layout_mode = 2
 [node name="GoToMenu" type="Button" parent="Panel/VBoxContainer"]
 layout_mode = 2
 text = "$gotomenu"
-
-[node name="fps" type="Label" parent="."]
-offset_left = 1150.0
-offset_right = 1280.0
-offset_bottom = 23.0
-text = "fps"
-label_settings = SubResource("LabelSettings_3u7xm")
-horizontal_alignment = 2
-vertical_alignment = 1
-script = ExtResource("5_k2vha")
-
-[node name="info" type="Label" parent="."]
-offset_left = 878.0
-offset_top = 23.0
-offset_right = 1280.0
-offset_bottom = 311.0
-text = "Zurvival Remastered, version 2.0DEV"
-label_settings = SubResource("LabelSettings_woa3c")
-horizontal_alignment = 2
-autowrap_mode = 2
-script = ExtResource("6_fkf4o")
 
 [connection signal="pressed" from="Panel/VBoxContainer/GoToMenu" to="." method="_on_go_to_menu_pressed"]
