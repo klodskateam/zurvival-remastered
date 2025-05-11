@@ -19,7 +19,7 @@ var SPEED = 325
 var BULLETS = 12
 var ZAPAS_BULLETS = 48
 var DELAY = 0
-var HEALTH = 100
+var HEALTH = 30
 @export var MAX_HEALTH = 100
 @export var MAX_BULLETS = 12
 var SCORE = 0
@@ -103,6 +103,10 @@ func _process(delta: float):
 		$Person.queue_free()
 		$"../GameOver".show()
 		$"../GameOver".set_scores()
+	if (HEALTH <= 20):
+		$"../UI/VignetteRed".lowhealth = true
+	else:
+		$"../UI/VignetteRed".lowhealth = false		
 		
 		
 	

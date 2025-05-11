@@ -1,10 +1,51 @@
-[gd_scene load_steps=7 format=3 uid="uid://bshfbsu15v3v1"]
+[gd_scene load_steps=12 format=3 uid="uid://bshfbsu15v3v1"]
 
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="1_3mkkl"]
 [ext_resource type="Texture2D" uid="uid://ccrwp3ybxv88m" path="res://Resources/vignette_black.png" id="1_ibotj"]
+[ext_resource type="Texture2D" uid="uid://duplt3pxkstqo" path="res://Resources/vignette_red.png" id="1_y4yjw"]
 [ext_resource type="Texture2D" uid="uid://nnwpet7egxrr" path="res://Resources/ui_stuff_lol/speed.png" id="2_iev70"]
+[ext_resource type="Script" uid="uid://1tecp1t17agd" path="res://vignette.gd" id="2_waa4j"]
 [ext_resource type="Texture2D" uid="uid://66com61wgllf" path="res://Resources/ui_stuff_lol/bullets.png" id="3_qg45p"]
 [ext_resource type="Texture2D" uid="uid://nmdal2gs2k1d" path="res://Resources/ui_stuff_lol/health.png" id="4_4pw5h"]
+
+[sub_resource type="Animation" id="Animation_y4yjw"]
+resource_name = "lowhealth_anim"
+length = 3.5
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 3.5),
+"transitions": PackedFloat32Array(0.707106, 1.93187, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.10312, 1.16111), Vector2(1.00078, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_waa4j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ok7cu"]
+_data = {
+&"RESET": SubResource("Animation_waa4j"),
+&"lowhealth_anim": SubResource("Animation_y4yjw")
+}
 
 [sub_resource type="LabelSettings" id="LabelSettings_y7fw5"]
 font_size = 48
@@ -15,6 +56,16 @@ font_size = 48
 z_index = -5
 position = Vector2(640, 360)
 texture = ExtResource("1_ibotj")
+
+[node name="VignetteRed" type="Sprite2D" parent="."]
+position = Vector2(639.5, 360)
+texture = ExtResource("1_y4yjw")
+script = ExtResource("2_waa4j")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="VignetteRed"]
+libraries = {
+&"": SubResource("AnimationLibrary_ok7cu")
+}
 
 [node name="SpeedBar" type="ProgressBar" parent="."]
 offset_left = 30.0
@@ -93,9 +144,9 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -334.0
+offset_left = -339.0
 offset_top = -60.0
-offset_right = -3.0
+offset_right = -8.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = ExtResource("1_3mkkl")
