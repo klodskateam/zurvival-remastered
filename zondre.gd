@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @onready var player: CharacterBody2D = $"../player"
 
-const SPEED = 200
+const SPEED = 220
 var HP = 100
 var DAMAGE = 10
 
