@@ -4,7 +4,7 @@ extends CharacterBody2D
 
 const SPEED = 200
 var HP = 100
-var DAMAGE = 5
+var DAMAGE = 10
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
