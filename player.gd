@@ -15,7 +15,7 @@ class_name Player
 
 var VINOSLIVOST = 100
 @export var MAX_VINOSLIVOST = 100
-var SPEED = 325
+var SPEED = 320
 var BULLETS = 12
 var ZAPAS_BULLETS = 48
 var DELAY = 0
