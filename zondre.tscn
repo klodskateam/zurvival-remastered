@@ -15,7 +15,7 @@ script = ExtResource("1_kk7w6")
 texture = ExtResource("1_ch0u4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(5, -1)
+position = Vector2(7, -2)
 scale = Vector2(1.03544, 0.96786)
 shape = SubResource("CircleShape2D_t8bhi")
 
@@ -25,8 +25,8 @@ collision_mask = 9
 priority = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(5, -1)
-scale = Vector2(1.05063, 1.00807)
+position = Vector2(8, -3)
+scale = Vector2(0.970628, 1.00807)
 shape = SubResource("CircleShape2D_t8bhi")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
