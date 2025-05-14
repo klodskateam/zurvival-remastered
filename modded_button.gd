@@ -17,6 +17,6 @@ func _on_pressed() -> void:
 			if action["window"] == "maximize":
 				get_tree().root.mode = Window.MODE_MAXIMIZED
 		if "openurl" in action:
-			OS.shell_open(action["openurl"])
+			ErrorManager.openurl(action["openurl"])
 		if "execute" in action:
-			OS.shell_open(OS.get_user_data_dir() + action["execute"])
+			ErrorManager.openfile(OS.get_user_data_dir() + action["execute"])
