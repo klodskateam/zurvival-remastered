@@ -15,13 +15,16 @@
 
 extends Node
 
+# Настройки и служебное
 var VERSION = ProjectSettings.get_setting("application/config/version")
 var FULLSCREEN = false
 
+#Конфиги
 const SAVE_PATH = "user://save.cfg"
 var CONFIG = ConfigFile.new()
+var KT_URL = "https://kteam.veliona.no/"
 
-
+# Переменные
 var ZCOINS = 0
 var CURRENT_AIM = preload("res://Resources/aims/default.png")
 

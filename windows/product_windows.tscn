@@ -1,0 +1,75 @@
+[gd_scene load_steps=6 format=3 uid="uid://dbu0t7lmjrgxh"]
+
+[ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="1_li6pk"]
+[ext_resource type="Script" uid="uid://bav6vdqsoxruv" path="res://windows/product_windows.gd" id="2_0iguw"]
+[ext_resource type="Texture2D" uid="uid://bqmmq22i5svdr" path="res://_IMPORTANT_IMAGE_DONT_DELETE_INACHE_PISEC!!.jpg" id="2_li6pk"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_85st1"]
+font_size = 20
+outline_size = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_0iguw"]
+font_size = 20
+outline_size = 2
+
+[node name="Window" type="Window"]
+title = "$product"
+initial_position = 1
+size = Vector2i(320, 240)
+unresizable = true
+theme = ExtResource("1_li6pk")
+script = ExtResource("2_0iguw")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HSplitContainer" type="HSplitContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HSplitContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HSplitContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("2_li6pk")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Panel/HSplitContainer/VBoxContainer"]
+layout_mode = 2
+text = "99Z$"
+label_settings = SubResource("LabelSettings_85st1")
+
+[node name="Button" type="Button" parent="Panel/HSplitContainer/VBoxContainer"]
+layout_mode = 2
+text = "$buy"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/HSplitContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/HSplitContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Placeholder"
+label_settings = SubResource("LabelSettings_0iguw")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/HSplitContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 213)
+layout_mode = 2
+bbcode_enabled = true
+text = "Это [color=#FF0000]т[/color][color=#FF4800]е[/color][color=#FF9100]с[/color][color=#FFDA00]т[/color][color=#DAFF00]о[/color][color=#91FF00]в[/color][color=#48FF00]ы[/color][color=#00FF00]й[/color] [color=#00FF91]т[/color][color=#00FFDA]е[/color][color=#00DAFF]к[/color][color=#0091FF]с[/color][color=#0048FF]т[/color] [color=#4800FF]т[/color][color=#9100FF]о[/color][color=#DA00FF]в[/color][color=#FF00DA]а[/color][color=#FF0091]р[/color][color=#FF0048]а[/color]. Это описание товара, оно поддерживает [color=#870000]B[/color][color=#65003F]B[/color][color=#43007F]-[/color][color=#2100BF]К[/color][color=#0000FF]о[/color][color=#0026BF]д[/color][color=#004C7F]ы[/color][color=#00723F]![/color]"
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]

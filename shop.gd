@@ -4,6 +4,7 @@ var COSMICITEMS = [
 	{
 		"type": "aim",
 		"name": tr("$default"),
+		"description": tr("$default_aim_desctiption"),
 		"default": true,
 		"price": 0,
 		"sprite": preload("res://Resources/aims/default.png"),
@@ -12,6 +13,7 @@ var COSMICITEMS = [
 	{
 		"type": "aim",
 		"name": tr("$crossaim"),
+		"description": tr("$cross_aim_desctiption"),
 		"default": false,
 		"price": 50,
 		"sprite": preload("res://Resources/aims/cross.png"),
@@ -20,6 +22,7 @@ var COSMICITEMS = [
 	{
 		"type": "aim",
 		"name": tr("$plusaim"),
+		"description": tr("$plus_aim_desctiption"),
 		"default": false,
 		"price": 50,
 		"sprite": preload("res://Resources/aims/plus.png"),
@@ -28,6 +31,7 @@ var COSMICITEMS = [
 	{
 		"type": "aim",
 		"name": tr("$taim"),
+		"description": tr("$t_aim_desctiption"),
 		"default": false,
 		"price": 50,
 		"sprite": preload("res://Resources/aims/aa.png"),
