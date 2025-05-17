@@ -49,7 +49,7 @@ alignment = 1
 
 [node name="Button" parent="UI/Control/Panel/ScrollContainer/VBoxContainer" instance=ExtResource("4_uitb6")]
 layout_mode = 2
-text = "Магазин"
+text = "$shop"
 
 [node name="HSeparator" type="HSeparator" parent="UI/Control/Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
