@@ -24,6 +24,7 @@ func _ready() -> void:
 			for sussy in tmp_mod["adds"].size():
 				if tmp_mod["adds"][sussy]["type"] == "aim":
 					MODCOSMICITEMS.insert(MODCOSMICITEMS.size(), tmp_mod["adds"][sussy])
+		print("MOD COSMETIC:")
 		print(MODCOSMICITEMS)
 		
 

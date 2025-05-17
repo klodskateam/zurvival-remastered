@@ -47,6 +47,7 @@ func _ready() -> void:
 	print(COSMICITEMS)
 	for sus in COSMICITEMS.size():
 		var newbtn = SHOPITEM.instantiate()
+		newbtn.INFO = COSMICITEMS[sus]
 		newbtn.text = COSMICITEMS[sus]["name"]
 		if COSMICITEMS[sus]["ismod"] == true:
 			if str(COSMICITEMS[sus]["sprite"]).begins_with("res://"):

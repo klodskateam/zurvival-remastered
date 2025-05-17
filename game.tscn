@@ -1,13 +1,15 @@
-[gd_scene load_steps=9 format=3 uid="uid://d1es6dbs7uaad"]
+[gd_scene load_steps=11 format=3 uid="uid://d1es6dbs7uaad"]
 
 [ext_resource type="Script" uid="uid://ba1djtv0bo560" path="res://pause_manager.gd" id="1_6olua"]
 [ext_resource type="Texture2D" uid="uid://c0gku65b6ujhb" path="res://Resources/grass.png" id="1_ictw6"]
 [ext_resource type="PackedScene" uid="uid://bgd4is08hm4yv" path="res://player.tscn" id="1_thl6f"]
-[ext_resource type="Script" uid="uid://c0mpd1abcunko" path="res://timer.gd" id="3_ar85b"]
+[ext_resource type="Script" uid="uid://ci5an67eusm3l" path="res://timer.gd" id="3_ar85b"]
 [ext_resource type="PackedScene" uid="uid://bshfbsu15v3v1" path="res://ui.tscn" id="4_t63fs"]
 [ext_resource type="PackedScene" uid="uid://rk6x2yf4sydr" path="res://pause.tscn" id="6_5dskx"]
 [ext_resource type="PackedScene" uid="uid://cow6451posxft" path="res://spawner.tscn" id="7_8yshx"]
 [ext_resource type="PackedScene" uid="uid://uo6qjyv0h20n" path="res://game_over.tscn" id="8_nlu6b"]
+[ext_resource type="Texture2D" uid="uid://bnoiah2jgxblr" path="res://Resources/aims/default.png" id="9_vef74"]
+[ext_resource type="Script" uid="uid://oer2u1m0p56i" path="res://aim-ingame.gd" id="10_hve3p"]
 
 [node name="game" type="Node2D"]
 
@@ -33,9 +35,11 @@ script = ExtResource("3_ar85b")
 
 [node name="GameOver" parent="." instance=ExtResource("8_nlu6b")]
 process_mode = 2
+visible = false
 
 [node name="Pause" parent="." instance=ExtResource("6_5dskx")]
 process_mode = 2
+visible = false
 
 [node name="Spawner7" parent="." instance=ExtResource("7_8yshx")]
 position = Vector2(-132, 5099)
@@ -51,5 +55,12 @@ position = Vector2(-90, -92)
 
 [node name="player" parent="." instance=ExtResource("1_thl6f")]
 position = Vector2(2494, 1858)
+
+[node name="Aim" type="Sprite2D" parent="."]
+z_index = 10
+position = Vector2(338, 331)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("9_vef74")
+script = ExtResource("10_hve3p")
 
 [connection signal="timeout" from="Timer" to="Timer" method="_on_timeout"]

@@ -1,3 +1,18 @@
+# TODO
+# [ ] Доделать прицелы
+# [*] Сделать кнопки открытия сайта мода в списке модов
+# [ ] Добавить режимы в модлоадер
+# [ ] Вернуть Discord Rich Preference (или как его) из 1.3 и ниже
+# [ ] добавьте больше TODO🤪🤪🤪 
+
+# INFO самые важные песни зр 2.0 это:
+# бутырка метеорит
+
+# чтооо годот подсветка комментариев😨
+# ALERT, ATTENTION, CAUTION, CRITICAL, DANGER, SECURITY
+# BUG, DEPRECATED, FIXME, HACK, TASK, TBD, TODO, WARNING
+# INFO, NOTE, NOTICE, TEST, TESTING
+
 extends Node
 
 var VERSION = ProjectSettings.get_setting("application/config/version")
@@ -8,6 +23,7 @@ var CONFIG = ConfigFile.new()
 
 
 var ZCOINS = 0
+var CURRENT_AIM = preload("res://Resources/aims/default.png")
 
 
 func _input(event: InputEvent) -> void:

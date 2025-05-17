@@ -19,6 +19,8 @@ func _ready() -> void:
 			ModItem.DESC = tmp_mod["description"]
 		if "icon" in tmp_mod:
 			ModItem.IMG = ModLoader.get_mod_img(tmp_mod["icon"])
+		if "website" in tmp_mod:
+			ModItem.URL = tmp_mod["website"]
 		
 		$Control/Panel/VBoxContainer/VBoxContainer.add_child(ModItem)
 
