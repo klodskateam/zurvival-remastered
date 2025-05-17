@@ -4,7 +4,7 @@
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_4p2vr"]
 [ext_resource type="Script" uid="uid://2bvrwha2lhlt" path="res://buttonsmenu.gd" id="2_8mcqh"]
 [ext_resource type="Script" uid="uid://cnmud1a7ocq3v" path="res://settings_lang.gd" id="3_vfm0g"]
-[ext_resource type="Script" uid="uid://cxgrh8nb7qeg" path="res://settings_fullscreen_check.gd" id="4_vftto"]
+[ext_resource type="Script" uid="uid://cy33ypxnnm3ty" path="res://settings_fullscreen_check.gd" id="4_vftto"]
 
 [node name="Settings" type="Node2D"]
 

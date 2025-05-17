@@ -36,8 +36,12 @@ const BG9 = [
 	preload("res://bgs/9.png"),
 	"mw10b1909"
 ]
+const BG10 = [
+	preload("res://bgs/10.png"),
+	"mw10b1909"
+]
 
-const images = 9
+const images = 10
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if randi_range(1, images) == 1:
@@ -67,6 +71,9 @@ func _ready() -> void:
 	if randi_range(1, images) == 9:
 			texture = BG9[0]
 			$Label.text = tr("$createdby") + " " + BG9[1]
+	if randi_range(1, images) == 10:
+			texture = BG10[0]
+			$Label.text = tr("$createdby") + " " + BG10[1]
 
 	
 	
@@ -98,6 +105,10 @@ func _process(delta: float) -> void:
 		if randi_range(1, images) == 8:
 			texture = BG8[0]
 			$Label.text = tr("$createdby") + " " + BG8[1]
+		if randi_range(1, images) == 10:
+			texture = BG10[0]
+			$Label.text = tr("$createdby") + " " + BG10[1]
+
 
 		
 
