@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://c77tvaq5vklip"]
+[gd_scene load_steps=8 format=3 uid="uid://c77tvaq5vklip"]
 
 [ext_resource type="Script" uid="uid://4mjqs05v3tfk" path="res://shop.gd" id="1_aoq43"]
 [ext_resource type="Texture2D" uid="uid://boirt17seoi3l" path="res://Resources/store.png" id="1_uy4op"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="3_g44lh"]
 [ext_resource type="PackedScene" uid="uid://8t6e4ir44ffr" path="res://shopitem.tscn" id="4_8ipye"]
+[ext_resource type="FontFile" uid="uid://mol2p0edntwv" path="res://Resources/Montserrat-Regular.ttf" id="5_6lah5"]
+[ext_resource type="Script" uid="uid://bmtgqikqbpbuj" path="res://zc_shop.gd" id="6_gmb2m"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b6wtc"]
 
@@ -49,5 +51,20 @@ offset_right = 1264.0
 offset_bottom = 704.0
 theme = ExtResource("3_g44lh")
 text = "$quit"
+
+[node name="Label" type="Label" parent="CanvasLayer/Control"]
+offset_left = 25.0
+offset_top = 13.0
+offset_right = 256.0
+offset_bottom = 44.0
+scale = Vector2(1.85376, 1.75066)
+theme = ExtResource("3_g44lh")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.643137)
+theme_override_constants/shadow_outline_size = 5
+theme_override_fonts/font = ExtResource("5_6lah5")
+theme_override_font_sizes/font_size = 20
+text = "0 Z$"
+justification_flags = 162
+script = ExtResource("6_gmb2m")
 
 [connection signal="pressed" from="CanvasLayer/Control/Button" to="." method="_on_shopclose_pressed"]

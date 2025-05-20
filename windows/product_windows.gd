@@ -20,3 +20,10 @@ func _process(delta: float) -> void:
 
 func _on_close_requested() -> void:
 	queue_free()
+
+
+func _on_buyitem_pressed() -> void:
+	if Global.ZCOINS >= PRODUCT_PRICE:
+		Global.ZCOINS -= PRODUCT_PRICE
+		print(str(Global.ZCOINS))
+		queue_free()
