@@ -36,6 +36,8 @@ $close,Close,Закрыть,Зачыніць,关闭,Cerrar,Sulje,Začynić,🔐
 $modtexterror,The text is not set,Текст не установлен,Тэкст не ўстаноўлены,文本未设置,Texto no instalado,Tekstiä ei asetettu,Tekst nie ŭstanoŭlieny,✍ 🚫 ⚒
 $actionserror,Actions not set,События не установлены,Падзеі не ўстаноўлены,事件未设置,Eventos no establecidos,Tapahtumia ei asetettu,Padziei nie ŭstanoŭlieny,🎉 🚫 ⚒
 $message,Message,Сообщение,Паведамленне,信息,Mensaje,Viesti,Paviedamlieńnie,📧
-$open,Open,Открыть,,,,Avaa,,
-$website,Website,Веб-сайт,,,,Netti-sivusto,,
-$shop,Shop,Магазин,,,,Kauppa,,
+$open,Open,Открыть,,打开,Abierto,Avaa,,📂
+$website,Website,Веб-сайт,,网站,Sitio web,Netti-sivusto,,🕸
+$shop,Shop,Магазин,,店铺,Comercio,Kauppa,,🏬
+$notset,Not installed,Не установлено,,未安装,No instalado,Ei asetettu,,🚫 ❎
+$buy,Buy,Купить,,,,Ostaa,,

@@ -53,6 +53,7 @@ theme = ExtResource("3_g44lh")
 text = "$quit"
 
 [node name="Label" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
 offset_left = 25.0
 offset_top = 13.0
 offset_right = 256.0
