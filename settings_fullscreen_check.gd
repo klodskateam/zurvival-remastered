@@ -7,3 +7,9 @@ func _on_toggled(toggled_on: bool) -> void:
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 		Global.FULLSCREEN = false
+	
+func _ready() -> void:
+	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
+		button_pressed = true
+	else:
+		button_pressed = false
