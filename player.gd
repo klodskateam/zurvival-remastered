@@ -114,6 +114,10 @@ func _process(delta: float):
 		$"../PauseManager".PAUSELOCK = true
 		$Person.queue_free()
 		$"../GameOver".show()
+		Global.ZCOINS += (SCORE/5)
+		Global.CONFIG.set_value("save", "zcoins", Global.ZCOINS)
+		Global.CONFIG.save(Global.SAVE_PATH)
+		$"../GameOver".receivedzc = (SCORE/5)
 		$"../GameOver".set_scores()
 	if (HEALTH <= 20):
 		$"../UI/VignetteRed".lowhealth = true

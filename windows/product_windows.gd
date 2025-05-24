@@ -25,5 +25,7 @@ func _on_close_requested() -> void:
 func _on_buyitem_pressed() -> void:
 	if Global.ZCOINS >= PRODUCT_PRICE:
 		Global.ZCOINS -= PRODUCT_PRICE
+		Global.CONFIG.set_value("save", "zcoins", Global.ZCOINS)
+		Global.CONFIG.save(Global.SAVE_PATH)
 		print(str(Global.ZCOINS))
 		queue_free()

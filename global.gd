@@ -40,11 +40,15 @@ func _input(event: InputEvent) -> void:
 	
 func _ready() -> void:
 	CONFIG.load(SAVE_PATH)
-	TranslationServer.set_locale(CONFIG.get_value("settings", "lang"))
+	if !CONFIG.get_value("settings", "lang"):
+		TranslationServer.set_locale("en")
+	else:
+		TranslationServer.set_locale(CONFIG.get_value("settings", "lang"))
+	
 	if CONFIG.get_value("settings", "fullscreen") == true:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 		
-	if CONFIG.get_value("save", "zcoins") == true:
+	if CONFIG.get_value("save", "zcoins"):
 		ZCOINS = CONFIG.get_value("save", "zcoins")
 	if CONFIG.get_value("save", "fullscreen") == true:
 		FULLSCREEN = CONFIG.get_value("save", "fullscreen")
