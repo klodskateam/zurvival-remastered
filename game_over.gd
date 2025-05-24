@@ -6,7 +6,7 @@ func _ready() -> void:
 	hide()
 
 func set_scores():
-	$Panel/VBoxContainer/scores.text = tr("$score") + ": " + str($"../player".SCORE)+", " + tr("$received") + ": " + str(receivedzc) + " Z$"
+	$Panel/VBoxContainer/scores.text = tr("$score") + ": " + str($"../player".SCORE)+", " + tr("$received") + " " + str(receivedzc) + " Z$"
 
 
 func _on_go_to_menu_pressed() -> void:
