@@ -16,6 +16,7 @@ func _on_settings_pressed():
 func _on_settings_back_pressed():
 	config.set_value("settings", "fullscreen", $"../VBoxContainer/SettingsFullscreenCheck".button_pressed)
 	config.set_value("settings", "lang", TranslationServer.get_loaded_locales()[$"../VBoxContainer/SettingsLang".selected])
+	config.set_value("save", "zcoins", Global.ZCOINS)
 	config.save(Global.SAVE_PATH)
 	get_tree().change_scene_to_file("res://menu.tscn")
 	

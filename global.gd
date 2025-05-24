@@ -50,7 +50,7 @@ func _ready() -> void:
 		
 	if CONFIG.get_value("save", "zcoins"):
 		ZCOINS = CONFIG.get_value("save", "zcoins")
-	if CONFIG.get_value("save", "fullscreen") == true:
+	if CONFIG.get_value("save", "fullscreen"):
 		FULLSCREEN = CONFIG.get_value("save", "fullscreen")
 		
 # полезная функция™
