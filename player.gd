@@ -98,10 +98,10 @@ func fov_up():
 	tween.tween_property($Camera2D, "zoom", Vector2(0.907, 0.907), 0.8)
 func fov_half_up():
 	var tween = $Camera2D.create_tween()
-	tween.tween_property($Camera2D, "zoom", Vector2(0.954, 0.954), 1.3)
+	tween.tween_property($Camera2D, "zoom", Vector2(0.954, 0.954), 2)
 func fov_down():
 	var tween = $Camera2D.create_tween()
-	tween.tween_property($Camera2D, "zoom", Vector2(1, 1), 1.4)	
+	tween.tween_property($Camera2D, "zoom", Vector2(1, 1), 1.4)
 		
 	
 func _process(delta: float):
