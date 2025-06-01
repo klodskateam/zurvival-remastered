@@ -1,6 +1,7 @@
 extends Node
 
 var MODCOSMICITEMS = []
+var MODBGIMAGES = []
 var MODSLIST
 
 const MOD_IMG_ERROR = preload("res://mod_img_error.png")
@@ -24,9 +25,15 @@ func _ready() -> void:
 			for sussy in tmp_mod["adds"].size():
 				if tmp_mod["adds"][sussy]["type"] == "aim":
 					MODCOSMICITEMS.insert(MODCOSMICITEMS.size(), tmp_mod["adds"][sussy])
+				if tmp_mod["adds"][sussy]["type"] == "bgimage":
+					MODBGIMAGES.insert(MODBGIMAGES.size(), tmp_mod["adds"][sussy])
 		print("MOD COSMETIC:")
 		print(MODCOSMICITEMS)
 		
+		print("MOD BGs:")
+		print(MODBGIMAGES)
+		
+		print("--")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

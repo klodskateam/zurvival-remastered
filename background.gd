@@ -1,79 +1,62 @@
 extends Sprite2D
-var BGTIME = 0
-const BG1 = [
-	preload("res://bgs/1.png"),
-	"mw10b1909"
-]
-const BG2 = [
-	preload("res://bgs/2.png"),
-	"mw10b1909"
-]
-const BG3 = [
-	preload("res://bgs/3.png"),
-	"mw10b1909"
-]
-const BG4 = [
-	preload("res://bgs/4.png"),
-	"mw10b1909"
-]
-const BG5 = [
-	preload("res://bgs/5.png"),
-	"mw10b1909"
-]
-const BG6 = [
-	preload("res://bgs/6.png"),
-	"mw10b1909"
-]
-const BG7 = [
-	preload("res://bgs/7.png"),
-	"mw10b1909"
-]
-const BG8 = [
-	preload("res://bgs/8.png"),
-	"mw10b1909"
-]
-const BG9 = [
-	preload("res://bgs/9.png"),
-	"mw10b1909"
-]
-const BG10 = [
-	preload("res://bgs/10.png"),
-	"mw10b1909"
-]
 
-const images = 10
+# тут был костыль HACK HACK HACK (kteam.veliona.no/korzina/index.php?file=paste_683c3701ef2285.34850194.txt)
+
+var BGTIME = 0
+var BGs = [
+	{
+		"image": preload("res://bgs/1.png"),
+		"author": "mw10b1909" 
+	},
+	{
+		"image": preload("res://bgs/2.png"),
+		"author": "mw10b1909" 
+	},
+	{
+		"image": preload("res://bgs/3.png"),
+		"author": "mw10b1909" 
+	},
+	{
+		"image": preload("res://bgs/4.png"),
+		"author": "mw10b1909" 
+	},
+	{
+		"image": preload("res://bgs/5.png"),
+		"author": "mw10b1909" 
+	},
+	{
+		"image": preload("res://bgs/6.png"),
+		"author": "mw10b1909" 
+	},
+	{
+		"image": preload("res://bgs/7.png"),
+		"author": "mw10b1909" 
+	},
+	{
+		"image": preload("res://bgs/8.png"),
+		"author": "mw10b1909" 
+	},
+	{
+		"image": preload("res://bgs/9.png"),
+		"author": "mw10b1909" 
+	},
+	{
+		"image": preload("res://bgs/10.png"),
+		"author": "mw10b1909" 
+	}
+]
+var current_image
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if randi_range(1, images) == 1:
-			texture = BG1[0]
-			$Label.text = tr("$createdby") + " " + BG1[1]
-	if randi_range(1, images) == 2:
-			texture = BG2[0]
-			$Label.text = tr("$createdby") + " " + BG2[1]
-	if randi_range(1, images) == 3:
-			texture = BG3[0]
-			$Label.text = tr("$createdby") + " " + BG3[1]
-	if randi_range(1, images) == 4:
-			texture = BG4[0]
-			$Label.text = tr("$createdby") + " " + BG4[1]
-	if randi_range(1, images) == 5:
-			texture = BG5[0]
-			$Label.text = tr("$createdby") + " " + BG5[1]
-	if randi_range(1, images) == 6:
-			texture = BG6[0]
-			$Label.text = tr("$createdby") + " " + BG6[1]
-	if randi_range(1, images) == 7:
-			texture = BG7[0]
-			$Label.text = tr("$createdby") + " " + BG7[1]
-	if randi_range(1, images) == 8:
-			texture = BG8[0]
-			$Label.text = tr("$createdby") + " " + BG8[1]
-	if randi_range(1, images) == 9:
-			texture = BG9[0]
-			$Label.text = tr("$createdby") + " " + BG9[1]
-	if randi_range(1, images) == 10:
-			texture = BG10[0]
-			$Label.text = tr("$createdby") + " " + BG10[1]
+	for img in ModLoader.MODBGIMAGES:
+		var imgg = ModLoader.get_mod_img(img["image"])
+		
+		BGs.insert(BGs.size(), {
+			"image": imgg,
+			"author": img["author"]
+		})
+	
+	change_image(0)
 
 	
 	
@@ -81,37 +64,14 @@ func _process(delta: float) -> void:
 	BGTIME += delta # люблю костыли
 	if BGTIME >= 5:
 		BGTIME -= 5
-		if randi_range(1, images) == 1: # хотелось бы рандомнее, а то показывается один фон несколько раз
-			texture = BG1[0]
-			$Label.text = tr("$createdby") + " " + BG1[1]
-		if randi_range(1, images) == 2:
-			texture = BG2[0]
-			$Label.text = tr("$createdby") + " " + BG2[1]
-		if randi_range(1, images) == 3:
-			texture = BG3[0]
-			$Label.text = tr("$createdby") + " " + BG3[1]
-		if randi_range(1, images) == 4:
-			texture = BG4[0]
-			$Label.text = tr("$createdby") + " " + BG4[1]
-		if randi_range(1, images) == 5:
-			texture = BG5[0]
-			$Label.text = tr("$createdby") + " " + BG5[1]
-		if randi_range(1, images) == 6:
-			texture = BG6[0]
-			$Label.text = tr("$createdby") + " " + BG6[1]
-		if randi_range(1, images) == 7:
-			texture = BG7[0]
-			$Label.text = tr("$createdby") + " " + BG7[1]
-		if randi_range(1, images) == 8:
-			texture = BG8[0]
-			$Label.text = tr("$createdby") + " " + BG8[1]
-		if randi_range(1, images) == 10:
-			texture = BG10[0]
-			$Label.text = tr("$createdby") + " " + BG10[1]
+		change_image(current_image)
 
 
-		
-
-
-func _on_mods_pressed() -> void:
-	pass # Replace with function body.
+func change_image(current):
+	var bgid = randi_range(0, BGs.size())-1
+	while bgid == current:
+		bgid = randi_range(0, BGs.size())-1
+	texture = BGs[bgid]["image"]
+	$Label.text = tr("$createdby") + " " + BGs[bgid]["author"]
+	current_image = bgid
+	

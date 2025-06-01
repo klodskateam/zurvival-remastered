@@ -1,6 +1,10 @@
-[gd_resource type="Theme" load_steps=6 format=3 uid="uid://d2wr8qi0mdxxq"]
+[gd_resource type="Theme" load_steps=10 format=3 uid="uid://d2wr8qi0mdxxq"]
 
+[ext_resource type="FontFile" uid="uid://iqm5lhjmux6c" path="res://Resources/Montserrat-Bold.ttf" id="1_3s7v7"]
 [ext_resource type="FontFile" uid="uid://mol2p0edntwv" path="res://Resources/Montserrat-Regular.ttf" id="1_r3vpi"]
+[ext_resource type="FontFile" uid="uid://b017clmvssiq2" path="res://Resources/Montserrat-BoldItalic.ttf" id="2_nr8cx"]
+[ext_resource type="FontFile" uid="uid://cphvfnriqknso" path="res://Resources/Montserrat-Italic.ttf" id="3_onyq1"]
+[ext_resource type="FontFile" uid="uid://dguvreqepx2px" path="res://Resources/NotoSansMono-Regular.ttf" id="4_epijf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3va1a"]
 bg_color = Color(0.29964, 0.520377, 0.218746, 1)
@@ -56,6 +60,16 @@ shadow_offset = Vector2(5, 5)
 [resource]
 default_font = ExtResource("1_r3vpi")
 Panel/styles/panel = SubResource("StyleBoxFlat_3va1a")
+RichTextLabel/colors/table_border = Color(0.0686131, 0.246094, 0.0432587, 1)
+RichTextLabel/colors/table_even_row_bg = Color(0.252853, 0.44, 0.1848, 1)
+RichTextLabel/colors/table_odd_row_bg = Color(0.350547, 0.61, 0.2562, 1)
+RichTextLabel/constants/table_h_separation = 10
+RichTextLabel/constants/table_v_separation = 10
+RichTextLabel/fonts/bold_font = ExtResource("1_3s7v7")
+RichTextLabel/fonts/bold_italics_font = ExtResource("2_nr8cx")
+RichTextLabel/fonts/italics_font = ExtResource("3_onyq1")
+RichTextLabel/fonts/mono_font = ExtResource("4_epijf")
+RichTextLabel/fonts/normal_font = ExtResource("1_r3vpi")
 ScrollContainer/styles/panel = SubResource("StyleBoxFlat_3uw5e")
 Window/fonts/title_font = ExtResource("1_r3vpi")
 Window/styles/embedded_border = SubResource("StyleBoxFlat_lq1h7")
