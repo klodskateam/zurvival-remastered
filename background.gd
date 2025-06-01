@@ -3,6 +3,8 @@ extends Sprite2D
 # тут был костыль HACK HACK HACK (kteam.veliona.no/korzina/index.php?file=paste_683c3701ef2285.34850194.txt)
 
 var BGTIME = 0
+var imageres
+var scale2
 var BGs = [
 	{
 		"image": preload("res://bgs/1.png"),
@@ -72,6 +74,9 @@ func change_image(current):
 	while bgid == current:
 		bgid = randi_range(0, BGs.size())-1
 	texture = BGs[bgid]["image"]
+	imageres = BGs[bgid]["image"].get_size()
+	scale2 = max((1280.0/imageres.x), (720.0/imageres.y))
+	scale = Vector2(scale2, scale2)
 	$Label.text = tr("$createdby") + " " + BGs[bgid]["author"]
 	current_image = bgid
 	
