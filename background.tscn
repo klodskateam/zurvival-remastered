@@ -1,21 +1,28 @@
-[gd_scene load_steps=4 format=3 uid="uid://db8yny8uiwun1"]
+[gd_scene load_steps=5 format=3 uid="uid://db8yny8uiwun1"]
 
 [ext_resource type="Texture2D" uid="uid://dtx8bje4ie0ja" path="res://bgs/1.png" id="1_vrd3a"]
 [ext_resource type="Script" uid="uid://baotmr4fuvmav" path="res://background.gd" id="2_pv48m"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="3_d4myy"]
 
-[node name="Background" type="Sprite2D"]
+[sub_resource type="LabelSettings" id="LabelSettings_i7s6n"]
+font_size = 11
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(640, 360)
-scale = Vector2(0.667, 0.667)
+scale = Vector2(0.666667, 0.666667)
 texture = ExtResource("1_vrd3a")
 script = ExtResource("2_pv48m")
 
 [node name="Label" type="Label" parent="."]
-offset_left = 642.0
-offset_top = 420.0
-offset_right = 959.0
-offset_bottom = 539.0
+offset_left = 954.0
+offset_top = 703.0
+offset_right = 1277.0
+offset_bottom = 717.0
 theme = ExtResource("3_d4myy")
 text = "AUTHOR228"
+label_settings = SubResource("LabelSettings_i7s6n")
 horizontal_alignment = 2
-vertical_alignment = 2
+autowrap_mode = 1
+justification_flags = 171

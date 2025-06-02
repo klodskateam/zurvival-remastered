@@ -77,6 +77,6 @@ func change_image(current):
 	imageres = BGs[bgid]["image"].get_size()
 	scale2 = max((1280.0/imageres.x), (720.0/imageres.y))
 	scale = Vector2(scale2, scale2)
-	$Label.text = tr("$createdby") + " " + BGs[bgid]["author"]
+	$"../Label".text = tr("$createdby") + " " + BGs[bgid]["author"]
 	current_image = bgid
 	
