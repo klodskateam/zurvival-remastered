@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://ddsqj7m25ucaa"]
+
+[ext_resource type="Script" uid="uid://dk6c7q85yu48l" path="res://storage.gd" id="1_3vq3h"]
+[ext_resource type="Texture2D" uid="uid://cmdbay58waf1e" path="res://Resources/storage.png" id="1_ueev3"]
+[ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_lnm35"]
+
+[node name="storage" type="Node2D"]
+script = ExtResource("1_3vq3h")
+
+[node name="Storage" type="Sprite2D" parent="."]
+position = Vector2(640, 360)
+texture = ExtResource("1_ueev3")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+offset_left = 1089.0
+offset_top = 659.0
+offset_right = 1268.0
+offset_bottom = 707.0
+theme = ExtResource("2_lnm35")
+text = "$quit"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer"]
+offset_left = 261.0
+offset_top = 155.0
+offset_right = 1046.0
+offset_bottom = 720.0
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_quitstorage_pressed"]
