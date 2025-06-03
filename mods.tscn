@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://db8yny8uiwun1" path="res://background.tscn" id="1_nlh3i"]
 [ext_resource type="Script" uid="uid://dmvtfldeyutds" path="res://modsmenu.gd" id="1_yji3y"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_gjigg"]
-[ext_resource type="FontFile" uid="uid://cioek74u5cmdr" path="res://Resources/NotoColorEmoji-Regular.ttf" id="4_nlh3i"]
+[ext_resource type="FontFile" uid="uid://2y1jrqeu8jri" path="res://Resources/Twemoji-Color.ttf" id="4_nlh3i"]
 [ext_resource type="PackedScene" uid="uid://cycy75qd356tu" path="res://mod_item.tscn" id="4_yji3y"]
 
 [node name="Mods" type="Node2D"]
@@ -59,7 +59,6 @@ offset_bottom = 38.0
 theme_override_constants/h_separation = 0
 theme_override_constants/align_to_largest_stylebox = 0
 theme_override_fonts/font = ExtResource("4_nlh3i")
-theme_override_font_sizes/font_size = 15
 text = "📂"
 
 [node name="VBoxContainer" type="ScrollContainer" parent="Control/Panel"]
