@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://k2logs20d545"]
+[gd_scene load_steps=9 format=3 uid="uid://k2logs20d545"]
 
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="1_teobh"]
 [ext_resource type="Script" uid="uid://bk278j3u3ei21" path="res://modsinternet.gd" id="2_io5ma"]
 [ext_resource type="PackedScene" uid="uid://casxtl5gm7da3" path="res://mod_item_internet.tscn" id="3_io5ma"]
+[ext_resource type="PackedScene" uid="uid://db8yny8uiwun1" path="res://background.tscn" id="3_ye50u"]
 [ext_resource type="Texture2D" uid="uid://bqmmq22i5svdr" path="res://_IMPORTANT_IMAGE_DONT_DELETE_INACHE_PISEC!!.jpg" id="4_4f321"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_yn577"]
@@ -29,6 +30,8 @@ grow_vertical = 2
 theme = ExtResource("1_teobh")
 script = ExtResource("2_io5ma")
 
+[node name="Node2D" parent="." instance=ExtResource("3_ye50u")]
+
 [node name="Panel" type="Panel" parent="."]
 custom_minimum_size = Vector2(1000, 600)
 layout_mode = 1
@@ -48,12 +51,20 @@ grow_vertical = 2
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 21.0
+offset_bottom = 51.0
 grow_horizontal = 2
 text = "$modsforzr2.0"
 label_settings = SubResource("LabelSettings_yn577")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 138.0
+offset_bottom = 46.0
+text = "$quit"
 
 [node name="HSplitContainer" type="HSplitContainer" parent="Panel"]
 layout_mode = 1
@@ -142,6 +153,7 @@ timeout = 30.0
 
 [node name="mod_dl" type="HTTPRequest" parent="."]
 
+[connection signal="pressed" from="Panel/Button" to="." method="_on_quitmodsinternet_pressed"]
 [connection signal="pressed" from="Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/dl_btn" to="." method="_on_dl_btn_pressed"]
 [connection signal="meta_clicked" from="Panel/HSplitContainer/VSplitContainer/RichTextLabel" to="." method="_on_rich_text_label_meta_clicked"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]

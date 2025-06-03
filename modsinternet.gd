@@ -122,19 +122,18 @@ func _on_dl_btn_pressed() -> void:
 
 func _on_mod_dl_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	var modname = str(randi_range(100, 1000000))
+	var dir = DirAccess.open("user://mods")
+	print("Проверка существования папок, создание...")
+	if !dir.dir_exists("user://mods"):
+		dir.make_dir("user://mods")
+	if !dir.dir_exists("user://mods/temp"):
+		dir.make_dir("user://mods/temp")
+	var file = FileAccess.open("user://mods/temp/temp" + modname + ".zip", FileAccess.WRITE)
 	
 	if response_code != 200:
 		pass
 	else:
 		print("Успешно загружено, попытка сохранить...")
-		var file = FileAccess.open("user://mods/temp/temp" + modname + ".zip", FileAccess.WRITE)
-		var dir = DirAccess.open("user://mods")
-		print("Проверка существования папок, создание...")
-		if !dir.dir_exists("user://mods"):
-			dir.make_dir("user://mods")
-		if !dir.make_dir("user://mods/temp"):
-			dir.make_dir("user://mods/temp")
-		print("Попытка сохранить 2...")
 		file.store_buffer(body)
 		file.close()
 		print("Сохранено! Попытка распаковать...")
@@ -160,3 +159,7 @@ func _on_mod_dl_request_completed(result: int, response_code: int, headers: Pack
 			var buffer = reader.read_file(file_path)
 			filee.store_buffer(buffer)
 		dir.remove("user://mods/temp/temp" + modname + ".zip")
+
+
+func _on_quitmodsinternet_pressed() -> void:
+	get_tree().change_scene_to_file("res://mods.tscn")

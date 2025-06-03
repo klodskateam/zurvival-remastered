@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://ds56116ok1cdi"]
+[gd_scene load_steps=6 format=3 uid="uid://ds56116ok1cdi"]
 
 [ext_resource type="PackedScene" uid="uid://db8yny8uiwun1" path="res://background.tscn" id="1_nlh3i"]
 [ext_resource type="Script" uid="uid://dmvtfldeyutds" path="res://modsmenu.gd" id="1_yji3y"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_gjigg"]
+[ext_resource type="FontFile" uid="uid://cioek74u5cmdr" path="res://Resources/NotoColorEmoji-Regular.ttf" id="4_nlh3i"]
 [ext_resource type="PackedScene" uid="uid://cycy75qd356tu" path="res://mod_item.tscn" id="4_yji3y"]
 
 [node name="Mods" type="Node2D"]
@@ -32,20 +33,33 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_gjigg")
 
+[node name="Mods" type="Button" parent="Control/Panel"]
+layout_mode = 0
+offset_left = 240.0
+offset_top = 7.0
+offset_right = 292.0
+offset_bottom = 38.0
+theme_override_fonts/font = ExtResource("4_nlh3i")
+text = "🛠"
+
 [node name="SettingsSave" type="Button" parent="Control/Panel"]
 layout_mode = 0
 offset_left = 8.0
-offset_top = 9.0
-offset_right = 290.0
-offset_bottom = 40.0
+offset_top = 7.0
+offset_right = 237.0
+offset_bottom = 38.0
 text = "$close"
 
 [node name="OpenDir" type="Button" parent="Control/Panel"]
 layout_mode = 0
 offset_left = 295.0
-offset_top = 9.0
+offset_top = 7.0
 offset_right = 347.0
-offset_bottom = 40.0
+offset_bottom = 38.0
+theme_override_constants/h_separation = 0
+theme_override_constants/align_to_largest_stylebox = 0
+theme_override_fonts/font = ExtResource("4_nlh3i")
+theme_override_font_sizes/font_size = 15
 text = "📂"
 
 [node name="VBoxContainer" type="ScrollContainer" parent="Control/Panel"]
@@ -62,5 +76,6 @@ layout_mode = 2
 [node name="modItem" parent="Control/Panel/VBoxContainer/VBoxContainer" instance=ExtResource("4_yji3y")]
 layout_mode = 2
 
+[connection signal="pressed" from="Control/Panel/Mods" to="." method="_on_mods2_pressed"]
 [connection signal="pressed" from="Control/Panel/SettingsSave" to="." method="_on_settings_save_pressed"]
 [connection signal="button_down" from="Control/Panel/OpenDir" to="." method="_on_open_dir_button_down"]

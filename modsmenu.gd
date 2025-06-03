@@ -36,3 +36,7 @@ func _on_open_dir_button_down() -> void:
 
 func _on_settings_save_pressed() -> void:
 	get_tree().change_scene_to_file("res://menu.tscn")
+
+
+func _on_mods2_pressed() -> void:
+	get_tree().change_scene_to_file("res://modsinternet.tscn")
