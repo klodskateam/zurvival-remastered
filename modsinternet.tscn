@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://k2logs20d545"]
+[gd_scene load_steps=8 format=3 uid="uid://k2logs20d545"]
 
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="1_teobh"]
 [ext_resource type="Script" uid="uid://bk278j3u3ei21" path="res://modsinternet.gd" id="2_io5ma"]
+[ext_resource type="PackedScene" uid="uid://casxtl5gm7da3" path="res://mod_item_internet.tscn" id="3_io5ma"]
+[ext_resource type="Texture2D" uid="uid://bqmmq22i5svdr" path="res://_IMPORTANT_IMAGE_DONT_DELETE_INACHE_PISEC!!.jpg" id="4_4f321"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_yn577"]
 font_size = 41
@@ -13,6 +15,9 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_ye50u"]
+font_size = 30
 
 [node name="mods" type="Control"]
 layout_mode = 3
@@ -73,32 +78,60 @@ layout_mode = 2
 text = "$loading"
 autowrap_mode = 2
 
+[node name="modIteminternet" parent="Panel/HSplitContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_io5ma")]
+layout_mode = 2
+
 [node name="VSplitContainer" type="VSplitContainer" parent="Panel/HSplitContainer"]
 layout_mode = 2
-split_offset = 135
+split_offset = 128
 
 [node name="Panel" type="Panel" parent="Panel/HSplitContainer/VSplitContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_teobh")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/HSplitContainer/VSplitContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture = ExtResource("4_4f321")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="modname" type="Label" parent="Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Название мода 22"
+label_settings = SubResource("LabelSettings_ye50u")
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="moddesc" type="Label" parent="Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Опис"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="dl_btn" type="Button" parent="Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+disabled = true
+text = "$downloadmod"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Panel/HSplitContainer/VSplitContainer"]
 layout_mode = 2
 size_flags_stretch_ratio = 0.86
 focus_mode = 2
 bbcode_enabled = true
-text = "Описание модов [b]!С ПОДДЕРЖКОЙ BBCODE![/b]
-[fill]Необычное преступление потрясло тихий городок, когда 12-летний подросток, чье имя не разглашается из-за возраста, совершил дерзкую кражу в местной библиотеке. По данным следствия, мальчик, известный как страстный книголюб, длительное время посещал учреждение, изучая редкие издания. Его целью стала ценная книга XIX века — первое прижизненное издание классика мировой литературы, хранившееся в специальном фонде под усиленной защитой. По предварительной версии, подросток, воспользовавшись моментом невнимательности сотрудников, отключил датчик системы безопасности, спрятав фолиант под одеждой.  [/fill]
-[center]МЕГА ТЕСТ 228[/center]
-[wave amp=50 freq=2]волна[/wave] [tornado]вихрь[/tornado] [shake rate=10 level=5]дрожание[/shake]
-[outline_size=2]текст[/outline_size] 
-[rainbow freq=1.0 sat=0.8 val=0.8 speed=1.0]РААДУУГАА[/rainbow]
-[table=2]
-[cell]Ячейка 1[/cell]
-[cell]Ячейка 2[/cell]
-[cell]Ячейка 3[/cell]
-[cell]Ячейка 4[/cell]
-[/table]
-"
+text = "$selectmod"
 context_menu_enabled = true
 selection_enabled = true
 
@@ -107,4 +140,9 @@ timeout = 30.0
 
 [node name="HTTPRequest2" type="HTTPRequest" parent="."]
 
+[node name="mod_dl" type="HTTPRequest" parent="."]
+
+[connection signal="pressed" from="Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/dl_btn" to="." method="_on_dl_btn_pressed"]
+[connection signal="meta_clicked" from="Panel/HSplitContainer/VSplitContainer/RichTextLabel" to="." method="_on_rich_text_label_meta_clicked"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
+[connection signal="request_completed" from="mod_dl" to="." method="_on_mod_dl_request_completed"]
