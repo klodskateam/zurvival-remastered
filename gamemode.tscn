@@ -59,6 +59,7 @@ layout_mode = 2
 layout_mode = 0
 offset_right = 398.0
 offset_bottom = 31.0
+theme = ExtResource("2_7rmfm")
 theme_override_font_sizes/font_size = 24
 text = "$gamemodeselect"
 horizontal_alignment = 1
