@@ -162,6 +162,7 @@ func _on_mod_dl_request_completed(result: int, response_code: int, headers: Pack
 			print("Очистка...")
 	reader.close()
 	print(modname)
+	ModLoader.load_mods()
 	dir.remove("user://mods/temp/temp" + modname + ".zip")
 
 
