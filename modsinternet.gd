@@ -122,7 +122,7 @@ func _on_dl_btn_pressed() -> void:
 
 func _on_mod_dl_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	var modname = str(randi_range(100, 1000000))
-	var dir = DirAccess.open("user://mods")
+	var dir = DirAccess.open("user://")
 	print("Проверка существования папок, создание...")
 	if !dir.dir_exists("user://mods"):
 		dir.make_dir("user://mods")
