@@ -44,6 +44,7 @@ grow_vertical = 2
 theme = ExtResource("3_g44lh")
 
 [node name="Label" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
 offset_left = 22.0
 offset_top = 5.0
 offset_right = 253.0
@@ -59,6 +60,7 @@ justification_flags = 162
 script = ExtResource("6_gmb2m")
 
 [node name="Button" type="Button" parent="CanvasLayer/Control"]
+layout_mode = 0
 offset_left = 1101.0
 offset_top = 652.0
 offset_right = 1263.0
@@ -68,6 +70,7 @@ text = "$quit"
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control"]
 clip_children = 1
+layout_mode = 0
 offset_left = 121.0
 offset_top = 377.0
 offset_right = 1157.0

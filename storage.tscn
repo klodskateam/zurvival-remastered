@@ -16,8 +16,8 @@ texture = ExtResource("1_ueev3")
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1281.0
+offset_bottom = 720.0
 
 [node name="Button" type="Button" parent="CanvasLayer"]
 offset_left = 1088.0

@@ -111,8 +111,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="BulletsIcon" type="Sprite2D" parent="BulletsBar"]
-position = Vector2(-16, 13.5)
-scale = Vector2(0.234375, 0.210937)
+position = Vector2(-15.5, 13.95)
+scale = Vector2(0.242187, 0.217968)
 texture = ExtResource("3_qg45p")
 
 [node name="HealthBar" type="ProgressBar" parent="."]
