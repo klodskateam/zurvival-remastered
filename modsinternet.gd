@@ -129,6 +129,7 @@ func _on_mod_dl_request_completed(result: int, response_code: int, headers: Pack
 	if !dir.dir_exists("user://mods/temp"):
 		dir.make_dir("user://mods/temp")
 	var file = FileAccess.open("user://mods/temp/temp" + modname + ".zip", FileAccess.WRITE)
+	var reader = ZIPReader.new()
 	
 	if response_code != 200:
 		pass
@@ -138,9 +139,7 @@ func _on_mod_dl_request_completed(result: int, response_code: int, headers: Pack
 		file.close()
 		print("Сохранено! Попытка распаковать...")
 		
-		var reader = ZIPReader.new()
 		reader.open("user://mods/temp/temp" + modname + ".zip")
-		
 		# украдено с документации потому-что я неуч😎😎😎
 		var root_dir = DirAccess.open("user://mods/")
 
@@ -156,9 +155,14 @@ func _on_mod_dl_request_completed(result: int, response_code: int, headers: Pack
 			# the file entry comes before the folder entry.
 			root_dir.make_dir_recursive(root_dir.get_current_dir().path_join(file_path).get_base_dir())
 			var filee = FileAccess.open(root_dir.get_current_dir().path_join(file_path), FileAccess.WRITE)
+			var file2 = DirAccess.open("user://mods/temp/")
 			var buffer = reader.read_file(file_path)
 			filee.store_buffer(buffer)
-		dir.remove("user://mods/temp/temp" + modname + ".zip")
+			filee.close()
+			print("Очистка...")
+	reader.close()
+	print(modname)
+	dir.remove("user://mods/temp/temp" + modname + ".zip")
 
 
 func _on_quitmodsinternet_pressed() -> void:
