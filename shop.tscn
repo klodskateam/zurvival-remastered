@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c77tvaq5vklip"]
+[gd_scene load_steps=10 format=3 uid="uid://c77tvaq5vklip"]
 
 [ext_resource type="Script" uid="uid://4mjqs05v3tfk" path="res://shop.gd" id="1_aoq43"]
 [ext_resource type="Texture2D" uid="uid://boirt17seoi3l" path="res://Resources/store.png" id="1_uy4op"]
@@ -6,6 +6,18 @@
 [ext_resource type="PackedScene" uid="uid://8t6e4ir44ffr" path="res://shopitem.tscn" id="4_8ipye"]
 [ext_resource type="FontFile" uid="uid://mol2p0edntwv" path="res://Resources/Montserrat-Regular.ttf" id="5_6lah5"]
 [ext_resource type="Script" uid="uid://bmtgqikqbpbuj" path="res://zc_shop.gd" id="6_gmb2m"]
+
+[sub_resource type="Gradient" id="Gradient_gmb2m"]
+interpolation_color_space = 2
+offsets = PackedFloat32Array(0, 0.04, 0.15, 0.86, 0.96, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.55, 0.55, 0.55, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8kdgp"]
+gradient = SubResource("Gradient_gmb2m")
+width = 128
+height = 32
+fill_from = Vector2(1, 0)
+fill_to = Vector2(0, 0)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b6wtc"]
 
@@ -24,40 +36,18 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 8.0
+offset_right = 113.0
+offset_bottom = 374.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_g44lh")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Control"]
-layout_mode = 0
-offset_left = 161.0
-offset_top = 409.0
-offset_right = 1117.0
-offset_bottom = 567.0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_b6wtc")
-vertical_scroll_mode = 0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/ScrollContainer"]
-layout_mode = 2
-
-[node name="Item" parent="CanvasLayer/Control/ScrollContainer/HBoxContainer" instance=ExtResource("4_8ipye")]
-layout_mode = 2
-
-[node name="Button" type="Button" parent="CanvasLayer/Control"]
-layout_mode = 0
-offset_left = 1102.0
-offset_top = 660.0
-offset_right = 1264.0
-offset_bottom = 704.0
-theme = ExtResource("3_g44lh")
-text = "$quit"
-
 [node name="Label" type="Label" parent="CanvasLayer/Control"]
-layout_mode = 0
-offset_left = 25.0
-offset_top = 13.0
-offset_right = 256.0
-offset_bottom = 44.0
+offset_left = 22.0
+offset_top = 5.0
+offset_right = 253.0
+offset_bottom = 36.0
 scale = Vector2(1.85376, 1.75066)
 theme = ExtResource("3_g44lh")
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.643137)
@@ -67,5 +57,36 @@ theme_override_font_sizes/font_size = 20
 text = "0 Z$"
 justification_flags = 162
 script = ExtResource("6_gmb2m")
+
+[node name="Button" type="Button" parent="CanvasLayer/Control"]
+offset_left = 1101.0
+offset_top = 652.0
+offset_right = 1263.0
+offset_bottom = 696.0
+theme = ExtResource("3_g44lh")
+text = "$quit"
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control"]
+clip_children = 1
+offset_left = 121.0
+offset_top = 377.0
+offset_right = 1157.0
+offset_bottom = 583.0
+texture = SubResource("GradientTexture2D_8kdgp")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Control/TextureRect"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 32.0
+offset_right = 996.0
+offset_bottom = 190.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_b6wtc")
+vertical_scroll_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/TextureRect/ScrollContainer"]
+layout_mode = 2
+
+[node name="Item" parent="CanvasLayer/Control/TextureRect/ScrollContainer/HBoxContainer" instance=ExtResource("4_8ipye")]
+layout_mode = 2
 
 [connection signal="pressed" from="CanvasLayer/Control/Button" to="." method="_on_shopclose_pressed"]

@@ -20,9 +20,9 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Button" type="Button" parent="CanvasLayer"]
-offset_left = 1089.0
+offset_left = 1088.0
 offset_top = 659.0
-offset_right = 1268.0
+offset_right = 1267.0
 offset_bottom = 707.0
 theme = ExtResource("2_lnm35")
 text = "$quit"

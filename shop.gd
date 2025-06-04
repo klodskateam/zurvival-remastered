@@ -61,7 +61,7 @@ func _ready() -> void:
 		else:
 			newbtn.icon = COSMICITEMS[sus]["sprite"]
 		
-		$CanvasLayer/Control/ScrollContainer/HBoxContainer.add_child(newbtn)
+		$CanvasLayer/Control/TextureRect/ScrollContainer/HBoxContainer.add_child(newbtn)
 		print(newbtn)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
