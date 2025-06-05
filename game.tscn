@@ -35,9 +35,11 @@ script = ExtResource("3_ar85b")
 
 [node name="GameOver" parent="." instance=ExtResource("8_nlu6b")]
 process_mode = 2
+visible = false
 
 [node name="Pause" parent="." instance=ExtResource("6_5dskx")]
 process_mode = 2
+visible = false
 
 [node name="Spawner7" parent="." instance=ExtResource("7_8yshx")]
 position = Vector2(-132, 5099)

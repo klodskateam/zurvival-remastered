@@ -8,6 +8,9 @@ const MOD_IMG_ERROR = preload("res://mod_img_error.png")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	load_mods()
+
+func load_mods() -> void:
 	MODSLIST = DirAccess.get_files_at("user://mods/")
 	
 	for sus in MODSLIST.size():
@@ -34,7 +37,7 @@ func _ready() -> void:
 		print(MODBGIMAGES)
 		
 		print("--")
-
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
