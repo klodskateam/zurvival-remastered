@@ -4,7 +4,9 @@ const P_BULLETS = preload("res://bullets.tscn")
 
 func _on_timeout():
 	match GamemodeManager.GAMEMODE:
-		0:
+		1:
+			pass
+		_:
 			wait_time = randf_range(1, 2)
 			# пульки хуюльки
 			var bullets_new = P_BULLETS.instantiate()
@@ -19,6 +21,5 @@ func _on_timeout():
 			medkit_new.position.y = randi_range(50, 9950)
 			get_parent().add_child(medkit_new)
 			print(medkit_new)
-		1:
-			pass
+
 	
