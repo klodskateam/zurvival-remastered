@@ -9,17 +9,18 @@ var GAMEMODE = null
 
 var GAMEMODES = [
 	{
+		"name": tr("$classicmodename"),
+		"description": tr("$classicmodedesc"),
+		"scene": "res://game.tscn",
+		"gamemode": 1,
+	},
+	{
 		"name": tr("$standardmodename"),
 		"description": tr("$standardmodedesc"),
 		"scene": "res://game.tscn",
 		"gamemode": 0,
 	},
-	{
-		"name": tr("$classicmodename"),
-		"description": tr("$classicmodedesc"),
-		"scene": "res://game.tscn",
-		"gamemode": 1,
-	}
+
 ]
 
 
