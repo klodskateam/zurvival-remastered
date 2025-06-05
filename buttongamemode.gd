@@ -1,9 +1,9 @@
 extends Button
-
 var SCENE = "res://shop.tscn"
 
 var GMNAME = null
 var GMDESC = null
+var GMODE = null
 
 func _on_pressed() -> void:
 #	get_tree().change_scene_to_file(SCENE)
@@ -12,6 +12,8 @@ func _on_pressed() -> void:
 	
 	$"../../../../../..".GMNAME = GMNAME
 	$"../../../../../..".GMDESC = GMDESC
+	GamemodeManager.GAMEMODE = GMODE
 	$"../../../../../..".GMCHANGE_TO = SCENE
+	
 	
 	$"../../../../../..".change_info()

@@ -26,6 +26,7 @@ Global="*res://global.gd"
 MouseController="res://mouse_controller.gd"
 ModLoader="*res://mod_loader.gd"
 ErrorManager="*res://error_manager.gd"
+GamemodeManager="*res://gamemode_manager.gd"
 
 [display]
 

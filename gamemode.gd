@@ -5,12 +5,20 @@ const BUTTONGAMEMODE = preload("res://buttongamemode.tscn")
 var GMCHANGE_TO = null
 var GMNAME = null
 var GMDESC = null
+var GAMEMODE = null
 
 var GAMEMODES = [
 	{
 		"name": tr("$standardmodename"),
 		"description": tr("$standardmodedesc"),
 		"scene": "res://game.tscn",
+		"gamemode": 0,
+	},
+	{
+		"name": tr("$classicmodename"),
+		"description": tr("$classicmodedesc"),
+		"scene": "res://game.tscn",
+		"gamemode": 1,
 	}
 ]
 
@@ -23,6 +31,7 @@ func _ready() -> void:
 		newbtn.GMNAME = GAMEMODES[sus]["name"]
 		newbtn.GMDESC = GAMEMODES[sus]["description"]
 		newbtn.SCENE = GAMEMODES[sus]["scene"]
+		newbtn.GMODE = GAMEMODES[sus]["gamemode"]
 		
 		$UI/Control/Panel/ScrollContainer/VBoxContainer.add_child(newbtn)
 

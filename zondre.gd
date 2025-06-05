@@ -12,13 +12,17 @@ extends CharacterBody2D
 # ЗОНДРЕ НАХ 😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨😨
 
 @onready var player: CharacterBody2D = $"../player"
-
 const SPEED = 217
 var HP = 100
 var DAMAGE = 10
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	match GamemodeManager.GAMEMODE:
+		0:
+			DAMAGE = 10
+		1:
+			DAMAGE = 100
 	
 	if HP <= 0:
 		$".".queue_free()
