@@ -4,6 +4,8 @@ var MODCOSMICITEMS = []
 var MODBGIMAGES = []
 var MODSLIST
 
+var BGs = []
+
 const MOD_IMG_ERROR = preload("res://mod_img_error.png")
 
 # Called when the node enters the scene tree for the first time.
@@ -37,6 +39,14 @@ func load_mods() -> void:
 		print(MODBGIMAGES)
 		
 		print("--")
+		
+		for img in ModLoader.MODBGIMAGES:
+			var imgg = ModLoader.get_mod_img(img["image"])
+			
+			BGs.insert(BGs.size(), {
+				"image": imgg,
+				"author": img["author"]
+			})
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

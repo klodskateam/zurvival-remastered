@@ -50,13 +50,8 @@ var BGs = [
 var current_image
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	for img in ModLoader.MODBGIMAGES:
-		var imgg = ModLoader.get_mod_img(img["image"])
-		
-		BGs.insert(BGs.size(), {
-			"image": imgg,
-			"author": img["author"]
-		})
+	
+	BGs.append_array(ModLoader.BGs)
 	
 	change_image(0)
 
