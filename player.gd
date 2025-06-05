@@ -147,7 +147,7 @@ func _input(event):
 				health_bar.queue_free()
 			if kaktameto_bar:
 				kaktameto_bar.queue_free()
-			bullets_bar.position = Vector2(27, 3)
+			bullets_bar.position = Vector2(30, 3)
 		_:
 			pass
 	
