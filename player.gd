@@ -43,47 +43,62 @@ func _physics_process(delta: float):
 		
 	score.text = str(SCORE)
 	
-	kaktameto.text = tr("$stamina") + ": " + str(round(int(VINOSLIVOST))) + "/" + str(MAX_VINOSLIVOST)
-	kaktameto_bar.max_value = MAX_VINOSLIVOST
-	kaktameto_bar.value = VINOSLIVOST
-
-	bullets.text = tr("$bullets") + ": " + str(BULLETS) + "/" + str(ZAPAS_BULLETS)
-	bullets_bar.max_value = MAX_BULLETS
-	bullets_bar.value = BULLETS
-	
-	health.text = tr("$health") + ": " + str(HEALTH) + "/" + str(MAX_HEALTH)
-	health_bar.max_value = MAX_HEALTH
-	health_bar.value = HEALTH
-	
-	if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
-		print(SPEED)
-		print(VINOSLIVOST)
-		if (VINOSLIVOST >= 40):
-			RUN_SPEED = 410 
-			fov_up()
-		#	$Camera2D.zoom = Vector2(0.98, 0.98)
-		else:
-			RUN_SPEED = 345
-			fov_half_up()
-		#	$Camera2D.zoom = Vector2(0.987, 0.987)
-		if (VINOSLIVOST >= 0):
-			SPEED = RUN_SPEED
-			VINOSLIVOST -= 19.5 * delta
-		else:
-			SPEED = REGULAR_SPEED
-			fov_down()
-#			$Camera2D.zoom = Vector2(1, 1)
-			RUNLOCK = 1
+	if $"../UI/SpeedBar":
+		kaktameto.text = tr("$stamina") + ": " + str(round(int(VINOSLIVOST))) + "/" + str(MAX_VINOSLIVOST)
+		kaktameto_bar.max_value = MAX_VINOSLIVOST
+		kaktameto_bar.value = VINOSLIVOST
 	else:
-		SPEED = REGULAR_SPEED
-		if (VINOSLIVOST <= MAX_VINOSLIVOST) and (SPEED != RUN_SPEED):
-			VINOSLIVOST += 6.5 * delta
-			fov_down()
-#			$Camera2D.zoom = Vector2(1, 1)
-	if (VINOSLIVOST <= 35) and !Input.is_action_pressed("run"):
-		RUNLOCK = 1
-	if (VINOSLIVOST >= 35):
-		RUNLOCK = 0
+		pass
+	match GamemodeManager.GAMEMODE:
+		1:
+			bullets.text = tr("$bullets") + ": " + str(BULLETS)
+			bullets_bar.max_value = MAX_BULLETS
+			bullets_bar.value = BULLETS
+		_:	
+			bullets.text = tr("$bullets") + ": " + str(BULLETS) + "/" + str(ZAPAS_BULLETS)
+			bullets_bar.max_value = MAX_BULLETS
+			bullets_bar.value = BULLETS
+	
+	if $"../UI/HealthBar":
+		health.text = tr("$health") + ": " + str(HEALTH) + "/" + str(MAX_HEALTH)
+		health_bar.max_value = MAX_HEALTH
+		health_bar.value = HEALTH
+	else:
+		pass
+	
+	match GamemodeManager.GAMEMODE:
+		1:
+			pass
+		_:
+			if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
+				print(SPEED)
+				print(VINOSLIVOST)
+				if (VINOSLIVOST >= 40):
+					RUN_SPEED = 410 
+					fov_up()
+				#	$Camera2D.zoom = Vector2(0.98, 0.98)
+				else:
+					RUN_SPEED = 345
+					fov_half_up()
+				#	$Camera2D.zoom = Vector2(0.987, 0.987)
+				if (VINOSLIVOST >= 0):
+					SPEED = RUN_SPEED
+					VINOSLIVOST -= 19.5 * delta
+				else:
+					SPEED = REGULAR_SPEED
+					fov_down()
+#					$Camera2D.zoom = Vector2(1, 1)
+					RUNLOCK = 1
+			else:
+				SPEED = REGULAR_SPEED
+				if (VINOSLIVOST <= MAX_VINOSLIVOST) and (SPEED != RUN_SPEED):
+					VINOSLIVOST += 6.5 * delta
+					fov_down()
+#					$Camera2D.zoom = Vector2(1, 1)
+			if (VINOSLIVOST <= 35) and !Input.is_action_pressed("run"):
+				RUNLOCK = 1
+			if (VINOSLIVOST >= 35):
+				RUNLOCK = 0
 		
 	if (OS.get_name() != "Android"):
 		look_at(get_global_mouse_position())
@@ -126,6 +141,15 @@ func _process(delta: float):
 		
 	
 func _input(event):
+	match GamemodeManager.GAMEMODE:
+		1:
+			if $"../UI/HealthBar":
+				$"../UI/HealthBar".queue_free()
+			if $"../UI/SpeedBar":
+				$"../UI/SpeedBar".queue_free()
+			$"../UI/BulletsBar".position = Vector2(27, 3)
+		_:
+			pass
 	
 	if event.is_action_pressed("shoot"):
 		if (OS.get_name() != "Android"):
@@ -154,9 +178,17 @@ func shoot():
 		print(DELAY)
 		
 func bullets_reload():
-	if (BULLETS == 0) and (ZAPAS_BULLETS >= 12):
-		BULLETS = MAX_BULLETS
-		DELAY = 0
-		ZAPAS_BULLETS -= 12
-		$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
-		$ReloadSound.play()
+	match GamemodeManager.GAMEMODE:
+		1:
+			if (BULLETS == 0):
+				BULLETS = MAX_BULLETS
+				DELAY = 0
+				$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
+				$ReloadSound.play()
+		_:
+			if (BULLETS == 0) and (ZAPAS_BULLETS >= 12):
+				BULLETS = MAX_BULLETS
+				DELAY = 0
+				ZAPAS_BULLETS -= 12
+				$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
+				$ReloadSound.play()
