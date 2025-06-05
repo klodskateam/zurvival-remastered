@@ -49,3 +49,5 @@ $errorinternetmods,"Couldn't load mod list, reply code: %s. Please check your in
 $errorinternetmods0,"Couldn't load mod list, you have (in opinion of zombu psychic) disabled internet.","Не получилось получить список модов, у вас (по мнению экстрасэнса зомбу) отключён интернет.",,,,"Modinlistaa ei voitu ladata, sinulla (zombun näkemyksen mukaan) ei ole internet-yhteyttä.",,
 $selectmod,Select a mod...,Выберите мод...,,,,Valitse modin...,,
 $downloadmod,Download mod,Скачать мод,,,,Lataa modin,,
+$classicmodename,Classic mode,Классический режим,,,,Klassillinen pelimuoto,,
+$classicmodedesc,Gamemode as seen in Zurvival. Only hardcore!,Режим прямиком из Zurvival. Только хардкор!,,,,Pelimuoto suoraan Zurvivallistä. Vain hardkori!,,
