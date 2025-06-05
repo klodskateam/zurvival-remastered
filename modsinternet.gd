@@ -41,9 +41,9 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 			$Panel/HSplitContainer/ScrollContainer/VBoxContainer.add_child(new_mod_item)
 			print(mod)
 	elif response_code == 0:
-		$Panel/HSplitContainer/ScrollContainer/VBoxContainer/Label.text = "Не получилось получить список модов, у вас (по мнению экстрасэнса зомбу) отключён интернет."
+		$Panel/HSplitContainer/ScrollContainer/VBoxContainer/Label.text = tr("$errorinternetmods0")
 	else:
-		$Panel/HSplitContainer/ScrollContainer/VBoxContainer/Label.text = "Не получилось получить список модов, код ответа: %s. Проверьте подключение к интернету или доступность адреса \"kteam.veliona.no\"." % str(response_code)
+		$Panel/HSplitContainer/ScrollContainer/VBoxContainer/Label.text = tr("$errorinternetmods") % str(response_code)
 		
 
 

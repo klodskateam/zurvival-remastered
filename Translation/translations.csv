@@ -28,7 +28,7 @@ $placeholdergmdesc,Choose an gamemode to learn more.,Выберите режим
 $gamemodeselect,Choose an gamemode,Выберите режим,Абярыце рэжым,选择模式,Seleccione el modo,Valitse pelin,Abiarycie režym,🖊 📳
 $standardmodename,Standard mode,Стандартный режим,Стандартны рэжым,标准模式,Modo estándar,Tavallinen peli,Standartny režym,🐩 📳
 $standardmodedesc,Classic gamemode that you know and love.,"Самый стандартный режим, что ещё говорить?","Самы стандартны рэжым, што яшчэ казаць?",最标准的模式，我还能说什么？,"El modo más estándar, ¿qué más decir?",Klassikko! Tavallinen peli.,"Samy standartny režym, što jašče kazać?","🌅 🐩 📳, ⚫️❔ 🙆 💪 👤 💬 ❓"
-$moderror,Mod error!,Ошибка мода!,Памылка мода!,模组错误！,Error de moda!,Mod:isä tapahtui virhe!,Pamylka moda!,👗 ❌ ❗
+$moderror,Mod error!,Ошибка мода!,Памылка мода!,模组错误！,Error de moda!,Modissä tapahtui virhe!,Pamylka moda!,👗 ❌ ❗
 $modnameerror,Mod name missing,Название не установлено,Назва не ўстаноўлена,名称未设置,Nombre no establecido,Nimi ei lisätty,Nazva nie ŭstanoŭliena,📛 🚫 ⚒
 $moddescerror,Mod description missing,Описание не установлено,Апісанне не ўстаноўлена,描述未设置,Descripción no instalada,Seloste ei lisätty,Apisańnie nie ŭstanoŭliena,📛 🚫 ⚒
 $mods,Mods,Моды,Моды,模组,Modas,Modit,Mody,🧟‍♂
@@ -42,3 +42,10 @@ $shop,Shop,Магазин,,店铺,Comercio,Kauppa,,🏬
 $notset,Not installed,Не установлено,,未安装,No instalado,Ei asetettu,,🚫 ❎
 $buy,Buy,Купить,,,,Ostaa,,
 $received,Received,Получено,,,,Saatu,,
+$modsforzr2.0,Mods for ZR2.0,Моды для ZR2.0,,,,ZR2.0:n modit,,
+$learnmore,Learn more,Узнать больше,,,,Lisätietoa,,
+$loading,"Loading, please wait...","Загрузка, пожалуйста подождите...",,,,"Ladataan, odota hetki",,
+$errorinternetmods,"Couldn't load mod list, reply code: %s. Please check your internet connection or accessibility of \""kteam.veliona.no\"".","Не получилось получить список модов, код ответа: %s. Проверьте подключение к интернету или доступность адреса \""kteam.veliona.no\"".",,,,"Modinlistaa ei voitu ladata, vastauskoodi: %s. Tarkista sinun internet-yhteytesi tai osoitteen \""kteam.veliona.no\"" saavutettavuus.",,
+$errorinternetmods0,"Couldn't load mod list, you have (in opinion of zombu psychic) disabled internet.","Не получилось получить список модов, у вас (по мнению экстрасэнса зомбу) отключён интернет.",,,,"Modinlistaa ei voitu ladata, sinulla (zombun näkemyksen mukaan) ei ole internet-yhteyttä.",,
+$selectmod,Select a mod...,Выберите мод...,,,,Valitse modin...,,
+$downloadmod,Download mod,Скачать мод,,,,Lataa modin,,
