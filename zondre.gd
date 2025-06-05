@@ -19,10 +19,10 @@ var DAMAGE = 10
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	match GamemodeManager.GAMEMODE:
-		0:
-			DAMAGE = 10
 		1:
 			DAMAGE = 100
+		_:
+			DAMAGE = 10
 	
 	if HP <= 0:
 		$".".queue_free()
