@@ -10,7 +10,7 @@ extends CharacterBody2D
 
 @onready var health: Label = $"../UI/HealthBar/Health"
 @onready var health_bar: ProgressBar = $"../UI/HealthBar"
-
+@onready var vignette_red = $"../UI/VignetteRed"
 
 var VINOSLIVOST = 100
 @export var MAX_VINOSLIVOST = 100
@@ -43,7 +43,7 @@ func _physics_process(delta: float):
 		
 	score.text = str(SCORE)
 	
-	if $"../UI/SpeedBar":
+	if kaktameto_bar:
 		kaktameto.text = tr("$stamina") + ": " + str(round(int(VINOSLIVOST))) + "/" + str(MAX_VINOSLIVOST)
 		kaktameto_bar.max_value = MAX_VINOSLIVOST
 		kaktameto_bar.value = VINOSLIVOST
@@ -59,7 +59,7 @@ func _physics_process(delta: float):
 			bullets_bar.max_value = MAX_BULLETS
 			bullets_bar.value = BULLETS
 	
-	if $"../UI/HealthBar":
+	if health_bar:
 		health.text = tr("$health") + ": " + str(HEALTH) + "/" + str(MAX_HEALTH)
 		health_bar.max_value = MAX_HEALTH
 		health_bar.value = HEALTH
@@ -134,20 +134,20 @@ func _process(delta: float):
 		$"../GameOver".receivedzc = (SCORE/5)
 		$"../GameOver".set_scores()
 	if (HEALTH <= 20):
-		$"../UI/VignetteRed".lowhealth = true
+		vignette_red.lowhealth = true
 	else:
-		$"../UI/VignetteRed".lowhealth = false		
+		vignette_red.lowhealth = false		
 		
 		
 	
 func _input(event):
 	match GamemodeManager.GAMEMODE:
 		1:
-			if $"../UI/HealthBar":
-				$"../UI/HealthBar".queue_free()
-			if $"../UI/SpeedBar":
-				$"../UI/SpeedBar".queue_free()
-			$"../UI/BulletsBar".position = Vector2(27, 3)
+			if health_bar:
+				health_bar.queue_free()
+			if kaktameto_bar:
+				kaktameto_bar.queue_free()
+			bullets_bar.position = Vector2(27, 3)
 		_:
 			pass
 	
