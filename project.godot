@@ -127,7 +127,7 @@ pointing/emulate_touch_from_mouse=true
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://Translation/translations.be.translation", "res://Translation/translations.ch.translation", "res://Translation/translations.en.translation", "res://Translation/translations.ru.translation", "res://Translation/translations.sp.translation", "res://Translation/translations.fi.translation", "res://Translation/translations.bel.translation", "res://Translation/translations.emoji.translation")
+locale/translations=PackedStringArray("res://Translation/translations.be.translation", "res://Translation/translations.ch.translation", "res://Translation/translations.en.translation", "res://Translation/translations.ru.translation", "res://Translation/translations.sp.translation", "res://Translation/translations.fi.translation", "res://Translation/translations.bel.translation", "res://Translation/translations.pl.translation", "res://Translation/translations.emoji.translation")
 
 [layer_names]
 
