@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://k2logs20d545"]
+[gd_scene load_steps=8 format=3 uid="uid://k2logs20d545"]
 
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="1_teobh"]
 [ext_resource type="Script" uid="uid://bk278j3u3ei21" path="res://modsinternet.gd" id="2_io5ma"]
-[ext_resource type="PackedScene" uid="uid://casxtl5gm7da3" path="res://mod_item_internet.tscn" id="3_io5ma"]
 [ext_resource type="PackedScene" uid="uid://db8yny8uiwun1" path="res://background.tscn" id="3_ye50u"]
 [ext_resource type="Texture2D" uid="uid://bqmmq22i5svdr" path="res://_IMPORTANT_IMAGE_DONT_DELETE_INACHE_PISEC!!.jpg" id="4_4f321"]
 
@@ -88,9 +87,6 @@ size_flags_vertical = 3
 layout_mode = 2
 text = "$loading"
 autowrap_mode = 2
-
-[node name="modIteminternet" parent="Panel/HSplitContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_io5ma")]
-layout_mode = 2
 
 [node name="VSplitContainer" type="VSplitContainer" parent="Panel/HSplitContainer"]
 layout_mode = 2
