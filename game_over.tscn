@@ -7,7 +7,10 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8u835"]
 resource_local_to_scene = true
 shader = ExtResource("2_ccer4")
-shader_parameter/blur = 3.07
+shader_parameter/blur_type = 2
+shader_parameter/blur_amount = 48
+shader_parameter/blur_radius = 1.0
+shader_parameter/blur_direction = Vector2(1, 1)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ccer4"]
 
