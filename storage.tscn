@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://ddsqj7m25ucaa"]
+[gd_scene load_steps=5 format=3 uid="uid://ddsqj7m25ucaa"]
 
 [ext_resource type="Script" uid="uid://dk6c7q85yu48l" path="res://storage.gd" id="1_3vq3h"]
 [ext_resource type="Texture2D" uid="uid://cmdbay58waf1e" path="res://Resources/storage.png" id="1_ueev3"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_lnm35"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wttin"]
+font_size = 32
 
 [node name="storage" type="Node2D"]
 script = ExtResource("1_3vq3h")
@@ -34,5 +37,19 @@ offset_right = 1046.0
 offset_bottom = 720.0
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Прицелы"
+label_settings = SubResource("LabelSettings_wttin")
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+columns = 6
 
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_quitstorage_pressed"]
