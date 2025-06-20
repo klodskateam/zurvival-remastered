@@ -2,7 +2,6 @@ extends Button
 
 @onready var GAME = "res://gamemode.tscn"
 @onready var SETTINGS = "res://settings.tscn"
-
 var config = ConfigFile.new()
 
 func _on_play_pressed():
@@ -14,9 +13,12 @@ func _on_settings_pressed():
 	get_tree().change_scene_to_file(SETTINGS)
 	
 func _on_settings_back_pressed():
+	config.load(Global.SAVE_PATH)
+	var tmp_aims = config.get_value("items", "aims", [])
 	config.set_value("settings", "fullscreen", $"../VBoxContainer/SettingsFullscreenCheck".button_pressed)
 	config.set_value("settings", "lang", TranslationServer.get_loaded_locales()[$"../VBoxContainer/SettingsLang".selected])
 	config.set_value("save", "zcoins", Global.ZCOINS)
+	config.set_value("items", "aims", tmp_aims)
 	config.save(Global.SAVE_PATH)
 	get_tree().change_scene_to_file("res://menu.tscn")
 	
