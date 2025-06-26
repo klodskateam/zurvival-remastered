@@ -30,6 +30,8 @@ func _on_pressed() -> void:
 				product_win.PRODUCT_IMAGE = INFO["sprite"]
 			else:
 				product_win.PRODUCT_IMAGE = ModLoader.get_mod_img(INFO["sprite"])
+	if "type" in INFO:
+		product_win.PRODUCT_TYPE = INFO["type"]
 	
 	$"../../../../..".add_child(product_win)
 	print(INFO)
