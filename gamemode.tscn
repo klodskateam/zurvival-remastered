@@ -48,12 +48,25 @@ custom_minimum_size = Vector2(390, 0)
 layout_mode = 2
 alignment = 1
 
-[node name="Button" parent="UI/Control/Panel/ScrollContainer/VBoxContainer" instance=ExtResource("4_uitb6")]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Control/Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 4
+alignment = 1
+
+[node name="Button" parent="UI/Control/Panel/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource("4_uitb6")]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "$shop"
 
-[node name="HSeparator" type="HSeparator" parent="UI/Control/Panel/ScrollContainer/VBoxContainer"]
+[node name="Button2" parent="UI/Control/Panel/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource("4_uitb6")]
 layout_mode = 2
+size_flags_horizontal = 3
+text = "$storage"
+
+[node name="HSeparator" type="HSeparator" parent="UI/Control/Panel/ScrollContainer/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="UI/Control/Panel"]
 layout_mode = 0
@@ -100,5 +113,7 @@ offset_bottom = 349.0
 theme_override_font_sizes/font_size = 16
 text = "$placeholdergmdesc"
 
+[connection signal="pressed" from="UI/Control/Panel/ScrollContainer/VBoxContainer/HBoxContainer/Button" to="." method="_on_shopbtn_pressed"]
+[connection signal="pressed" from="UI/Control/Panel/ScrollContainer/VBoxContainer/HBoxContainer/Button2" to="." method="_on_storagebtn_pressed"]
 [connection signal="pressed" from="UI/Control/Panel/Back" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="UI/Control/Panel/PlayButton" to="." method="_on_play_button_pressed"]
