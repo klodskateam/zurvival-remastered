@@ -1,11 +1,21 @@
-[gd_scene load_steps=10 format=3 uid="uid://c77tvaq5vklip"]
+[gd_scene load_steps=13 format=3 uid="uid://c77tvaq5vklip"]
 
 [ext_resource type="Script" uid="uid://4mjqs05v3tfk" path="res://shop.gd" id="1_aoq43"]
 [ext_resource type="Texture2D" uid="uid://boirt17seoi3l" path="res://Resources/store.png" id="1_uy4op"]
+[ext_resource type="Shader" uid="uid://4e5td3doxjwy" path="res://blur.gdshader" id="3_8kdgp"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="3_g44lh"]
 [ext_resource type="PackedScene" uid="uid://8t6e4ir44ffr" path="res://shopitem.tscn" id="4_8ipye"]
 [ext_resource type="FontFile" uid="uid://mol2p0edntwv" path="res://Resources/Montserrat-Regular.ttf" id="5_6lah5"]
 [ext_resource type="Script" uid="uid://bmtgqikqbpbuj" path="res://zc_shop.gd" id="6_gmb2m"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_myf4l"]
+shader = ExtResource("3_8kdgp")
+shader_parameter/blur_type = 0
+shader_parameter/blur_amount = 64
+shader_parameter/blur_radius = 1.0
+shader_parameter/blur_direction = Vector2(1, 1)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_p5a0g"]
 
 [sub_resource type="Gradient" id="Gradient_gmb2m"]
 interpolation_color_space = 2
@@ -43,6 +53,24 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_g44lh")
 
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control"]
+material = SubResource("ShaderMaterial_myf4l")
+layout_mode = 0
+offset_left = 1101.0
+offset_top = 652.0
+offset_right = 1263.0
+offset_bottom = 696.0
+texture = SubResource("CanvasTexture_p5a0g")
+
+[node name="Button" type="Button" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 1101.0
+offset_top = 652.0
+offset_right = 1263.0
+offset_bottom = 696.0
+theme = ExtResource("3_g44lh")
+text = "$quit"
+
 [node name="Label" type="Label" parent="CanvasLayer/Control"]
 layout_mode = 0
 offset_left = 22.0
@@ -58,15 +86,6 @@ theme_override_font_sizes/font_size = 20
 text = "0 Z$"
 justification_flags = 162
 script = ExtResource("6_gmb2m")
-
-[node name="Button" type="Button" parent="CanvasLayer/Control"]
-layout_mode = 0
-offset_left = 1101.0
-offset_top = 652.0
-offset_right = 1263.0
-offset_bottom = 696.0
-theme = ExtResource("3_g44lh")
-text = "$quit"
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control"]
 clip_children = 1

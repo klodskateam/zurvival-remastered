@@ -54,3 +54,11 @@ func _on_play_button_pressed() -> void:
 func change_info():
 	$UI/Control/Panel/gamemodename.text = str(GMNAME)
 	$UI/Control/Panel/gamemodedesc.text = str(GMDESC)
+
+
+func _on_shopbtn_pressed() -> void:
+	get_tree().change_scene_to_file("res://shop.tscn")
+
+
+func _on_storagebtn_pressed() -> void:
+	get_tree().change_scene_to_file("res://storage.tscn")
