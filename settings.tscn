@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cqqovs65rrlkp"]
+[gd_scene load_steps=8 format=3 uid="uid://cqqovs65rrlkp"]
 
 [ext_resource type="PackedScene" uid="uid://db8yny8uiwun1" path="res://background.tscn" id="1_jxt1c"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_4p2vr"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://beg25d2qybjtl" path="res://transitionmenu.gd" id="3_71mqq"]
 [ext_resource type="Script" uid="uid://cnmud1a7ocq3v" path="res://settings_lang.gd" id="3_vfm0g"]
 [ext_resource type="Script" uid="uid://cy33ypxnnm3ty" path="res://settings_fullscreen_check.gd" id="4_vftto"]
+[ext_resource type="Script" uid="uid://bsmlt6q86exbs" path="res://settings_transition_check.gd" id="6_3j6r5"]
 
 [node name="Settings" type="Node2D"]
 
@@ -65,6 +66,24 @@ layout_mode = 2
 text = "$fullscreen"
 alignment = 2
 script = ExtResource("4_vftto")
+
+[node name="SettingsTransitionCheck" type="CheckButton" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+text = "$disablesmoothtransitions"
+alignment = 2
+script = ExtResource("6_3j6r5")
+
+[node name="Label" type="Label" parent="Control/Panel/VBoxContainer/SettingsTransitionCheck"]
+layout_mode = 2
+offset_left = -5.0
+offset_top = 20.0
+offset_right = 294.0
+offset_bottom = 36.0
+theme_override_font_sizes/font_size = 12
+text = "$restartrequired"
+horizontal_alignment = 2
+vertical_alignment = 3
+justification_flags = 0
 
 [node name="Sep1" type="HSeparator" parent="Control/Panel/VBoxContainer"]
 layout_mode = 2

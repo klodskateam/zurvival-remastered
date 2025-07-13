@@ -21,6 +21,7 @@ extends Node
 # Настройки и служебное
 var VERSION = ProjectSettings.get_setting("application/config/version")
 var FULLSCREEN = false
+var SmoothTransitions = false
 @onready var GAME = "res://gamemode.tscn"
 @onready var SETTINGS = "res://settings.tscn"
 var FROM = 0
@@ -51,14 +52,16 @@ func _ready() -> void:
 		TranslationServer.set_locale("en")
 	else:
 		TranslationServer.set_locale(CONFIG.get_value("settings", "lang"))
-	
-	if CONFIG.get_value("settings", "fullscreen") == true:
+		
+	if CONFIG.get_value("settings", "smoothtransitions"):
+		SmoothTransitions = CONFIG.get_value("settings", "smoothtransitions")
+		
+	if CONFIG.get_value("settings", "fullscreen"):
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+		FULLSCREEN = CONFIG.get_value("settings", "fullscreen")	
 		
 	if CONFIG.get_value("save", "zcoins"):
 		ZCOINS = CONFIG.get_value("save", "zcoins")
-	if CONFIG.get_value("save", "fullscreen"):
-		FULLSCREEN = CONFIG.get_value("save", "fullscreen")
 		
 		
 # полезная функция™
