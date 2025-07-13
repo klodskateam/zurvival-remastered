@@ -81,8 +81,10 @@ func from(where: int):
 		position = Vector2(1500.0, 360.0)
 	
 func _ready() -> void:
-	if Global.BGID:
+	if Global.BGID and Global.SmoothTransitions:
 		background.set_id(Global.BGID)
+	else:
+		pass
 	if Global.FROM != 0 and Global.SmoothTransitions:
 		from(Global.FROM)
 		center()
