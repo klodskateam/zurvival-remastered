@@ -81,6 +81,11 @@ layout_mode = 2
 [node name="modItem" parent="Control/Panel/VBoxContainer/VBoxContainer" instance=ExtResource("4_yji3y")]
 layout_mode = 2
 
+[node name="TransitionBlock" type="TextureRect" parent="."]
+visible = false
+offset_right = 1280.0
+offset_bottom = 720.0
+
 [connection signal="pressed" from="Control/Panel/Mods" to="." method="_on_mods2_pressed"]
 [connection signal="pressed" from="Control/Panel/SettingsSave" to="." method="_on_settings_save_pressed"]
 [connection signal="button_down" from="Control/Panel/OpenDir" to="." method="_on_open_dir_button_down"]
