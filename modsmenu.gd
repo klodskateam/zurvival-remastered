@@ -1,6 +1,8 @@
 extends Node2D
 
 const MOD_ITEM = preload("res://mod_item.tscn")
+@onready var transition = get_tree().current_scene.get_node("Control")
+@onready var background = get_tree().current_scene.get_node("Background/Sprite2D")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -23,6 +25,8 @@ func _ready() -> void:
 			ModItem.URL = tmp_mod["website"]
 		
 		$Control/Panel/VBoxContainer/VBoxContainer.add_child(ModItem)
+	if not transition.imfinished.is_connected(Global.got_finishedsign):
+		transition.imfinished.connect(Global.got_finishedsign)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -35,8 +39,10 @@ func _on_open_dir_button_down() -> void:
 
 
 func _on_settings_save_pressed() -> void:
-	get_tree().change_scene_to_file("res://menu.tscn")
-
+#	get_tree().change_scene_to_file("res://menu.tscn")
+	background.save_id()
+	Global.FROM = 3
+	transition.right(6)
 
 func _on_mods2_pressed() -> void:
 	get_tree().change_scene_to_file("res://modsinternet.tscn")

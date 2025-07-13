@@ -7,7 +7,7 @@
 [sub_resource type="LabelSettings" id="LabelSettings_i7s6n"]
 font_size = 11
 
-[node name="Node2D" type="Node2D"]
+[node name="Background" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(640, 360)

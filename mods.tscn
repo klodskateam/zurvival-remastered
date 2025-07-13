@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://ds56116ok1cdi"]
+[gd_scene load_steps=6 format=3 uid="uid://ds56116ok1cdi"]
 
 [ext_resource type="PackedScene" uid="uid://db8yny8uiwun1" path="res://background.tscn" id="1_nlh3i"]
 [ext_resource type="Script" uid="uid://dmvtfldeyutds" path="res://modsmenu.gd" id="1_yji3y"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_gjigg"]
+[ext_resource type="Script" uid="uid://beg25d2qybjtl" path="res://transitionmenu.gd" id="4_nlh3i"]
 [ext_resource type="PackedScene" uid="uid://cycy75qd356tu" path="res://mod_item.tscn" id="4_yji3y"]
 
 [node name="Mods" type="Node2D"]
@@ -12,10 +13,17 @@ script = ExtResource("1_yji3y")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 640.0
+offset_top = 360.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("2_gjigg")
+script = ExtResource("4_nlh3i")
 
 [node name="Panel" type="Panel" parent="Control"]
 layout_mode = 1
@@ -24,10 +32,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 423.0
-offset_top = 115.0
-offset_right = 777.0
-offset_bottom = 541.0
+offset_left = -177.0
+offset_top = -213.0
+offset_right = 177.0
+offset_bottom = 213.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_gjigg")

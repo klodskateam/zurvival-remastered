@@ -21,6 +21,9 @@ extends Node
 # Настройки и служебное
 var VERSION = ProjectSettings.get_setting("application/config/version")
 var FULLSCREEN = false
+@onready var GAME = "res://gamemode.tscn"
+@onready var SETTINGS = "res://settings.tscn"
+var FROM = 0
 
 #Конфиги
 const SAVE_PATH = "user://save.cfg"
@@ -28,6 +31,7 @@ var CONFIG = ConfigFile.new()
 var KT_URL = "https://kteam.veliona.no/"
 
 # Переменные
+var BGID
 var ZCOINS = 0
 var CURRENT_AIM = preload("res://Resources/aims/default.png")
 
@@ -56,7 +60,6 @@ func _ready() -> void:
 	if CONFIG.get_value("save", "fullscreen"):
 		FULLSCREEN = CONFIG.get_value("save", "fullscreen")
 		
-
 		
 # полезная функция™
 func check(в_рот_мне_ноги: bool):
@@ -65,3 +68,17 @@ func check(в_рот_мне_ноги: bool):
 	else:
 		return false
 		
+func got_finishedsign(value):
+	match value:
+		1:
+			get_tree().change_scene_to_file(GAME)
+		2:
+			get_tree().change_scene_to_file(SETTINGS)
+		3:
+			get_tree().change_scene_to_file("res://mods.tscn")
+		4:
+			get_tree().quit()
+		5:
+			get_tree().change_scene_to_file("res://modsinternet.tscn")
+		6:
+			get_tree().change_scene_to_file("res://menu.tscn")

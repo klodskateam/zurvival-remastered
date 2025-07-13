@@ -29,7 +29,7 @@ grow_vertical = 2
 theme = ExtResource("1_teobh")
 script = ExtResource("2_io5ma")
 
-[node name="Node2D" parent="." instance=ExtResource("3_ye50u")]
+[node name="Background" parent="." instance=ExtResource("3_ye50u")]
 
 [node name="Panel" type="Panel" parent="."]
 custom_minimum_size = Vector2(1000, 600)
