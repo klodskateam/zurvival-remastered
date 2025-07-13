@@ -102,10 +102,11 @@ text = "$play"
 layout_mode = 0
 offset_left = 3.0
 offset_top = 251.0
-offset_right = 183.0
-offset_bottom = 272.0
+offset_right = 395.0
+offset_bottom = 282.0
 theme_override_font_sizes/font_size = 24
 text = "$placeholdergmname"
+autowrap_mode = 3
 
 [node name="gamemodedesc" type="Label" parent="Control/Panel"]
 layout_mode = 0
@@ -115,6 +116,9 @@ offset_right = 395.0
 offset_bottom = 349.0
 theme_override_font_sizes/font_size = 16
 text = "$placeholdergmdesc"
+autowrap_mode = 3
+justification_flags = 130
+text_overrun_behavior = 2
 
 [node name="TransitionBlock" type="TextureRect" parent="."]
 visible = false
