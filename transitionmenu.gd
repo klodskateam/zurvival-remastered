@@ -91,3 +91,7 @@ func _ready() -> void:
 		Global.FROM = 0
 	else:
 		position = Vector2(640.0, 360.0)
+
+
+func _on_visibility_changed2() -> void:
+	pass # Replace with function body.
