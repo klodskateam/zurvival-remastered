@@ -74,14 +74,20 @@ func check(в_рот_мне_ноги: bool):
 func got_finishedsign(value):
 	match value:
 		1:
+			await get_tree().process_frame
 			get_tree().change_scene_to_file(GAME)
 		2:
+			await get_tree().process_frame
 			get_tree().change_scene_to_file(SETTINGS)
 		3:
+			await get_tree().process_frame
 			get_tree().change_scene_to_file("res://mods.tscn")
 		4:
+			await get_tree().process_frame
 			get_tree().quit()
 		5:
+			await get_tree().process_frame
 			get_tree().change_scene_to_file("res://modsinternet.tscn")
 		6:
+			await get_tree().process_frame
 			get_tree().change_scene_to_file("res://menu.tscn")
