@@ -55,6 +55,8 @@ func _ready() -> void:
 		
 	if CONFIG.get_value("settings", "smoothtransitions"):
 		SmoothTransitions = CONFIG.get_value("settings", "smoothtransitions")
+	else:
+		SmoothTransitions = true
 		
 	if CONFIG.get_value("settings", "fullscreen"):
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
@@ -62,6 +64,7 @@ func _ready() -> void:
 		
 	if CONFIG.get_value("save", "zcoins"):
 		ZCOINS = CONFIG.get_value("save", "zcoins")
+		
 		
 		
 # полезная функция™
