@@ -45,4 +45,7 @@ func _on_settings_save_pressed() -> void:
 	transition.right(6)
 
 func _on_mods2_pressed() -> void:
-	get_tree().change_scene_to_file("res://modsinternet.tscn")
+#	get_tree().change_scene_to_file("res://modsinternet.tscn")
+	background.save_id()
+	Global.FROM = 1
+	transition.down(5)

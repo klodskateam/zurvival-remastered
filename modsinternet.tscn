@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://k2logs20d545"]
+[gd_scene load_steps=9 format=3 uid="uid://k2logs20d545"]
 
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="1_teobh"]
 [ext_resource type="Script" uid="uid://bk278j3u3ei21" path="res://modsinternet.gd" id="2_io5ma"]
 [ext_resource type="PackedScene" uid="uid://db8yny8uiwun1" path="res://background.tscn" id="3_ye50u"]
 [ext_resource type="Texture2D" uid="uid://bqmmq22i5svdr" path="res://_IMPORTANT_IMAGE_DONT_DELETE_INACHE_PISEC!!.jpg" id="4_4f321"]
+[ext_resource type="Script" uid="uid://beg25d2qybjtl" path="res://transitionmenu.gd" id="4_ye50u"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_yn577"]
 font_size = 41
@@ -31,7 +32,20 @@ script = ExtResource("2_io5ma")
 
 [node name="Background" parent="." instance=ExtResource("3_ye50u")]
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 640.0
+offset_top = 360.0
+offset_right = -639.0
+offset_bottom = -359.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_ye50u")
+
+[node name="Panel" type="Panel" parent="Control"]
 custom_minimum_size = Vector2(1000, 600)
 layout_mode = 1
 anchors_preset = 8
@@ -39,14 +53,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -500.0
-offset_top = -300.0
-offset_right = 500.0
-offset_bottom = 300.0
+offset_left = -500.5
+offset_top = -300.5
+offset_right = 499.5
+offset_bottom = 299.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="Panel"]
+[node name="Label" type="Label" parent="Control/Panel"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -57,7 +71,7 @@ label_settings = SubResource("LabelSettings_yn577")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="Panel"]
+[node name="Button" type="Button" parent="Control/Panel"]
 layout_mode = 0
 offset_left = 10.0
 offset_top = 10.0
@@ -65,7 +79,7 @@ offset_right = 138.0
 offset_bottom = 46.0
 text = "$quit"
 
-[node name="HSplitContainer" type="HSplitContainer" parent="Panel"]
+[node name="HSplitContainer" type="HSplitContainer" parent="Control/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -75,28 +89,28 @@ grow_horizontal = 2
 grow_vertical = 2
 split_offset = 355
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel/HSplitContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/Panel/HSplitContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HSplitContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel/HSplitContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="Panel/HSplitContainer/ScrollContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="Control/Panel/HSplitContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "$loading"
 autowrap_mode = 2
 
-[node name="VSplitContainer" type="VSplitContainer" parent="Panel/HSplitContainer"]
+[node name="VSplitContainer" type="VSplitContainer" parent="Control/Panel/HSplitContainer"]
 layout_mode = 2
 split_offset = 128
 
-[node name="Panel" type="Panel" parent="Panel/HSplitContainer/VSplitContainer"]
+[node name="Panel" type="Panel" parent="Control/Panel/HSplitContainer/VSplitContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_teobh")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/HSplitContainer/VSplitContainer/Panel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/Panel/HSplitContainer/VSplitContainer/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -104,36 +118,36 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer"]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 texture = ExtResource("4_4f321")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="modname" type="Label" parent="Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer"]
+[node name="modname" type="Label" parent="Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Название мода 22"
 label_settings = SubResource("LabelSettings_ye50u")
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="moddesc" type="Label" parent="Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer"]
+[node name="moddesc" type="Label" parent="Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Опис"
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="dl_btn" type="Button" parent="Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer"]
+[node name="dl_btn" type="Button" parent="Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 disabled = true
 text = "$downloadmod"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Panel/HSplitContainer/VSplitContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/Panel/HSplitContainer/VSplitContainer"]
 layout_mode = 2
 size_flags_stretch_ratio = 0.86
 focus_mode = 2
@@ -149,8 +163,13 @@ timeout = 30.0
 
 [node name="mod_dl" type="HTTPRequest" parent="."]
 
-[connection signal="pressed" from="Panel/Button" to="." method="_on_quitmodsinternet_pressed"]
-[connection signal="pressed" from="Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/dl_btn" to="." method="_on_dl_btn_pressed"]
-[connection signal="meta_clicked" from="Panel/HSplitContainer/VSplitContainer/RichTextLabel" to="." method="_on_rich_text_label_meta_clicked"]
+[node name="TransitionBlock" type="TextureRect" parent="."]
+visible = false
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[connection signal="pressed" from="Control/Panel/Button" to="." method="_on_quitmodsinternet_pressed"]
+[connection signal="pressed" from="Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/dl_btn" to="." method="_on_dl_btn_pressed"]
+[connection signal="meta_clicked" from="Control/Panel/HSplitContainer/VSplitContainer/RichTextLabel" to="." method="_on_rich_text_label_meta_clicked"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
 [connection signal="request_completed" from="mod_dl" to="." method="_on_mod_dl_request_completed"]

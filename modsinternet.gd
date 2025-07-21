@@ -1,7 +1,8 @@
 extends Control
 
 @onready var internet: HTTPRequest = $HTTPRequest
-
+@onready var transition = get_tree().current_scene.get_node("Control")
+@onready var background = get_tree().current_scene.get_node("Background/Sprite2D")
 
 var API_URL = "http://kteam.veliona.no/_game_services/zr2.0/mods/api/getmods.php"
 const MOD_ITEM_INTERNET = preload("res://mod_item_internet.tscn")
@@ -13,6 +14,8 @@ var mods_info
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if not transition.imfinished.is_connected(Global.got_finishedsign):
+		transition.imfinished.connect(Global.got_finishedsign)
 	internet.request(API_URL)
 	download("https://kteam.veliona.no/_game_services/zr2.0/mods/files/sus.zip", "user://sus.zip")
 
@@ -167,4 +170,7 @@ func _on_mod_dl_request_completed(result: int, response_code: int, headers: Pack
 
 
 func _on_quitmodsinternet_pressed() -> void:
-	get_tree().change_scene_to_file("res://mods.tscn")
+#	get_tree().change_scene_to_file("res://mods.tscn")
+	background.save_id()
+	Global.FROM = 2
+	transition.up(3)
