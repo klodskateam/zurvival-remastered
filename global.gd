@@ -83,7 +83,7 @@ func got_finishedsign(value):
 			await get_tree().process_frame
 			get_tree().change_scene_to_file("res://mods.tscn")
 		4:
-			await get_tree().process_frame
+			
 			get_tree().quit()
 		5:
 			await get_tree().process_frame

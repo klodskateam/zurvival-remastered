@@ -7,10 +7,18 @@ func up(to: int):
 	if !Global.SmoothTransitions:
 		imfinished.emit(to)
 	else:
+		if to == 4:
+			var blackscreen = get_tree().current_scene.get_node("BlackScreen")
+			var tween = create_tween()
+			tween.tween_property(blackscreen, "position", Vector2(0, -1008.0), 0.7).set_trans(Tween.TRANS_QUINT)
+			tween.connect("finished", func(): up_done(to))
 		var tween = create_tween()
 		tween.tween_property(self, "position", Vector2(640.0, -520), 0.7).set_trans(Tween.TRANS_QUINT)
 		transitionblock.visible = true
-		tween.connect("finished", func(): up_done(to))
+		if to == 4:
+			pass 
+		else:
+			tween.connect("finished", func(): up_done(to))
 	
 	
 func up_done(to: int):

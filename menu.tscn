@@ -1,10 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://c6ji2387qq42r"]
+[gd_scene load_steps=8 format=3 uid="uid://c6ji2387qq42r"]
 
 [ext_resource type="Script" uid="uid://2bvrwha2lhlt" path="res://buttonsmenu.gd" id="1_814jb"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_i4evy"]
 [ext_resource type="PackedScene" uid="uid://db8yny8uiwun1" path="res://background.tscn" id="2_xh8be"]
 [ext_resource type="Script" uid="uid://beg25d2qybjtl" path="res://transitionmenu.gd" id="3_l48gv"]
 [ext_resource type="Script" uid="uid://deyhfds4n3ph0" path="res://create_mod_buttons.gd" id="3_ytr4m"]
+
+[sub_resource type="Gradient" id="Gradient_ytr4m"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.309211, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_l48gv"]
+gradient = SubResource("Gradient_ytr4m")
+fill_from = Vector2(1, 1)
 
 [node name="menu" type="Node2D"]
 
@@ -81,6 +90,12 @@ script = ExtResource("1_814jb")
 visible = false
 offset_right = 1280.0
 offset_bottom = 720.0
+
+[node name="BlackScreen" type="TextureRect" parent="."]
+offset_top = 720.0
+offset_right = 1280.0
+offset_bottom = 2448.0
+texture = SubResource("GradientTexture2D_l48gv")
 
 [connection signal="pressed" from="Control/Panel/VBoxContainer/Play" to="Control/Panel/VBoxContainer/Play" method="_on_play_pressed"]
 [connection signal="pressed" from="Control/Panel/VBoxContainer/Settings" to="Control/Panel/VBoxContainer/Play" method="_on_settings_pressed"]
