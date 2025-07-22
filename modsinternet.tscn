@@ -165,6 +165,7 @@ timeout = 30.0
 
 [node name="TransitionBlock" type="TextureRect" parent="."]
 visible = false
+layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
 
