@@ -32,7 +32,6 @@ shape = SubResource("CircleShape2D_t8bhi")
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 simplify_path = true
 simplify_epsilon = 0.66
-debug_enabled = true
 debug_path_custom_color = Color(1, 0, 0, 1)
 
 [node name="Timer" type="Timer" parent="."]
