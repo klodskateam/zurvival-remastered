@@ -39,12 +39,11 @@ func nav(delta: float) -> void:
 	var nextpath: Vector2 = navagent.get_next_path_position()
 	var newvelocity: Vector2 = (global_position.direction_to(nextpath) * SPEED)
 	position += newvelocity * delta
-	if player != null:
-		navagent.target_position = player.global_position
-	pass
+
 
 func _on_timer_timeout() -> void:
-	navagent.target_position = player.global_position
+	if player != null:
+		navagent.target_position = player.global_position
 
 #func get_direction_to_player():
 #	var player = get_tree().get_first_node_in_group("player") as Node2D

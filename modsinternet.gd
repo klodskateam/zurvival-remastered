@@ -27,7 +27,7 @@ func _process(delta: float) -> void:
 func _on_http_request_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	if response_code == 200:
 		mods_info = JSON.parse_string(body.get_string_from_utf8())
-		$Panel/HSplitContainer/ScrollContainer/VBoxContainer/Label.queue_free()
+		$Control/Panel/HSplitContainer/ScrollContainer/VBoxContainer/Label.queue_free()
 		
 		for mod in mods_info["data"]:
 			var new_mod_item = MOD_ITEM_INTERNET.instantiate()
@@ -41,12 +41,12 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 			load_image(mod["icon"], new_mod_item, "moditem")
 				
 		
-			$Panel/HSplitContainer/ScrollContainer/VBoxContainer.add_child(new_mod_item)
+			$Control/Panel/HSplitContainer/ScrollContainer/VBoxContainer.add_child(new_mod_item)
 			print(mod)
 	elif response_code == 0:
-		$Panel/HSplitContainer/ScrollContainer/VBoxContainer/Label.text = tr("$errorinternetmods0")
+		$Control/Panel/HSplitContainer/ScrollContainer/VBoxContainer/Label.text = tr("$errorinternetmods0")
 	else:
-		$Panel/HSplitContainer/ScrollContainer/VBoxContainer/Label.text = tr("$errorinternetmods") % str(response_code)
+		$Control/Panel/HSplitContainer/ScrollContainer/VBoxContainer/Label.text = tr("$errorinternetmods") % str(response_code)
 		
 
 
@@ -100,14 +100,14 @@ func dl_mod_info_complete(result, code, headers, body, request):
 	
 	for mod in mods_info["data"].size():
 		if mod == mod_idid:
-			$Panel/HSplitContainer/VSplitContainer/RichTextLabel.text = mods_info["data"][mod]["full_description"]
+			$Control/Panel/HSplitContainer/VSplitContainer/RichTextLabel.text = mods_info["data"][mod]["full_description"]
 			
-			$Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/modname.text = mods_info["data"][mod]["name"]
-			$Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/moddesc.text = mods_info["data"][mod]["description"]
+			$Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/modname.text = mods_info["data"][mod]["name"]
+			$Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/moddesc.text = mods_info["data"][mod]["description"]
 			
-			$Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/TextureRect.texture = LOAD_IMG
+			$Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/TextureRect.texture = LOAD_IMG
 			load_image(mods_info["data"][mod]["icon"], $Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/TextureRect, "modinfo")
-			$Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/dl_btn.disabled = false
+			$Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/dl_btn.disabled = false
 
 func _on_rich_text_label_meta_clicked(meta: Variant) -> void:
 	OS.shell_open(str(meta))
