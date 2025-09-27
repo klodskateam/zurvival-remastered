@@ -106,7 +106,7 @@ func dl_mod_info_complete(result, code, headers, body, request):
 			$Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/moddesc.text = mods_info["data"][mod]["description"]
 			
 			$Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/TextureRect.texture = LOAD_IMG
-			load_image(mods_info["data"][mod]["icon"], $Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/TextureRect, "modinfo")
+			load_image(mods_info["data"][mod]["icon"], $Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/TextureRect, "modinfo")
 			$Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/dl_btn.disabled = false
 
 func _on_rich_text_label_meta_clicked(meta: Variant) -> void:

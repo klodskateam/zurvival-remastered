@@ -20,4 +20,4 @@ func _process(delta: float) -> void:
 
 
 func _on_button_pressed() -> void:
-	$"../../../../..".load_mod_info(MOD_ID)
+	$"../../../../../..".load_mod_info(MOD_ID)
