@@ -10,10 +10,10 @@ func up(to: int):
 		if to == 4:
 			var blackscreen = get_tree().current_scene.get_node("BlackScreen")
 			var tween = create_tween()
-			tween.tween_property(blackscreen, "position", Vector2(0, -1008.0), 0.7).set_trans(Tween.TRANS_QUINT)
+			tween.tween_property(blackscreen, "position", Vector2(0, -1008.0), 0.58).set_trans(Tween.TRANS_QUINT)
 			tween.connect("finished", func(): up_done(to))
 		var tween = create_tween()
-		tween.tween_property(self, "position", Vector2(640.0, -520), 0.7).set_trans(Tween.TRANS_QUINT)
+		tween.tween_property(self, "position", Vector2(640.0, -520), 0.58).set_trans(Tween.TRANS_QUINT)
 		transitionblock.visible = true
 		if to == 4:
 			pass 
@@ -30,7 +30,7 @@ func down(to: int):
 		imfinished.emit(to)
 	else:
 		var tween = create_tween()
-		tween.tween_property(self, "position", Vector2(640.0, 1000), 0.7).set_trans(Tween.TRANS_QUINT)
+		tween.tween_property(self, "position", Vector2(640.0, 1000), 0.58).set_trans(Tween.TRANS_QUINT)
 		transitionblock.visible = true
 		tween.connect("finished", func(): down_done(to))
 	
@@ -44,7 +44,7 @@ func left(to: int):
 	else:
 		var tween = create_tween()
 		transitionblock.visible = true
-		tween.tween_property(self, "position", Vector2(-400, 360), 0.7).set_trans(Tween.TRANS_QUINT)
+		tween.tween_property(self, "position", Vector2(-400, 360), 0.58).set_trans(Tween.TRANS_QUINT)
 		tween.connect("finished", func(): left_done(to))
 		
 func left_done(to: int):
@@ -57,7 +57,7 @@ func right(to: int):
 	else:
 		var tween = create_tween()
 		transitionblock.visible = true
-		tween.tween_property(self, "position", Vector2(1500, 360), 0.7).set_trans(Tween.TRANS_QUINT)
+		tween.tween_property(self, "position", Vector2(1500, 360), 0.58).set_trans(Tween.TRANS_QUINT)
 		tween.connect("finished", func(): right_done(to))
 		
 func right_done(to: int):
@@ -71,7 +71,7 @@ func center():
 	else:
 		var tween = create_tween()
 		transitionblock.visible = true
-		tween.tween_property(self, "position", Vector2(640, 360), 0.7).set_trans(Tween.TRANS_QUINT)
+		tween.tween_property(self, "position", Vector2(640, 360), 0.58).set_trans(Tween.TRANS_QUINT)
 		tween.connect("finished", func(): center_done())
 	
 func center_done():
