@@ -4,6 +4,7 @@ var my_aims = []
 
 var my_items = []
 
+const STORAGEITEM = preload("res://storageitem.tscn")
 
 const SAVE_PATH = "user://save.cfg"
 var CONFIG = ConfigFile.new()
@@ -13,7 +14,16 @@ func _ready() -> void:
 	
 	if Global.CONFIG.get_value("items", "aims"):
 		my_aims = Global.CONFIG.get_value("items", "aims")
+		print("МОИ ПРИЦЕЛЫ (стрелка вниз)")
 		print(my_aims)
+		
+		for aim in my_aims:
+			# print(aim)
+			var stritem = STORAGEITEM.instantiate()
+			stritem.Iicon = aim["sprite"]
+			stritem.Ititle = aim["name"]
+			
+			$CanvasLayer/ScrollContainer/VBoxContainer/GridContainer.add_child(stritem)
 		
 		
 

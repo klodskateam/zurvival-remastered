@@ -54,6 +54,6 @@ label_settings = SubResource("LabelSettings_wttin")
 
 [node name="GridContainer" type="GridContainer" parent="CanvasLayer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-columns = 6
+columns = 5
 
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_quitstorage_pressed"]
