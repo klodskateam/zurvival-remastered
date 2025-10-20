@@ -4,7 +4,8 @@ extends Control
 @onready var transition = get_tree().current_scene.get_node("Control")
 @onready var background = get_tree().current_scene.get_node("Background/Sprite2D")
 
-var API_URL = "http://kteam.veliona.no/_game_services/zr2.0/mods/api/getmods.php"
+# временный URL
+var API_URL = "http://127.0.0.1/_api/zrapi/api/v1"
 const MOD_ITEM_INTERNET = preload("res://mod_item_internet.tscn")
 const LOAD_IMG = preload("res://Resources/loading_img.png")
 const MOD_IMG_ERROR = preload("res://image_not_found.png")
@@ -16,8 +17,9 @@ var mods_info
 func _ready() -> void:
 	if not transition.imfinished.is_connected(Global.got_finishedsign):
 		transition.imfinished.connect(Global.got_finishedsign)
-	internet.request(API_URL)
-	download("https://kteam.veliona.no/_game_services/zr2.0/mods/files/sus.zip", "user://sus.zip")
+	internet.request(API_URL + "/getmods.php")
+	# INFO ↓↓↓ что это делает? Зачем оно? Мы не знаем, lol ↓↓↓
+	# download("https://kteam.veliona.no/_game_services/zr2.0/mods/files/sus.zip", "user://sus.zip")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -27,9 +29,9 @@ func _process(delta: float) -> void:
 func _on_http_request_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	if response_code == 200:
 		mods_info = JSON.parse_string(body.get_string_from_utf8())
-		$Panel/HSplitContainer/ScrollContainer/VBoxContainer/Label.queue_free()
+		$Control/Panel/HSplitContainer/ScrollContainer/VBoxContainer/Label.queue_free()
 		
-		for mod in mods_info["data"]:
+		for mod in mods_info:
 			var new_mod_item = MOD_ITEM_INTERNET.instantiate()
 			new_mod_item.IMG = LOAD_IMG
 			new_mod_item.NAME = mod["name"]
@@ -41,12 +43,12 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 			load_image(mod["icon"], new_mod_item, "moditem")
 				
 		
-			$Panel/HSplitContainer/ScrollContainer/VBoxContainer.add_child(new_mod_item)
+			$Control/Panel/HSplitContainer/ScrollContainer/VBoxContainer.add_child(new_mod_item)
 			print(mod)
 	elif response_code == 0:
-		$Panel/HSplitContainer/ScrollContainer/VBoxContainer/Label.text = tr("$errorinternetmods0")
+		$Control/Panel/HSplitContainer/ScrollContainer/VBoxContainer/Label.text = tr("$errorinternetmods0")
 	else:
-		$Panel/HSplitContainer/ScrollContainer/VBoxContainer/Label.text = tr("$errorinternetmods") % str(response_code)
+		$Control/Panel/HSplitContainer/ScrollContainer/VBoxContainer/Label.text = tr("$errorinternetmods") % str(response_code)
 		
 
 
@@ -89,7 +91,7 @@ func download(url : String, target : String):
 func load_mod_info(id):
 
 	mod_idid = id
-	#$Panel/HSplitContainer/VSplitContainer/RichTextLabel.text = "\n\n\n[center][tornado]%s[/tornado][/center]" % tr("$loading")
+	#$Control/Panel/HSplitContainer/VSplitContainer/RichTextLabel.text = "\n\n\n[center][tornado]%s[/tornado][/center]" % tr("$loading")
 	#
 	#http_info.request_completed.connect(dl_mod_info_complete.bind(http_info))
 	#http_info.request(API_URL)
@@ -98,25 +100,25 @@ func load_mod_info(id):
 
 func dl_mod_info_complete(result, code, headers, body, request):
 	
-	for mod in mods_info["data"].size():
+	for mod in mods_info.size():
 		if mod == mod_idid:
-			$Panel/HSplitContainer/VSplitContainer/RichTextLabel.text = mods_info["data"][mod]["full_description"]
+			$Control/Panel/HSplitContainer/VSplitContainer/VSplitContainer/RichTextLabel.text = mods_info[mod]["description"]
 			
-			$Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/modname.text = mods_info["data"][mod]["name"]
-			$Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/moddesc.text = mods_info["data"][mod]["description"]
+			$Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/modname.text = mods_info[mod]["name"]
+			$Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/moddesc.text = mods_info[mod]["shortdescription"]
 			
-			$Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/TextureRect.texture = LOAD_IMG
-			load_image(mods_info["data"][mod]["icon"], $Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/TextureRect, "modinfo")
-			$Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/dl_btn.disabled = false
+			$Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/TextureRect.texture = LOAD_IMG
+			load_image(mods_info[mod]["icon"], $Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/TextureRect, "modinfo")
+			$Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/dl_btn.disabled = false
 
 func _on_rich_text_label_meta_clicked(meta: Variant) -> void:
 	OS.shell_open(str(meta))
 
 
 func _on_dl_btn_pressed() -> void:
-	for mod in mods_info["data"].size():
+	for mod in mods_info.size():
 		if mod == mod_idid:
-			$mod_dl.request(mods_info["data"][mod]["file"])
+			$mod_dl.request(mods_info[mod]["file"])
 			
 			print("Начало загрузки...")
 	

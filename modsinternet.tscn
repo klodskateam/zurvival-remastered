@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://k2logs20d545"]
+[gd_scene load_steps=11 format=3 uid="uid://k2logs20d545"]
 
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="1_teobh"]
 [ext_resource type="Script" uid="uid://bk278j3u3ei21" path="res://modsinternet.gd" id="2_io5ma"]
 [ext_resource type="PackedScene" uid="uid://db8yny8uiwun1" path="res://background.tscn" id="3_ye50u"]
 [ext_resource type="Texture2D" uid="uid://bqmmq22i5svdr" path="res://_IMPORTANT_IMAGE_DONT_DELETE_INACHE_PISEC!!.jpg" id="4_4f321"]
 [ext_resource type="Script" uid="uid://beg25d2qybjtl" path="res://transitionmenu.gd" id="4_ye50u"]
+[ext_resource type="Texture2D" uid="uid://b26wdxld3j1ex" path="res://Resources/loading_img.png" id="6_1uubt"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_yn577"]
 font_size = 41
@@ -19,6 +20,9 @@ anti_aliasing = false
 
 [sub_resource type="LabelSettings" id="LabelSettings_ye50u"]
 font_size = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_smusq"]
+bg_color = Color(0.281587, 0.49, 0.2058, 1)
 
 [node name="mods" type="Control"]
 layout_mode = 3
@@ -147,7 +151,50 @@ layout_mode = 2
 disabled = true
 text = "$downloadmod"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Control/Panel/HSplitContainer/VSplitContainer"]
+[node name="VSplitContainer" type="VSplitContainer" parent="Control/Panel/HSplitContainer/VSplitContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="Control/Panel/HSplitContainer/VSplitContainer/VSplitContainer"]
+custom_minimum_size = Vector2(0, 65)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_smusq")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/Panel/HSplitContainer/VSplitContainer/VSplitContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/Panel/HSplitContainer/VSplitContainer/VSplitContainer/Panel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="Control/Panel/HSplitContainer/VSplitContainer/VSplitContainer/Panel/ScrollContainer/HBoxContainer"]
+custom_minimum_size = Vector2(80, 60)
+layout_mode = 2
+text = "[ ▶︎ ]"
+icon = ExtResource("6_1uubt")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button2" type="Button" parent="Control/Panel/HSplitContainer/VSplitContainer/VSplitContainer/Panel/ScrollContainer/HBoxContainer"]
+custom_minimum_size = Vector2(80, 60)
+layout_mode = 2
+icon = ExtResource("6_1uubt")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button3" type="Button" parent="Control/Panel/HSplitContainer/VSplitContainer/VSplitContainer/Panel/ScrollContainer/HBoxContainer"]
+custom_minimum_size = Vector2(80, 60)
+layout_mode = 2
+icon = ExtResource("6_1uubt")
+icon_alignment = 1
+expand_icon = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/Panel/HSplitContainer/VSplitContainer/VSplitContainer"]
 layout_mode = 2
 size_flags_stretch_ratio = 0.86
 focus_mode = 2
@@ -171,6 +218,6 @@ offset_bottom = 720.0
 
 [connection signal="pressed" from="Control/Panel/Button" to="." method="_on_quitmodsinternet_pressed"]
 [connection signal="pressed" from="Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/dl_btn" to="." method="_on_dl_btn_pressed"]
-[connection signal="meta_clicked" from="Control/Panel/HSplitContainer/VSplitContainer/RichTextLabel" to="." method="_on_rich_text_label_meta_clicked"]
+[connection signal="meta_clicked" from="Control/Panel/HSplitContainer/VSplitContainer/VSplitContainer/RichTextLabel" to="." method="_on_rich_text_label_meta_clicked"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
 [connection signal="request_completed" from="mod_dl" to="." method="_on_mod_dl_request_completed"]
