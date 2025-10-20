@@ -45,7 +45,11 @@ var BGs = [
 	{
 		"image": preload("res://bgs/10.png"),
 		"author": "mw10b1909" 
-	}
+	},
+	{
+		"image": preload("res://bgs/11.png"),
+		"author": "mw10b1909" 
+	},
 ]
 var current_image
 # Called when the node enters the scene tree for the first time.

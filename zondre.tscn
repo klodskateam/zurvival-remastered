@@ -29,4 +29,15 @@ position = Vector2(8, -3)
 scale = Vector2(0.970628, 1.00807)
 shape = SubResource("CircleShape2D_t8bhi")
 
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+simplify_path = true
+simplify_epsilon = 0.66
+debug_path_custom_color = Color(1, 0, 0, 1)
+
+[node name="Timer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.05
+autostart = true
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

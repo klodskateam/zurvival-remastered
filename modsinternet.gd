@@ -102,13 +102,13 @@ func dl_mod_info_complete(result, code, headers, body, request):
 	
 	for mod in mods_info.size():
 		if mod == mod_idid:
-			$Control/Panel/HSplitContainer/VSplitContainer/VSplitContainer/RichTextLabel.text = mods_info[mod]["description"]
+			$Control/Panel/HSplitContainer/VSplitContainer/RichTextLabel.text = mods_info["data"][mod]["full_description"]
 			
-			$Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/modname.text = mods_info[mod]["name"]
-			$Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/moddesc.text = mods_info[mod]["shortdescription"]
+			$Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/modname.text = mods_info["data"][mod]["name"]
+			$Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/moddesc.text = mods_info["data"][mod]["description"]
 			
 			$Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/TextureRect.texture = LOAD_IMG
-			load_image(mods_info[mod]["icon"], $Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/TextureRect, "modinfo")
+			load_image(mods_info["data"][mod]["icon"], $Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/TextureRect, "modinfo")
 			$Control/Panel/HSplitContainer/VSplitContainer/Panel/HBoxContainer/VBoxContainer/dl_btn.disabled = false
 
 func _on_rich_text_label_meta_clicked(meta: Variant) -> void:
