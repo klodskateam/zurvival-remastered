@@ -55,6 +55,7 @@ func _ready() -> void:
 		
 	if CONFIG.get_value("settings", "smoothtransitions"):
 		SmoothTransitions = CONFIG.get_value("settings", "smoothtransitions")
+	
 		
 	if CONFIG.get_value("settings", "fullscreen"):
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
