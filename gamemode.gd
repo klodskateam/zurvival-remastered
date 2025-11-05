@@ -28,6 +28,13 @@ var GAMEMODES = [
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if Global.isDEMO:
+		$Control/Panel/ScrollContainer/VBoxContainer/HBoxContainer/ShopButton.text = "Soon..."
+		$Control/Panel/ScrollContainer/VBoxContainer/HBoxContainer/StorageButton.text = "Soon..."
+		
+		$Control/Panel/ScrollContainer/VBoxContainer/HBoxContainer/ShopButton.disabled = true
+		$Control/Panel/ScrollContainer/VBoxContainer/HBoxContainer/StorageButton.disabled = true
+	
 	for sus in GAMEMODES.size():
 		var newbtn = BUTTONGAMEMODE.instantiate()
 		newbtn.text = GAMEMODES[sus]["name"]

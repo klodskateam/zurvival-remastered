@@ -25,6 +25,7 @@ var SmoothTransitions = false
 @onready var GAME = "res://gamemode.tscn"
 @onready var SETTINGS = "res://settings.tscn"
 var FROM = 0
+const isDEMO = true # Данная настройка отключает магазин, склад и список модов Онлайн, так-как оно не готово (онлайн моды я ещё апи не сделал ну я и лох вообще)
 
 #Конфиги
 const SAVE_PATH = "user://save.cfg"

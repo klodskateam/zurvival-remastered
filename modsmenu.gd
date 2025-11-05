@@ -6,6 +6,9 @@ const MOD_ITEM = preload("res://mod_item.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if Global.isDEMO:
+		$Control/Panel/Mods.queue_free()
+	
 	for sus in ModLoader.MODSLIST.size():
 		var filepath = "user://mods/" + ModLoader.MODSLIST[sus]
 		var file = FileAccess.open(filepath, FileAccess.READ)
