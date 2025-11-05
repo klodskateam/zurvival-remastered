@@ -7,7 +7,8 @@ func up(to: int):
 	if !Global.SmoothTransitions:
 		imfinished.emit(to)
 	else:
-		if to == 4:
+		if to == 4: 
+		# следует использовать ТОЛЬКО при выходе из игры в главном меню
 			var blackscreen = get_tree().current_scene.get_node("BlackScreen")
 			var tween = create_tween()
 			tween.tween_property(blackscreen, "position", Vector2(0, -1008.0), 0.58).set_trans(Tween.TRANS_QUINT)
@@ -99,7 +100,3 @@ func _ready() -> void:
 		Global.FROM = 0
 	else:
 		position = Vector2(640.0, 360.0)
-
-
-func _on_visibility_changed2() -> void:
-	pass # Replace with function body.

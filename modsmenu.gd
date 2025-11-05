@@ -8,6 +8,8 @@ const MOD_ITEM = preload("res://mod_item.tscn")
 func _ready() -> void:
 	if Global.isDEMO:
 		$Control/Panel/Mods.queue_free()
+		$Control/Panel/SettingsSave.size = Vector2(285, 31)
+		$Control/Panel/SettingsSave.position = Vector2(6, 7)
 	
 	for sus in ModLoader.MODSLIST.size():
 		var filepath = "user://mods/" + ModLoader.MODSLIST[sus]

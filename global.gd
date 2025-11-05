@@ -24,7 +24,6 @@ var FULLSCREEN = false
 var SmoothTransitions = false
 @onready var GAME = "res://gamemode.tscn"
 @onready var SETTINGS = "res://settings.tscn"
-var FROM = 0
 const isDEMO = true # Данная настройка отключает магазин, склад и список модов Онлайн, так-как оно не готово (онлайн моды я ещё апи не сделал ну я и лох вообще)
 
 #Конфиги
@@ -34,6 +33,7 @@ var KT_URL = "https://kteam.veliona.no/"
 
 # Переменные
 var BGID
+var FROM = 0
 var ZCOINS = 0
 var CURRENT_AIM = preload("res://Resources/aims/default.png")
 
@@ -75,6 +75,7 @@ func check(в_рот_мне_ноги: bool):
 		return false
 		
 func got_finishedsign(value):
+	# ID которое используется для определения, в какую сцену отправить после анимации. Пока-что работают только встроенные анимации/сцены.
 	match value:
 		1:
 			await get_tree().process_frame
