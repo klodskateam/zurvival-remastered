@@ -10,7 +10,16 @@ extends CharacterBody2D
 
 @onready var health: Label = $"../UI/HealthBar/Health"
 @onready var health_bar: ProgressBar = $"../UI/HealthBar"
+
+@onready var inventory: Label = $"../UI/InventoryBar/Inventory"
+@onready var inventory_bar: ProgressBar = $"../UI/InventoryBar"
+
+@onready var coldness: Label = $"../UI/ColdnessBar/Coldness"
+@onready var coldness_bar: ProgressBar = $"../UI/ColdnessBar"
+
 @onready var vignette_red = $"../UI/VignetteRed"
+
+
 
 var VINOSLIVOST = 100
 @export var MAX_VINOSLIVOST = 100
@@ -19,6 +28,10 @@ var BULLETS = 12
 var ZAPAS_BULLETS = 48
 var DELAY = 0
 var HEALTH = 100
+var COLDNESS = 0
+var INVENTORY_FILLED = 0
+@export var MAX_INVENTORY_FILLED = 100
+@export var MAX_COLDNESS = 100
 @export var MAX_HEALTH = 100
 @export var MAX_BULLETS = 12
 var SCORE = 0
@@ -65,6 +78,21 @@ func _physics_process(delta: float):
 		health_bar.value = HEALTH
 	else:
 		pass
+		
+	if inventory_bar:
+		inventory.text = tr("$inventory") + ": " + str(INVENTORY_FILLED) + "/" + str(MAX_INVENTORY_FILLED)
+		inventory_bar.max_value = MAX_INVENTORY_FILLED
+		inventory_bar.value = INVENTORY_FILLED
+	else:
+		pass
+	
+	if coldness_bar:
+		coldness.text = tr("$coldness") + ": " + str(COLDNESS) + "/" + str(MAX_COLDNESS)
+		coldness_bar.max_value = MAX_COLDNESS
+		coldness_bar.value = COLDNESS
+	else:
+		pass
+	
 	
 	match GamemodeManager.GAMEMODE:
 		1:
@@ -123,7 +151,7 @@ func _process(delta: float):
 		if $"../../GlobalInterface/joysticks/VirtualJoystick2" and $"../../GlobalInterface/joysticks/VirtualJoystick2".is_pressed:
 			rotation = $"../../GlobalInterface/joysticks/VirtualJoystick2".output.angle()
 			rotate(PI / 2)
-	if (HEALTH <= 0) and ($Person != null):
+	if (HEALTH <= 0) and ($Person != null) or (GamemodeManager.GAMEMODE == 2 and COLDNESS >= 100):
 		$"../PauseManager".PAUSE = true
 		$"../PauseManager".PAUSELOCK = true
 		$Person.queue_free()
@@ -137,19 +165,27 @@ func _process(delta: float):
 		vignette_red.lowhealth = true
 	else:
 		vignette_red.lowhealth = false		
-		
-		
+
 	
 func _input(event):
 	match GamemodeManager.GAMEMODE:
+		2:
+			pass
 		1:
 			if health_bar:
 				health_bar.queue_free()
 			if kaktameto_bar:
 				kaktameto_bar.queue_free()
+			if inventory_bar:
+				inventory_bar.queue_free()
+			if coldness_bar:
+				coldness_bar.queue_free()
 			bullets_bar.position = Vector2(30, 3)
 		_:
-			pass
+			if inventory_bar:
+				inventory_bar.queue_free()
+			if coldness_bar:
+				coldness_bar.queue_free()
 	
 	if event.is_action_pressed("shoot"):
 		if (OS.get_name() != "Android"):
@@ -159,6 +195,8 @@ func _input(event):
 	if event.is_action_pressed("reload"):
 		bullets_reload()
 		
+
+	
 func shoot():
 	if BULLETS != 0:
 		if DELAY >= 1:

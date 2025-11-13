@@ -41,9 +41,9 @@ grow_vertical = 2
 [node name="ScrollContainer" type="ScrollContainer" parent="Control/Panel"]
 layout_mode = 0
 offset_left = 2.0
-offset_top = 32.0
+offset_top = 29.0
 offset_right = 396.0
-offset_bottom = 249.0
+offset_bottom = 239.0
 theme = ExtResource("2_7rmfm")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel/ScrollContainer"]
@@ -101,23 +101,23 @@ text = "$play"
 [node name="gamemodename" type="Label" parent="Control/Panel"]
 layout_mode = 0
 offset_left = 3.0
-offset_top = 251.0
+offset_top = 237.0
 offset_right = 395.0
-offset_bottom = 282.0
-theme_override_font_sizes/font_size = 24
+offset_bottom = 266.0
+theme_override_font_sizes/font_size = 23
 text = "$placeholdergmname"
 autowrap_mode = 3
 
 [node name="gamemodedesc" type="Label" parent="Control/Panel"]
 layout_mode = 0
 offset_left = 3.0
-offset_top = 282.0
+offset_top = 266.0
 offset_right = 395.0
-offset_bottom = 349.0
-theme_override_font_sizes/font_size = 16
+offset_bottom = 352.0
+theme_override_font_sizes/font_size = 15
 text = "$placeholdergmdesc"
 autowrap_mode = 3
-justification_flags = 130
+justification_flags = 139
 text_overrun_behavior = 2
 
 [node name="TransitionBlock" type="TextureRect" parent="."]

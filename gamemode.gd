@@ -22,7 +22,12 @@ var GAMEMODES = [
 		"scene": "res://game.tscn",
 		"gamemode": 0,
 	},
-
+	{
+		"name": tr("$wintermodename"),
+		"description": tr("$wintermodedesc"),
+		"scene": "res://game-wintermode.tscn",
+		"gamemode": 2,
+	},
 ]
 
 

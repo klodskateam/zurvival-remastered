@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://dydu3jwjjgubs"]
+
+[ext_resource type="Script" uid="uid://bdkj35mqb7dx2" path="res://plank.gd" id="1_n00cy"]
+[ext_resource type="Texture2D" uid="uid://cdgqcdxx8k6fr" path="res://Resources/plank.png" id="2_uw3nf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yui1s"]
+radius = 19.0263
+
+[node name="plank" type="Area2D"]
+collision_layer = 4
+script = ExtResource("1_n00cy")
+
+[node name="Plank" type="Sprite2D" parent="."]
+scale = Vector2(-0.038760304, -0.038760304)
+texture = ExtResource("2_uw3nf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_yui1s")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
