@@ -59,6 +59,7 @@ position = Vector2(640, 360)
 texture = ExtResource("1_ibotj")
 
 [node name="VignetteRed" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
 position = Vector2(640, 360)
 texture = ExtResource("1_y4yjw")
 script = ExtResource("2_waa4j")
