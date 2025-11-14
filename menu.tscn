@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://c6ji2387qq42r"]
+[gd_scene load_steps=9 format=3 uid="uid://c6ji2387qq42r"]
 
 [ext_resource type="Script" uid="uid://2bvrwha2lhlt" path="res://buttonsmenu.gd" id="1_814jb"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_i4evy"]
 [ext_resource type="PackedScene" uid="uid://db8yny8uiwun1" path="res://background.tscn" id="2_xh8be"]
 [ext_resource type="Script" uid="uid://beg25d2qybjtl" path="res://transitionmenu.gd" id="3_l48gv"]
 [ext_resource type="Script" uid="uid://deyhfds4n3ph0" path="res://create_mod_buttons.gd" id="3_ytr4m"]
+[ext_resource type="Theme" uid="uid://oprukw2tpf3d" path="res://default.tres" id="4_l48gv"]
 
 [sub_resource type="Gradient" id="Gradient_ytr4m"]
 interpolation_mode = 2
@@ -49,38 +50,41 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_i4evy")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/Panel"]
+clip_children = 1
+layout_mode = 0
+offset_left = 2.0
+offset_right = 218.0
+offset_bottom = 235.0
+theme = ExtResource("4_l48gv")
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel/ScrollContainer"]
+clip_contents = true
 custom_minimum_size = Vector2(0, 230)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 4.0
-offset_top = 3.0
-offset_right = -4.0
-offset_bottom = -1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("2_i4evy")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 alignment = 1
 script = ExtResource("3_ytr4m")
 
-[node name="Play" type="Button" parent="Control/Panel/VBoxContainer"]
+[node name="Play" type="Button" parent="Control/Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "$play"
 script = ExtResource("1_814jb")
 
-[node name="Settings" type="Button" parent="Control/Panel/VBoxContainer"]
+[node name="Settings" type="Button" parent="Control/Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "$settings"
 script = ExtResource("1_814jb")
 
-[node name="Mods" type="Button" parent="Control/Panel/VBoxContainer"]
+[node name="Mods" type="Button" parent="Control/Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "$mods"
 script = ExtResource("1_814jb")
 
-[node name="Exit" type="Button" parent="Control/Panel/VBoxContainer"]
+[node name="Exit" type="Button" parent="Control/Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_i4evy")
 text = "$quit"
@@ -97,7 +101,7 @@ offset_right = 1280.0
 offset_bottom = 2448.0
 texture = SubResource("GradientTexture2D_l48gv")
 
-[connection signal="pressed" from="Control/Panel/VBoxContainer/Play" to="Control/Panel/VBoxContainer/Play" method="_on_play_pressed"]
-[connection signal="pressed" from="Control/Panel/VBoxContainer/Settings" to="Control/Panel/VBoxContainer/Play" method="_on_settings_pressed"]
-[connection signal="pressed" from="Control/Panel/VBoxContainer/Mods" to="Control/Panel/VBoxContainer/Mods" method="_on_mods_pressed"]
-[connection signal="pressed" from="Control/Panel/VBoxContainer/Exit" to="Control/Panel/VBoxContainer/Exit" method="_on_exit_pressed"]
+[connection signal="pressed" from="Control/Panel/ScrollContainer/VBoxContainer/Play" to="Control/Panel/ScrollContainer/VBoxContainer/Play" method="_on_play_pressed"]
+[connection signal="pressed" from="Control/Panel/ScrollContainer/VBoxContainer/Settings" to="Control/Panel/ScrollContainer/VBoxContainer/Play" method="_on_settings_pressed"]
+[connection signal="pressed" from="Control/Panel/ScrollContainer/VBoxContainer/Mods" to="Control/Panel/ScrollContainer/VBoxContainer/Mods" method="_on_mods_pressed"]
+[connection signal="pressed" from="Control/Panel/ScrollContainer/VBoxContainer/Exit" to="Control/Panel/ScrollContainer/VBoxContainer/Exit" method="_on_exit_pressed"]

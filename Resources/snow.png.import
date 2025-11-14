@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c0gntm575ocrj"
-path="res://.godot/imported/person.png-7103abfe4a338c9590e69e72cbab6fe2.ctex"
+uid="uid://drdny5majvrhy"
+path="res://.godot/imported/snow.png-8c6a9ab9a255ec1273c156b44833db95.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/person.png"
-dest_files=["res://.godot/imported/person.png-7103abfe4a338c9590e69e72cbab6fe2.ctex"]
+source_file="res://Resources/snow.png"
+dest_files=["res://.godot/imported/snow.png-8c6a9ab9a255ec1273c156b44833db95.ctex"]
 
 [params]
 

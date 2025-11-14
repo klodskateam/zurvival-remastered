@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c0gntm575ocrj"
-path="res://.godot/imported/person.png-7103abfe4a338c9590e69e72cbab6fe2.ctex"
+uid="uid://cdgqcdxx8k6fr"
+path="res://.godot/imported/plank.png-36f6e8de35acd7c95c6902bf4b6ddcab.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/person.png"
-dest_files=["res://.godot/imported/person.png-7103abfe4a338c9590e69e72cbab6fe2.ctex"]
+source_file="res://Resources/plank.png"
+dest_files=["res://.godot/imported/plank.png-36f6e8de35acd7c95c6902bf4b6ddcab.ctex"]
 
 [params]
 

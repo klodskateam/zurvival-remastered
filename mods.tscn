@@ -79,10 +79,10 @@ custom_minimum_size = Vector2(334.55, 369.75)
 layout_mode = 2
 
 [node name="modItem" parent="Control/Panel/VBoxContainer/VBoxContainer" instance=ExtResource("4_yji3y")]
+visible = false
 layout_mode = 2
 
 [node name="TransitionBlock" type="TextureRect" parent="."]
-visible = false
 offset_right = 1280.0
 offset_bottom = 720.0
 
