@@ -90,7 +90,7 @@ vertical_alignment = 1
 
 [node name="SpeedIcon" type="Sprite2D" parent="SpeedBar"]
 position = Vector2(-15, 15)
-scale = Vector2(0.21875, 0.210937)
+scale = Vector2(0.2109375, 0.210937)
 texture = ExtResource("2_iev70")
 
 [node name="BulletsBar" type="ProgressBar" parent="."]
@@ -114,8 +114,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="BulletsIcon" type="Sprite2D" parent="BulletsBar"]
-position = Vector2(-15.5, 13.95)
-scale = Vector2(0.242187, 0.217968)
+position = Vector2(-16.000008, 14.000003)
+scale = Vector2(0.21874987, 0.217968)
 texture = ExtResource("3_qg45p")
 
 [node name="HealthBar" type="ProgressBar" parent="."]
@@ -138,8 +138,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HealthIcon" type="Sprite2D" parent="HealthBar"]
-position = Vector2(-15, 13.5)
-scale = Vector2(0.21875, 0.210937)
+position = Vector2(-15, 13)
+scale = Vector2(0.2109375, 0.210937)
 texture = ExtResource("4_4pw5h")
 
 [node name="InventoryBar" type="ProgressBar" parent="."]

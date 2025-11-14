@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://ddsqj7m25ucaa"]
+[gd_scene load_steps=6 format=3 uid="uid://ddsqj7m25ucaa"]
 
 [ext_resource type="Script" uid="uid://dk6c7q85yu48l" path="res://storage.gd" id="1_3vq3h"]
 [ext_resource type="Texture2D" uid="uid://cmdbay58waf1e" path="res://Resources/storage.png" id="1_ueev3"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_lnm35"]
+[ext_resource type="Theme" uid="uid://oprukw2tpf3d" path="res://default.tres" id="4_2h3vr"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_wttin"]
 font_size = 32
@@ -44,6 +45,7 @@ use_parent_material = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = ExtResource("4_2h3vr")
 
 [node name="Label" type="Label" parent="CanvasLayer/ScrollContainer/VBoxContainer"]
 use_parent_material = true

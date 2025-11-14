@@ -72,10 +72,10 @@ tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = false
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 60),
+"times": PackedFloat32Array(0, 59.966667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 2,
-"values": [Vector2(0, 0), Vector2(-16006, -16006)]
+"values": [Vector2(0, 0), Vector2(-10485.233, -10485.233)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -84,7 +84,7 @@ tracks/1/path = NodePath(".:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = false
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 60),
+"times": PackedFloat32Array(0, 59.966667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 2,
 "values": [0.0, 0.0]
@@ -120,7 +120,7 @@ texture = ExtResource("5_rbf5n")
 process_mode = 3
 script = ExtResource("1_6olua")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="AmbientColor" type="ColorRect" parent="."]
 modulate = Color(0.053295396, 0.062288336, 0.066790454, 0.54901963)
 show_behind_parent = true
 clip_children = 2
@@ -149,7 +149,7 @@ wait_time = 1.5
 autostart = true
 script = ExtResource("3_ar85b")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="clouds" type="TextureRect" parent="."]
 modulate = Color(1.7009393, 1.7009393, 1.7009393, 0.5137255)
 self_modulate = Color(0.8732979, 0.87329865, 0.873298, 1)
 material = SubResource("CanvasItemMaterial_m5m7k")
@@ -157,7 +157,7 @@ offset_right = 21006.0
 offset_bottom = 21006.0
 texture = ExtResource("3_8k8hu")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="TextureRect"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="clouds"]
 libraries = {
 &"": SubResource("AnimationLibrary_e2odv")
 }
@@ -186,7 +186,7 @@ max_value = 200.0
 show_percentage = false
 
 [node name="Spawner7" parent="." instance=ExtResource("7_8yshx")]
-position = Vector2(-139, 4211)
+position = Vector2(-116, 4507)
 
 [node name="Spawner5" parent="." instance=ExtResource("7_8yshx")]
 position = Vector2(5198, 4620)
