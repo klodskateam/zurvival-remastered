@@ -93,7 +93,6 @@ func _physics_process(delta: float):
 	else:
 		pass
 	
-	
 	match GamemodeManager.GAMEMODE:
 		1:
 			pass
@@ -230,3 +229,37 @@ func bullets_reload():
 				ZAPAS_BULLETS -= 12
 				$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
 				$ReloadSound.play()
+
+func _on_walkdelay_timeout() -> void:
+	if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
+		$WalkDelay.wait_time = randf_range(0.20,0.24)
+		match randi_range(1,4):
+			1:
+				$GrassStep01.pitch_scale = 0.93
+				$GrassStep01.play()
+			2:
+				$GrassStep02.pitch_scale = 0.97
+				$GrassStep02.play()
+			3:
+				$GrassStep03.pitch_scale = 0.91
+				$GrassStep03.play()
+			4:
+				$GrassStep04.pitch_scale = 0.96
+				$GrassStep04.play()
+	elif (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")):
+		$WalkDelay.wait_time = randf_range(0.24,0.27)
+		match randi_range(1,4):
+			1:
+				$GrassStep01.pitch_scale = 1.03
+				$GrassStep01.play()
+			2:
+				$GrassStep02.pitch_scale = 1.02
+				$GrassStep02.play()
+			3:
+				$GrassStep03.pitch_scale = 1.01
+				$GrassStep03.play()
+			4:
+				$GrassStep04.pitch_scale = 1.04
+				$GrassStep04.play()
+		pass
+	

@@ -15,7 +15,7 @@ extends CharacterBody2D
 @onready var navagent: NavigationAgent2D = $NavigationAgent2D
 @onready var timer: Timer = $Timer
 
-const SPEED = 217
+const SPEED = 0
 var HP = 100
 var DAMAGE = 10
 

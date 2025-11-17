@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Zurvival Remastered"
-config/version="2.0 Demo!"
+config/version="2.0.216 Demo!"
 run/main_scene="res://menu.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
 boot_splash/fullsize=false
@@ -39,6 +39,11 @@ window/vsync/vsync_mode=2
 
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
+
+[global_group]
+
+thisisamedkit=""
+thesearebullets=""
 
 [input]
 
