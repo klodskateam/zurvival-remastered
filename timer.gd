@@ -30,7 +30,7 @@ func _on_timeout():
 			get_parent().add_child(plank_new)
 			print(plank_new)
 		_:
-			wait_time = randf_range(0.01, 0.02)
+			wait_time = randf_range(1, 2)
 			# пульки хуюльки
 			var bullets_new = P_BULLETS.instantiate()
 			bullets_new.position.x = randi_range(50, 9950)
