@@ -54,7 +54,7 @@ volume_db = -5.5
 
 [node name="GrassStep04" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_pbfsw")
-volume_db = -4.5
+volume_db = -6.5
 
 [node name="Camera2D" type="Camera2D" parent="."]
 scale = Vector2(1, 1.6)
