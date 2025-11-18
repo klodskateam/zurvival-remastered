@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_yui1s"]
 radius = 19.0263
 
-[node name="bullets" type="Area2D"]
+[node name="bullets" type="Area2D" groups=["thesearebullets"]]
 collision_layer = 4
 script = ExtResource("1_bnpoj")
 

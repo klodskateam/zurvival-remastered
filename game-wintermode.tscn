@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bo7fjaj74k005"]
+[gd_scene load_steps=26 format=3 uid="uid://bo7fjaj74k005"]
 
 [ext_resource type="Script" uid="uid://ba1djtv0bo560" path="res://pause_manager.gd" id="1_6olua"]
 [ext_resource type="PackedScene" uid="uid://bgd4is08hm4yv" path="res://player.tscn" id="1_thl6f"]
@@ -16,6 +16,7 @@
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="11_uxs6f"]
 [ext_resource type="Script" uid="uid://c0lowe1w3ka8i" path="res://winter_timer.gd" id="15_ouewx"]
 [ext_resource type="Texture2D" uid="uid://jn40y6bdxl51" path="res://Resources/tree.png" id="16_uxs6f"]
+[ext_resource type="AudioStream" uid="uid://eoxi07lj6bn6" path="res://Sound/ambience_01.mp3" id="17_kwlxl"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bo1a3"]
 blend_mode = 1
@@ -461,6 +462,13 @@ texture = ExtResource("16_uxs6f")
 position = Vector2(4656.0005, 855.9999)
 scale = Vector2(0.39166662, 0.39166668)
 texture = ExtResource("16_uxs6f")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(2472, 2437)
+stream = ExtResource("17_kwlxl")
+volume_db = -2.537
+autoplay = true
+max_distance = 4096.0
 
 [connection signal="timeout" from="Timer" to="Timer" method="_on_timeout"]
 [connection signal="timeout" from="WinterTimer" to="Campfire" method="_on_timer_timeout"]

@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_ryj3i"]
 radius = 18.1108
 
-[node name="medkit" type="Area2D"]
+[node name="medkit" type="Area2D" groups=["thisisamedkit"]]
 collision_layer = 4
 script = ExtResource("1_kvb0d")
 
@@ -21,3 +21,4 @@ z_index = 1
 shape = SubResource("CircleShape2D_ryj3i")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="pickedup_medkit" from="." to="." method="_on_pickedup_medkit"]

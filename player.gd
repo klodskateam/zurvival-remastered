@@ -23,11 +23,13 @@ extends CharacterBody2D
 
 var VINOSLIVOST = 100
 @export var MAX_VINOSLIVOST = 100
+var pickedup : bool = false
+var pickedup_medkit : bool = false
 var SPEED = 325
 var BULLETS = 12
 var ZAPAS_BULLETS = 48
 var DELAY = 0
-var HEALTH = 100
+var HEALTH = 30
 var COLDNESS = 0
 var INVENTORY_FILLED = 0
 @export var MAX_INVENTORY_FILLED = 100
@@ -92,7 +94,6 @@ func _physics_process(delta: float):
 		coldness_bar.value = COLDNESS
 	else:
 		pass
-	
 	
 	match GamemodeManager.GAMEMODE:
 		1:
@@ -194,6 +195,24 @@ func _input(event):
 	
 	if event.is_action_pressed("reload"):
 		bullets_reload()
+	if pickedup:
+		match randi_range(1,2):
+			1:
+				$Pickup01.pitch_scale = randf_range(0.97, 1.12)
+				$Pickup01.play()
+			2:
+				$Pickup02.pitch_scale = randf_range(0.97, 1.12)
+				$Pickup02.play()
+	pickedup = false
+	if pickedup_medkit:
+		match randi_range(1,2):
+			1:
+				$PickupMedkit01.pitch_scale = randf_range(0.96, 1.12)
+				$PickupMedkit01.play()
+			2:
+				$PickupMedkit02.pitch_scale = randf_range(0.96, 1.12)
+				$PickupMedkit02.play()
+	pickedup_medkit = false
 		
 
 	
@@ -230,3 +249,35 @@ func bullets_reload():
 				ZAPAS_BULLETS -= 12
 				$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
 				$ReloadSound.play()
+
+func _on_walkdelay_timeout() -> void:
+	if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
+		$WalkDelay.wait_time = randf_range(0.20,0.24)
+		match randi_range(1,4):
+			1:
+				$GrassStep01.pitch_scale = randf_range(0.96, 1.02)
+				$GrassStep01.play()
+			2:
+				$GrassStep02.pitch_scale = randf_range(0.96, 1.02)
+				$GrassStep02.play()
+			3:
+				$GrassStep03.pitch_scale = randf_range(0.94, 1.05)
+				$GrassStep03.play()
+			4:
+				$GrassStep04.pitch_scale = randf_range(0.94, 1.05)
+				$GrassStep04.play()
+	elif (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")):
+		$WalkDelay.wait_time = randf_range(0.24,0.27)
+		match randi_range(1,4):
+			1:
+				$GrassStep01.pitch_scale = randf_range(0.91, 1.06)
+				$GrassStep01.play()
+			2:
+				$GrassStep02.pitch_scale = randf_range(0.91, 1.06)
+				$GrassStep02.play()
+			3:
+				$GrassStep03.pitch_scale = randf_range(0.89, 1.06)
+				$GrassStep03.play()
+			4:
+				$GrassStep04.pitch_scale = randf_range(0.89, 1.02)
+				$GrassStep04.play()

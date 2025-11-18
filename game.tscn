@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://d1es6dbs7uaad"]
+[gd_scene load_steps=14 format=3 uid="uid://d1es6dbs7uaad"]
 
 [ext_resource type="Script" uid="uid://ba1djtv0bo560" path="res://pause_manager.gd" id="1_6olua"]
 [ext_resource type="Texture2D" uid="uid://c0gku65b6ujhb" path="res://Resources/grass.png" id="1_ictw6"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://c0mpd1abcunko" path="res://timer.gd" id="3_ar85b"]
 [ext_resource type="Script" uid="uid://dir1l8p8gewnq" path="res://grass-winter.gd" id="4_mfdv2"]
 [ext_resource type="PackedScene" uid="uid://bshfbsu15v3v1" path="res://ui.tscn" id="4_t63fs"]
+[ext_resource type="AudioStream" uid="uid://cp1ttpcdxuts1" path="res://Sound/ambience_02.mp3" id="5_iotsf"]
 [ext_resource type="PackedScene" uid="uid://rk6x2yf4sydr" path="res://pause.tscn" id="6_5dskx"]
 [ext_resource type="PackedScene" uid="uid://cow6451posxft" path="res://spawner.tscn" id="7_8yshx"]
 [ext_resource type="PackedScene" uid="uid://uo6qjyv0h20n" path="res://game_over.tscn" id="8_nlu6b"]
@@ -38,6 +39,13 @@ centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 10000, 10000)
 script = ExtResource("4_mfdv2")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(2472, 2437)
+stream = ExtResource("5_iotsf")
+volume_db = -2.537
+autoplay = true
+max_distance = 4096.0
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 1.5
