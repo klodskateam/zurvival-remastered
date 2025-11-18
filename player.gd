@@ -23,11 +23,13 @@ extends CharacterBody2D
 
 var VINOSLIVOST = 100
 @export var MAX_VINOSLIVOST = 100
+var pickedup : bool = false
+var pickedup_medkit : bool = false
 var SPEED = 325
 var BULLETS = 12
 var ZAPAS_BULLETS = 48
 var DELAY = 0
-var HEALTH = 100
+var HEALTH = 30
 var COLDNESS = 0
 var INVENTORY_FILLED = 0
 @export var MAX_INVENTORY_FILLED = 100
@@ -193,6 +195,24 @@ func _input(event):
 	
 	if event.is_action_pressed("reload"):
 		bullets_reload()
+	if pickedup:
+		match randi_range(1,2):
+			1:
+				$Pickup01.pitch_scale = randf_range(0.97, 1.12)
+				$Pickup01.play()
+			2:
+				$Pickup02.pitch_scale = randf_range(0.97, 1.12)
+				$Pickup02.play()
+	pickedup = false
+	if pickedup_medkit:
+		match randi_range(1,2):
+			1:
+				$PickupMedkit01.pitch_scale = randf_range(0.96, 1.12)
+				$PickupMedkit01.play()
+			2:
+				$PickupMedkit02.pitch_scale = randf_range(0.96, 1.12)
+				$PickupMedkit02.play()
+	pickedup_medkit = false
 		
 
 	
@@ -262,4 +282,3 @@ func _on_walkdelay_timeout() -> void:
 				$GrassStep04.pitch_scale = randf_range(0.89, 1.02)
 				$GrassStep04.play()
 		pass
-	

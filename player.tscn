@@ -72,15 +72,23 @@ autostart = true
 
 [node name="Pickup01" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_urp6f")
+pitch_scale = 1.49
+max_polyphony = 3
 
 [node name="Pickup02" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_bwjto")
+pitch_scale = 1.34
+max_polyphony = 3
 
 [node name="PickupMedkit01" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_606se")
+pitch_scale = 1.24
+max_polyphony = 4
 
 [node name="PickupMedkit02" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_u1c27")
+pitch_scale = 1.44
+max_polyphony = 4
 
 [node name="Area2D" type="Area2D" parent="."]
 
