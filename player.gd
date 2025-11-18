@@ -281,4 +281,3 @@ func _on_walkdelay_timeout() -> void:
 			4:
 				$GrassStep04.pitch_scale = randf_range(0.89, 1.02)
 				$GrassStep04.play()
-		pass
