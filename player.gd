@@ -236,14 +236,14 @@ func _input(event):
 		$PickupMedkit01.play()
 	pickedup_medkit = false
 	if pickedup_plank:
-		$Pickup01.pitch_scale = randf_range(0.89, 0.98)
+		$Pickup01.pitch_scale = randf_range(0.81, 0.98)
 		match randi_range(1,2):
 			1:
 				$Pickup01.stream = PICKUP_01
 			2:
 				$Pickup01.stream = PICKUP_02
 		$Pickup01.play()
-
+	pickedup_plank = false
 	
 func shoot():
 	if BULLETS != 0:
