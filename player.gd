@@ -36,6 +36,7 @@ var VINOSLIVOST = 100
 @export var MAX_VINOSLIVOST = 100
 var pickedup : bool = false
 var pickedup_medkit : bool = false
+var pickedup_plank : bool = false
 var SPEED = 325
 var BULLETS = 12
 var ZAPAS_BULLETS = 48
@@ -52,7 +53,7 @@ var RUNLOCK = 0
 @export var ded: bool = false
 
 @export var REGULAR_SPEED = 300
-@export var RUN_SPEED = 400
+@export var RUN_SPEED = 410
 @export var P_BULLET = preload("res://bullet.tscn")
 
 func _physics_process(delta: float):
@@ -142,9 +143,9 @@ func _physics_process(delta: float):
 			pass
 		2:
 			if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
-				SPEED = clamp(RUN_SPEED - (INVENTORY_FILLED*5), 150, 400)
+				SPEED = clamp(RUN_SPEED - (INVENTORY_FILLED*4), 150, 400)
 			else:
-				SPEED = clamp(REGULAR_SPEED - (INVENTORY_FILLED*5), 150, 400)
+				SPEED = clamp(REGULAR_SPEED - (INVENTORY_FILLED*3.5), 150, 400)
 		_:
 			pass
 	
@@ -222,7 +223,7 @@ func _input(event):
 			1:
 				$Pickup01.stream = PICKUP_01
 			2:
-				$Pickup01.stream = PICKUP_01
+				$Pickup01.stream = PICKUP_02
 		$Pickup01.play()
 	pickedup = false
 	if pickedup_medkit:
@@ -231,10 +232,17 @@ func _input(event):
 			1:
 				$PickupMedkit01.stream = PICKUP_MEDKIT_01
 			2:
-				$PickupMedkit01.stream = PICKUP_MEDKIT_01
+				$PickupMedkit01.stream = PICKUP_MEDKIT_02
 		$PickupMedkit01.play()
 	pickedup_medkit = false
-		
+	if pickedup_plank:
+		$Pickup01.pitch_scale = randf_range(0.89, 0.98)
+		match randi_range(1,2):
+			1:
+				$Pickup01.stream = PICKUP_01
+			2:
+				$Pickup01.stream = PICKUP_02
+		$Pickup01.play()
 
 	
 func shoot():
@@ -273,7 +281,7 @@ func bullets_reload():
 
 func _on_walkdelay_timeout() -> void:
 	if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
-		$WalkDelay.wait_time = randf_range(0.20,0.24)
+		$WalkDelay.wait_time = randf_range((clamp(0.20 + (INVENTORY_FILLED*0.0025), 0.10, 0.60)),(clamp(0.24 + (INVENTORY_FILLED*0.0035), 0.10, 0.60)))
 		$GrassStep01.pitch_scale = randf_range(0.96, 1.02)
 		match randi_range(1,4):
 			1:
@@ -286,7 +294,7 @@ func _on_walkdelay_timeout() -> void:
 				$GrassStep01.stream = GRASS_STEP_04
 		$GrassStep01.play()
 	elif (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")):
-		$WalkDelay.wait_time = randf_range(0.24,0.27)
+		$WalkDelay.wait_time = randf_range((clamp(0.24 + (INVENTORY_FILLED*0.0045), 0.10, 0.60)),(clamp(0.27 + (INVENTORY_FILLED*0.0050), 0.10, 0.60)))
 		$GrassStep01.pitch_scale = randf_range(0.91, 1.06)
 		match randi_range(1,4):
 			1:

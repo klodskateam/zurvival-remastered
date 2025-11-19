@@ -14,10 +14,10 @@ config/name="Zurvival Remastered"
 config/version="2.0.224 Demo!"
 run/main_scene="res://menu.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
-config/icon="uid://bq517y5c4o7dw"
 boot_splash/fullsize=false
 boot_splash/use_filter=false
 boot_splash/image="uid://crqpy6n5f8ekg"
+config/icon="uid://bq517y5c4o7dw"
 
 [autoload]
 
