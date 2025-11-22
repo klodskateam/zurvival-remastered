@@ -24,6 +24,12 @@ const GRASS_STEP_01 = preload("res://Sound/grass_step_01.wav")
 const GRASS_STEP_02 = preload("res://Sound/grass_step_02.wav")
 const GRASS_STEP_03 = preload("res://Sound/grass_step_03.wav")
 const GRASS_STEP_04 = preload("res://Sound/grass_step_04.wav")
+const SNOW_STEP_01 = preload("res://Sound/snow_step_01.wav")
+const SNOW_STEP_02 = preload("res://Sound/snow_step_02.wav")
+const SNOW_STEP_03 = preload("res://Sound/snow_step_03.wav")
+const SNOW_STEP_04 = preload("res://Sound/snow_step_04.wav")
+
+
 
 const PICKUP_01 = preload("res://Sound/pickup_01.wav")
 const PICKUP_02 = preload("res://Sound/pickup_02.wav")
@@ -31,7 +37,8 @@ const PICKUP_MEDKIT_01 = preload("res://Sound/pickup_medkit_01.wav")
 const PICKUP_MEDKIT_02 = preload("res://Sound/pickup_medkit_02.wav")
 
 
-
+var time = Time.get_datetime_dict_from_system()
+var month = time["month"]
 var VINOSLIVOST = 100
 @export var MAX_VINOSLIVOST = 100
 var pickedup : bool = false
@@ -282,27 +289,59 @@ func bullets_reload():
 func _on_walkdelay_timeout() -> void:
 	if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
 		$WalkDelay.wait_time = randf_range((clamp(0.20 + (INVENTORY_FILLED*0.0025), 0.10, 0.60)),(clamp(0.24 + (INVENTORY_FILLED*0.0035), 0.10, 0.60)))
-		$GrassStep01.pitch_scale = randf_range(0.96, 1.02)
+		if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) and month >= 12 or month <= 01):
+			$GrassStep01.pitch_scale = randf_range(0.93, 1.04)
+		else:
+			$GrassStep01.pitch_scale = randf_range(0.96, 1.02)
 		match randi_range(1,4):
 			1:
-				$GrassStep01.stream = GRASS_STEP_01
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) and month >= 12 or month <= 01):
+					$GrassStep01.stream = SNOW_STEP_01
+				else:
+					$GrassStep01.stream = GRASS_STEP_01
 			2:
-				$GrassStep01.stream = GRASS_STEP_02
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) and month >= 12 or month <= 01):
+					$GrassStep01.stream = SNOW_STEP_02
+				else:
+					$GrassStep01.stream = GRASS_STEP_02
 			3:
-				$GrassStep01.stream = GRASS_STEP_03
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) and month >= 12 or month <= 01):
+					$GrassStep01.stream = SNOW_STEP_03
+				else:
+					$GrassStep01.stream = GRASS_STEP_03
 			4:
-				$GrassStep01.stream = GRASS_STEP_04
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) and month >= 12 or month <= 01):
+					$GrassStep01.stream = SNOW_STEP_04
+				else:
+					$GrassStep01.stream = GRASS_STEP_04
 		$GrassStep01.play()
 	elif (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")):
 		$WalkDelay.wait_time = randf_range((clamp(0.24 + (INVENTORY_FILLED*0.0045), 0.10, 0.60)),(clamp(0.27 + (INVENTORY_FILLED*0.0050), 0.10, 0.60)))
-		$GrassStep01.pitch_scale = randf_range(0.91, 1.06)
+		if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) and month >= 12 or month <= 01):
+			$GrassStep01.pitch_scale = randf_range(0.99, 1.09)
+			$GrassStep01.volume_db = randf_range(-1, 1)
+		else:
+			$GrassStep01.pitch_scale = randf_range(0.91, 1.06)
+			$GrassStep01.volume_db = randf_range(-5, -3)
 		match randi_range(1,4):
 			1:
-				$GrassStep01.stream = GRASS_STEP_01
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) and month >= 12 or month <= 01):
+					$GrassStep01.stream = SNOW_STEP_01
+				else:
+					$GrassStep01.stream = GRASS_STEP_01
 			2:
-				$GrassStep01.stream = GRASS_STEP_02
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) and month >= 12 or month <= 01):
+					$GrassStep01.stream = SNOW_STEP_02
+				else:
+					$GrassStep01.stream = GRASS_STEP_02
 			3:
-				$GrassStep01.stream = GRASS_STEP_03
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) and month >= 12 or month <= 01):
+					$GrassStep01.stream = SNOW_STEP_03
+				else:
+					$GrassStep01.stream = GRASS_STEP_03
 			4:
-				$GrassStep01.stream = GRASS_STEP_04
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) and month >= 12 or month <= 01):
+					$GrassStep01.stream = SNOW_STEP_04
+				else:
+					$GrassStep01.stream = GRASS_STEP_04
 		$GrassStep01.play()
