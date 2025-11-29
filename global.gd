@@ -22,6 +22,7 @@ extends Node
 var VERSION = ProjectSettings.get_setting("application/config/version")
 var FULLSCREEN = false
 var SmoothTransitions = false
+var WEAPONHINTS = true
 @onready var GAME = "res://gamemode.tscn"
 @onready var SETTINGS = "res://settings.tscn"
 const isDEMO = true # Данная настройка отключает магазин, склад и список модов Онлайн, так-как оно не готово (онлайн моды я ещё апи не сделал ну я и лох вообще)
@@ -57,6 +58,8 @@ func _ready() -> void:
 	if CONFIG.get_value("settings", "smoothtransitions"):
 		SmoothTransitions = CONFIG.get_value("settings", "smoothtransitions")
 	
+	if CONFIG.get_value("save", "disableweaponhints"):
+		WEAPONHINTS = CONFIG.get_value("save", "disableweaponhints")
 		
 	if CONFIG.get_value("settings", "fullscreen"):
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
