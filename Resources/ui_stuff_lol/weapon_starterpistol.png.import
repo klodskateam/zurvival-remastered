@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nnwpet7egxrr"
-path="res://.godot/imported/speed.png-35582d7447184592a68f58b398c91319.ctex"
+uid="uid://1nevn5xi2jek"
+path="res://.godot/imported/weapon_starterpistol.png-717e205918784f20ecffa8eadc0678e7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/ui_stuff_lol/speed.png"
-dest_files=["res://.godot/imported/speed.png-35582d7447184592a68f58b398c91319.ctex"]
+source_file="res://Resources/ui_stuff_lol/weapon_starterpistol.png"
+dest_files=["res://.godot/imported/weapon_starterpistol.png-717e205918784f20ecffa8eadc0678e7.ctex"]
 
 [params]
 

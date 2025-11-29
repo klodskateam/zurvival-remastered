@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bgd4is08hm4yv"]
+[gd_scene load_steps=10 format=3 uid="uid://bgd4is08hm4yv"]
 
 [ext_resource type="Script" uid="uid://dkbllljttt738" path="res://player.gd" id="1_16hic"]
 [ext_resource type="Texture2D" uid="uid://c0gntm575ocrj" path="res://Resources/person.png" id="2_fef5v"]
@@ -6,13 +6,8 @@
 [ext_resource type="AudioStream" uid="uid://d1h3atxwyd1p0" path="res://Sound/pistol-reload.wav" id="4_51cx5"]
 [ext_resource type="AudioStream" uid="uid://c6m8ni3m64iqm" path="res://Sound/no_ammo.wav" id="5_by3vp"]
 [ext_resource type="AudioStream" uid="uid://ddkilhyif7duj" path="res://Sound/pickup_01.wav" id="6_urp6f"]
-[ext_resource type="AudioStream" uid="uid://ntm7ydb0a1tw" path="res://Sound/pickup_02.wav" id="7_bwjto"]
 [ext_resource type="AudioStream" uid="uid://c1xv3b2t1gfws" path="res://Sound/pickup_medkit_01.wav" id="8_606se"]
-[ext_resource type="AudioStream" uid="uid://dgvr2fdqvx3mk" path="res://Sound/pickup_medkit_02.wav" id="9_u1c27"]
 [ext_resource type="AudioStream" uid="uid://dyfi40bw8gxqr" path="res://Sound/grass_step_01.wav" id="10_op7ga"]
-[ext_resource type="AudioStream" uid="uid://bh02sid8riis3" path="res://Sound/grass_step_02.wav" id="11_q13i1"]
-[ext_resource type="AudioStream" uid="uid://c84uvdqwfwc82" path="res://Sound/grass_step_03.wav" id="12_pylmc"]
-[ext_resource type="AudioStream" uid="uid://dhu54wwf5lelf" path="res://Sound/grass_step_04.wav" id="13_pbfsw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7ksh0"]
 radius = 39.0
@@ -33,28 +28,20 @@ position = Vector2(-3, -57)
 
 [node name="ShootSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_ft5c5")
+max_polyphony = 128
 
 [node name="ReloadSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_51cx5")
+max_polyphony = 128
 
 [node name="EmptySound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_by3vp")
+max_polyphony = 128
 
 [node name="GrassStep01" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_op7ga")
 volume_db = -6.0
-
-[node name="GrassStep02" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("11_q13i1")
-volume_db = -5.0
-
-[node name="GrassStep03" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("12_pylmc")
-volume_db = -5.5
-
-[node name="GrassStep04" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("13_pbfsw")
-volume_db = -6.5
+max_polyphony = 128
 
 [node name="Camera2D" type="Camera2D" parent="."]
 scale = Vector2(1, 1.6)
@@ -73,22 +60,12 @@ autostart = true
 [node name="Pickup01" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_urp6f")
 pitch_scale = 1.49
-max_polyphony = 3
-
-[node name="Pickup02" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_bwjto")
-pitch_scale = 1.34
-max_polyphony = 3
+max_polyphony = 128
 
 [node name="PickupMedkit01" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_606se")
 pitch_scale = 1.24
-max_polyphony = 4
-
-[node name="PickupMedkit02" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("9_u1c27")
-pitch_scale = 1.44
-max_polyphony = 4
+max_polyphony = 128
 
 [node name="Area2D" type="Area2D" parent="."]
 

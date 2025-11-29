@@ -18,7 +18,7 @@ func _process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D):
 	if body.name == "player" and body.INVENTORY_FILLED > 0 and ENERGY > 0: 
-		ENERGY += body.INVENTORY_FILLED/2
+		ENERGY += body.INVENTORY_FILLED
 		body.INVENTORY_FILLED = 0
 
 	

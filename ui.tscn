@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bshfbsu15v3v1"]
+[gd_scene load_steps=15 format=3 uid="uid://bshfbsu15v3v1"]
 
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="1_3mkkl"]
 [ext_resource type="Texture2D" uid="uid://ccrwp3ybxv88m" path="res://Resources/vignette_black.png" id="1_ibotj"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://nmdal2gs2k1d" path="res://Resources/ui_stuff_lol/health.png" id="4_4pw5h"]
 [ext_resource type="Texture2D" uid="uid://cu64qf2fknrj0" path="res://Resources/ui_stuff_lol/inventory.png" id="8_ok7cu"]
 [ext_resource type="Texture2D" uid="uid://22rpyi6muyu6" path="res://Resources/ui_stuff_lol/cold.png" id="9_irxef"]
+[ext_resource type="Texture2D" uid="uid://1nevn5xi2jek" path="res://Resources/ui_stuff_lol/weapon_starterpistol.png" id="10_irxef"]
 
 [sub_resource type="Animation" id="Animation_waa4j"]
 length = 0.001
@@ -191,6 +192,21 @@ vertical_alignment = 1
 position = Vector2(-15.5, 14.000001)
 scale = Vector2(0.242187, 0.23437499)
 texture = ExtResource("9_irxef")
+
+[node name="WeaponText" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_left = 71.0
+offset_top = 106.0
+offset_right = 458.0
+offset_bottom = 151.0
+theme = ExtResource("1_3mkkl")
+text = "Выбран: ПК-182
+Оружие выбирается колёсиком мыши"
+
+[node name="WeaponIcon" type="Sprite2D" parent="WeaponText"]
+position = Vector2(-33, 19)
+scale = Vector2(0.23046875, 0.23046875)
+texture = ExtResource("10_irxef")
 
 [node name="Score" type="Label" parent="."]
 anchors_preset = 3

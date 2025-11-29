@@ -58,9 +58,18 @@ $wintermodename,Winter mode,Зимний режим,Зімовы рэжым,冬�
 $wintermodedesc,"You found yourself in a forest in the middle of a zombie-apocalypse. Collect planks, defend yourself from zombu's, and don't let the campfire extinguish.","Вы оказались в лесу посреди зомби-апокалисиса зимой. Собирайте палки, защищайтесь от зомбу, и не дайте костру потухнуть.
 
 
-","Вы апынуліся ў лесе пасярод зомбі-апакалісісу зімой. Збірайце палкі, абараняйцеся ад зомбу, і не дайце вогнішча патухнуць.",你发现自己身处一场冬季丧尸末日中的森林里。收集树枝，保护自己免受丧尸攻击，并保持篝火燃烧。,"Te encuentras en el bosque en medio de un apocalipsis zombu invernal. Recoge leña, protégete de los zombis y mantén el fuego encendido.","Olit löytynyt itsesi metsässä keskellä zombiapokalypsia talvella. Kerää kepiä, puolustaa itseäsi zombuista, ja älä anna kokolle sammua.","Вы апынуліся ў лесе пасярод зомбі-апакалісісу зімой. Збірайце палкі, абараняйцеся ад зомбу, і не дайце вогнішча патухнуць.","Znalazłeś się w lesie w środku zimowej apokalipsy zombu. Zbieraj patyki, chroń się przed zombu i podtrzymuj ogień.
+","Вы апынуліся ў лесе пасярод зомбі-апакалісісу зімой. Збірайце палкі, абараняйцеся ад зомбу, і не дайце вогнішча патухнуць.",你发现自己身处一场冬季丧尸末日中的森林里。收集树枝，保护自己免受丧尸攻击，并保持篝火燃烧。,"Te encuentras en el bosque en medio de un apocalipsis zombu invernal. Recoge leña, protégete de los zombis y mantén el fuego encendido.","Olit löytynyt itsesi metsässä keskellä zombiapokalypsia talvella. Kerää kepiä, puolustaa itseäsi zombuista, ja älä anna kokolle sammua.","Vy apynulisia ŭ liesie pasiarod zombi-apakalisisu zimoj. Źbirajcie palki, abaraniajciesia ad zombu, i nie dajcie vohnišča patuchnuć.","Znalazłeś się w lesie w środku zimowej apokalipsy zombu. Zbieraj patyki, chroń się przed zombu i podtrzymuj ogień.
 ","👤🌲🌳🧟‍♂️🔥💥
 🪵➕🪵🛡️🧟‍♂️🚫
 🔥❌➡️🏕️"
 $coldness,Frost,Мороз,Мароз,冷冻,Congelación,Jäätyminen,Maroz,Zamrażanie,❄️
 $inventory,Inventory,Инвентарь,Інвентар,存货,Inventario,Tasku,Inventar',Spis,📦🗂️📝
+$starterpistol,PP-182,ПК-182,ПК-182,PP-182,PP-182,PP-182,PK-182,PP-182,PP-182
+$startermp,MP5,MP5,MP5,MP5,MP5,MP5,MP5,MP5,MP5
+$selectedweapon,Selected weapon: %s. \nChange weapons using mouse wheel.,Выбран: %s. \nОружие выбирается колёсиком мыши,Выбраная зброя: %s. \nЗмяняйце зброю з дапамогай скролу мышы.,"已选武器：%s。\n使用鼠标滚轮切换武器。
+","Arma seleccionada: %s. \nCambia de arma con la rueda del ratón.
+",Valittu ase: %s. \nVaihda aseita hiiren rullalla.,Vybranaja zbroja: %s. \nŹmianiajcie zbroju z dapamohaj skrolu myšy.,Wybrana broń: %s. \nZmień broń za pomocą kółka myszy.,🖊: %s. \n🗡 🖊 ⏮ 🐁 🎡
+$disablegunhints,Disable weapon hints,Отключить подсказки,"Выключыць адлюстраванне бягучай зброі
+","关闭当前武器显示
+",Desactivar la visualización del arma actual,Poista aseiden vihjeet,"Vykliučyć adliustravańnie biahučaj zbroi
+",Wyłączyć wyświetlanie aktualnej broni,❎ 🗡 🎱
