@@ -69,3 +69,7 @@ $startermp,MP5,MP5,MP5,MP5,MP5,MP5,MP5,MP5,MP5
 $selectedweapon,Selected weapon: %s. \nChange weapons using mouse wheel.,Выбран: %s. \nОружие выбирается колёсиком мыши,Выбраная зброя: %s. \nЗмяняйце зброю з дапамогай скролу мышы.,"已选武器：%s。\n使用鼠标滚轮切换武器。
 ","Arma seleccionada: %s. \nCambia de arma con la rueda del ratón.
 ",Valittu ase: %s. \nVaihda aseita hiiren rullalla.,Vybranaja zbroja: %s. \nŹmianiajcie zbroju z dapamohaj skrolu myšy.,Wybrana broń: %s. \nZmień broń za pomocą kółka myszy.,🖊: %s. \n🗡 🖊 ⏮ 🐁 🎡
+$disableweaponhints,Disable weapon hints,Отключить показ текущего оружия,"Выключыць адлюстраванне бягучай зброі
+","关闭当前武器显示
+",Desactivar la visualización del arma actual,Poista aseiden vihjeet,"Vykliučyć adliustravańnie biahučaj zbroi
+",Wyłączyć wyświetlanie aktualnej broni,❎ 🗡 🎱
