@@ -34,28 +34,29 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -177.0
+offset_left = -202.0
 offset_top = -224.0
-offset_right = 177.0
-offset_bottom = 227.0
+offset_right = 197.0
+offset_bottom = 255.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SettingsSave" type="Button" parent="Control/Panel"]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 9.0
-offset_right = 347.0
-offset_bottom = 40.0
+offset_left = 14.0
+offset_top = 10.0
+offset_right = 388.0
+offset_bottom = 41.0
 text = "$save"
 script = ExtResource("2_8mcqh")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel"]
+clip_contents = true
 layout_mode = 0
-offset_left = 8.0
-offset_top = 42.0
-offset_right = 347.0
-offset_bottom = 416.0
+offset_left = 6.0
+offset_top = 47.0
+offset_right = 396.0
+offset_bottom = 444.175
 alignment = 1
 
 [node name="GraphSet" type="Label" parent="Control/Panel/VBoxContainer"]
@@ -76,10 +77,10 @@ script = ExtResource("6_3j6r5")
 
 [node name="Label" type="Label" parent="Control/Panel/VBoxContainer/SettingsTransitionCheck"]
 layout_mode = 0
-offset_left = -5.0
-offset_top = 20.0
-offset_right = 294.0
-offset_bottom = 36.0
+offset_left = 53.0
+offset_top = 21.0
+offset_right = 352.0
+offset_bottom = 37.0
 theme_override_font_sizes/font_size = 12
 text = "$restartrequired"
 horizontal_alignment = 2
@@ -90,6 +91,7 @@ justification_flags = 0
 layout_mode = 2
 text = "$disablegunhints"
 alignment = 2
+autowrap_mode = 3
 script = ExtResource("7_3lj6o")
 
 [node name="Sep1" type="HSeparator" parent="Control/Panel/VBoxContainer"]
