@@ -89,6 +89,13 @@ var WEAPONS = [
 ]
 
 func _ready() -> void:
+	if GamemodeManager.GAMEMODE == -1:
+		if !GamemodeManager.MODGAME.has("player_health") or GamemodeManager.MODGAME["player_health"] == "default":
+			HEALTH = MAX_HEALTH
+		else:
+			MAX_HEALTH = int(GamemodeManager.MODGAME["player_health"])
+			health_bar.max_value = int(GamemodeManager.MODGAME["player_health"])
+			HEALTH = int(GamemodeManager.MODGAME["player_health"])
 	weaponhint_show()
 
 func _physics_process(delta: float):

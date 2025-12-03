@@ -30,9 +30,11 @@ var GAMEMODES = [
 	},
 ]
 
+var MODDED_GAMEMODES = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	MODDED_GAMEMODES = ModLoader.MODGAMEMODES
 	if Global.isDEMO:
 		$Control/Panel/ScrollContainer/VBoxContainer/HBoxContainer/ShopButton.text = "Soon..."
 		$Control/Panel/ScrollContainer/VBoxContainer/HBoxContainer/StorageButton.text = "Soon..."
@@ -49,6 +51,18 @@ func _ready() -> void:
 		newbtn.GMODE = GAMEMODES[sus]["gamemode"]
 		
 		$Control/Panel/ScrollContainer/VBoxContainer.add_child(newbtn)
+		
+	for susgame in MODDED_GAMEMODES.size():
+		var newbtn = BUTTONGAMEMODE.instantiate()
+		newbtn.text = "[MOD] " + MODDED_GAMEMODES[susgame]["name"]
+		newbtn.GMNAME = MODDED_GAMEMODES[susgame]["name"]
+		newbtn.GMDESC = MODDED_GAMEMODES[susgame]["desc"]
+		newbtn.SCENE = "res://game-mod.tscn"
+		GamemodeManager.MODGAME = MODDED_GAMEMODES[susgame]
+		newbtn.GMODE = -1
+		
+		$Control/Panel/ScrollContainer/VBoxContainer.add_child(newbtn)
+		pass
 	if not transition.imfinished.is_connected(Global.got_finishedsign):
 		transition.imfinished.connect(Global.got_finishedsign)
 
