@@ -31,7 +31,7 @@ var GAMEMODES = [
 ]
 
 var MODDED_GAMEMODES = []
-
+var MODGAME = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	MODDED_GAMEMODES = ModLoader.MODGAMEMODES
@@ -49,7 +49,8 @@ func _ready() -> void:
 		newbtn.GMDESC = GAMEMODES[sus]["description"]
 		newbtn.SCENE = GAMEMODES[sus]["scene"]
 		newbtn.GMODE = GAMEMODES[sus]["gamemode"]
-		
+		newbtn.MODGAME = null
+
 		$Control/Panel/ScrollContainer/VBoxContainer.add_child(newbtn)
 		
 	for susgame in MODDED_GAMEMODES.size():
@@ -58,7 +59,7 @@ func _ready() -> void:
 		newbtn.GMNAME = MODDED_GAMEMODES[susgame]["name"]
 		newbtn.GMDESC = MODDED_GAMEMODES[susgame]["desc"]
 		newbtn.SCENE = "res://game-mod.tscn"
-		GamemodeManager.MODGAME = MODDED_GAMEMODES[susgame]
+		newbtn.MODGAME = susgame
 		newbtn.GMODE = -1
 		
 		$Control/Panel/ScrollContainer/VBoxContainer.add_child(newbtn)
@@ -83,6 +84,10 @@ func _on_button_pressed() -> void:
 
 
 func _on_play_button_pressed() -> void:
+	if MODGAME == null:
+		pass
+	else:
+		GamemodeManager.MODGAME = MODDED_GAMEMODES[MODGAME].duplicate(true)
 	get_tree().change_scene_to_file(GMCHANGE_TO)
 	
 func change_info():

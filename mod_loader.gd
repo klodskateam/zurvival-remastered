@@ -34,7 +34,7 @@ func load_mods() -> void:
 				if tmp_mod["adds"][sussy]["type"] == "bgimage":
 					MODBGIMAGES.insert(MODBGIMAGES.size(), tmp_mod["adds"][sussy])
 				if tmp_mod["adds"][sussy]["type"] == "gamemode":
-					MODGAMEMODES.insert(MODGAMEMODES.size(), tmp_mod["adds"][sussy])
+					MODGAMEMODES.insert(MODGAMEMODES.size(), tmp_mod["adds"][sussy].duplicate(true))
 #		print("MOD COSMETIC:")
 #		print(MODCOSMICITEMS)
 		

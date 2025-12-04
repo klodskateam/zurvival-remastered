@@ -296,6 +296,36 @@ func _input(event):
 	pickedup_plank = false
 	
 	match GamemodeManager.GAMEMODE:
+		-1:
+			if GamemodeManager.MODGAME["allow_weapons"]:
+				if event.is_action_pressed("nextweapon"):
+					if SELECTED_WEAPON + 1 >= WEAPONS.size():
+						WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
+						SELECTED_WEAPON = 0
+						weaponhint_show()
+						BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
+						print(SELECTED_WEAPON)
+					else:
+						WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
+						SELECTED_WEAPON += 1
+						weaponhint_show()
+						BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
+						print(SELECTED_WEAPON)		
+				if event.is_action_pressed("previousweapon"):
+					if SELECTED_WEAPON - 1 < 0:
+						WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
+						SELECTED_WEAPON = WEAPONS.size() - 1
+						weaponhint_show()
+						BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
+						print(SELECTED_WEAPON)
+					else:
+						WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
+						SELECTED_WEAPON -= 1
+						weaponhint_show()
+						BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
+						print(SELECTED_WEAPON)
+			else:
+				pass
 		1: 
 			pass
 		_:	
@@ -326,6 +356,7 @@ func _input(event):
 					weaponhint_show()
 					BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
 					print(SELECTED_WEAPON)
+
 		
 	
 func shoot():
@@ -376,22 +407,22 @@ func _on_walkdelay_timeout() -> void:
 			$GrassStep01.pitch_scale = randf_range(0.96, 1.02)
 		match randi_range(1,4):
 			1:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) and month >= 12 or month <= 01):
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
 					$GrassStep01.stream = SNOW_STEP_01
 				else:
 					$GrassStep01.stream = GRASS_STEP_01
 			2:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) and month >= 12 or month <= 01):
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
 					$GrassStep01.stream = SNOW_STEP_02
 				else:
 					$GrassStep01.stream = GRASS_STEP_02
 			3:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) and month >= 12 or month <= 01):
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
 					$GrassStep01.stream = SNOW_STEP_03
 				else:
 					$GrassStep01.stream = GRASS_STEP_03
 			4:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) and month >= 12 or month <= 01):
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
 					$GrassStep01.stream = SNOW_STEP_04
 				else:
 					$GrassStep01.stream = GRASS_STEP_04
@@ -406,22 +437,22 @@ func _on_walkdelay_timeout() -> void:
 			$GrassStep01.volume_db = randf_range(-5, -3)
 		match randi_range(1,4):
 			1:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE != 2) and month >= 12 or month <= 01):
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
 					$GrassStep01.stream = SNOW_STEP_01
 				else:
 					$GrassStep01.stream = GRASS_STEP_01
 			2:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE != 2) and month >= 12 or month <= 01):
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
 					$GrassStep01.stream = SNOW_STEP_02
 				else:
 					$GrassStep01.stream = GRASS_STEP_02
 			3:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE != 2) and month >= 12 or month <= 01):
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
 					$GrassStep01.stream = SNOW_STEP_03
 				else:
 					$GrassStep01.stream = GRASS_STEP_03
 			4:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE != 2) and month >= 12 or month <= 01):
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
 					$GrassStep01.stream = SNOW_STEP_04
 				else:
 					$GrassStep01.stream = GRASS_STEP_04
@@ -429,6 +460,19 @@ func _on_walkdelay_timeout() -> void:
 
 func weaponhint_show():
 	match GamemodeManager.GAMEMODE:
+		-1:
+			if GamemodeManager.MODGAME["allow_weapons"]:
+				if Global.WEAPONHINTS:
+					var iconfile = WEAPONS[SELECTED_WEAPON]["icon"]
+					var icon = load(iconfile)
+					weapon_icon.texture = icon
+					weapon_text.modulate.a = 1
+					weapon_text.text = tr("$selectedweapon") % tr(WEAPONS[SELECTED_WEAPON]["name"])
+					if HINT_TWEEN and HINT_TWEEN.is_valid():
+						HINT_TWEEN.kill()
+					HINT_TWEEN = get_tree().create_tween()
+					HINT_TWEEN.tween_property(weapon_text, "modulate:a", 0, 4)
+					HINT_TWEEN.play()
 		1:
 			pass
 		_:
