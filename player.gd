@@ -51,20 +51,25 @@ var SPEED = 325
 var BULLETS = 12
 var ZAPAS_BULLETS = 48
 var DELAY = 0
-var HEALTH = 100
+var HEALTH = 1000
 var COLDNESS = 0
 var INVENTORY_FILLED = 0
 @export var MAX_INVENTORY_FILLED = 100
 @export var MAX_COLDNESS = 100
-@export var MAX_HEALTH = 100
+@export var MAX_HEALTH = 1000
 @export var MAX_BULLETS = 12
 var SCORE = 0
 var RUNLOCK = 0
+var shake = false
 @export var ded: bool = false
 
 @export var REGULAR_SPEED = 300
 @export var RUN_SPEED = 410
 @export var P_BULLET = preload("res://bullet.tscn")
+@export var P_GRENADE = preload("uid://c52nnfwncwkti")
+@onready var grenade_target: Marker2D = $GrenadeTarget
+@export var max_range = 300 # у тракториста
+var inthehall = false
 @export var SELECTED_WEAPON = 0
 
 var WEAPONS = [
@@ -76,6 +81,7 @@ var WEAPONS = [
 		"left_bullets": 12,
 		"zapas_bullets": 48,
 		"icon": "res://Resources/ui_stuff_lol/weapon_starterpistol.png",
+		"grenade": false,
 	},
 	{
 		"name": tr("$startermp"),
@@ -85,6 +91,17 @@ var WEAPONS = [
 		"left_bullets": 30,
 		"zapas_bullets": 30,
 		"icon": "res://Resources/ui_stuff_lol/weapon_startermp.png",
+		"grenade": false,
+	},
+	{
+		"name": tr("$he_grenade"),
+		"delay": 1,
+		"automatic": false,
+		"bullets": 1,
+		"left_bullets": 1,
+		"zapas_bullets": 4,
+		"icon": "res://Resources/ui_stuff_lol/weapon_hegrenade.png",
+		"grenade": true,
 	},
 ]
 
@@ -231,6 +248,10 @@ func _process(delta: float):
 	else:
 		vignette_red.lowhealth = false	
 		
+	if shake:
+		$Camera2D/AnimationPlayer.play("shake")	
+		shake = false
+		
 	if Input.is_action_pressed("shoot"):
 		ratata()	
 
@@ -260,11 +281,19 @@ func _input(event):
 			if coldness_bar:
 				coldness_bar.queue_free()
 	
-	if event.is_action_pressed("shoot"):
+	
+	if event.is_action_pressed("shoot") and !WEAPONS[SELECTED_WEAPON]["grenade"]:
 		if (OS.get_name() != "Android"):
 			shoot()
-		
-	
+	if Input.is_action_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["grenade"]:
+		grenade_target.global_position = get_global_mouse_position()
+		inthehall = true
+	if Input.is_action_just_released("shoot") and inthehall and WEAPONS[SELECTED_WEAPON]["grenade"]:
+		throw()
+		pass
+
+
+
 	if event.is_action_pressed("reload"):
 		bullets_reload()
 	if pickedup:
@@ -356,6 +385,7 @@ func _input(event):
 					weaponhint_show()
 					BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
 					print(SELECTED_WEAPON)
+					
 
 		
 	
@@ -380,6 +410,29 @@ func shoot():
 		$EmptySound.play()
 		DELAY = 0
 		print(DELAY)
+		
+func throw():
+	if BULLETS != 0:
+		if DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]:
+			var grenade = P_GRENADE.instantiate()
+			grenade.global_position = $Marker2D.global_position
+			grenade.global_rotation = global_rotation + randf_range(0.9, 1.1)
+			get_parent().add_child(grenade)
+			grenade.target = $GrenadeTarget.global_position
+			WEAPONS[SELECTED_WEAPON]["left_bullets"] -= 1
+			BULLETS -= 1
+			WEAPONS[SELECTED_WEAPON]["left_bullets"] = max(0, WEAPONS[SELECTED_WEAPON]["left_bullets"])
+			BULLETS = max(0, BULLETS)
+			WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
+			#$ShootSound.pitch_scale = randf_range(0.93, 1.06)
+			#$ShootSound.play()
+			DELAY = 0
+			print(DELAY)
+	else:
+		$EmptySound.play()
+		DELAY = 0
+		print(DELAY)
+	pass
 		
 func bullets_reload():
 	match GamemodeManager.GAMEMODE:

@@ -153,6 +153,7 @@ locale/translations=PackedStringArray("res://Translation/translations.be.transla
 2d_physics/layer_3="items"
 2d_physics/layer_4="bullet"
 2d_physics/layer_5="system"
+2d_physics/layer_6="grenade"
 
 [physics]
 
