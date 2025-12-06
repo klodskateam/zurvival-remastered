@@ -37,6 +37,7 @@ const PICKUP_01 = preload("res://Sound/pickup_01.wav")
 const PICKUP_02 = preload("res://Sound/pickup_02.wav")
 const PICKUP_MEDKIT_01 = preload("res://Sound/pickup_medkit_01.wav")
 const PICKUP_MEDKIT_02 = preload("res://Sound/pickup_medkit_02.wav")
+var GRENADE_PREPARE = preload("uid://brrx5ku6x7b1n")
 
 
 var time = Time.get_datetime_dict_from_system()
@@ -51,12 +52,12 @@ var SPEED = 325
 var BULLETS = 12
 var ZAPAS_BULLETS = 48
 var DELAY = 0
-var HEALTH = 1000
+var HEALTH = 100
 var COLDNESS = 0
 var INVENTORY_FILLED = 0
 @export var MAX_INVENTORY_FILLED = 100
 @export var MAX_COLDNESS = 100
-@export var MAX_HEALTH = 1000
+@export var MAX_HEALTH = 100
 @export var MAX_BULLETS = 12
 var SCORE = 0
 var RUNLOCK = 0
@@ -94,7 +95,7 @@ var WEAPONS = [
 		"grenade": false,
 	},
 	{
-		"name": tr("$he_grenade"),
+		"name": tr("$hegrenade"),
 		"delay": 1,
 		"automatic": false,
 		"bullets": 1,
@@ -288,6 +289,10 @@ func _input(event):
 	if Input.is_action_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["grenade"]:
 		grenade_target.global_position = get_global_mouse_position()
 		inthehall = true
+	if Input.is_action_just_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["grenade"] and BULLETS >= 0:
+		$Pickup01.stream = GRENADE_PREPARE
+		$Pickup01.pitch_scale = randf_range(0.83, 1.06)
+		$Pickup01.play()
 	if Input.is_action_just_released("shoot") and inthehall and WEAPONS[SELECTED_WEAPON]["grenade"]:
 		throw()
 		pass
@@ -443,12 +448,22 @@ func bullets_reload():
 				$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
 				$ReloadSound.play()
 		_:
+			if (WEAPONS[SELECTED_WEAPON]["grenade"]):
+				if (BULLETS == 0) and (WEAPONS[SELECTED_WEAPON]["zapas_bullets"] >= WEAPONS[SELECTED_WEAPON]["bullets"]):
+					BULLETS = WEAPONS[SELECTED_WEAPON]["bullets"]
+					DELAY = 0
+					WEAPONS[SELECTED_WEAPON]["zapas_bullets"] -= WEAPONS[SELECTED_WEAPON]["bullets"]
+					WEAPONS[SELECTED_WEAPON]["zapas_bullets"] = max(0, WEAPONS[SELECTED_WEAPON]["zapas_bullets"])
+					$ReloadSound.pitch_scale = randf_range(1.2, 1.35)
+					$ReloadSound.stream = PICKUP_01
+					$ReloadSound.play()
 			if (BULLETS == 0) and (WEAPONS[SELECTED_WEAPON]["zapas_bullets"] >= WEAPONS[SELECTED_WEAPON]["bullets"]):
 				BULLETS = WEAPONS[SELECTED_WEAPON]["bullets"]
 				DELAY = 0
 				WEAPONS[SELECTED_WEAPON]["zapas_bullets"] -= WEAPONS[SELECTED_WEAPON]["bullets"]
 				WEAPONS[SELECTED_WEAPON]["zapas_bullets"] = max(0, WEAPONS[SELECTED_WEAPON]["zapas_bullets"])
 				$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
+				$ReloadSound.stream = load("res://Sound/pistol-reload.wav")
 				$ReloadSound.play()
 
 func _on_walkdelay_timeout() -> void:
