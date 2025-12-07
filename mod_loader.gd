@@ -2,6 +2,7 @@ extends Node
 
 var MODCOSMICITEMS = []
 var MODBGIMAGES = []
+var MODGAMEMODES = []
 var MODSLIST
 
 var BGs = []
@@ -32,11 +33,18 @@ func load_mods() -> void:
 					MODCOSMICITEMS.insert(MODCOSMICITEMS.size(), tmp_mod["adds"][sussy])
 				if tmp_mod["adds"][sussy]["type"] == "bgimage":
 					MODBGIMAGES.insert(MODBGIMAGES.size(), tmp_mod["adds"][sussy])
-		print("MOD COSMETIC:")
-		print(MODCOSMICITEMS)
+				if tmp_mod["adds"][sussy]["type"] == "gamemode":
+					MODGAMEMODES.insert(MODGAMEMODES.size(), tmp_mod["adds"][sussy].duplicate(true))
+#		print("MOD COSMETIC:")
+#		print(MODCOSMICITEMS)
 		
-		print("MOD BGs:")
-		print(MODBGIMAGES)
+#		print("MOD BGs:")
+#		print(MODBGIMAGES)
+		
+		# 03/12/25 - когда там в последний раз модлоадер обновлялся? 
+		
+		print("MOD GAMEMODES:")
+		print(MODGAMEMODES)
 		
 		print("--")
 		
@@ -47,7 +55,11 @@ func load_mods() -> void:
 				"image": imgg,
 				"author": img["author"]
 			})
-	
+		
+		for gamesus in ModLoader.MODGAMEMODES:
+			
+			pass
+		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass

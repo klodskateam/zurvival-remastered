@@ -37,6 +37,7 @@ const PICKUP_01 = preload("res://Sound/pickup_01.wav")
 const PICKUP_02 = preload("res://Sound/pickup_02.wav")
 const PICKUP_MEDKIT_01 = preload("res://Sound/pickup_medkit_01.wav")
 const PICKUP_MEDKIT_02 = preload("res://Sound/pickup_medkit_02.wav")
+var GRENADE_PREPARE = preload("uid://brrx5ku6x7b1n")
 
 
 var time = Time.get_datetime_dict_from_system()
@@ -60,11 +61,16 @@ var INVENTORY_FILLED = 0
 @export var MAX_BULLETS = 12
 var SCORE = 0
 var RUNLOCK = 0
+var shake = false
 @export var ded: bool = false
 
 @export var REGULAR_SPEED = 300
 @export var RUN_SPEED = 410
 @export var P_BULLET = preload("res://bullet.tscn")
+@export var P_GRENADE = preload("uid://c52nnfwncwkti")
+@onready var grenade_target: Marker2D = $GrenadeTarget
+@export var max_range = 300 # у тракториста
+var inthehall = false
 @export var SELECTED_WEAPON = 0
 
 var WEAPONS = [
@@ -76,6 +82,7 @@ var WEAPONS = [
 		"left_bullets": 12,
 		"zapas_bullets": 48,
 		"icon": "res://Resources/ui_stuff_lol/weapon_starterpistol.png",
+		"grenade": false,
 	},
 	{
 		"name": tr("$startermp"),
@@ -85,10 +92,28 @@ var WEAPONS = [
 		"left_bullets": 30,
 		"zapas_bullets": 30,
 		"icon": "res://Resources/ui_stuff_lol/weapon_startermp.png",
+		"grenade": false,
+	},
+	{
+		"name": tr("$hegrenade"),
+		"delay": 1,
+		"automatic": false,
+		"bullets": 1,
+		"left_bullets": 1,
+		"zapas_bullets": 4,
+		"icon": "res://Resources/ui_stuff_lol/weapon_hegrenade.png",
+		"grenade": true,
 	},
 ]
 
 func _ready() -> void:
+	if GamemodeManager.GAMEMODE == -1:
+		if !GamemodeManager.MODGAME.has("player_health") or GamemodeManager.MODGAME["player_health"] == "default":
+			HEALTH = MAX_HEALTH
+		else:
+			MAX_HEALTH = int(GamemodeManager.MODGAME["player_health"])
+			health_bar.max_value = int(GamemodeManager.MODGAME["player_health"])
+			HEALTH = int(GamemodeManager.MODGAME["player_health"])
 	weaponhint_show()
 
 func _physics_process(delta: float):
@@ -224,6 +249,10 @@ func _process(delta: float):
 	else:
 		vignette_red.lowhealth = false	
 		
+	if shake:
+		$Camera2D/AnimationPlayer.play("shake")	
+		shake = false
+		
 	if Input.is_action_pressed("shoot"):
 		ratata()	
 
@@ -253,11 +282,23 @@ func _input(event):
 			if coldness_bar:
 				coldness_bar.queue_free()
 	
-	if event.is_action_pressed("shoot"):
+	
+	if event.is_action_pressed("shoot") and !WEAPONS[SELECTED_WEAPON]["grenade"]:
 		if (OS.get_name() != "Android"):
 			shoot()
-		
-	
+	if Input.is_action_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["grenade"]:
+		grenade_target.global_position = get_global_mouse_position()
+		inthehall = true
+	if Input.is_action_just_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["grenade"] and BULLETS >= 0:
+		$Pickup01.stream = GRENADE_PREPARE
+		$Pickup01.pitch_scale = randf_range(0.83, 1.06)
+		$Pickup01.play()
+	if Input.is_action_just_released("shoot") and inthehall and WEAPONS[SELECTED_WEAPON]["grenade"]:
+		throw()
+		pass
+
+
+
 	if event.is_action_pressed("reload"):
 		bullets_reload()
 	if pickedup:
@@ -289,6 +330,36 @@ func _input(event):
 	pickedup_plank = false
 	
 	match GamemodeManager.GAMEMODE:
+		-1:
+			if GamemodeManager.MODGAME["allow_weapons"]:
+				if event.is_action_pressed("nextweapon"):
+					if SELECTED_WEAPON + 1 >= WEAPONS.size():
+						WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
+						SELECTED_WEAPON = 0
+						weaponhint_show()
+						BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
+						print(SELECTED_WEAPON)
+					else:
+						WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
+						SELECTED_WEAPON += 1
+						weaponhint_show()
+						BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
+						print(SELECTED_WEAPON)		
+				if event.is_action_pressed("previousweapon"):
+					if SELECTED_WEAPON - 1 < 0:
+						WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
+						SELECTED_WEAPON = WEAPONS.size() - 1
+						weaponhint_show()
+						BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
+						print(SELECTED_WEAPON)
+					else:
+						WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
+						SELECTED_WEAPON -= 1
+						weaponhint_show()
+						BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
+						print(SELECTED_WEAPON)
+			else:
+				pass
 		1: 
 			pass
 		_:	
@@ -319,6 +390,8 @@ func _input(event):
 					weaponhint_show()
 					BULLETS = WEAPONS[SELECTED_WEAPON]["left_bullets"]
 					print(SELECTED_WEAPON)
+					
+
 		
 	
 func shoot():
@@ -343,6 +416,29 @@ func shoot():
 		DELAY = 0
 		print(DELAY)
 		
+func throw():
+	if BULLETS != 0:
+		if DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]:
+			var grenade = P_GRENADE.instantiate()
+			grenade.global_position = $Marker2D.global_position
+			grenade.global_rotation = global_rotation + randf_range(0.9, 1.1)
+			get_parent().add_child(grenade)
+			grenade.target = $GrenadeTarget.global_position
+			WEAPONS[SELECTED_WEAPON]["left_bullets"] -= 1
+			BULLETS -= 1
+			WEAPONS[SELECTED_WEAPON]["left_bullets"] = max(0, WEAPONS[SELECTED_WEAPON]["left_bullets"])
+			BULLETS = max(0, BULLETS)
+			WEAPONS[SELECTED_WEAPON]["left_bullets"] = BULLETS
+			#$ShootSound.pitch_scale = randf_range(0.93, 1.06)
+			#$ShootSound.play()
+			DELAY = 0
+			print(DELAY)
+	else:
+		$EmptySound.play()
+		DELAY = 0
+		print(DELAY)
+	pass
+		
 func bullets_reload():
 	match GamemodeManager.GAMEMODE:
 		1:
@@ -352,12 +448,22 @@ func bullets_reload():
 				$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
 				$ReloadSound.play()
 		_:
+			if (WEAPONS[SELECTED_WEAPON]["grenade"]):
+				if (BULLETS == 0) and (WEAPONS[SELECTED_WEAPON]["zapas_bullets"] >= WEAPONS[SELECTED_WEAPON]["bullets"]):
+					BULLETS = WEAPONS[SELECTED_WEAPON]["bullets"]
+					DELAY = 0
+					WEAPONS[SELECTED_WEAPON]["zapas_bullets"] -= WEAPONS[SELECTED_WEAPON]["bullets"]
+					WEAPONS[SELECTED_WEAPON]["zapas_bullets"] = max(0, WEAPONS[SELECTED_WEAPON]["zapas_bullets"])
+					$ReloadSound.pitch_scale = randf_range(1.2, 1.35)
+					$ReloadSound.stream = PICKUP_01
+					$ReloadSound.play()
 			if (BULLETS == 0) and (WEAPONS[SELECTED_WEAPON]["zapas_bullets"] >= WEAPONS[SELECTED_WEAPON]["bullets"]):
 				BULLETS = WEAPONS[SELECTED_WEAPON]["bullets"]
 				DELAY = 0
 				WEAPONS[SELECTED_WEAPON]["zapas_bullets"] -= WEAPONS[SELECTED_WEAPON]["bullets"]
 				WEAPONS[SELECTED_WEAPON]["zapas_bullets"] = max(0, WEAPONS[SELECTED_WEAPON]["zapas_bullets"])
 				$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
+				$ReloadSound.stream = load("res://Sound/pistol-reload.wav")
 				$ReloadSound.play()
 
 func _on_walkdelay_timeout() -> void:
@@ -369,22 +475,22 @@ func _on_walkdelay_timeout() -> void:
 			$GrassStep01.pitch_scale = randf_range(0.96, 1.02)
 		match randi_range(1,4):
 			1:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) and month >= 12 or month <= 01):
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
 					$GrassStep01.stream = SNOW_STEP_01
 				else:
 					$GrassStep01.stream = GRASS_STEP_01
 			2:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) and month >= 12 or month <= 01):
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
 					$GrassStep01.stream = SNOW_STEP_02
 				else:
 					$GrassStep01.stream = GRASS_STEP_02
 			3:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) and month >= 12 or month <= 01):
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
 					$GrassStep01.stream = SNOW_STEP_03
 				else:
 					$GrassStep01.stream = GRASS_STEP_03
 			4:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) and month >= 12 or month <= 01):
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
 					$GrassStep01.stream = SNOW_STEP_04
 				else:
 					$GrassStep01.stream = GRASS_STEP_04
@@ -399,22 +505,22 @@ func _on_walkdelay_timeout() -> void:
 			$GrassStep01.volume_db = randf_range(-5, -3)
 		match randi_range(1,4):
 			1:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE != 2) and month >= 12 or month <= 01):
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
 					$GrassStep01.stream = SNOW_STEP_01
 				else:
 					$GrassStep01.stream = GRASS_STEP_01
 			2:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE != 2) and month >= 12 or month <= 01):
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
 					$GrassStep01.stream = SNOW_STEP_02
 				else:
 					$GrassStep01.stream = GRASS_STEP_02
 			3:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE != 2) and month >= 12 or month <= 01):
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
 					$GrassStep01.stream = SNOW_STEP_03
 				else:
 					$GrassStep01.stream = GRASS_STEP_03
 			4:
-				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE != 2) and month >= 12 or month <= 01):
+				if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"]) and month >= 12 or month <= 01) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
 					$GrassStep01.stream = SNOW_STEP_04
 				else:
 					$GrassStep01.stream = GRASS_STEP_04
@@ -422,6 +528,19 @@ func _on_walkdelay_timeout() -> void:
 
 func weaponhint_show():
 	match GamemodeManager.GAMEMODE:
+		-1:
+			if GamemodeManager.MODGAME["allow_weapons"]:
+				if Global.WEAPONHINTS:
+					var iconfile = WEAPONS[SELECTED_WEAPON]["icon"]
+					var icon = load(iconfile)
+					weapon_icon.texture = icon
+					weapon_text.modulate.a = 1
+					weapon_text.text = tr("$selectedweapon") % tr(WEAPONS[SELECTED_WEAPON]["name"])
+					if HINT_TWEEN and HINT_TWEEN.is_valid():
+						HINT_TWEEN.kill()
+					HINT_TWEEN = get_tree().create_tween()
+					HINT_TWEEN.tween_property(weapon_text, "modulate:a", 0, 4)
+					HINT_TWEEN.play()
 		1:
 			pass
 		_:

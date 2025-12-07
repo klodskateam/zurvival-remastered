@@ -15,18 +15,32 @@ extends CharacterBody2D
 @onready var navagent: NavigationAgent2D = $NavigationAgent2D
 @onready var timer: Timer = $Timer
 
-const SPEED = 217
+const DEFAULT_SPEED = 217
+var SPEED = 217
 var HP = 100
 var DAMAGE = 10
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta: float) -> void:
+func _ready() -> void:
 	match GamemodeManager.GAMEMODE:
+		-1:
+			pass
 		1:
 			DAMAGE = 100
+			SPEED = DEFAULT_SPEED
 		_:
 			DAMAGE = 10
-	
+			SPEED = DEFAULT_SPEED
+	if GamemodeManager.GAMEMODE == -1:
+		if !GamemodeManager.MODGAME.has("zondre_damage") or GamemodeManager.MODGAME["zondre_damage"] == "default":
+			DAMAGE = 10
+		else:
+			DAMAGE = int(GamemodeManager.MODGAME["zondre_damage"])
+		if !GamemodeManager.MODGAME.has("zondre_speed") or GamemodeManager.MODGAME["zondre_speed"] == "default":
+			SPEED = DEFAULT_SPEED
+		else:
+			SPEED = int(GamemodeManager.MODGAME["zondre_speed"])
+func _physics_process(delta: float) -> void:
 	if HP <= 0:
 		$".".queue_free()
 	

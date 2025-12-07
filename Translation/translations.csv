@@ -71,3 +71,4 @@ $selectedweapon,Selected weapon: %s. \nChange weapons using mouse wheel.,Выб�
 ",Valittu ase: %s. \nVaihda aseita hiiren rullalla.,Vybranaja zbroja: %s. \nŹmianiajcie zbroju z dapamohaj skrolu myšy.,Wybrana broń: %s. \nZmień broń za pomocą kółka myszy.,🖊: %s. \n🗡 🖊 ⏮ 🐁 🎡
 $disablegunhints,Disable weapon hints,Отключить подсказки,Выключыць падказкі,"关闭当前武器显示
 ",Desactivar sugerencias,Poista vihjeet käytöstä,Vykliučyć padkazki,Wyłącz podpowiedzi,❎ 🗡 🎱
+$hegrenade,AB-13 Grenade,Граната AB-13,Гранада АБ-13,AB-13手榴弹,Granada AB-13,AB-13-kranaatti,Granat AB-13,Granat AB-13,AB-13
