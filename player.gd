@@ -289,7 +289,7 @@ func _input(event):
 	if Input.is_action_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["grenade"]:
 		grenade_target.global_position = get_global_mouse_position()
 		inthehall = true
-	if Input.is_action_just_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["grenade"] and BULLETS >= 0:
+	if Input.is_action_just_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["grenade"] and WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0:
 		$Pickup01.stream = GRENADE_PREPARE
 		$Pickup01.pitch_scale = randf_range(0.83, 1.06)
 		$Pickup01.play()
