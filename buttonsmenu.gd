@@ -31,6 +31,7 @@ func _on_settings_back_pressed():
 	config.set_value("settings", "lang", TranslationServer.get_loaded_locales()[$"../VBoxContainer/SettingsLang".selected])
 	config.set_value("settings", "smoothtransitions", $"../VBoxContainer/SettingsTransitionCheck".button_pressed)
 	config.set_value("settings", "disableweaponhints", $"../VBoxContainer/SettingsHintsCheck".button_pressed)
+	config.set_value("settings", "gamepad_sens", Global.GAYPAD_AIDS)
 	config.set_value("save", "zcoins", Global.ZCOINS)
 	config.set_value("items", "aims", tmp_aims)
 	config.save(Global.SAVE_PATH)

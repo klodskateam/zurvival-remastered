@@ -14,16 +14,16 @@ config/name="Zurvival Remastered"
 config/version="2.0.241 Demo!"
 run/main_scene="res://menu.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
-config/icon="uid://bq517y5c4o7dw"
 boot_splash/fullsize=false
 boot_splash/use_filter=false
 boot_splash/image="uid://crqpy6n5f8ekg"
+config/icon="uid://bq517y5c4o7dw"
 
 [autoload]
 
 GlobalInterface="*res://global_interface.tscn"
 Global="*res://global.gd"
-MouseController="res://mouse_controller.gd"
+MouseController="res://gamepad_ctrls.gd"
 ModLoader="*res://mod_loader.gd"
 ErrorManager="*res://error_manager.gd"
 GamemodeManager="*res://gamemode_manager.gd"
@@ -47,6 +47,12 @@ thesearebullets=""
 
 [input]
 
+ui_cancel={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194305,"physical_keycode":0,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":4,"pressure":0.0,"pressed":false,"script":null)
+]
+}
 up={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":87,"key_label":0,"unicode":119,"location":0,"echo":false,"script":null)
