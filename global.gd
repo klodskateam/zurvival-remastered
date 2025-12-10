@@ -39,6 +39,8 @@ var FROM = 0
 var ZCOINS = 0
 var CURRENT_AIM = preload("res://Resources/aims/default.png")
 var GAYPAD_AIDS = 1 # причем тут aids? ну, типа короче типа я хотел сначала gaypad_speed, ну типа спид, а спид по английски это aids вот типа шутка да хазвъзахвзахвзахвза
+var CONTROLLER_CONNECTED = false
+var weap_chng_btn
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("fullscreenkey"):

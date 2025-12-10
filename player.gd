@@ -535,7 +535,10 @@ func weaponhint_show():
 					var icon = load(iconfile)
 					weapon_icon.texture = icon
 					weapon_text.modulate.a = 1
-					weapon_text.text = tr("$selectedweapon") % tr(WEAPONS[SELECTED_WEAPON]["name"])
+					var weapon_name = tr(WEAPONS[SELECTED_WEAPON]["name"])
+					var control_name = Global.weap_chng_btn if Global.CONTROLLER_CONNECTED else tr("$mousewheel")
+					weapon_text.text = tr("$selectedweapon") % [weapon_name, control_name]
+
 					if HINT_TWEEN and HINT_TWEEN.is_valid():
 						HINT_TWEEN.kill()
 					HINT_TWEEN = get_tree().create_tween()
@@ -549,7 +552,9 @@ func weaponhint_show():
 				var icon = load(iconfile)
 				weapon_icon.texture = icon
 				weapon_text.modulate.a = 1
-				weapon_text.text = tr("$selectedweapon") % tr(WEAPONS[SELECTED_WEAPON]["name"])
+				var weapon_name = tr(WEAPONS[SELECTED_WEAPON]["name"])
+				var control_name = Global.weap_chng_btn if Global.CONTROLLER_CONNECTED else tr("$mousewheel")
+				weapon_text.text = tr("$selectedweapon") % [weapon_name, control_name]
 				if HINT_TWEEN and HINT_TWEEN.is_valid():
 					HINT_TWEEN.kill()
 				HINT_TWEEN = get_tree().create_tween()

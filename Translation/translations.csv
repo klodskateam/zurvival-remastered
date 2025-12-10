@@ -66,10 +66,10 @@ $coldness,Frost,Мороз,Мароз,冷冻,Congelación,Jäätyminen,Maroz,Zam
 $inventory,Inventory,Инвентарь,Інвентар,存货,Inventario,Tasku,Inventar',Spis,📦🗂️📝,Inventārs
 $starterpistol,PP-182,ПК-182,ПК-182,PP-182,PP-182,PP-182,PK-182,PP-182,PP-182,PP-182
 $startermp,MP5,MP5,MP5,MP5,MP5,MP5,MP5,MP5,MP5,MP5
-$selectedweapon,Selected weapon: %s. \nChange weapons using mouse wheel.,Выбран: %s. \nОружие выбирается колёсиком мыши,Выбраная зброя: %s. \nЗмяняйце зброю з дапамогай скролу мышы.,"已选武器：%s。\n使用鼠标滚轮切换武器。
-","Arma seleccionada: %s. \nCambia de arma con la rueda del ratón.
-",Valittu ase: %s. \nVaihda aseita hiiren rullalla.,Vybranaja zbroja: %s. \nŹmianiajcie zbroju z dapamohaj skrolu myšy.,Wybrana broń: %s. \nZmień broń za pomocą kółka myszy.,🖊: %s. \n🗡 🖊 ⏮ 🐁 🎡,"Atlasīts: %s. \nIeroči tiek atlasīti, izmantojot peles ritenīti."
+$selectedweapon,Selected weapon: %s. \nChange weapons using %s,Выбран: %s. \nОружие выбирается c помощью %s,Выбраная зброя: %s. \nЗмяняйце зброю з дапамогай %s,已选武器：%s。\n使用 %s 切换武器。,Arma seleccionada: %s. \nCambia de arma con %s,Valittu ase: %s. \nVaihda aseita %s,Vybranaja zbroja: %s. \nŹmianiajcie zbroju z dapamohaj %s,Wybrana broń: %s. \nZmień broń za pomocą %s,🖊: %s. \n🗡 🖊 ⚙️ %s,"Atlasīts: %s. \nIeroči tiek atlasīti, izmantojot %s"
 $disablegunhints,Disable weapon hints,Отключить подсказки,Выключыць падказкі,"关闭当前武器显示
 ",Desactivar sugerencias,Poista vihjeet käytöstä,Vykliučyć padkazki,Wyłącz podpowiedzi,❎ 🗡 🎱,Atspējot rīka padomus
 $hegrenade,AB-13 Grenade,Граната AB-13,Гранада АБ-13,AB-13手榴弹,Granada AB-13,AB-13-kranaatti,Granat AB-13,Granat AB-13,AB-13,Granāta AB-13
 $gpadspeed,Gamepad sensitivity,Чувствительность геймпада,Адчувальнасць геймпада,游戏手柄灵敏度,Sensibilidad del gamepad,Peliohjaimen herkkyys,Adčuvalnaść hiejmpada,Czułość gamepada,🕹 🔅,Spēļu vadības ierīces jutība
+$mousewheel,mouse wheel,колесика мыши,скролу мышы,鼠标滚轮,la rueda del ratón,hiiren rullalla,skrolu myšy,kółka myszy,🐁 🎡,peles ritenīti
+$retry,Retry,Заново,Зноў,重来,Reiniciar,Uudelleen,Znoŭ,Ponownie,🔄,Atkārtoti
