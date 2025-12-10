@@ -38,7 +38,7 @@ var BGID
 var FROM = 0
 var ZCOINS = 0
 var CURRENT_AIM = preload("res://Resources/aims/default.png")
-
+var GAYPAD_AIDS = 1 # причем тут aids? ну, типа короче типа я хотел сначала gaypad_speed, ну типа спид, а спид по английски это aids вот типа шутка да хазвъзахвзахвзахвза
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("fullscreenkey"):
@@ -64,13 +64,22 @@ func _ready() -> void:
 		
 	if CONFIG.get_value("settings", "fullscreen"):
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-		FULLSCREEN = CONFIG.get_value("settings", "fullscreen")	
+		FULLSCREEN = CONFIG.get_value("settings", "fullscreen")
+		
+	if CONFIG.get_value("settings", "gamepad_sens"):
+		GAYPAD_AIDS = CONFIG.get_value("settings", "gamepad_sens")
 		
 	if CONFIG.get_value("save", "zcoins"):
 		ZCOINS = CONFIG.get_value("save", "zcoins")
 		
+
 		
+	# tf2 reference ALERT
+	if !FileAccess.file_exists("res://_IMPORTANT_IMAGE_DONT_DELETE_INACHE_PISEC!!.jpg"):
+		OS.alert("Игра обнаружила отсутствие самого важного файла. Игра больше не запустится. Наверное.\nВерните файл на место и не трогайте его ему страшно вообще капец.", "Aw, snap")
+		OS.crash("Fatal error")
 		
+
 # полезная функция™
 func check(в_рот_мне_ноги: bool):
 	if в_рот_мне_ноги:

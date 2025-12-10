@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cqqovs65rrlkp"]
+[gd_scene load_steps=10 format=3 uid="uid://cqqovs65rrlkp"]
 
 [ext_resource type="PackedScene" uid="uid://db8yny8uiwun1" path="res://background.tscn" id="1_jxt1c"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_4p2vr"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://beg25d2qybjtl" path="res://transitionmenu.gd" id="3_71mqq"]
 [ext_resource type="Script" uid="uid://cnmud1a7ocq3v" path="res://settings_lang.gd" id="3_vfm0g"]
 [ext_resource type="Script" uid="uid://cy33ypxnnm3ty" path="res://settings_fullscreen_check.gd" id="4_vftto"]
+[ext_resource type="Script" uid="uid://dfe0ayalptafc" path="res://settings_gpad.gd" id="5_6mhpt"]
 [ext_resource type="Script" uid="uid://bsmlt6q86exbs" path="res://settings_transition_check.gd" id="6_3j6r5"]
 [ext_resource type="Script" uid="uid://ciusdkgamja88" path="res://settings_hints_check.gd" id="7_3lj6o"]
 
@@ -58,6 +59,20 @@ offset_top = 47.0
 offset_right = 396.0
 offset_bottom = 444.175
 alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="GamepadSpeed" type="Label" parent="Control/Panel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 2
+text = "$gpadspeed"
+
+[node name="SpinBox" type="SpinBox" parent="Control/Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+step = 0.1
+alignment = 2
+script = ExtResource("5_6mhpt")
 
 [node name="GraphSet" type="Label" parent="Control/Panel/VBoxContainer"]
 layout_mode = 2
@@ -122,6 +137,7 @@ offset_right = 1280.0
 offset_bottom = 720.0
 
 [connection signal="pressed" from="Control/Panel/SettingsSave" to="Control/Panel/SettingsSave" method="_on_settings_back_pressed"]
+[connection signal="value_changed" from="Control/Panel/VBoxContainer/HBoxContainer/SpinBox" to="Control/Panel/VBoxContainer/HBoxContainer/SpinBox" method="_on_value_changed"]
 [connection signal="toggled" from="Control/Panel/VBoxContainer/SettingsFullscreenCheck" to="Control/Panel/VBoxContainer/SettingsFullscreenCheck" method="_on_toggled"]
 [connection signal="toggled" from="Control/Panel/VBoxContainer/SettingsHintsCheck" to="Control/Panel/VBoxContainer/SettingsHintsCheck" method="_on_toggled"]
 [connection signal="item_selected" from="Control/Panel/VBoxContainer/SettingsLang" to="Control/Panel/VBoxContainer/SettingsLang" method="_on_item_selected"]
