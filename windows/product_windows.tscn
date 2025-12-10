@@ -13,7 +13,6 @@ font_size = 20
 outline_size = 2
 
 [node name="Window" type="Window"]
-oversampling_override = 1.0
 title = "$product"
 initial_position = 1
 size = Vector2i(320, 240)
