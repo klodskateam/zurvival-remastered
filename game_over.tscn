@@ -85,5 +85,10 @@ layout_mode = 2
 layout_mode = 2
 text = "$gotomenu"
 
+[node name="Retry" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "$retry"
+
 [connection signal="visibility_changed" from="TextureRect" to="TextureRect" method="_on_visibility_changed"]
 [connection signal="pressed" from="Panel/VBoxContainer/GoToMenu" to="." method="_on_go_to_menu_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/Retry" to="." method="_on_retry_pressed"]
