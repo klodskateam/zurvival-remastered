@@ -77,9 +77,10 @@ func _ready() -> void:
 
 		
 	# tf2 reference ALERT
-	if !FileAccess.file_exists("res://_IMPORTANT_IMAGE_DONT_DELETE_INACHE_PISEC!!.jpg"):
-		OS.alert("Игра обнаружила отсутствие самого важного файла. Игра больше не запустится. Наверное.\nВерните файл на место и не трогайте его ему страшно вообще капец.", "Aw, snap")
-		OS.crash("Fatal error")
+	# NOTE: я скомпилированную игру не могу запустить, надо закомментировать rsiughdsugjh
+#	if !FileAccess.file_exists("res://_IMPORTANT_IMAGE_DONT_DELETE_INACHE_PISEC!!.jpg"):
+#		OS.alert("Игра обнаружила отсутствие самого важного файла. Игра больше не запустится. Наверное.\nВерните файл на место и не трогайте его ему страшно вообще капец.", "Aw, snap")
+#		OS.crash("Fatal error")
 		
 
 # полезная функция™
