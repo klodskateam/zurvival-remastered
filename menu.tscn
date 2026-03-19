@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://beg25d2qybjtl" path="res://transitionmenu.gd" id="3_l48gv"]
 [ext_resource type="Script" uid="uid://deyhfds4n3ph0" path="res://create_mod_buttons.gd" id="3_ytr4m"]
 [ext_resource type="Theme" uid="uid://oprukw2tpf3d" path="res://default.tres" id="4_l48gv"]
-[ext_resource type="Script" path="res://update.gd" id="7_ecwwl"]
+[ext_resource type="Script" uid="uid://paxq4dmntri8" path="res://update.gd" id="7_ecwwl"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_l48gv"]
 font_size = 36
