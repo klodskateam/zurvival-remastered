@@ -20,3 +20,5 @@ func _on_pressed() -> void:
 			ErrorManager.openurl(action["openurl"])
 		if "execute" in action:
 			ErrorManager.openfile(OS.get_user_data_dir() + action["execute"])
+		if "open_scene" in action:
+			get_tree().change_scene_to_file(action["open_scene"])

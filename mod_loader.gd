@@ -36,6 +36,10 @@ func load_mods() -> void:
 						MODBGIMAGES.insert(MODBGIMAGES.size(), tmp_mod["adds"][sussy])
 					if tmp_mod["adds"][sussy]["type"] == "gamemode":
 						MODGAMEMODES.insert(MODGAMEMODES.size(), tmp_mod["adds"][sussy].duplicate(true))
+					if tmp_mod["adds"][sussy]["type"] == "pck":
+						var success = ProjectSettings.load_resource_pack(tmp_mod["adds"][sussy]["path"])
+						if !success:
+							ErrorManager.alert(tr("$failedtoloadpck") % [tmp_mod["adds"][sussy]["path"], tmp_mod["name"]])
 	#		print("MOD COSMETIC:")
 	#		print(MODCOSMICITEMS)
 			
