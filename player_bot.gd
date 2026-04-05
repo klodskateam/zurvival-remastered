@@ -59,7 +59,7 @@ var WEAPONS = [	{
 var MOVEORDERS = []
 var TARGET = []
 
-enum AIStates {WANDERING, SEARCHING, RETREATING, ACTIVE}
+enum AIStates {WANDERING, SEARCHING, ACTIVE}
 var State : AIStates = AIStates.WANDERING
 var enemies = ["zondre"]
 
@@ -71,6 +71,7 @@ var randrange = PI*2
 var targetrotation = 0
 var randdir = 0
 var stress = 0
+var statedebug = false
 
 func _ready() -> void:
 	randdir = randf_range(-1, 1)
@@ -86,6 +87,8 @@ func _physics_process(delta: float) -> void:
 	if State == AIStates.WANDERING:
 		updatespeed = lerp(updatespeed, 0.9, 0.2)
 		if updatetimer >= updatespeed:
+			if statedebug:
+				print("STATE: " + str(AIStates.keys()[State]))
 			#targetrotation = global_rotation+(randf_range(-randrange, randrange))*0.7
 			if MOVEORDERS.size() < 1:
 				var randpoint = NavigationServer2D.map_get_closest_point(navagent.get_navigation_map(), global_position.lerp(NavigationServer2D.map_get_random_point(navagent.get_navigation_map(), 1, true), 0.25) ) 
@@ -100,7 +103,7 @@ func _physics_process(delta: float) -> void:
 					if ray.get_collider(i) and ray.get_collider(i).is_in_group(potential):
 						ray.get_collider(i)
 						#print("ivan we need to cook")
-						stress = 6
+						stress = 12
 						TARGET.append(ray.get_collider(i).global_position)
 						State = AIStates.ACTIVE
 					
@@ -108,6 +111,8 @@ func _physics_process(delta: float) -> void:
 	if State == AIStates.ACTIVE:
 		updatespeed = lerp(updatespeed, 0.6, 0.2)
 		if updatetimer >= updatespeed:
+			if statedebug:
+				print("STATE: " + str(AIStates.keys()[State]))
 			if MOVEORDERS.size() < 1:
 				go(TARGET[0] + Vector2(randf_range(-120, 130), randf_range(-120, 130)))
 			if stress >= 3:
@@ -136,10 +141,12 @@ func _physics_process(delta: float) -> void:
 							
 		if !onsight:
 			stress -= 2 * delta
+			if updatetimer >= updatespeed:
+				updatetimer = 0
 			if !TARGET.is_empty():
 				targetrotation = global_position.angle_to_point(TARGET[0]) + PI/2
 			if stress <= 0:
-				stress = 5
+				stress = 10
 				updatetimer = updatespeed
 				MOVEORDERS.clear()
 				State = AIStates.SEARCHING
@@ -147,9 +154,12 @@ func _physics_process(delta: float) -> void:
 			
 	if State == AIStates.SEARCHING:
 		stress -= 1 * delta		
+			
 		updatespeed = lerp(updatespeed, 0.8, 0.2)
 		
 		if updatetimer >= updatespeed:
+			if statedebug:
+				print("STATE: " + str(AIStates.keys()[State]))
 			if MOVEORDERS.size() < 1:
 				if stress >= 3 and !TARGET.is_empty():
 					go(TARGET[0] + Vector2(randf_range(-350, 500), randf_range(-350, 500)))
