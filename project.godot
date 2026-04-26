@@ -23,6 +23,10 @@ boot_splash/use_filter=false
 boot_splash/image="uid://crqpy6n5f8ekg"
 config/icon="uid://bq517y5c4o7dw"
 
+[audio]
+
+buses/default_bus_layout="uid://ch5ki26oyxin4"
+
 [autoload]
 
 GlobalInterface="*res://global_interface.tscn"
@@ -186,6 +190,6 @@ common/physics_ticks_per_second=90
 textures/canvas_textures/default_texture_filter=2
 renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true
-anti_aliasing/quality/msaa_2d=1
 anti_aliasing/quality/use_debanding=true
+environment/glow/upscale_mode=0
 anti_aliasing/quality/screen_space_aa=1

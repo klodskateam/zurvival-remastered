@@ -114,13 +114,13 @@ background_mode = 3
 tonemap_mode = 1
 tonemap_white = 0.44
 glow_enabled = true
-glow_levels/1 = 26.2
-glow_levels/2 = 1.65
+glow_levels/1 = 7.0
+glow_levels/2 = 14.5
+glow_levels/4 = 5.8
 glow_levels/6 = 0.65
 glow_normalized = true
 glow_intensity = 1.74
 glow_bloom = 0.79
-glow_map_strength = 0.75
 adjustment_enabled = true
 adjustment_brightness = 0.53
 

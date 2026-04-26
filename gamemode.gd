@@ -59,6 +59,7 @@ func _ready() -> void:
 	newchallengebtn.CHALLENGE = true
 	newchallengebtn.MODGAME = null
 	newchallengebtn.size_flags_horizontal = 3
+	
 	$Control/Panel/ScrollContainer/VBoxContainer/ChallengeContainer.add_child(newchallengebtn)
 	
 	
@@ -71,6 +72,7 @@ func _ready() -> void:
 		newbtn.GMODE = GAMEMODES[sus]["gamemode"]
 		newbtn.CHALLENGE = false
 		newbtn.MODGAME = null
+		
 		$Control/Panel/ScrollContainer/VBoxContainer.add_child(newbtn)
 		
 	for susgame in MODDED_GAMEMODES.size():
@@ -82,6 +84,7 @@ func _ready() -> void:
 		newbtn.MODGAME = susgame
 		newbtn.CHALLENGE = false
 		newbtn.GMODE = -1
+		
 		$Control/Panel/ScrollContainer/VBoxContainer.add_child(newbtn)
 	if not transition.imfinished.is_connected(Global.got_finishedsign):
 		transition.imfinished.connect(Global.got_finishedsign)
@@ -107,13 +110,7 @@ func _on_play_button_pressed() -> void:
 		pass
 	else:
 		GamemodeManager.MODGAME = MODDED_GAMEMODES[MODGAME].duplicate(true)
-	# HACK -- 31/01/26
-	GamemodeManager.GAMEMODEINFO = {
-			"scene": GMCHANGE_TO,
-			"gamemode": GamemodeManager.GAMEMODE,
-		}
-
-	
+	# HACK -- 31/01/26 -- убрано :D -- 23/04/26
 	#print("gamemode info: " + str(GamemodeManager.GAMEMODEINFO))	
 	get_tree().change_scene_to_file(GMCHANGE_TO)
 	

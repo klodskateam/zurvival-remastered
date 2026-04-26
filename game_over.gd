@@ -16,4 +16,4 @@ func _on_go_to_menu_pressed() -> void:
 
 
 func _on_retry_pressed():
-	get_tree().change_scene_to_file(GamemodeManager.GAMEMODEINFO["scene"])
+	get_tree().reload_current_scene()

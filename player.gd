@@ -66,6 +66,7 @@ var FORCE_RUNLOCK = false
 var shake = false
 var zondrespleasesaveusall = false
 var weightaccum = 0
+var accum2 = 0
 @export var ded: bool = false
 
 @export var REGULAR_SPEED = 300
@@ -76,6 +77,13 @@ var weightaccum = 0
 @export var max_range = 420
 var max_range2 = 0
 var inthehall = false
+
+var shakeamount = 0
+var shaketimer = 0
+var shakedelay = 0.07
+var weaponshakeamount = 0
+var totalshakeamount = 0
+
 @export var SELECTED_WEAPON = 0
 
 var WEAPONS = []
@@ -99,8 +107,9 @@ func _ready() -> void:
 		"incremental_minusroundonreload": false,
 		"increment_delay": 0,
 		"type": "gun",
-		"sway": 0.07,
+		"sway": 0.01,
 		"weight": 0.26,
+		"shake": 1,
 		"soundondelay": false,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
 		"sound": "res://Sound/pistol.wav",
@@ -153,6 +162,7 @@ func _ready() -> void:
 			"type": "gun",
 			"sway": 0.15,
 			"weight": 0.30,
+			"shake": 10,
 			"soundondelay": false,
 			"delaysound": "res://Sound/shotgun_cycle.wav",
 			"sound": "res://Sound/pistol-02.wav",
@@ -176,6 +186,7 @@ func _ready() -> void:
 		"type": "grenade",
 		"sway": 0,
 		"weight": 0.17,
+		"shake": 0,
 		"soundondelay": false,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
 		"sound": "res://Sound/pistol.wav",
@@ -290,7 +301,8 @@ func _physics_process(delta: float):
 			if WEAPONS[maybeselectedweapon]["zapas_bullets"] <= 0 or WEAPONS[SELECTED_WEAPON]["left_bullets"] == WEAPONS[SELECTED_WEAPON]["bullets"]:
 				RELOADING = false
 			if WEAPONS[SELECTED_WEAPON]["left_bullets"]	== WEAPONS[SELECTED_WEAPON]["bullets"] and !RELOADING and ogroundamount == 0:
-				DELAY = WEAPONS[SELECTED_WEAPON]["delay"]	
+				DELAY = WEAPONS[SELECTED_WEAPON]["delay"]
+		
 	match GamemodeManager.GAMEMODE:
 		1:
 			pass
@@ -355,17 +367,27 @@ func _physics_process(delta: float):
 		#print("DELAY:" + str(DELAY))
 	if INCREMENT_DELAY <= WEAPONS[SELECTED_WEAPON]["increment_delay"]:
 		INCREMENT_DELAY += 1 * delta
+	if shaketimer <= shakedelay:
+		shaketimer += 1 * delta
+	if shakeamount > 0:
+		shakeamount = abs(shakeamount)-(19*delta)
+	if weaponshakeamount > 0:
+		weaponshakeamount = abs(weaponshakeamount)-(21*delta)
 
 func fov_up():
 	var tween = $Camera2D.create_tween()
-	tween.tween_property($Camera2D, "zoom", Vector2(0.907, 0.907), 0.8)
+	tween.parallel().tween_property($Camera2D, "zoom", Vector2(0.907, 0.907), 0.8)
 func fov_half_up():
 	var tween = $Camera2D.create_tween()
-	tween.tween_property($Camera2D, "zoom", Vector2(0.954, 0.954), 2)
+	tween.parallel().tween_property($Camera2D, "zoom", Vector2(0.954, 0.954), 2)
 func fov_down():
 	var tween = $Camera2D.create_tween()
-	tween.tween_property($Camera2D, "zoom", Vector2(1, 1), 1.4)
-		
+	tween.parallel().tween_property($Camera2D, "zoom", Vector2(1, 1), 1.4)
+func tween_shake():
+	var tween = $Camera2D.create_tween()
+	tween.parallel().tween_property($Camera2D, "offset", Vector2(0+(randf_range(-1, 1))*totalshakeamount, 0+(randf_range(-1, 1))*totalshakeamount), 0.2).set_trans(Tween.TRANS_SINE)
+	
+
 	
 func _process(delta: float):
 	if (OS.get_name() == "Android"):
@@ -387,10 +409,14 @@ func _process(delta: float):
 	else:
 		vignette_red.lowhealth = false	
 		
-	if shake:
-		$Camera2D/AnimationPlayer.play("shake")
-		shake = false
+	#if shake:
+		#$Camera2D/AnimationPlayer.play("shake")
+		#shake = false
 		
+	if shaketimer >= shakedelay:
+		tween_shake()
+		shaketimer = 0	
+	totalshakeamount = shakeamount + weaponshakeamount	
 	if Input.is_action_pressed("shoot"):
 		ratata()	
 
@@ -508,7 +534,6 @@ func changeweapon(number: int = 0):
 func shoot():
 	if WEAPONS[SELECTED_WEAPON]["left_bullets"] != 0:
 		if DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]:
-			
 			# bullet.add_constant_force(get_global_mouse_position() - bullet.global_position)
 			if WEAPONS[SELECTED_WEAPON]["type"] == "shotgun":
 				$Camera2D/AnimationPlayer.stop()
@@ -517,6 +542,8 @@ func shoot():
 					var bullet = P_BULLET.instantiate()
 					bullet.shotgunbullet = true
 					bullet.global_position = $Marker2D.global_position
+					shaketimer = shakedelay+1
+					weaponshakeamount = WEAPONS[SELECTED_WEAPON]["shake"]
 					if GamemodeManager.GAMEMODE == 3 and unreliableweapon:
 						bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)) )/2.3
 					else:
@@ -528,6 +555,8 @@ func shoot():
 			else:
 				var bullet = P_BULLET.instantiate()
 				bullet.global_position = $Marker2D.global_position
+				shaketimer = shakedelay+1
+				weaponshakeamount = WEAPONS[SELECTED_WEAPON]["shake"]
 				bullet.shotgunbullet = false
 				if GamemodeManager.GAMEMODE == 3 and zondrespleasesaveusall:
 					bullet.magnum = true

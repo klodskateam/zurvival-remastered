@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://rk6x2yf4sydr"]
+[gd_scene format=3 uid="uid://rk6x2yf4sydr"]
 
 [ext_resource type="Shader" uid="uid://4e5td3doxjwy" path="res://blur.gdshader" id="1_05lnj"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="1_m8y0o"]
@@ -21,9 +21,9 @@ font_size = 32
 [sub_resource type="LabelSettings" id="LabelSettings_h7hc0"]
 font_size = 20
 
-[node name="Pause" type="CanvasLayer"]
+[node name="Pause" type="CanvasLayer" unique_id=357505312]
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1483417087]
 material = SubResource("ShaderMaterial_m0a22")
 anchors_preset = -1
 anchor_left = -0.132902
@@ -38,13 +38,13 @@ texture = SubResource("CanvasTexture_w2ufp")
 script = ExtResource("2_8u653")
 metadata/_edit_use_anchors_ = true
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=1868218438]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Panel" type="Panel" parent="Control"]
+[node name="Panel" type="Panel" parent="Control" unique_id=991147129]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -59,7 +59,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_m8y0o")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel" unique_id=578664567]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -72,26 +72,26 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="Pause" type="Label" parent="Control/Panel/VBoxContainer"]
+[node name="Pause" type="Label" parent="Control/Panel/VBoxContainer" unique_id=1572919669]
 layout_mode = 2
 text = "$pausemenu"
 label_settings = SubResource("LabelSettings_xow8s")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Pause2" type="Label" parent="Control/Panel/VBoxContainer"]
+[node name="Pause2" type="Label" parent="Control/Panel/VBoxContainer" unique_id=476694961]
 layout_mode = 2
 text = "$pausetext"
 label_settings = SubResource("LabelSettings_h7hc0")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Quit" type="Button" parent="Control/Panel/VBoxContainer"]
+[node name="Quit" type="Button" parent="Control/Panel/VBoxContainer" unique_id=1271954087]
 layout_mode = 2
 text = "$quit"
 script = ExtResource("2_64k0p")
 
-[node name="TransitionBlock" type="TextureRect" parent="."]
+[node name="TransitionBlock" type="TextureRect" parent="." unique_id=334958581]
 visible = false
 offset_right = 1280.0
 offset_bottom = 720.0
