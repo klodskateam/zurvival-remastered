@@ -97,6 +97,8 @@ func _ready() -> void:
 		"id": 1,
 		"class": "sidearm",
 		"delay": 1,
+		"damage": 100,
+		"bullet_speed": 1450,
 		"automatic": false,
 		"bullets": 12,
 		"left_bullets": 12,
@@ -111,7 +113,7 @@ func _ready() -> void:
 		"weight": 0.26,
 		"shake": 1,
 		"penthrough": false,
-		"bulletdespawn_dist": 1000,
+		"bulletdespawn_dist": 2000,
 		"soundondelay": false,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
 		"sound": "res://Sound/pistol.wav",
@@ -153,6 +155,7 @@ func _ready() -> void:
 			"name": tr("$starterpistol"),
 			"delay": 3,
 			"damage": 200,
+			"bullet_speed": 1450,
 			"automatic": false,
 			"bullets": 1,
 			"left_bullets": 1,
@@ -179,6 +182,7 @@ func _ready() -> void:
 		"name": tr("$hegrenade"),
 		"delay": 1,
 		"damage": 100,
+		"bullet_speed": 1450,
 		"automatic": false,
 		"bullets": 1,
 		"left_bullets": 1,
@@ -553,6 +557,7 @@ func shoot():
 					bullet.despawn_dist = WEAPONS[SELECTED_WEAPON]["bulletdespawn_dist"]
 					bullet.PIERCETHRU = WEAPONS[SELECTED_WEAPON]["penthrough"]
 					bullet.DAMAGE = WEAPONS[SELECTED_WEAPON]["damage"]
+					bullet.SPEED = WEAPONS[SELECTED_WEAPON]["bullet_speed"]
 					shaketimer = shakedelay+1
 					weaponshakeamount = WEAPONS[SELECTED_WEAPON]["shake"]
 					if GamemodeManager.GAMEMODE == 3 and unreliableweapon:
@@ -569,6 +574,7 @@ func shoot():
 				bullet.markerpos = $Marker2D.global_position
 				bullet.despawn_dist = WEAPONS[SELECTED_WEAPON]["bulletdespawn_dist"]
 				bullet.PIERCETHRU = WEAPONS[SELECTED_WEAPON]["penthrough"]
+				bullet.SPEED = WEAPONS[SELECTED_WEAPON]["bullet_speed"]
 				bullet.DAMAGE = WEAPONS[SELECTED_WEAPON]["damage"]
 				shaketimer = shakedelay
 				weaponshakeamount = WEAPONS[SELECTED_WEAPON]["shake"]
