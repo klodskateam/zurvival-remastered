@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Zurvival Remastered"
-config/version="2.0.288 Demo!"
+config/version="2.0.302 Demo!"
 run/main_scene="res://menu.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 boot_splash/stretch_mode=0
