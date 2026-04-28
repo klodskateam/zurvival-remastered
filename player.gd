@@ -110,6 +110,8 @@ func _ready() -> void:
 		"sway": 0.01,
 		"weight": 0.26,
 		"shake": 1,
+		"penthrough": false,
+		"bulletdespawn_dist": 1000,
 		"soundondelay": false,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
 		"sound": "res://Sound/pistol.wav",
@@ -130,7 +132,7 @@ func _ready() -> void:
 		var RNG2 = RandomNumberGenerator.new()
 		DATE = int(str(DATE).replace("-", ""))
 		#print("date:" + str(hash(int(DATE/64))))
-		RNG.seed = hash(DATE^15631)
+		RNG.seed = hash(DATE^65454)
 		var rngnum = RNG.randi_range(0, 10)
 		var rngnum2 = RNG.randi_range(0, 14)
 		var rngnum3 = RNG.randi_range(0, 23)
@@ -150,6 +152,7 @@ func _ready() -> void:
 		{
 			"name": tr("$starterpistol"),
 			"delay": 3,
+			"damage": 200,
 			"automatic": false,
 			"bullets": 1,
 			"left_bullets": 1,
@@ -163,17 +166,19 @@ func _ready() -> void:
 			"sway": 0.15,
 			"weight": 0.30,
 			"shake": 10,
+			"penthrough": false,
+			"bulletdespawn_dist": 1000,
 			"soundondelay": false,
 			"delaysound": "res://Sound/shotgun_cycle.wav",
 			"sound": "res://Sound/pistol-02.wav",
 		},
 			]
-			zondrespleasesaveusall = true
 		elif rngnum2 == 9 or rngnum4 == 12:
 			WEAPONS = [
 	{
 		"name": tr("$hegrenade"),
 		"delay": 1,
+		"damage": 100,
 		"automatic": false,
 		"bullets": 1,
 		"left_bullets": 1,
@@ -187,6 +192,8 @@ func _ready() -> void:
 		"sway": 0,
 		"weight": 0.17,
 		"shake": 0,
+		"penthrough": false,
+		"bulletdespawn_dist": 1000,
 		"soundondelay": false,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
 		"sound": "res://Sound/pistol.wav",
@@ -542,6 +549,10 @@ func shoot():
 					var bullet = P_BULLET.instantiate()
 					bullet.shotgunbullet = true
 					bullet.global_position = $Marker2D.global_position
+					bullet.markerpos = $Marker2D.global_position
+					bullet.despawn_dist = WEAPONS[SELECTED_WEAPON]["bulletdespawn_dist"]
+					bullet.PIERCETHRU = WEAPONS[SELECTED_WEAPON]["penthrough"]
+					bullet.DAMAGE = WEAPONS[SELECTED_WEAPON]["damage"]
 					shaketimer = shakedelay+1
 					weaponshakeamount = WEAPONS[SELECTED_WEAPON]["shake"]
 					if GamemodeManager.GAMEMODE == 3 and unreliableweapon:
@@ -555,13 +566,13 @@ func shoot():
 			else:
 				var bullet = P_BULLET.instantiate()
 				bullet.global_position = $Marker2D.global_position
-				shaketimer = shakedelay+1
+				bullet.markerpos = $Marker2D.global_position
+				bullet.despawn_dist = WEAPONS[SELECTED_WEAPON]["bulletdespawn_dist"]
+				bullet.PIERCETHRU = WEAPONS[SELECTED_WEAPON]["penthrough"]
+				bullet.DAMAGE = WEAPONS[SELECTED_WEAPON]["damage"]
+				shaketimer = shakedelay
 				weaponshakeamount = WEAPONS[SELECTED_WEAPON]["shake"]
 				bullet.shotgunbullet = false
-				if GamemodeManager.GAMEMODE == 3 and zondrespleasesaveusall:
-					bullet.magnum = true
-				else:
-					bullet.magnum = false
 				if GamemodeManager.GAMEMODE == 3 and unreliableweapon:
 					bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)) )/2.3
 				else:

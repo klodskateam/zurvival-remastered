@@ -198,6 +198,8 @@ offset_top = 50.0
 offset_right = 208.0
 offset_bottom = 75.0
 size_flags_horizontal = 3
+text_overrun_behavior = 1
+clip_text = true
 expand_icon = true
 
 [node name="SidearmDropdown" type="OptionButton" parent="Control/Panel/Panel2" unique_id=449482390]
@@ -207,6 +209,8 @@ offset_top = 94.0
 offset_right = 208.0
 offset_bottom = 119.0
 size_flags_horizontal = 3
+text_overrun_behavior = 1
+clip_text = true
 expand_icon = true
 item_count = 1
 popup/item_0/text = "-"
@@ -219,6 +223,8 @@ offset_top = 140.0
 offset_right = 208.0
 offset_bottom = 165.0
 size_flags_horizontal = 3
+text_overrun_behavior = 1
+clip_text = true
 item_count = 1
 popup/item_0/text = "-"
 popup/item_0/id = 0

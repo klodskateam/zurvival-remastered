@@ -51,7 +51,7 @@ func _ready() -> void:
 		var RNG = RandomNumberGenerator.new()
 		DATE = int(str(DATE).replace("-", ""))
 		#print("date:" + str(hash(int(DATE/64))))
-		RNG.seed = hash(DATE^8357)
+		RNG.seed = hash(DATE^15374)
 		rngnum = RNG.randi_range(0, 4)
 		rngnum2 = RNG.randi_range(0, 6)
 		rngnum3 = RNG.randi_range(0, 8)
@@ -101,8 +101,8 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("danger_zombie"):
 		if GamemodeManager.GAMEMODE != 3 or !twotapkill:
 			HP -= body.DAMAGE
-			if body.PIERCETHRU:
-				body.PIERCETHRU = false
+			if body.PIERCETHRU and body.DAMAGE >= HP:
+				body.DAMAGE /= 2
 				pass
 			else:
 				body.queue_free()
