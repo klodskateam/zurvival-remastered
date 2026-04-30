@@ -40,6 +40,8 @@ var WEAPONS = [	{
 		"id": 1,
 		"class": "sidearm",
 		"delay": 1,
+		"damage": 100,
+		"bullet_speed": 1450,
 		"automatic": false,
 		"bullets": 12,
 		"left_bullets": 12,
@@ -52,9 +54,13 @@ var WEAPONS = [	{
 		"type": "gun",
 		"sway": 0.07,
 		"weight": 0.26,
+		"shake": 6,
 		"soundondelay": false,
+		"penthrough": false,
+		"bulletdespawn_dist": 900,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
 		"sound": "res://Sound/pistol.wav",
+		"reloadsound": "res://Sound/pistol-reload.wav",
 	},]
 var MOVEORDERS = []
 var TARGET = []
@@ -263,60 +269,35 @@ func ratata():
 	if WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0 and DELAY >= WEAPONS[SELECTED_WEAPON]["delay"] and !RELOADING:
 		shoot()	
 
-func bullets_reload():
-	match GamemodeManager.GAMEMODE:
-		1:
-			if (WEAPONS[SELECTED_WEAPON]["left_bullets"] == 0):
-				WEAPONS[SELECTED_WEAPON]["left_bullets"] = WEAPONS[SELECTED_WEAPON]["bullets"]
-				DELAY = 0
-				$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
-				$ReloadSound.play()
-		_:
-			if WEAPONS[SELECTED_WEAPON]["incremental_reload"]:
-				if WEAPONS[SELECTED_WEAPON]["left_bullets"] < WEAPONS[SELECTED_WEAPON]["bullets"] and WEAPONS[SELECTED_WEAPON]["zapas_bullets"] >= 1:
-					maybeselectedweapon = SELECTED_WEAPON
-										
-					if WEAPONS[SELECTED_WEAPON]["incremental_minusroundonreload"] and WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0 and !RELOADING:
-						INCREMENT_DELAY = 0-WEAPONS[SELECTED_WEAPON]["increment_delay"]
-						WEAPONS[SELECTED_WEAPON]["left_bullets"] -= 1
-					elif !RELOADING:
-						INCREMENT_DELAY = 0-WEAPONS[SELECTED_WEAPON]["increment_delay"]/2
-					else:
-						pass
-					ogroundamount = WEAPONS[SELECTED_WEAPON]["left_bullets"]
-					RELOADING = true
-			else:
-				if (WEAPONS[SELECTED_WEAPON]["left_bullets"] == 0) and (WEAPONS[SELECTED_WEAPON]["zapas_bullets"] >= WEAPONS[SELECTED_WEAPON]["bullets"]):
-					WEAPONS[SELECTED_WEAPON]["left_bullets"] = WEAPONS[SELECTED_WEAPON]["bullets"]
-					DELAY = 0
-					WEAPONS[SELECTED_WEAPON]["zapas_bullets"] -= WEAPONS[SELECTED_WEAPON]["bullets"]
-					WEAPONS[SELECTED_WEAPON]["zapas_bullets"] = max(0, WEAPONS[SELECTED_WEAPON]["zapas_bullets"])
-					if WEAPONS[SELECTED_WEAPON]["type"] == "grenade":
-						$ReloadSound.pitch_scale = randf_range(1.2, 1.35)
-						$ReloadSound.stream = PICKUP_01
-						$ReloadSound.play()
-					else:
-						$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
-						$ReloadSound.stream = load("res://Sound/pistol-reload.wav")
-						$ReloadSound.play()
-
 func shoot():
 	if WEAPONS[SELECTED_WEAPON]["left_bullets"] != 0:
 		if DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]:
 			# bullet.add_constant_force(get_global_mouse_position() - bullet.global_position)
-			if WEAPONS[SELECTED_WEAPON]["type"] == "shotgun":	
+			if WEAPONS[SELECTED_WEAPON]["type"] == "shotgun":
+				$Camera2D/AnimationPlayer.stop()
+				$Camera2D/AnimationPlayer.play("shotgun_recoil")	
 				for i in 9:
 					var bullet = P_BULLET.instantiate()
 					bullet.shotgunbullet = true
 					bullet.global_position = $Marker2D.global_position
+					bullet.markerpos = $Marker2D.global_position
+					bullet.despawn_dist = WEAPONS[SELECTED_WEAPON]["bulletdespawn_dist"]
+					bullet.PIERCETHRU = WEAPONS[SELECTED_WEAPON]["penthrough"]
+					bullet.DAMAGE = WEAPONS[SELECTED_WEAPON]["damage"]
+					bullet.SPEED = WEAPONS[SELECTED_WEAPON]["bullet_speed"]
 					if WEAPONS[SELECTED_WEAPON]["left_bullets"] == WEAPONS[SELECTED_WEAPON]["bullets"]:
 						bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)))*WEAPONS[SELECTED_WEAPON]["sway"]/1.5
 					else:
-						bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)))*WEAPONS[SELECTED_WEAPON]["sway"]					
+						bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)))*WEAPONS[SELECTED_WEAPON]["sway"]			
 					get_parent().add_child(bullet)
 			else:
 				var bullet = P_BULLET.instantiate()
 				bullet.global_position = $Marker2D.global_position
+				bullet.markerpos = $Marker2D.global_position
+				bullet.despawn_dist = WEAPONS[SELECTED_WEAPON]["bulletdespawn_dist"]
+				bullet.PIERCETHRU = WEAPONS[SELECTED_WEAPON]["penthrough"]
+				bullet.SPEED = WEAPONS[SELECTED_WEAPON]["bullet_speed"]
+				bullet.DAMAGE = WEAPONS[SELECTED_WEAPON]["damage"]
 				bullet.shotgunbullet = false
 				if WEAPONS[SELECTED_WEAPON]["left_bullets"] == WEAPONS[SELECTED_WEAPON]["bullets"]:
 					bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)))*WEAPONS[SELECTED_WEAPON]["sway"]/1.5
@@ -333,6 +314,38 @@ func shoot():
 			#print(DELAY)
 	else:
 		#$EmptySound.play()
-		bullets_reload()
 		DELAY = 0
-		#print(DELAY)
+		bullets_reload()
+		print(DELAY)
+			
+func bullets_reload():
+	match GamemodeManager.GAMEMODE:
+		1:
+			if (WEAPONS[SELECTED_WEAPON]["left_bullets"] == 0):
+				WEAPONS[SELECTED_WEAPON]["left_bullets"] = WEAPONS[SELECTED_WEAPON]["bullets"]
+				DELAY = 0
+				$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
+				$ReloadSound.play()
+		_:
+			if WEAPONS[SELECTED_WEAPON]["incremental_reload"]:
+				if WEAPONS[SELECTED_WEAPON]["left_bullets"] < WEAPONS[SELECTED_WEAPON]["bullets"] and WEAPONS[SELECTED_WEAPON]["zapas_bullets"] >= 1:
+					maybeselectedweapon = SELECTED_WEAPON
+					
+					if WEAPONS[SELECTED_WEAPON]["incremental_minusroundonreload"] and WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0 and !RELOADING:
+						INCREMENT_DELAY = 0-WEAPONS[SELECTED_WEAPON]["increment_delay"]
+						WEAPONS[SELECTED_WEAPON]["left_bullets"] -= 1
+					elif !RELOADING:
+						INCREMENT_DELAY = 0-WEAPONS[SELECTED_WEAPON]["increment_delay"]/2
+					else:
+						pass
+					ogroundamount = WEAPONS[SELECTED_WEAPON]["left_bullets"]
+					RELOADING = true
+			else:
+				if (WEAPONS[SELECTED_WEAPON]["left_bullets"] == 0) and (WEAPONS[SELECTED_WEAPON]["zapas_bullets"] >= WEAPONS[SELECTED_WEAPON]["bullets"]):
+					WEAPONS[SELECTED_WEAPON]["left_bullets"] = WEAPONS[SELECTED_WEAPON]["bullets"]
+					DELAY = 0
+					WEAPONS[SELECTED_WEAPON]["zapas_bullets"] -= WEAPONS[SELECTED_WEAPON]["bullets"]
+					WEAPONS[SELECTED_WEAPON]["zapas_bullets"] = max(0, WEAPONS[SELECTED_WEAPON]["zapas_bullets"])
+					$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
+					$ReloadSound.stream = load(WEAPONS[SELECTED_WEAPON]["reloadsound"])
+					$ReloadSound.play()

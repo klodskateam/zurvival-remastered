@@ -113,7 +113,12 @@ func _ready() -> void:
 		var RNG2 = RandomNumberGenerator.new()
 		DATE = int(str(DATE).replace("-", ""))
 		#print("date:" + str(hash(int(DATE/64))))
-		RNG.seed = hash(DATE^65454)
+		if GamemodeManager.CHALLENGEID == 0:
+			RNG.seed = hash(DATE^65454)
+		elif GamemodeManager.CHALLENGEID == 1:
+			RNG.seed = hash(DATE^23775)
+		elif GamemodeManager.CHALLENGEID == 2:
+			RNG.seed = hash(DATE^85263)
 		var rngnum = RNG.randi_range(0, 10)
 		var rngnum2 = RNG.randi_range(0, 14)
 		var rngnum3 = RNG.randi_range(0, 23)
@@ -129,32 +134,16 @@ func _ready() -> void:
 			REGULAR_SPEED = 250
 			RUN_SPEED = 375	
 		if rngnum2 == 7 or rngnum4 == 3:
-			WEAPONS = [
-		{
-			"name": tr("$starterpistol"),
-			"delay": 3,
-			"damage": 200,
-			"bullet_speed": 1450,
-			"automatic": false,
-			"bullets": 1,
-			"left_bullets": 1,
-			"zapas_bullets": 40,
-			"icon": "res://Resources/ui_stuff_lol/weapon_starterpistol.png",
-			"incremental_reload": false,
-			"increment_sound": "res://Sound/shotgun_increment",
-			"incremental_minusroundonreload": false,
-			"increment_delay": 0,
-			"type": "gun",
-			"sway": 0.15,
-			"weight": 0.30,
-			"shake": 10,
-			"penthrough": false,
-			"bulletdespawn_dist": 1000,
-			"soundondelay": false,
-			"delaysound": "res://Sound/shotgun_cycle.wav",
-			"sound": "res://Sound/pistol-02.wav",
-		},
-			]
+			WEAPONS = []
+			WEAPONS.append(Global.WEAPONS[0])
+			WEAPONS[0]["sway"] = 0
+			WEAPONS[0]["shake"] = 0
+			WEAPONS[0]["bulletdespawn_dist"] = 10000
+			WEAPONS[0]["sound"] = "res://Sound/pistol-02.wav"
+			WEAPONS[0]["damage"] = 200
+			WEAPONS[0]["bullets"] = 1
+			WEAPONS[0]["left_bullets"] = 1
+			WEAPONS[0]["zapas_bullets"] = 40
 		elif rngnum2 == 9 or rngnum4 == 12:
 			WEAPONS = [
 	{
@@ -180,6 +169,7 @@ func _ready() -> void:
 		"soundondelay": false,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
 		"sound": "res://Sound/pistol.wav",
+		"reloadsound": "res://Sound/pickup_01.wav"
 	},
 			]	
 		elif rngnum2 == 5 or rngnum2 == 8:
@@ -631,14 +621,9 @@ func bullets_reload():
 					DELAY = 0
 					WEAPONS[SELECTED_WEAPON]["zapas_bullets"] -= WEAPONS[SELECTED_WEAPON]["bullets"]
 					WEAPONS[SELECTED_WEAPON]["zapas_bullets"] = max(0, WEAPONS[SELECTED_WEAPON]["zapas_bullets"])
-					if WEAPONS[SELECTED_WEAPON]["type"] == "grenade":
-						$ReloadSound.pitch_scale = randf_range(1.2, 1.35)
-						$ReloadSound.stream = PICKUP_01
-						$ReloadSound.play()
-					else:
-						$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
-						$ReloadSound.stream = load(WEAPONS[SELECTED_WEAPON]["reloadsound"])
-						$ReloadSound.play()
+					$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
+					$ReloadSound.stream = load(WEAPONS[SELECTED_WEAPON]["reloadsound"])
+					$ReloadSound.play()
 			
 func _on_walkdelay_timeout() -> void:
 	if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:

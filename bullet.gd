@@ -17,14 +17,19 @@ func _ready() -> void:
 		var RNG = RandomNumberGenerator.new()
 		DATE = int(str(DATE).replace("-", ""))
 		#print("date:" + str(hash(int(DATE/64))))
-		RNG.seed = hash(DATE^96356)
+		if GamemodeManager.CHALLENGEID == 0:
+			RNG.seed = hash(DATE^4263)
+		elif GamemodeManager.CHALLENGEID == 1:
+			RNG.seed = hash(DATE^75419)
+		elif GamemodeManager.CHALLENGEID == 2:
+			RNG.seed = hash(DATE^93426)
 		rngnum = RNG.randi_range(0, 7)
 		rngnum2 = RNG.randi_range(0, 9)
 		
 		if rngnum == 3:
-			SPEED = 600
+			SPEED /= 2
 		elif rngnum == 6 or rngnum2 == 8:
-			SPEED = 700
+			SPEED /= 1.7
 	if shotgunbullet:
 		var bet = 0
 		bet = randi_range(0, 2)

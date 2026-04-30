@@ -11,7 +11,12 @@ func _on_timeout() -> void:
 		var RNG2 = RandomNumberGenerator.new()
 		DATE = int(str(DATE).replace("-", ""))
 		#print("date:" + str(hash(int(DATE/64))))
-		RNG.seed = hash(DATE^6489)
+		if GamemodeManager.CHALLENGEID == 0:
+			RNG.seed = hash(DATE^6489)
+		elif GamemodeManager.CHALLENGEID == 1:
+			RNG.seed = hash(DATE^563)
+		elif GamemodeManager.CHALLENGEID == 2:
+			RNG.seed = hash(DATE^9173)
 		rngnum = RNG.randi_range(0, 19)
 		rngnum2 = RNG.randi_range(0,6)
 		if rngnum == 16 or rngnum2 == 4:

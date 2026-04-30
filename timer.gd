@@ -10,9 +10,14 @@ func _ready() -> void:
 		# богато!
 		var DATE = Time.get_date_string_from_system()
 		var RNG = RandomNumberGenerator.new()
-		DATE = str(DATE).replace("-", "")
+		DATE = int(str(DATE).replace("-", ""))
 		#print("date:" + str(hash(int(DATE/64))))
-		RNG.seed = hash(DATE)
+		if GamemodeManager.CHALLENGEID == 0:
+			RNG.seed = hash(DATE^27)
+		elif GamemodeManager.CHALLENGEID == 1:
+			RNG.seed = hash(DATE^185)
+		elif GamemodeManager.CHALLENGEID == 2:
+			RNG.seed = hash(DATE^938)
 		rngnum = RNG.randi_range(0, 12)
 		if rngnum == 2:
 			medkitsbanned = true

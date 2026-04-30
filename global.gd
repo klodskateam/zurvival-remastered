@@ -114,6 +114,7 @@ var WEAPONS = [
 		"soundondelay": false,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
 		"sound": "",
+		"reloadsound": "res://Sound/pickup_01.wav"
 	},
 	{
 		"name": tr("$basicshotgun"),

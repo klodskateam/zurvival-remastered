@@ -8,6 +8,7 @@ var GMCHANGE_TO = null
 var GMNAME = null
 var GMDESC = null
 var GAMEMODE = null
+var CHALLENGESELECTOR = false
 
 # для удобства
 var CHALLENGE = {
@@ -91,6 +92,10 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if CHALLENGESELECTOR:
+		$Control/Panel/ChallengeSelector.visible = true
+	else:
+		$Control/Panel/ChallengeSelector.visible = false
 	if GMCHANGE_TO == null:
 		$Control/Panel/PlayButton.disabled = true
 	else:
@@ -111,7 +116,8 @@ func _on_play_button_pressed() -> void:
 	else:
 		GamemodeManager.MODGAME = MODDED_GAMEMODES[MODGAME].duplicate(true)
 	# HACK -- 31/01/26 -- убрано :D -- 23/04/26
-	#print("gamemode info: " + str(GamemodeManager.GAMEMODEINFO))	
+	#print("gamemode info: " + str(GamemodeManager.GAMEMODEINFO))
+	GamemodeManager.CHALLENGEID = $Control/Panel/ChallengeSelector.get_selected_id()
 	get_tree().change_scene_to_file(GMCHANGE_TO)
 	
 func change_info():
