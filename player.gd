@@ -92,32 +92,11 @@ func _ready() -> void:
 	WEAPONS = Global.EQUIPPED_WEAPONS.duplicate(true)
 	
 	if GamemodeManager.GAMEMODE == 1 or (GamemodeManager.GAMEMODE == -1 and !GamemodeManager.MODGAME["allow_weapons"]):
-		WEAPONS = [{
-		"name": tr("$starterpistol"),
-		"id": 1,
-		"class": "sidearm",
-		"delay": 1,
-		"damage": 100,
-		"bullet_speed": 1450,
-		"automatic": false,
-		"bullets": 12,
-		"left_bullets": 12,
-		"zapas_bullets": 48,
-		"icon": "res://Resources/ui_stuff_lol/weapon_starterpistol.png",
-		"incremental_reload": false,
-		"increment_sound": "res://Sound/shotgun_increment",
-		"incremental_minusroundonreload": false,
-		"increment_delay": 0,
-		"type": "gun",
-		"sway": 0.01,
-		"weight": 0.26,
-		"shake": 1,
-		"penthrough": false,
-		"bulletdespawn_dist": 2000,
-		"soundondelay": false,
-		"delaysound": "res://Sound/shotgun_cycle.wav",
-		"sound": "res://Sound/pistol.wav",
-	}]
+		WEAPONS = []
+		WEAPONS.append(Global.WEAPONS[0])
+		WEAPONS[0]["sway"] = 0
+		WEAPONS[0]["shake"] = 0
+		WEAPONS[0]["bulletdespawn_dist"] = 10000
 	if GamemodeManager.GAMEMODE == -1:
 		print("forcesnow: " + str(GamemodeManager.MODGAME["force_snow"]))
 		print("snowinwinter: " + str(GamemodeManager.MODGAME["snowinwinter"]))
