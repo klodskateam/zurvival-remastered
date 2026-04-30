@@ -61,6 +61,7 @@ var WEAPONS = [
 		"bulletdespawn_dist": 900,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
 		"sound": "res://Sound/pistol.wav",
+		"reloadsound": "res://Sound/pistol-reload.wav",
 	},
 	{
 		"name": tr("$startermp"),
@@ -87,6 +88,7 @@ var WEAPONS = [
 		"bulletdespawn_dist": 1200,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
 		"sound": "res://Sound/pistol-03.wav",
+		"reloadsound": "res://Sound/pistol-reload.wav",
 	},
 	{
 		"name": tr("$hegrenade"),
@@ -131,13 +133,14 @@ var WEAPONS = [
 		"increment_delay": 0.35,
 		"type": "shotgun",
 		"sway": 0.15,
-		"weight": 0.40,
+		"weight": 0.37,
 		"penthrough": false, # у ~~дробовика отдельный код для этого, мб стоит убрать~~ ладно я просто реюзанул код
 		"bulletdespawn_dist": 700,
 		"shake": 15,
 		"soundondelay": true,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
 		"sound": "res://Sound/shotgun.wav",
+		"reloadsound": "res://Sound/pistol-reload.wav",
 	},
 	{
 		"name": "TESTWEAPON_HIGHCAL",
@@ -145,7 +148,7 @@ var WEAPONS = [
 		"class": "primary",
 		"delay": 3,
 		"damage": 300, # выбор трактористов!
-		"bullet_speed": 1850,
+		"bullet_speed": 2050,
 		"automatic": false,
 		"bullets": 5,
 		"left_bullets": 5,
@@ -158,12 +161,13 @@ var WEAPONS = [
 		"type": "gun",
 		"sway": 0.12,
 		"shake": 45,
-		"weight": 0.38,
+		"weight": 0.46,
 		"penthrough": true,
 		"bulletdespawn_dist": 1500,
 		"soundondelay": false,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
 		"sound": "res://Sound/highcal-gun.wav",
+		"reloadsound": "res://Sound/highcal-reload.wav",
 	},
 ]
 var ALLWEAPONS = []

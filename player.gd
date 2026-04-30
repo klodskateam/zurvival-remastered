@@ -658,7 +658,7 @@ func bullets_reload():
 						$ReloadSound.play()
 					else:
 						$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
-						$ReloadSound.stream = load("res://Sound/pistol-reload.wav")
+						$ReloadSound.stream = load(WEAPONS[SELECTED_WEAPON]["reloadsound"])
 						$ReloadSound.play()
 			
 func _on_walkdelay_timeout() -> void:
