@@ -111,6 +111,9 @@ func _physics_process(delta: float) -> void:
 						#print("ivan we need to cook")
 						stress = 12
 						TARGET.append(ray.get_collider(i).global_position)
+						TARGET.append(ray.get_collider(i).velocity)
+						updatetimer = updatespeed
+						MOVEORDERS.clear()
 						State = AIStates.ACTIVE
 					
 					
@@ -138,6 +141,7 @@ func _physics_process(delta: float) -> void:
 						stress = 4
 						TARGET.clear()
 						TARGET.append(ray.get_collider(i).global_position)
+						TARGET.append(ray.get_collider(i).velocity)
 						updatespeed = lerp(updatespeed, 0.6, 1.3)
 						if updatetimer >= updatespeed:
 							shoot()
@@ -167,9 +171,9 @@ func _physics_process(delta: float) -> void:
 			if statedebug:
 				print("STATE: " + str(AIStates.keys()[State]))
 			if MOVEORDERS.size() < 1:
-				if stress >= 3 and !TARGET.is_empty():
-					go(TARGET[0] + Vector2(randf_range(-350, 500), randf_range(-350, 500)))
-					targetrotation = global_position.angle_to_point(TARGET[0] + Vector2(40, 40)) + PI/randf_range(0.6, 2.1)
+				if stress >= 4 and !TARGET.is_empty():
+					go((TARGET[0] + (TARGET[1] * 1.3)) + Vector2(randf_range(-350, 500), randf_range(-350, 500)))
+					targetrotation = global_position.angle_to_point(TARGET[0] + (TARGET[1] * 1.3)) + PI/randf_range(0.6, 2.1)
 				else:
 					var randpoint = NavigationServer2D.map_get_closest_point(navagent.get_navigation_map(), global_position.lerp(NavigationServer2D.map_get_random_point(navagent.get_navigation_map(), 1, true), 0.2) ) 
 					go(randpoint)
@@ -190,6 +194,9 @@ func _physics_process(delta: float) -> void:
 						#print("ivan we need to cook")
 						stress = 6
 						TARGET.append(ray.get_collider(i).global_position)
+						TARGET.append(ray.get_collider(i).velocity)
+						updatetimer = updatespeed
+						MOVEORDERS.clear()
 						State = AIStates.ACTIVE
 						
 	updatetimer += 1 * delta
@@ -249,7 +256,11 @@ func nav(delta: float) -> void:
 		if MOVEORDERS.size() > 0:
 			navagent.target_position = NavigationServer2D.map_get_closest_point(navagent.get_navigation_map(), MOVEORDERS.pop_front())
 		else:
-			velocity = Vector2.ZERO
+			if State != AIStates.WANDERING:
+				updatetimer = updatespeed
+			if State == AIStates.SEARCHING:
+				State = AIStates.WANDERING
+			velocity = velocity.lerp(Vector2.ZERO, 0.2)
 			return
 	var nextpath: Vector2 = navagent.get_next_path_position()
 	var newvelocity: Vector2 = (global_position.direction_to(nextpath) * SPEED)	

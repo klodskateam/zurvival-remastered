@@ -22,17 +22,6 @@ extends CharacterBody2D
 
 @onready var vignette_red = $"../UI/VignetteRed"
 
-
-
-const GRASS_STEP_01 = preload("res://Sound/grass_step_01.wav")
-const GRASS_STEP_02 = preload("res://Sound/grass_step_02.wav")
-const GRASS_STEP_03 = preload("res://Sound/grass_step_03.wav")
-const GRASS_STEP_04 = preload("res://Sound/grass_step_04.wav")
-const SNOW_STEP_01 = preload("res://Sound/snow_step_01.wav")
-const SNOW_STEP_02 = preload("res://Sound/snow_step_02.wav")
-const SNOW_STEP_03 = preload("res://Sound/snow_step_03.wav")
-const SNOW_STEP_04 = preload("res://Sound/snow_step_04.wav")
-
 const PICKUP_01 = preload("res://Sound/pickup_01.wav")
 const PICKUP_02 = preload("res://Sound/pickup_02.wav")
 const PICKUP_MEDKIT_01 = preload("res://Sound/pickup_medkit_01.wav")
@@ -77,6 +66,9 @@ var accum2 = 0
 @export var max_range = 420
 var max_range2 = 0
 var inthehall = false
+var steptimer = 0
+var stepmaterial = "grass"
+var dir2 = Vector2()
 
 var shakeamount = 0
 var shaketimer = 0
@@ -90,6 +82,11 @@ var WEAPONS = []
 
 func _ready() -> void:
 	WEAPONS = Global.EQUIPPED_WEAPONS.duplicate(true)
+	
+	if (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"] and (month >= 12 or month <= 01)) or ((GamemodeManager.GAMEMODE != -1 and GamemodeManager.GAMEMODE != 2)  and (month >= 12 or month <= 01)):
+		stepmaterial = "snow"
+	else:
+		stepmaterial = "grass"
 	
 	if GamemodeManager.GAMEMODE == 1 or (GamemodeManager.GAMEMODE == -1 and !GamemodeManager.MODGAME["allow_weapons"]):
 		WEAPONS = []
@@ -219,17 +216,18 @@ func _ready() -> void:
 	
 	weaponhint_show()
 
-
 func _physics_process(delta: float):
 	#TranslationServer.set_locale("be")
-	if Input.is_action_pressed("left"):
-		position.x -= SPEED * delta
-	if Input.is_action_pressed("right"):
-		position.x += SPEED * delta
-	if Input.is_action_pressed("up"):
-		position.y -= SPEED * delta
-	if Input.is_action_pressed("down"):
-		position.y += SPEED * delta
+	var direction = get_input()
+	if direction.length() > 0:
+		if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
+			dir2 = direction.lerp(direction.normalized(), 1)
+		else:
+			dir2 = direction.lerp(direction.normalized(), 0.35)
+		velocity = velocity.lerp(dir2 * SPEED, 0.3)
+	else:
+		velocity = velocity.lerp(Vector2.ZERO, 0.2)
+	move_and_slide()	
 		
 	score.text = str(SCORE)
 	
@@ -333,7 +331,16 @@ func _physics_process(delta: float):
 		_:
 			pass
 	
-	
+	if steptimer <= 4:
+		steptimer += Vector2(velocity.x, velocity.y).length()/20 * delta
+		
+	if Vector2(velocity.x, velocity.y).length() > 0:
+		if steptimer >= 4:
+			$GrassStep01.stream = load("res://Sound/" + stepmaterial + "_step_" + str(randi_range(1,4)).pad_zeros(2) + ".wav")
+			$GrassStep01.pitch_scale = randf_range(0.9, 1.06)
+			$GrassStep01.play()
+			steptimer = 0
+		pass
 		
 	if (OS.get_name() != "Android"):
 		look_at(get_global_mouse_position())
@@ -624,49 +631,12 @@ func bullets_reload():
 					$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
 					$ReloadSound.stream = load(WEAPONS[SELECTED_WEAPON]["reloadsound"])
 					$ReloadSound.play()
-			
-func _on_walkdelay_timeout() -> void:
-	if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
-		$WalkDelay.wait_time = randf_range((clamp(0.20 + (INVENTORY_FILLED*0.0025), 0.10, 0.60)),(clamp(0.24 + (INVENTORY_FILLED*0.0035), 0.10, 0.60)))
-		if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) and month >= 12 or month <= 01):
-			$GrassStep01.pitch_scale = randf_range(0.93, 1.04)
-		else:
-			$GrassStep01.pitch_scale = randf_range(0.96, 1.02)
-		step_sound()
-		$GrassStep01.play()
-	elif (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")):
-		$WalkDelay.wait_time = randf_range((clamp(0.24 + (INVENTORY_FILLED*0.0045), 0.10, 0.60)),(clamp(0.27 + (INVENTORY_FILLED*0.0050), 0.10, 0.60)))
-		if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) and month >= 12 or month <= 01):
-			$GrassStep01.pitch_scale = randf_range(0.99, 1.09)
-			$GrassStep01.volume_db = randf_range(-1, 1)
-		else:
-			$GrassStep01.pitch_scale = randf_range(0.91, 1.06)
-			$GrassStep01.volume_db = randf_range(-5, -3)
-		step_sound()
-		$GrassStep01.play()
 
-func step_sound():
-	match randi_range(1,4):
-		1:
-			if GamemodeManager.GAMEMODE == 2 or ((month >= 12 or month <= 1) and (GamemodeManager.GAMEMODE != -1 or GamemodeManager.MODGAME["snowinwinter"])) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
-				$GrassStep01.stream = SNOW_STEP_01
-			else:
-				$GrassStep01.stream = GRASS_STEP_01
-		2:
-			if GamemodeManager.GAMEMODE == 2 or ((month >= 12 or month <= 1) and (GamemodeManager.GAMEMODE != -1 or GamemodeManager.MODGAME["snowinwinter"])) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
-				$GrassStep01.stream = SNOW_STEP_02
-			else:
-				$GrassStep01.stream = GRASS_STEP_02
-		3:
-			if GamemodeManager.GAMEMODE == 2 or ((month >= 12 or month <= 1) and (GamemodeManager.GAMEMODE != -1 or GamemodeManager.MODGAME["snowinwinter"])) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
-				$GrassStep01.stream = SNOW_STEP_03
-			else:
-				$GrassStep01.stream = GRASS_STEP_03
-		4:
-			if GamemodeManager.GAMEMODE == 2 or ((month >= 12 or month <= 1) and (GamemodeManager.GAMEMODE != -1 or GamemodeManager.MODGAME["snowinwinter"])) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
-				$GrassStep01.stream = SNOW_STEP_04
-			else:
-				$GrassStep01.stream = GRASS_STEP_04	
+func get_input():
+	var vertical = Input.get_axis("up", "down")
+	var horizontal = Input.get_axis("left", "right")
+	return Vector2(horizontal, vertical)
+			
 func weaponhint_show():
 	match GamemodeManager.GAMEMODE:
 		-1:

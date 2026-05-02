@@ -37,7 +37,7 @@ var CONFIG = ConfigFile.new()
 var KT_URL = "https://kteam.veliona.no/"
 var WEAPONS = [
 	{
-		"name": tr("$starterpistol"),
+		"name": "$starterpistol",
 		"id": 1,
 		"class": "sidearm",
 		"delay": 1,
@@ -64,7 +64,7 @@ var WEAPONS = [
 		"reloadsound": "res://Sound/pistol-reload.wav",
 	},
 	{
-		"name": tr("$startermp"),
+		"name": "$startermp",
 		"id": 2,
 		"class": "primary",
 		"delay": 0.35,
@@ -91,7 +91,7 @@ var WEAPONS = [
 		"reloadsound": "res://Sound/pistol-reload.wav",
 	},
 	{
-		"name": tr("$hegrenade"),
+		"name": "$hegrenade",
 		"id": 3,
 		"class": "utility",
 		"delay": 1,
@@ -117,7 +117,7 @@ var WEAPONS = [
 		"reloadsound": "res://Sound/pickup_01.wav"
 	},
 	{
-		"name": tr("$basicshotgun"),
+		"name": "$basicshotgun",
 		"id": 4,
 		"class": "primary",
 		"delay": 2.5,
@@ -144,7 +144,7 @@ var WEAPONS = [
 		"reloadsound": "res://Sound/pistol-reload.wav",
 	},
 	{
-		"name": "TESTWEAPON_HIGHCAL",
+		"name": "$highcal_atrifle",
 		"id": 5,
 		"class": "primary",
 		"delay": 3,
