@@ -15,6 +15,8 @@ const PICKUP_MEDKIT_01 = preload("res://Sound/pickup_medkit_01.wav")
 const PICKUP_MEDKIT_02 = preload("res://Sound/pickup_medkit_02.wav")
 const GRENADE_PREPARE = preload("uid://brrx5ku6x7b1n")
 
+var time = Time.get_datetime_dict_from_system()
+var month = time["month"]
 var SPEED = 300
 var DELAY = 0
 var HEALTH = 100
@@ -24,6 +26,8 @@ var RELOADING = false
 var maybeselectedweapon = 0
 var INCREMENT_DELAY = 0
 var ogroundamount = 0
+var steptimer = 0
+var stepmaterial = "grass"
 
 @export var MAX_VINOSLIVOST = 100
 @export var REGULAR_SPEED = 300
@@ -80,6 +84,10 @@ var stress = 0
 var statedebug = false
 
 func _ready() -> void:
+	if GamemodeManager.GAMEMODE == 2 or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"] and (month >= 12 or month <= 01)) or ((GamemodeManager.GAMEMODE != -1 and GamemodeManager.GAMEMODE != 2)  and (month >= 12 or month <= 01)):
+		stepmaterial = "snow"
+	else:
+		stepmaterial = "grass"
 	randdir = randf_range(-1, 1)
 	navagent.velocity_computed.connect(Callable(_on_velocity_computed))
 
@@ -199,6 +207,16 @@ func _physics_process(delta: float) -> void:
 						MOVEORDERS.clear()
 						State = AIStates.ACTIVE
 						
+	if steptimer <= 4:
+		steptimer += Vector2(velocity.x, velocity.y).length()/20 * delta
+		
+	if Vector2(velocity.x, velocity.y).length() > 0:
+		if steptimer >= 4:
+			$GrassStep01.stream = load("res://Sound/" + stepmaterial + "_step_" + str(randi_range(1,4)).pad_zeros(2) + ".wav")
+			$GrassStep01.pitch_scale = randf_range(0.9, 1.06)
+			$GrassStep01.play()
+			steptimer = 0
+		pass
 	updatetimer += 1 * delta
 	#elif updatetimer >= updatespeed:
 		#shoot()
