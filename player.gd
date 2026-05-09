@@ -132,7 +132,7 @@ func _ready() -> void:
 			RUN_SPEED = 375	
 		if rngnum2 == 7 or rngnum4 == 3:
 			WEAPONS = []
-			WEAPONS.append(Global.WEAPONS[0])
+			WEAPONS.append(Global.WEAPONS[0].duplicate(true))
 			WEAPONS[0]["sway"] = 0
 			WEAPONS[0]["shake"] = 0
 			WEAPONS[0]["bulletdespawn_dist"] = 10000
@@ -168,7 +168,7 @@ func _ready() -> void:
 		"sound": "res://Sound/pistol.wav",
 		"reloadsound": "res://Sound/pickup_01.wav"
 	},
-			]	
+			].duplicate(true)
 		elif rngnum2 == 5 or rngnum2 == 8:
 			for weapon in WEAPONS.size():
 				WEAPONS[weapon]["delay"] *= 3

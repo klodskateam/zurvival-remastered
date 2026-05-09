@@ -158,9 +158,12 @@ attenuation = 0.5358867
 max_polyphony = 128
 panning_strength = 2.55
 
-[node name="ReloadSound" type="AudioStreamPlayer" parent="." unique_id=487309433]
+[node name="ReloadSound" type="AudioStreamPlayer2D" parent="." unique_id=926650585]
 stream = ExtResource("4_51cx5")
+volume_db = -2.2
+attenuation = 6.4980206
 max_polyphony = 128
+panning_strength = 1.6
 
 [node name="EmptySound" type="AudioStreamPlayer" parent="." unique_id=346690221]
 stream = ExtResource("5_by3vp")

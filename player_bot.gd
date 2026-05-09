@@ -79,6 +79,7 @@ var moveupdatespeed = 0.8
 var moveupdatetimer = 0
 var randrange = PI*2
 var targetrotation = 0
+var lostcontacttimer = 0
 var randdir = 0
 var stress = 0
 var statedebug = false
@@ -122,6 +123,7 @@ func _physics_process(delta: float) -> void:
 						TARGET.append(ray.get_collider(i).velocity)
 						updatetimer = updatespeed
 						MOVEORDERS.clear()
+						lostcontacttimer = 0
 						State = AIStates.ACTIVE
 					
 					
@@ -130,10 +132,10 @@ func _physics_process(delta: float) -> void:
 		if updatetimer >= updatespeed:
 			if statedebug:
 				print("STATE: " + str(AIStates.keys()[State]))
-			if MOVEORDERS.size() < 1:
-				go(TARGET[0] + Vector2(randf_range(-120, 130), randf_range(-120, 130)))
 			if stress >= 3:
-				targetrotation = global_position.angle_to_point(TARGET[0]) + PI/2
+				if MOVEORDERS.size() < 1:
+					go(TARGET[0] + (TARGET[1] * 0.4) + ((global_position - TARGET[0]).normalized() * randf_range(40, 120)))
+				targetrotation = global_position.angle_to_point(TARGET[0] + (TARGET[1] * 0.4)) + PI/2
 				
 		var onsight = false # ЗАФИКСИРОВАНО!
 				
@@ -162,11 +164,15 @@ func _physics_process(delta: float) -> void:
 			if updatetimer >= updatespeed:
 				updatetimer = 0
 			if !TARGET.is_empty():
-				targetrotation = global_position.angle_to_point(TARGET[0]) + PI/2
+				lostcontacttimer += 1.5 * delta
+				targetrotation = global_position.angle_to_point(TARGET[0] + (TARGET[1] * lostcontacttimer)) + PI/2
+				if MOVEORDERS.is_empty() and lostcontacttimer >= 2:
+					State = AIStates.SEARCHING
 			if stress <= 0:
 				stress = 10
 				updatetimer = updatespeed
 				MOVEORDERS.clear()
+				lostcontacttimer = 0
 				State = AIStates.SEARCHING
 			
 			
@@ -180,8 +186,9 @@ func _physics_process(delta: float) -> void:
 				print("STATE: " + str(AIStates.keys()[State]))
 			if MOVEORDERS.size() < 1:
 				if stress >= 4 and !TARGET.is_empty():
-					go((TARGET[0] + (TARGET[1] * 1.3)) + Vector2(randf_range(-350, 500), randf_range(-350, 500)))
-					targetrotation = global_position.angle_to_point(TARGET[0] + (TARGET[1] * 1.3)) + PI/randf_range(0.6, 2.1)
+					lostcontacttimer += 1 * delta
+					go((TARGET[0] + (TARGET[1] * lostcontacttimer)) + Vector2(randf_range(-350, 500), randf_range(-350, 500)))
+					targetrotation = global_position.angle_to_point(TARGET[0] + (TARGET[1] * lostcontacttimer)) + PI/randf_range(0.6, 2.1)
 				else:
 					var randpoint = NavigationServer2D.map_get_closest_point(navagent.get_navigation_map(), global_position.lerp(NavigationServer2D.map_get_random_point(navagent.get_navigation_map(), 1, true), 0.2) ) 
 					go(randpoint)
@@ -189,6 +196,7 @@ func _physics_process(delta: float) -> void:
 					
 			if stress <= 0 or TARGET.is_empty():
 				TARGET.clear()
+				lostcontacttimer = 0
 				State = AIStates.WANDERING
 			updatetimer = 0 
 			
@@ -205,6 +213,7 @@ func _physics_process(delta: float) -> void:
 						TARGET.append(ray.get_collider(i).velocity)
 						updatetimer = updatespeed
 						MOVEORDERS.clear()
+						lostcontacttimer = 0
 						State = AIStates.ACTIVE
 						
 	if steptimer <= 4:
@@ -260,7 +269,7 @@ func _physics_process(delta: float) -> void:
 
 func go(target: Vector2):
 	MOVEORDERS.clear()
-	if global_position.distance_to(target) >= 150:
+	if global_position.distance_to(target) >= 75:
 		var midwaynotthefilm = global_position.lerp(target, 0.6)
 		var split = global_position.distance_to(target) * 0.3
 		var almostthere = NavigationServer2D.map_get_closest_point(navagent.get_navigation_map(), midwaynotthefilm + (global_position.direction_to(target).orthogonal() * split * randdir))
@@ -276,8 +285,6 @@ func nav(delta: float) -> void:
 		else:
 			if State != AIStates.WANDERING:
 				updatetimer = updatespeed
-			if State == AIStates.SEARCHING:
-				State = AIStates.WANDERING
 			velocity = velocity.lerp(Vector2.ZERO, 0.2)
 			return
 	var nextpath: Vector2 = navagent.get_next_path_position()

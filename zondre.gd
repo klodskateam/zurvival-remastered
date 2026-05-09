@@ -79,13 +79,15 @@ func _physics_process(delta: float) -> void:
 	
 	look_at($"../player".position)
 	nav(delta)
+	move_and_slide()
 	
 func nav(delta: float) -> void:
 	if navagent.is_navigation_finished():
 		return
 	var nextpath: Vector2 = navagent.get_next_path_position()
 	var newvelocity: Vector2 = (global_position.direction_to(nextpath) * SPEED)
-	position += newvelocity * delta
+	velocity = newvelocity
+	
 
 
 func _on_timer_timeout() -> void:
