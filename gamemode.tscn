@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://bcvdhtfrjqpw8" path="res://gamemode.gd" id="1_x7xra"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_7rmfm"]
 [ext_resource type="Script" uid="uid://beg25d2qybjtl" path="res://transitionmenu.gd" id="4_wc7w4"]
-[ext_resource type="Script" path="res://weaponselector.gd" id="5_l6b64"]
+[ext_resource type="Script" uid="uid://deakb3acw62wt" path="res://weaponselector.gd" id="5_l6b64"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_wc7w4"]
 font_size = 18
@@ -160,13 +160,12 @@ clip_text = true
 text_overrun_behavior = 2
 
 [node name="Panel2" type="Panel" parent="Control/Panel" unique_id=800453972]
-visible = false
 z_index = -1
 layout_mode = 0
-offset_left = 161.0
-offset_top = 68.0
-offset_right = 374.0
-offset_bottom = 299.0
+offset_left = 171.0
+offset_top = 596.0
+offset_right = 384.0
+offset_bottom = 827.0
 script = ExtResource("5_l6b64")
 
 [node name="Label" type="Label" parent="Control/Panel/Panel2" unique_id=1307445589]
@@ -217,6 +216,10 @@ size_flags_horizontal = 3
 text_overrun_behavior = 1
 clip_text = true
 expand_icon = true
+selected = 0
+item_count = 1
+popup/item_0/text = "-"
+popup/item_0/id = 0
 
 [node name="SidearmDropdown" type="OptionButton" parent="Control/Panel/Panel2" unique_id=449482390]
 layout_mode = 0
@@ -228,6 +231,7 @@ size_flags_horizontal = 3
 text_overrun_behavior = 1
 clip_text = true
 expand_icon = true
+selected = 0
 item_count = 1
 popup/item_0/text = "-"
 popup/item_0/id = 0
@@ -241,6 +245,7 @@ offset_bottom = 165.0
 size_flags_horizontal = 3
 text_overrun_behavior = 1
 clip_text = true
+selected = 0
 item_count = 1
 popup/item_0/text = "-"
 popup/item_0/id = 0

@@ -269,7 +269,7 @@ func _physics_process(delta: float) -> void:
 
 func go(target: Vector2):
 	MOVEORDERS.clear()
-	if global_position.distance_to(target) >= 75:
+	if global_position.distance_to(target) >= 150:
 		var midwaynotthefilm = global_position.lerp(target, 0.6)
 		var split = global_position.distance_to(target) * 0.3
 		var almostthere = NavigationServer2D.map_get_closest_point(navagent.get_navigation_map(), midwaynotthefilm + (global_position.direction_to(target).orthogonal() * split * randdir))
