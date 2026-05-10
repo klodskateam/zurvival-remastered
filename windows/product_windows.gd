@@ -39,5 +39,5 @@ func _on_buyitem_pressed() -> void:
 		else:
 			Global.CONFIG.set_value("items", "aims", [PRODUCT_DATA])
 		Global.CONFIG.save(Global.SAVE_PATH)
-		print(str(Global.ZCOINS))
+		#print(str(Global.ZCOINS))
 		queue_free()
