@@ -51,7 +51,7 @@ func _on_damage_area_body_entered(body: Node2D) -> void:
 func _on_shake_area_body_entered(body: Node2D) -> void:
 	if exploded and $AnimatedSprite2D.is_playing():
 		if body.name == "player":
-			body.shake = true
+			body.shakeamount += 25
 
 func _on_player_damage_area_body_entered(body: Node2D) -> void:
 	if exploded and $AnimatedSprite2D.is_playing():

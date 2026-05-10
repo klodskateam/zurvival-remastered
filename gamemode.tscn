@@ -120,6 +120,22 @@ offset_bottom = 387.0
 theme = ExtResource("2_7rmfm")
 text = "$weaponselect"
 
+[node name="ChallengeSelector" type="OptionButton" parent="Control/Panel" unique_id=1028482195]
+visible = false
+layout_mode = 0
+offset_left = 4.0
+offset_top = 356.0
+offset_right = 60.0
+offset_bottom = 387.0
+selected = 0
+item_count = 3
+popup/item_0/text = "A"
+popup/item_0/id = 0
+popup/item_1/text = "B"
+popup/item_1/id = 1
+popup/item_2/text = "C"
+popup/item_2/id = 2
+
 [node name="gamemodename" type="Label" parent="Control/Panel" unique_id=1738598703]
 layout_mode = 0
 offset_left = 4.0
@@ -198,6 +214,8 @@ offset_top = 50.0
 offset_right = 208.0
 offset_bottom = 75.0
 size_flags_horizontal = 3
+text_overrun_behavior = 1
+clip_text = true
 expand_icon = true
 
 [node name="SidearmDropdown" type="OptionButton" parent="Control/Panel/Panel2" unique_id=449482390]
@@ -207,6 +225,8 @@ offset_top = 94.0
 offset_right = 208.0
 offset_bottom = 119.0
 size_flags_horizontal = 3
+text_overrun_behavior = 1
+clip_text = true
 expand_icon = true
 item_count = 1
 popup/item_0/text = "-"
@@ -219,6 +239,8 @@ offset_top = 140.0
 offset_right = 208.0
 offset_bottom = 165.0
 size_flags_horizontal = 3
+text_overrun_behavior = 1
+clip_text = true
 item_count = 1
 popup/item_0/text = "-"
 popup/item_0/id = 0

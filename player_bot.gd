@@ -15,6 +15,8 @@ const PICKUP_MEDKIT_01 = preload("res://Sound/pickup_medkit_01.wav")
 const PICKUP_MEDKIT_02 = preload("res://Sound/pickup_medkit_02.wav")
 const GRENADE_PREPARE = preload("uid://brrx5ku6x7b1n")
 
+var time = Time.get_datetime_dict_from_system()
+var month = time["month"]
 var SPEED = 300
 var DELAY = 0
 var HEALTH = 100
@@ -24,6 +26,8 @@ var RELOADING = false
 var maybeselectedweapon = 0
 var INCREMENT_DELAY = 0
 var ogroundamount = 0
+var steptimer = 0
+var stepmaterial = "grass"
 
 @export var MAX_VINOSLIVOST = 100
 @export var REGULAR_SPEED = 300
@@ -40,6 +44,8 @@ var WEAPONS = [	{
 		"id": 1,
 		"class": "sidearm",
 		"delay": 1,
+		"damage": 100,
+		"bullet_speed": 1450,
 		"automatic": false,
 		"bullets": 12,
 		"left_bullets": 12,
@@ -52,9 +58,13 @@ var WEAPONS = [	{
 		"type": "gun",
 		"sway": 0.07,
 		"weight": 0.26,
+		"shake": 6,
 		"soundondelay": false,
+		"penthrough": false,
+		"bulletdespawn_dist": 900,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
 		"sound": "res://Sound/pistol.wav",
+		"reloadsound": "res://Sound/pistol-reload.wav",
 	},]
 var MOVEORDERS = []
 var TARGET = []
@@ -69,11 +79,16 @@ var moveupdatespeed = 0.8
 var moveupdatetimer = 0
 var randrange = PI*2
 var targetrotation = 0
+var lostcontacttimer = 0
 var randdir = 0
 var stress = 0
 var statedebug = false
 
 func _ready() -> void:
+	if GamemodeManager.GAMEMODE == 2 or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"] and (month >= 12 or month <= 01)) or ((GamemodeManager.GAMEMODE != -1 and GamemodeManager.GAMEMODE != 2)  and (month >= 12 or month <= 01)):
+		stepmaterial = "snow"
+	else:
+		stepmaterial = "grass"
 	randdir = randf_range(-1, 1)
 	navagent.velocity_computed.connect(Callable(_on_velocity_computed))
 
@@ -105,6 +120,10 @@ func _physics_process(delta: float) -> void:
 						#print("ivan we need to cook")
 						stress = 12
 						TARGET.append(ray.get_collider(i).global_position)
+						TARGET.append(ray.get_collider(i).velocity)
+						updatetimer = updatespeed
+						MOVEORDERS.clear()
+						lostcontacttimer = 0
 						State = AIStates.ACTIVE
 					
 					
@@ -113,10 +132,10 @@ func _physics_process(delta: float) -> void:
 		if updatetimer >= updatespeed:
 			if statedebug:
 				print("STATE: " + str(AIStates.keys()[State]))
-			if MOVEORDERS.size() < 1:
-				go(TARGET[0] + Vector2(randf_range(-120, 130), randf_range(-120, 130)))
 			if stress >= 3:
-				targetrotation = global_position.angle_to_point(TARGET[0]) + PI/2
+				if MOVEORDERS.size() < 1:
+					go(TARGET[0] + (TARGET[1] * 0.4) + ((global_position - TARGET[0]).normalized() * randf_range(40, 120)))
+				targetrotation = global_position.angle_to_point(TARGET[0] + (TARGET[1] * 0.4)) + PI/2
 				
 		var onsight = false # ЗАФИКСИРОВАНО!
 				
@@ -132,6 +151,7 @@ func _physics_process(delta: float) -> void:
 						stress = 4
 						TARGET.clear()
 						TARGET.append(ray.get_collider(i).global_position)
+						TARGET.append(ray.get_collider(i).velocity)
 						updatespeed = lerp(updatespeed, 0.6, 1.3)
 						if updatetimer >= updatespeed:
 							shoot()
@@ -144,11 +164,15 @@ func _physics_process(delta: float) -> void:
 			if updatetimer >= updatespeed:
 				updatetimer = 0
 			if !TARGET.is_empty():
-				targetrotation = global_position.angle_to_point(TARGET[0]) + PI/2
+				lostcontacttimer += 1.5 * delta
+				targetrotation = global_position.angle_to_point(TARGET[0] + (TARGET[1] * lostcontacttimer)) + PI/2
+				if MOVEORDERS.is_empty() and lostcontacttimer >= 2:
+					State = AIStates.SEARCHING
 			if stress <= 0:
 				stress = 10
 				updatetimer = updatespeed
 				MOVEORDERS.clear()
+				lostcontacttimer = 0
 				State = AIStates.SEARCHING
 			
 			
@@ -161,9 +185,10 @@ func _physics_process(delta: float) -> void:
 			if statedebug:
 				print("STATE: " + str(AIStates.keys()[State]))
 			if MOVEORDERS.size() < 1:
-				if stress >= 3 and !TARGET.is_empty():
-					go(TARGET[0] + Vector2(randf_range(-350, 500), randf_range(-350, 500)))
-					targetrotation = global_position.angle_to_point(TARGET[0] + Vector2(40, 40)) + PI/randf_range(0.6, 2.1)
+				if stress >= 4 and !TARGET.is_empty():
+					lostcontacttimer += 1 * delta
+					go((TARGET[0] + (TARGET[1] * lostcontacttimer)) + Vector2(randf_range(-350, 500), randf_range(-350, 500)))
+					targetrotation = global_position.angle_to_point(TARGET[0] + (TARGET[1] * lostcontacttimer)) + PI/randf_range(0.6, 2.1)
 				else:
 					var randpoint = NavigationServer2D.map_get_closest_point(navagent.get_navigation_map(), global_position.lerp(NavigationServer2D.map_get_random_point(navagent.get_navigation_map(), 1, true), 0.2) ) 
 					go(randpoint)
@@ -171,6 +196,7 @@ func _physics_process(delta: float) -> void:
 					
 			if stress <= 0 or TARGET.is_empty():
 				TARGET.clear()
+				lostcontacttimer = 0
 				State = AIStates.WANDERING
 			updatetimer = 0 
 			
@@ -184,8 +210,22 @@ func _physics_process(delta: float) -> void:
 						#print("ivan we need to cook")
 						stress = 6
 						TARGET.append(ray.get_collider(i).global_position)
+						TARGET.append(ray.get_collider(i).velocity)
+						updatetimer = updatespeed
+						MOVEORDERS.clear()
+						lostcontacttimer = 0
 						State = AIStates.ACTIVE
 						
+	if steptimer <= 4:
+		steptimer += Vector2(velocity.x, velocity.y).length()/20 * delta
+		
+	if Vector2(velocity.x, velocity.y).length() > 0:
+		if steptimer >= 4:
+			$GrassStep01.stream = load("res://Sound/" + stepmaterial + "_step_" + str(randi_range(1,4)).pad_zeros(2) + ".wav")
+			$GrassStep01.pitch_scale = randf_range(0.9, 1.06)
+			$GrassStep01.play()
+			steptimer = 0
+		pass
 	updatetimer += 1 * delta
 	#elif updatetimer >= updatespeed:
 		#shoot()
@@ -229,7 +269,7 @@ func _physics_process(delta: float) -> void:
 
 func go(target: Vector2):
 	MOVEORDERS.clear()
-	if global_position.distance_to(target) >= 150:
+	if global_position.distance_to(target) >= 75:
 		var midwaynotthefilm = global_position.lerp(target, 0.6)
 		var split = global_position.distance_to(target) * 0.3
 		var almostthere = NavigationServer2D.map_get_closest_point(navagent.get_navigation_map(), midwaynotthefilm + (global_position.direction_to(target).orthogonal() * split * randdir))
@@ -243,7 +283,9 @@ func nav(delta: float) -> void:
 		if MOVEORDERS.size() > 0:
 			navagent.target_position = NavigationServer2D.map_get_closest_point(navagent.get_navigation_map(), MOVEORDERS.pop_front())
 		else:
-			velocity = Vector2.ZERO
+			if State != AIStates.WANDERING:
+				updatetimer = updatespeed
+			velocity = velocity.lerp(Vector2.ZERO, 0.2)
 			return
 	var nextpath: Vector2 = navagent.get_next_path_position()
 	var newvelocity: Vector2 = (global_position.direction_to(nextpath) * SPEED)	
@@ -263,60 +305,35 @@ func ratata():
 	if WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0 and DELAY >= WEAPONS[SELECTED_WEAPON]["delay"] and !RELOADING:
 		shoot()	
 
-func bullets_reload():
-	match GamemodeManager.GAMEMODE:
-		1:
-			if (WEAPONS[SELECTED_WEAPON]["left_bullets"] == 0):
-				WEAPONS[SELECTED_WEAPON]["left_bullets"] = WEAPONS[SELECTED_WEAPON]["bullets"]
-				DELAY = 0
-				$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
-				$ReloadSound.play()
-		_:
-			if WEAPONS[SELECTED_WEAPON]["incremental_reload"]:
-				if WEAPONS[SELECTED_WEAPON]["left_bullets"] < WEAPONS[SELECTED_WEAPON]["bullets"] and WEAPONS[SELECTED_WEAPON]["zapas_bullets"] >= 1:
-					maybeselectedweapon = SELECTED_WEAPON
-										
-					if WEAPONS[SELECTED_WEAPON]["incremental_minusroundonreload"] and WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0 and !RELOADING:
-						INCREMENT_DELAY = 0-WEAPONS[SELECTED_WEAPON]["increment_delay"]
-						WEAPONS[SELECTED_WEAPON]["left_bullets"] -= 1
-					elif !RELOADING:
-						INCREMENT_DELAY = 0-WEAPONS[SELECTED_WEAPON]["increment_delay"]/2
-					else:
-						pass
-					ogroundamount = WEAPONS[SELECTED_WEAPON]["left_bullets"]
-					RELOADING = true
-			else:
-				if (WEAPONS[SELECTED_WEAPON]["left_bullets"] == 0) and (WEAPONS[SELECTED_WEAPON]["zapas_bullets"] >= WEAPONS[SELECTED_WEAPON]["bullets"]):
-					WEAPONS[SELECTED_WEAPON]["left_bullets"] = WEAPONS[SELECTED_WEAPON]["bullets"]
-					DELAY = 0
-					WEAPONS[SELECTED_WEAPON]["zapas_bullets"] -= WEAPONS[SELECTED_WEAPON]["bullets"]
-					WEAPONS[SELECTED_WEAPON]["zapas_bullets"] = max(0, WEAPONS[SELECTED_WEAPON]["zapas_bullets"])
-					if WEAPONS[SELECTED_WEAPON]["type"] == "grenade":
-						$ReloadSound.pitch_scale = randf_range(1.2, 1.35)
-						$ReloadSound.stream = PICKUP_01
-						$ReloadSound.play()
-					else:
-						$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
-						$ReloadSound.stream = load("res://Sound/pistol-reload.wav")
-						$ReloadSound.play()
-
 func shoot():
 	if WEAPONS[SELECTED_WEAPON]["left_bullets"] != 0:
 		if DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]:
 			# bullet.add_constant_force(get_global_mouse_position() - bullet.global_position)
-			if WEAPONS[SELECTED_WEAPON]["type"] == "shotgun":	
+			if WEAPONS[SELECTED_WEAPON]["type"] == "shotgun":
+				$Camera2D/AnimationPlayer.stop()
+				$Camera2D/AnimationPlayer.play("shotgun_recoil")	
 				for i in 9:
 					var bullet = P_BULLET.instantiate()
 					bullet.shotgunbullet = true
 					bullet.global_position = $Marker2D.global_position
+					bullet.markerpos = $Marker2D.global_position
+					bullet.despawn_dist = WEAPONS[SELECTED_WEAPON]["bulletdespawn_dist"]
+					bullet.PIERCETHRU = WEAPONS[SELECTED_WEAPON]["penthrough"]
+					bullet.DAMAGE = WEAPONS[SELECTED_WEAPON]["damage"]
+					bullet.SPEED = WEAPONS[SELECTED_WEAPON]["bullet_speed"]
 					if WEAPONS[SELECTED_WEAPON]["left_bullets"] == WEAPONS[SELECTED_WEAPON]["bullets"]:
 						bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)))*WEAPONS[SELECTED_WEAPON]["sway"]/1.5
 					else:
-						bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)))*WEAPONS[SELECTED_WEAPON]["sway"]					
+						bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)))*WEAPONS[SELECTED_WEAPON]["sway"]			
 					get_parent().add_child(bullet)
 			else:
 				var bullet = P_BULLET.instantiate()
 				bullet.global_position = $Marker2D.global_position
+				bullet.markerpos = $Marker2D.global_position
+				bullet.despawn_dist = WEAPONS[SELECTED_WEAPON]["bulletdespawn_dist"]
+				bullet.PIERCETHRU = WEAPONS[SELECTED_WEAPON]["penthrough"]
+				bullet.SPEED = WEAPONS[SELECTED_WEAPON]["bullet_speed"]
+				bullet.DAMAGE = WEAPONS[SELECTED_WEAPON]["damage"]
 				bullet.shotgunbullet = false
 				if WEAPONS[SELECTED_WEAPON]["left_bullets"] == WEAPONS[SELECTED_WEAPON]["bullets"]:
 					bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)))*WEAPONS[SELECTED_WEAPON]["sway"]/1.5
@@ -333,6 +350,38 @@ func shoot():
 			#print(DELAY)
 	else:
 		#$EmptySound.play()
-		bullets_reload()
 		DELAY = 0
-		#print(DELAY)
+		bullets_reload()
+		print(DELAY)
+			
+func bullets_reload():
+	match GamemodeManager.GAMEMODE:
+		1:
+			if (WEAPONS[SELECTED_WEAPON]["left_bullets"] == 0):
+				WEAPONS[SELECTED_WEAPON]["left_bullets"] = WEAPONS[SELECTED_WEAPON]["bullets"]
+				DELAY = 0
+				$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
+				$ReloadSound.play()
+		_:
+			if WEAPONS[SELECTED_WEAPON]["incremental_reload"]:
+				if WEAPONS[SELECTED_WEAPON]["left_bullets"] < WEAPONS[SELECTED_WEAPON]["bullets"] and WEAPONS[SELECTED_WEAPON]["zapas_bullets"] >= 1:
+					maybeselectedweapon = SELECTED_WEAPON
+					
+					if WEAPONS[SELECTED_WEAPON]["incremental_minusroundonreload"] and WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0 and !RELOADING:
+						INCREMENT_DELAY = 0-WEAPONS[SELECTED_WEAPON]["increment_delay"]
+						WEAPONS[SELECTED_WEAPON]["left_bullets"] -= 1
+					elif !RELOADING:
+						INCREMENT_DELAY = 0-WEAPONS[SELECTED_WEAPON]["increment_delay"]/2
+					else:
+						pass
+					ogroundamount = WEAPONS[SELECTED_WEAPON]["left_bullets"]
+					RELOADING = true
+			else:
+				if (WEAPONS[SELECTED_WEAPON]["left_bullets"] == 0) and (WEAPONS[SELECTED_WEAPON]["zapas_bullets"] >= WEAPONS[SELECTED_WEAPON]["bullets"]):
+					WEAPONS[SELECTED_WEAPON]["left_bullets"] = WEAPONS[SELECTED_WEAPON]["bullets"]
+					DELAY = 0
+					WEAPONS[SELECTED_WEAPON]["zapas_bullets"] -= WEAPONS[SELECTED_WEAPON]["bullets"]
+					WEAPONS[SELECTED_WEAPON]["zapas_bullets"] = max(0, WEAPONS[SELECTED_WEAPON]["zapas_bullets"])
+					$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
+					$ReloadSound.stream = load(WEAPONS[SELECTED_WEAPON]["reloadsound"])
+					$ReloadSound.play()

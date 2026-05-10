@@ -151,22 +151,31 @@ shape = SubResource("CircleShape2D_7ksh0")
 [node name="Marker2D" type="Marker2D" parent="." unique_id=446653702]
 position = Vector2(-3, -57)
 
-[node name="ShootSound" type="AudioStreamPlayer" parent="." unique_id=1583636328]
+[node name="ShootSound" type="AudioStreamPlayer2D" parent="." unique_id=1169687683]
 stream = ExtResource("3_ft5c5")
+max_distance = 1900.0
+attenuation = 0.5358867
 max_polyphony = 128
+panning_strength = 2.55
 
-[node name="ReloadSound" type="AudioStreamPlayer" parent="." unique_id=487309433]
+[node name="ReloadSound" type="AudioStreamPlayer2D" parent="." unique_id=926650585]
 stream = ExtResource("4_51cx5")
+volume_db = -2.2
+attenuation = 6.4980206
 max_polyphony = 128
+panning_strength = 1.6
 
 [node name="EmptySound" type="AudioStreamPlayer" parent="." unique_id=346690221]
 stream = ExtResource("5_by3vp")
 max_polyphony = 128
 
-[node name="GrassStep01" type="AudioStreamPlayer" parent="." unique_id=386335971]
+[node name="GrassStep01" type="AudioStreamPlayer2D" parent="." unique_id=161067705]
 stream = ExtResource("10_op7ga")
-volume_db = -6.0
+volume_db = -8.055
+max_distance = 1340.0
+attenuation = 0.31864005
 max_polyphony = 128
+panning_strength = 2.05
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1789102826]
 scale = Vector2(1, 1.6)

@@ -10,13 +10,13 @@ func _ready() -> void:
 		for i2 in Global.WEAPONS.size():
 			if Global.ALLWEAPONS[i]["class"] == "primary":
 				if Global.ALLWEAPONS[i]["id"] == Global.WEAPONS[i2]["id"]:
-					primary.add_item(Global.WEAPONS[i2]["name"], Global.ALLWEAPONS[i]["id"])
+					primary.add_item(tr(Global.WEAPONS[i2]["name"]), Global.ALLWEAPONS[i]["id"])
 			if Global.ALLWEAPONS[i]["class"] == "sidearm":
 				if Global.ALLWEAPONS[i]["id"] == Global.WEAPONS[i2]["id"]:
-					sidearm.add_item(Global.WEAPONS[i2]["name"], Global.ALLWEAPONS[i]["id"])
+					sidearm.add_item(tr(Global.WEAPONS[i2]["name"]), Global.ALLWEAPONS[i]["id"])
 			if Global.ALLWEAPONS[i]["class"] == "utility":
 				if Global.ALLWEAPONS[i]["id"] == Global.WEAPONS[i2]["id"]:
-					utility.add_item(Global.WEAPONS[i2]["name"], Global.ALLWEAPONS[i]["id"])	
+					utility.add_item(tr(Global.WEAPONS[i2]["name"]), Global.ALLWEAPONS[i]["id"])	
 					
 	for i in Global.SAVED_WEAPONS.size():
 		if Global.SAVED_WEAPONS[i]["class"] == "primary":

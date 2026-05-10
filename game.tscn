@@ -24,10 +24,10 @@ agent_radius = 50.0
 background_mode = 3
 glow_enabled = true
 glow_levels/2 = 0.36
-glow_levels/3 = 0.52
+glow_levels/3 = 0.22
 glow_normalized = true
 glow_bloom = 0.56
-glow_map_strength = 0.75
+glow_blend_mode = 2
 adjustment_enabled = true
 
 [node name="game" type="Node2D" unique_id=243920902]

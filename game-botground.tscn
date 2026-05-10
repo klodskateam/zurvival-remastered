@@ -16,9 +16,9 @@
 [ext_resource type="PackedScene" uid="uid://dn12aa5x7hr5v" path="res://zondre.tscn" id="14_215e1"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_iotsf"]
-vertices = PackedVector2Array(5478.6797, -414.1797, 5442.297, 5439.9375, -369.27344, 5434.047, -401.71875, -435.8125)
+vertices = PackedVector2Array(5020.742, 5004, -4.828125, 5004, 11.828125, 20.867188, 4995.25, 8.1171875)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(5492, 5490, -419, 5484, -452, -486, 5529, -464)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(5071, 5054, -55, 5054, -38, -29, 5045, -42)])
 cell_size = 64.0
 agent_radius = 50.0
 
@@ -41,7 +41,6 @@ process_mode = 3
 script = ExtResource("1_6olua")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=98038227]
-visible = false
 navigation_polygon = SubResource("NavigationPolygon_iotsf")
 
 [node name="grass" type="Sprite2D" parent="." unique_id=638621766]

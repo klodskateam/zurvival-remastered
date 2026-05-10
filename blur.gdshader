@@ -108,6 +108,49 @@ vec4 texture_nodevgaussian_multipass(sampler2D tex, vec2 uv, vec2 pixel_size, fl
 	return blurred_tex;
 }
 
+vec4 texture_squareblur(sampler2D tex,vec2 uv, vec2 pixel_size, float blurriness) {
+    
+    vec4 color = vec4(0.,0.,0.,0.);
+    float strengthFloat = float(blurriness);	
+
+    vec2 pixel = uv/pixel_size;
+    int x_min = max(int(pixel.x-strengthFloat), 0);
+    int x_max = min(int(pixel.x+strengthFloat), int(1./pixel_size.x));
+    int y_min = max(int(pixel.y-strengthFloat), 0);
+    int y_max = min(int(pixel.y+strengthFloat), int(1./pixel_size.y));
+
+    int count =0;
+
+    // Sum the pixels colors
+    for(int x=x_min; x <= x_max; x++) {
+        for(int y = y_min; y <= y_max; y++) {           
+            color += texture(tex, vec2(float(x), float(y)) * pixel_size);
+            count++;
+        }
+    }
+    
+    // Divide the color by the number of colors you summed up
+    color /= float(count);
+    
+    return color;
+}
+
+vec4 texture_boxblur(sampler2D tex,vec2 uv, vec2 pixel_size, float blurriness){
+	vec2 pixel = uv / pixel_size;
+	int x_min = max(int(pixel.x-blurriness), 0);
+	int x_max = min(int(pixel.x+blurriness), int(1./pixel_size.x));
+	int y_min = max(int(pixel.y-blurriness), 0);
+	int y_max = min(int(pixel.y+blurriness), int(1./pixel_size.y));
+	vec4 total = vec4(0., 0., 0., 0.);
+	for(int i = x_min; i < x_max; i++){
+		for(int j = y_min; j < y_max; j++){
+			total += texture(tex, vec2(float(i), float(j)) * pixel_size);
+		}
+	}
+	total /= 9.;
+	return total;
+}
+
 //  -- EXAMPLE CODE -- //
 uniform int blur_type = 0;
 uniform int blur_amount = 16;
@@ -118,7 +161,7 @@ void fragment(){
 
 	if (blur_type == 0)
 	{
-		vec4 xorgaussian = texture_xorgaussian(SCREEN_TEXTURE, uv, SCREEN_PIXEL_SIZE, float(blur_amount), 16, 4);
+		vec4 xorgaussian = texture_xorgaussian(SCREEN_TEXTURE, uv, SCREEN_PIXEL_SIZE, float(blur_amount), 128, 4);
 		COLOR =  xorgaussian;
 	}
 	else if (blur_type == 1)
@@ -136,6 +179,12 @@ void fragment(){
 		vec4 nodevgaussian_multipass = texture_nodevgaussian_multipass(SCREEN_TEXTURE, uv, SCREEN_PIXEL_SIZE, float(blur_amount), blur_direction);
 		COLOR =  nodevgaussian_multipass;
 	}
+	else if (blur_type == 4)
+	{
+		vec4 squareblur = texture_boxblur(SCREEN_TEXTURE, uv, SCREEN_PIXEL_SIZE, float(blur_amount));
+		COLOR = squareblur;
+	}
+	
 	else
 	{
 		COLOR =  texture(SCREEN_TEXTURE, uv);

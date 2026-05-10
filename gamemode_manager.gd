@@ -1,7 +1,6 @@
 extends Node
 var GAMEMODE = 0
-var GAMEMODEINFO
-
+var CHALLENGEID = 0
 # :troll:
 var MODGAME
 
