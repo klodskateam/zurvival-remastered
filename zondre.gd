@@ -95,7 +95,7 @@ func _on_timer_timeout() -> void:
 #	return Vector2.ZERO
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	print(body)
+	#print(body)
 	if body.name == "player":
 		body.HEALTH -= DAMAGE
 	if body.is_in_group("danger_zombie"):

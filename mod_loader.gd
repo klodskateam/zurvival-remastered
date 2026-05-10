@@ -51,7 +51,7 @@ func load_mods() -> void:
 			#print("MOD GAMEMODES:")
 			#print(MODGAMEMODES)
 			
-			print("--")
+			#print("--")
 			
 			for img in ModLoader.MODBGIMAGES:
 				var imgg = ModLoader.get_mod_img(img["image"])

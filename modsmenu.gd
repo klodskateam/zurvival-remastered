@@ -18,7 +18,7 @@ func _ready() -> void:
 			var json = JSON.new()
 			var tmp_mod = json.parse_string(file.get_as_text())
 			
-			print(str(tmp_mod))
+			#print(str(tmp_mod))
 			
 			var ModItem = MOD_ITEM.instantiate()
 			if "name" in tmp_mod:
