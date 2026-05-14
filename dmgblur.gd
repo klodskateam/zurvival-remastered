@@ -6,6 +6,6 @@ var finalbluramount = 0
 
 func _process(delta: float) -> void:
 	if bluramount > 0:
-		bluramount -= abs(bluramount)-(8*delta)
+		bluramount -= 10*delta
 	finalbluramount = bluramount + hp_bluramount
 	material.set_shader_parameter("blur_amount", finalbluramount)

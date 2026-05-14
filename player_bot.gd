@@ -71,7 +71,7 @@ var TARGET = []
 
 enum AIStates {WANDERING, SEARCHING, ACTIVE}
 var State : AIStates = AIStates.WANDERING
-var enemies = ["zondre", "player"]
+var enemies = ["zondre"]
 
 var updatespeed = 0.9
 var updatetimer = 0
@@ -83,6 +83,10 @@ var lostcontacttimer = 0
 var randdir = 0
 var stress = 0
 var inactivetimer = 0
+var shotcounter = 0
+var shootingcooldowntimer = 0
+var shootingcooldownspeed = 0.7
+var cooldownshotamount = 10
 var statedebug = false
 
 func _ready() -> void:
@@ -94,7 +98,7 @@ func _ready() -> void:
 	navagent.velocity_computed.connect(Callable(_on_velocity_computed))
 
 func _process(delta: float) -> void:
-	print(inactivetimer)
+	#print(inactivetimer)
 	if (HEALTH <= 0) and ($Person != null):
 		$Person.queue_free()
 		queue_free()
@@ -138,16 +142,19 @@ func _physics_process(delta: float) -> void:
 			if stress >= 3:
 				if MOVEORDERS.size() < 1:
 					go(TARGET[0] + (TARGET[1] * 0.4) + ((global_position - TARGET[0]).normalized() * randf_range(40, 120)))
-				targetrotation = global_position.angle_to_point(TARGET[0] + (TARGET[1] * 0.4)) + PI/2
-		
-			if Vector2(velocity.x, velocity.y).length() >= 0.1 and onsight:
-				inactivetimer += 1 * delta
-			else:
-				inactivetimer = 0
+				targetrotation = global_position.angle_to_point(TARGET[0] + (TARGET[1] * 1.4) * (global_position.distance_to(TARGET[0])/WEAPONS[SELECTED_WEAPON]["bullet_speed"])) + PI/2
 			if inactivetimer >= 0.8:
+				MOVEORDERS.clear()
 				var randpoint = NavigationServer2D.map_get_closest_point(navagent.get_navigation_map(), global_position.lerp(NavigationServer2D.map_get_random_point(navagent.get_navigation_map(), 1, true), 0.15) ) 
 				go(randpoint)
-					
+		if (Vector2(velocity.x, velocity.y).length() >= 2 and onsight) or (MOVEORDERS.is_empty() and onsight):
+			inactivetimer += 1 * delta
+		else:
+			inactivetimer = 0
+		if shootingcooldowntimer > 0:
+			shootingcooldowntimer -= 1 * delta	
+		elif shotcounter >= cooldownshotamount or TARGET.is_empty():
+			shotcounter = 0
 		if ray.is_colliding():
 			for i in ray.get_collision_count():
 				#print(ray.get_collider())
@@ -161,7 +168,7 @@ func _physics_process(delta: float) -> void:
 						TARGET.clear()
 						TARGET = [ray.get_collider(i).global_position, ray.get_collider(i).velocity]
 						updatespeed = lerp(updatespeed, 0.6, 1.3)
-						if updatetimer >= updatespeed:
+						if updatetimer >= updatespeed and shootingcooldowntimer <= 0:
 							shoot()
 							updatetimer = 0
 						break
@@ -174,8 +181,10 @@ func _physics_process(delta: float) -> void:
 			if !TARGET.is_empty():
 				lostcontacttimer += 1.5 * delta
 				targetrotation = global_position.angle_to_point(TARGET[0] + (TARGET[1] * lostcontacttimer)) + PI/2
-				if (MOVEORDERS.is_empty() or Vector2(velocity.x, velocity.y).length() >= 0.1) and lostcontacttimer >= 1:
+				if (MOVEORDERS.is_empty() and lostcontacttimer >= 1) or Vector2(velocity.x, velocity.y).length() >= 2:
 					State = AIStates.SEARCHING
+			else:
+				State = AIStates.WANDERING
 			if stress <= 0:
 				stress = 10
 				updatetimer = updatespeed
@@ -288,7 +297,6 @@ func go(target: Vector2):
 	navagent.target_position = NavigationServer2D.map_get_closest_point(navagent.get_navigation_map(), MOVEORDERS.pop_front())
 
 func nav(delta: float) -> void:
-		
 	if navagent.is_navigation_finished():
 		if MOVEORDERS.size() > 0:
 			navagent.target_position = NavigationServer2D.map_get_closest_point(navagent.get_navigation_map(), MOVEORDERS.pop_front())
@@ -309,16 +317,9 @@ func _on_velocity_computed(safe_velocity: Vector2):
 	velocity = velocity.lerp(safe_velocity, 0.2)
 	move_and_slide()
 
-func ratata():
-	if !WEAPONS[SELECTED_WEAPON]["automatic"] or WEAPONS[SELECTED_WEAPON]["type"] == "grenade" or RELOADING:
-		return
-	if WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0 and DELAY >= WEAPONS[SELECTED_WEAPON]["delay"] and !RELOADING:
-		shoot()	
-
 func shoot():
 	if WEAPONS[SELECTED_WEAPON]["left_bullets"] != 0:
 		if DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]:
-			# bullet.add_constant_force(get_global_mouse_position() - bullet.global_position)
 			if WEAPONS[SELECTED_WEAPON]["type"] == "shotgun":
 				$Camera2D/AnimationPlayer.stop()
 				$Camera2D/AnimationPlayer.play("shotgun_recoil")	
@@ -357,6 +358,10 @@ func shoot():
 			$ShootSound.stream = load(WEAPONS[SELECTED_WEAPON]["sound"])
 			$ShootSound.play()
 			DELAY = 0
+			shotcounter += 1
+			if shotcounter >= cooldownshotamount:
+				shootingcooldowntimer = shootingcooldownspeed
+				shotcounter = 0
 			#print(DELAY)
 	else:
 		#$EmptySound.play()

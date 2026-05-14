@@ -222,14 +222,14 @@ func _physics_process(delta: float):
 	var direction = get_input()
 	if direction.length() > 0:
 		if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
-			dir2 = direction.lerp(direction.normalized(), 1)
+			dir2 = direction.lerp(direction.normalized(), 0.9)
 		else:
 			dir2 = direction.lerp(direction.normalized(), 0.35)
 		velocity = velocity.lerp(dir2 * SPEED, 0.3)
 	else:
 		velocity = velocity.lerp(Vector2.ZERO, 0.2)
 	move_and_slide()	
-		
+	
 	score.text = str(SCORE)
 	
 	if kaktameto_bar:
@@ -287,8 +287,6 @@ func _physics_process(delta: float):
 			pass
 		_:	
 			if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
-				print(SPEED)
-				print(VINOSLIVOST)
 				if (VINOSLIVOST >= 40):
 					SPEED = RUN_SPEED 
 					fov_up()
@@ -346,8 +344,8 @@ func _physics_process(delta: float):
 	
 	damageblur.hp_bluramount = (MAX_HEALTH-HEALTH)/2.3
 	if dmgblur:
-		damageblur.bluramount += 10
-		damageblur.bluramount = clamp(damageblur.bluramount, 0, 50)
+		damageblur.bluramount += 20
+		damageblur.bluramount = clamp(damageblur.bluramount, 0, 60)
 		fastshakeamount += 10
 		dmgblur = false
 		
