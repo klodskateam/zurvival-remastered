@@ -21,6 +21,7 @@ extends CharacterBody2D
 @onready var weapon_icon: Sprite2D = $"../UI/WeaponText/WeaponIcon"
 
 @onready var vignette_red = $"../UI/VignetteRed"
+@onready var damageblur = $"../UI/DMGBlur"
 
 const PICKUP_01 = preload("res://Sound/pickup_01.wav")
 const PICKUP_02 = preload("res://Sound/pickup_02.wav")
@@ -56,6 +57,7 @@ var shake = false
 var zondrespleasesaveusall = false
 var weightaccum = 0
 var accum2 = 0
+var dmgblur = false
 @export var ded: bool = false
 
 @export var REGULAR_SPEED = 300
@@ -74,6 +76,7 @@ var shakeamount = 0
 var shaketimer = 0
 var shakedelay = 0.07
 var weaponshakeamount = 0
+var fastshakeamount = 0
 var totalshakeamount = 0
 
 @export var SELECTED_WEAPON = 0
@@ -82,12 +85,10 @@ var WEAPONS = []
 
 func _ready() -> void:
 	WEAPONS = Global.EQUIPPED_WEAPONS.duplicate(true)
-	
 	if GamemodeManager.GAMEMODE == 2 or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"] and (month >= 12 or month <= 01)) or ((GamemodeManager.GAMEMODE != -1 and GamemodeManager.GAMEMODE != 2)  and (month >= 12 or month <= 01)):
 		stepmaterial = "snow"
 	else:
 		stepmaterial = "grass"
-	
 	if GamemodeManager.GAMEMODE == 1 or (GamemodeManager.GAMEMODE == -1 and !GamemodeManager.MODGAME["allow_weapons"]):
 		WEAPONS = []
 		WEAPONS.append(Global.WEAPONS[0])
@@ -341,6 +342,14 @@ func _physics_process(delta: float):
 			$GrassStep01.play()
 			steptimer = 0
 		pass
+	
+	
+	damageblur.hp_bluramount = (MAX_HEALTH-HEALTH)/2.3
+	if dmgblur:
+		damageblur.bluramount += 10
+		damageblur.bluramount = clamp(damageblur.bluramount, 0, 50)
+		fastshakeamount += 10
+		dmgblur = false
 		
 	if (OS.get_name() != "Android"):
 		look_at(get_global_mouse_position())
@@ -358,8 +367,10 @@ func _physics_process(delta: float):
 		shaketimer += 1 * delta
 	if shakeamount > 0:
 		shakeamount = abs(shakeamount)-(19*delta)
+	if fastshakeamount > 0:
+		fastshakeamount = abs(fastshakeamount)-(40*delta)	
 	if weaponshakeamount > 0:
-		weaponshakeamount = abs(weaponshakeamount)-(21*delta)
+		weaponshakeamount = abs(weaponshakeamount)-(23*delta)
 
 func fov_up():
 	var tween = $Camera2D.create_tween()
@@ -403,7 +414,7 @@ func _process(delta: float):
 	if shaketimer >= shakedelay:
 		tween_shake()
 		shaketimer = 0	
-	totalshakeamount = shakeamount + weaponshakeamount	
+	totalshakeamount = shakeamount + weaponshakeamount + fastshakeamount	
 	if Input.is_action_pressed("shoot"):
 		ratata()	
 

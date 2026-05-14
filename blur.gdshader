@@ -11,11 +11,15 @@ uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap_ani
 // Desc.: Don't have the best performance but will run on almost
 // anything, although, if developing for mobile, is better to use
 // 'texture_nodevgaussian(...) instead'.
-vec4 texture_xorgaussian(sampler2D tex, vec2 uv, vec2 pixel_size, float blurriness, int iterations, int quality){
+vec4 texture_xorgaussian(sampler2D tex, vec2 uv, vec2 pixel_size, float blurriness, int iterations, int quality, bool additive, sampler2D mask, bool usemask){
 	float pi = 6.28;
-
-	vec2 radius = blurriness / (1.0 / pixel_size).xy;
+	float blurmask = 1.0;
+	if (usemask) {
+		blurmask = texture(mask, uv).a;
+	}
+	vec2 radius = (blurriness * blurmask) / (1.0 / pixel_size).xy;
 	vec4 blurred_tex = texture(tex, uv);
+	
 
 	for(float d = 0.0; d < pi; d += pi / float(iterations)){
 		for( float i = 1.0 / float(quality); i <= 1.0; i += 1.0 / float(quality) ){
@@ -24,7 +28,9 @@ vec4 texture_xorgaussian(sampler2D tex, vec2 uv, vec2 pixel_size, float blurrine
 		}
 	}
 	blurred_tex /= float(quality) * float(iterations) + 1.0;
-
+	if (additive) {
+		blurred_tex += texture(tex, uv);
+	}
 	return blurred_tex;
 }
 
@@ -135,7 +141,7 @@ vec4 texture_squareblur(sampler2D tex,vec2 uv, vec2 pixel_size, float blurriness
     return color;
 }
 
-vec4 texture_boxblur(sampler2D tex,vec2 uv, vec2 pixel_size, float blurriness){
+vec4 texture_boxblur(sampler2D tex,vec2 uv, vec2 pixel_size, float blurriness, bool additive){
 	vec2 pixel = uv / pixel_size;
 	int x_min = max(int(pixel.x-blurriness), 0);
 	int x_max = min(int(pixel.x+blurriness), int(1./pixel_size.x));
@@ -148,6 +154,9 @@ vec4 texture_boxblur(sampler2D tex,vec2 uv, vec2 pixel_size, float blurriness){
 		}
 	}
 	total /= 9.;
+	if (additive) {
+		total += texture(tex, uv);
+	}
 	return total;
 }
 
@@ -155,13 +164,14 @@ vec4 texture_boxblur(sampler2D tex,vec2 uv, vec2 pixel_size, float blurriness){
 uniform int blur_type = 0;
 uniform int blur_amount = 16;
 uniform float blur_radius = 1;
+uniform sampler2D masktexture;
 uniform vec2 blur_direction = vec2(1, 1);
 void fragment(){
 	vec2 uv = FRAGCOORD.xy / (1.0 / SCREEN_PIXEL_SIZE).xy;
 
 	if (blur_type == 0)
 	{
-		vec4 xorgaussian = texture_xorgaussian(SCREEN_TEXTURE, uv, SCREEN_PIXEL_SIZE, float(blur_amount), 128, 4);
+		vec4 xorgaussian = texture_xorgaussian(SCREEN_TEXTURE, uv, SCREEN_PIXEL_SIZE, float(blur_amount), 96, 4, false, masktexture, false);
 		COLOR =  xorgaussian;
 	}
 	else if (blur_type == 1)
@@ -171,8 +181,8 @@ void fragment(){
 	}
 	else if (blur_type == 2)
 	{
-		vec4 nodevgaussian_singlepass = texture_nodevgaussian_singlepass(SCREEN_TEXTURE, uv, SCREEN_PIXEL_SIZE, float(blur_amount), blur_radius);
-		COLOR =  nodevgaussian_singlepass;
+		vec4 xorgaussian = texture_xorgaussian(SCREEN_TEXTURE, uv, SCREEN_PIXEL_SIZE, float(blur_amount), 32, 4, false, masktexture, true);
+		COLOR =  xorgaussian;
 	}
 	else if (blur_type == 3)
 	{
@@ -181,8 +191,8 @@ void fragment(){
 	}
 	else if (blur_type == 4)
 	{
-		vec4 squareblur = texture_boxblur(SCREEN_TEXTURE, uv, SCREEN_PIXEL_SIZE, float(blur_amount));
-		COLOR = squareblur;
+		vec4 xorgaussian = texture_xorgaussian(SCREEN_TEXTURE, uv, SCREEN_PIXEL_SIZE, float(blur_amount), 64, 4, true, masktexture, false);
+		COLOR =  xorgaussian;
 	}
 	
 	else

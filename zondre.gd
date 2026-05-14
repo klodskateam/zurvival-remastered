@@ -83,10 +83,11 @@ func _physics_process(delta: float) -> void:
 	
 func nav(delta: float) -> void:
 	if navagent.is_navigation_finished():
-		return
-	var nextpath: Vector2 = navagent.get_next_path_position()
-	var newvelocity: Vector2 = (global_position.direction_to(nextpath) * SPEED)
-	velocity = newvelocity
+		velocity = velocity.lerp(Vector2.ZERO, 0.2)
+	else:
+		var nextpath: Vector2 = navagent.get_next_path_position()
+		var newvelocity: Vector2 = (global_position.direction_to(nextpath) * SPEED)
+		velocity = newvelocity
 	
 
 
@@ -105,6 +106,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	#print(body)
 	if body.name == "player":
 		body.HEALTH -= DAMAGE
+		body.dmgblur = true
 	if body.is_in_group("danger_zombie"):
 		if GamemodeManager.GAMEMODE != 3 or !twotapkill:
 			HP -= body.DAMAGE
