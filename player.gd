@@ -412,6 +412,7 @@ func _process(delta: float):
 	if shaketimer >= shakedelay:
 		tween_shake()
 		shaketimer = 0	
+	shakedelay = 1/(totalshakeamount+10)
 	totalshakeamount = shakeamount + weaponshakeamount + fastshakeamount	
 	if Input.is_action_pressed("shoot"):
 		ratata()	
@@ -520,6 +521,10 @@ func changeweapon(number: int = 0):
 	if number > WEAPONS.size() - 1:
 		pass
 	else:
+		if number != SELECTED_WEAPON:
+			$WeaponSwitch.stream = load(str(WEAPONS[number]["weaponswitch_sound"] + "_" + str(randi_range(1,2)).pad_zeros(2)) + ".wav")
+			$WeaponSwitch.pitch_scale = randf_range(0.92, 1.07)
+			$WeaponSwitch.play()
 		SELECTED_WEAPON = number
 		weaponhint_show()
 		RELOADING = false

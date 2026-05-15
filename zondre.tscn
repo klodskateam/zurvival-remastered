@@ -30,6 +30,7 @@ scale = Vector2(0.970628, 1.00807)
 shape = SubResource("CircleShape2D_t8bhi")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=550493739]
+target_desired_distance = 40.0
 simplify_path = true
 simplify_epsilon = 0.66
 debug_path_custom_color = Color(1, 0, 0, 1)

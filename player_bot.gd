@@ -87,7 +87,8 @@ var shotcounter = 0
 var shootingcooldowntimer = 0
 var shootingcooldownspeed = 0.7
 var cooldownshotamount = 10
-var statedebug = false
+var rotationlerp = 0.07
+const statedebug = false
 
 func _ready() -> void:
 	if GamemodeManager.GAMEMODE == 2 or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"] and (month >= 12 or month <= 01)) or ((GamemodeManager.GAMEMODE != -1 and GamemodeManager.GAMEMODE != 2)  and (month >= 12 or month <= 01)):
@@ -104,9 +105,10 @@ func _process(delta: float) -> void:
 		queue_free()
 		
 func _physics_process(delta: float) -> void:
-	global_rotation = lerp_angle(global_rotation, targetrotation, 0.07)
+	global_rotation = lerp_angle(global_rotation, targetrotation, rotationlerp)
 	if State == AIStates.WANDERING:
 		updatespeed = lerp(updatespeed, 0.9, 0.2)
+		rotationlerp = lerp(rotationlerp, 0.07, 0.3)
 		if updatetimer >= updatespeed:
 			if statedebug:
 				print("STATE: " + str(AIStates.keys()[State]))
@@ -135,6 +137,7 @@ func _physics_process(delta: float) -> void:
 					
 	if State == AIStates.ACTIVE:
 		updatespeed = lerp(updatespeed, 0.6, 0.2)
+		rotationlerp = lerp(rotationlerp, 0.14, 0.3)
 		var onsight = false # ЗАФИКСИРОВАНО!
 		if updatetimer >= updatespeed:
 			if statedebug:
@@ -198,6 +201,7 @@ func _physics_process(delta: float) -> void:
 		stress -= 1 * delta		
 			
 		updatespeed = lerp(updatespeed, 0.8, 0.2)
+		rotationlerp = lerp(rotationlerp, 0.11, 0.3)
 		
 		if updatetimer >= updatespeed:
 			if statedebug:

@@ -191,6 +191,9 @@ stream = ExtResource("8_606se")
 pitch_scale = 1.24
 max_polyphony = 128
 
+[node name="WeaponSwitch" type="AudioStreamPlayer" parent="." unique_id=505261429]
+volume_db = -4.0
+
 [node name="Area2D" type="Area2D" parent="." unique_id=805093526]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=848152030]
