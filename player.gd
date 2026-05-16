@@ -522,8 +522,8 @@ func changeweapon(number: int = 0):
 		pass
 	else:
 		if number != SELECTED_WEAPON:
-			$WeaponSwitch.stream = load(str(WEAPONS[number]["weaponswitch_sound"] + "_" + str(randi_range(1,2)).pad_zeros(2)) + ".wav")
-			$WeaponSwitch.pitch_scale = randf_range(0.92, 1.07)
+			$WeaponSwitch.stream = load(str(WEAPONS[number]["weaponswitch_sound"] + "_" + str(randi_range(1,3)).pad_zeros(2)) + ".wav")
+			$WeaponSwitch.pitch_scale = randf_range(0.89, 1.07)
 			$WeaponSwitch.play()
 		SELECTED_WEAPON = number
 		weaponhint_show()
