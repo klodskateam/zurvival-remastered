@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://dfe0ayalptafc" path="res://settings_gpad.gd" id="5_6mhpt"]
 [ext_resource type="Script" uid="uid://bsmlt6q86exbs" path="res://settings_transition_check.gd" id="6_3j6r5"]
 [ext_resource type="Script" uid="uid://ciusdkgamja88" path="res://settings_hints_check.gd" id="7_3lj6o"]
+[ext_resource type="Script" uid="uid://ucyjt6h016gj" path="res://settings_cheapeffects_check.gd" id="9_1k4ii"]
 [ext_resource type="Script" uid="uid://obmpy46c8l5k" path="res://check_updates.gd" id="9_ohexs"]
 
 [node name="Settings" type="Node2D" unique_id=2085219545]
@@ -36,10 +37,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -202.0
-offset_top = -224.0
-offset_right = 197.0
-offset_bottom = 255.0
+offset_left = -224.0
+offset_top = -269.5
+offset_right = 224.0
+offset_bottom = 269.5
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -47,7 +48,7 @@ grow_vertical = 2
 layout_mode = 0
 offset_left = 14.0
 offset_top = 10.0
-offset_right = 388.0
+offset_right = 438.0
 offset_bottom = 41.0
 text = "$save"
 script = ExtResource("2_8mcqh")
@@ -57,16 +58,16 @@ clip_contents = true
 layout_mode = 0
 offset_left = 6.0
 offset_top = 47.0
-offset_right = 396.0
-offset_bottom = 444.175
+offset_right = 444.0
+offset_bottom = 538.0
 alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/Panel/VBoxContainer" unique_id=1970324333]
 layout_mode = 2
 
 [node name="GamepadSpeed" type="Label" parent="Control/Panel/VBoxContainer/HBoxContainer" unique_id=1995902507]
-custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
+size_flags_horizontal = 3
 text = "$gpadspeed"
 
 [node name="SpinBox" type="SpinBox" parent="Control/Panel/VBoxContainer/HBoxContainer" unique_id=1906461731]
@@ -95,7 +96,7 @@ script = ExtResource("6_3j6r5")
 layout_mode = 0
 offset_left = 53.0
 offset_top = 21.0
-offset_right = 352.0
+offset_right = 396.0
 offset_bottom = 37.0
 theme_override_font_sizes/font_size = 12
 text = "$restartrequired"
@@ -110,12 +111,12 @@ alignment = 2
 autowrap_mode = 3
 script = ExtResource("7_3lj6o")
 
-[node name="checkUpdates" type="CheckButton" parent="Control/Panel/VBoxContainer" unique_id=2146325324]
+[node name="SettingsCheapEffectsCheck" type="CheckButton" parent="Control/Panel/VBoxContainer" unique_id=1206012255]
 layout_mode = 2
-text = "$ignoreupdates"
+text = "$cheapeffects"
 alignment = 2
 autowrap_mode = 3
-script = ExtResource("9_ohexs")
+script = ExtResource("9_1k4ii")
 
 [node name="Sep1" type="HSeparator" parent="Control/Panel/VBoxContainer" unique_id=909149285]
 layout_mode = 2
@@ -123,6 +124,13 @@ layout_mode = 2
 [node name="OtherSet" type="Label" parent="Control/Panel/VBoxContainer" unique_id=1269977054]
 layout_mode = 2
 text = "$other"
+
+[node name="checkUpdates" type="CheckButton" parent="Control/Panel/VBoxContainer" unique_id=2146325324]
+layout_mode = 2
+text = "$ignoreupdates"
+alignment = 2
+autowrap_mode = 3
+script = ExtResource("9_ohexs")
 
 [node name="SettingsLang" type="OptionButton" parent="Control/Panel/VBoxContainer" unique_id=2117904934]
 layout_mode = 2
@@ -148,5 +156,6 @@ offset_bottom = 720.0
 [connection signal="value_changed" from="Control/Panel/VBoxContainer/HBoxContainer/SpinBox" to="Control/Panel/VBoxContainer/HBoxContainer/SpinBox" method="_on_value_changed"]
 [connection signal="toggled" from="Control/Panel/VBoxContainer/SettingsFullscreenCheck" to="Control/Panel/VBoxContainer/SettingsFullscreenCheck" method="_on_toggled"]
 [connection signal="toggled" from="Control/Panel/VBoxContainer/SettingsHintsCheck" to="Control/Panel/VBoxContainer/SettingsHintsCheck" method="_on_toggled"]
+[connection signal="toggled" from="Control/Panel/VBoxContainer/SettingsCheapEffectsCheck" to="Control/Panel/VBoxContainer/SettingsCheapEffectsCheck" method="_on_toggled"]
 [connection signal="toggled" from="Control/Panel/VBoxContainer/checkUpdates" to="Control/Panel/VBoxContainer/checkUpdates" method="_on_toggled"]
 [connection signal="item_selected" from="Control/Panel/VBoxContainer/SettingsLang" to="Control/Panel/VBoxContainer/SettingsLang" method="_on_item_selected"]

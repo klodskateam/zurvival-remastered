@@ -1,5 +1,9 @@
 shader_type canvas_item;
-uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap_anisotropic;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
+// btw
+// https://godotshaders.com/shader/gaussian-blur-functions-for-gles2/
+
 // Xor's gausian blur function
 // Link: https://xorshaders.weebly.com/tutorials/blur-shaders-5-part-2
 // Defaults from: https://www.shadertoy.com/view/Xltfzj
@@ -14,9 +18,13 @@ uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap_ani
 vec4 texture_xorgaussian(sampler2D tex, vec2 uv, vec2 pixel_size, float blurriness, int iterations, int quality, bool additive, sampler2D mask, bool usemask){
 	float pi = 6.28;
 	float blurmask = 1.0;
+	if (blurriness <= 0.1) {
+		return texture(tex,uv);
+	}
 	if (usemask) {
 		blurmask = texture(mask, uv).a;
 	}
+	
 	vec2 radius = (blurriness * blurmask) / (1.0 / pixel_size).xy;
 	vec4 blurred_tex = texture(tex, uv);
 	
@@ -34,6 +42,20 @@ vec4 texture_xorgaussian(sampler2D tex, vec2 uv, vec2 pixel_size, float blurrine
 	return blurred_tex;
 }
 
+float gaussianDistribution(float x, float STD){ // STD stands for standard deviation
+	return exp(-(x*x)/(2.*STD*STD))/(sqrt(2.*PI)*STD);
+}
+
+vec4 texture_cheapblur(sampler2D sampler, vec2 pos, float lod, sampler2D mask, bool usemask){
+	float blurmask = 1.0;
+	if (usemask) {
+		blurmask = texture(mask, pos).a;
+	}
+    vec4 color = texture(sampler, pos, (lod*blurmask));
+	color = vec4(color.r, color.g, color.b, 1);
+    return color;
+}
+	
 // Experience-Monks' fast gaussian blur function
 // Link: https://github.com/Experience-Monks/glsl-fast-gaussian-blur/
 //
@@ -114,11 +136,15 @@ vec4 texture_nodevgaussian_multipass(sampler2D tex, vec2 uv, vec2 pixel_size, fl
 	return blurred_tex;
 }
 
-vec4 texture_squareblur(sampler2D tex,vec2 uv, vec2 pixel_size, float blurriness) {
+vec4 texture_squareblur(sampler2D tex,vec2 uv, vec2 pixel_size, float blurriness, sampler2D mask, bool usemask) {
     
     vec4 color = vec4(0.,0.,0.,0.);
+	float blurmask = 1.0;
+	if (usemask) {
+		blurmask = texture(mask, uv).a;
+	}
+	blurriness *= blurmask;
     float strengthFloat = float(blurriness);	
-
     vec2 pixel = uv/pixel_size;
     int x_min = max(int(pixel.x-strengthFloat), 0);
     int x_max = min(int(pixel.x+strengthFloat), int(1./pixel_size.x));
@@ -194,7 +220,16 @@ void fragment(){
 		vec4 xorgaussian = texture_xorgaussian(SCREEN_TEXTURE, uv, SCREEN_PIXEL_SIZE, float(blur_amount), 64, 4, true, masktexture, false);
 		COLOR =  xorgaussian;
 	}
-	
+	else if (blur_type == 5)
+	{
+		vec4 cheapblur = texture_squareblur(SCREEN_TEXTURE, uv, SCREEN_PIXEL_SIZE, float(blur_amount), masktexture, true);
+		COLOR = cheapblur;
+	}
+	else if (blur_type == 6)
+	{
+		vec4 cheapblur = texture_cheapblur(SCREEN_TEXTURE, uv, float(blur_amount/4), masktexture, true);
+		COLOR = cheapblur;
+	}
 	else
 	{
 		COLOR =  texture(SCREEN_TEXTURE, uv);

@@ -8,6 +8,7 @@
 # [*] добавьте больше TODO🤪🤪🤪 
 # [ ] добавить автомобильный режим
 # [ ] сделать ЕЩЁ больше TODO tm
+# [ ] Добавить дешёвый блюр 
 
 # INFO самые важные песни зр 2.0 это:
 # бутырка метеорит
@@ -26,6 +27,7 @@ var VERSION = ProjectSettings.get_setting("application/config/version")
 var FULLSCREEN = false
 var SmoothTransitions = false
 var WEAPONHINTS = true
+var CheapEffects = false
 @onready var GAME = "res://gamemode.tscn"
 @onready var SETTINGS = "res://settings.tscn"
 const isDEMO = true # Данная настройка отключает магазин, склад и список модов Онлайн, так-как оно не готово (онлайн моды я ещё апи не сделал ну я и лох вообще)

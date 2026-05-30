@@ -41,7 +41,7 @@ var pickedup_medkit : bool = false
 var pickedup_plank : bool = false
 var SPEED = 325
 var DELAY = 0
-var HEALTH = 100
+var HEALTH = 40
 var COLDNESS = 0
 var INVENTORY_FILLED = 0
 @export var MAX_INVENTORY_FILLED = 100
@@ -85,6 +85,10 @@ var WEAPONS = []
 
 func _ready() -> void:
 	WEAPONS = Global.EQUIPPED_WEAPONS.duplicate(true)
+	if Global.CheapEffects:
+		damageblur.material.set_shader_parameter("blur_type", 6)
+	else:
+		damageblur.material.set_shader_parameter("blur_type", 2)
 	if GamemodeManager.GAMEMODE == 2 or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"] and (month >= 12 or month <= 01)) or ((GamemodeManager.GAMEMODE != -1 and GamemodeManager.GAMEMODE != 2)  and (month >= 12 or month <= 01)):
 		stepmaterial = "snow"
 	else:

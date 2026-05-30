@@ -16,9 +16,9 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cxd00"]
 shader = ExtResource("2_gs482")
-shader_parameter/blur_type = 2
-shader_parameter/blur_amount = 0
-shader_parameter/blur_radius = 1.0
+shader_parameter/blur_type = 6
+shader_parameter/blur_amount = 12
+shader_parameter/blur_radius = 2.085
 shader_parameter/masktexture = ExtResource("1_n5rqp")
 shader_parameter/blur_direction = Vector2(1, 1)
 
