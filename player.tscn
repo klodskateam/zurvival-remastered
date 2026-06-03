@@ -203,6 +203,18 @@ shape = SubResource("CircleShape2D_7ksh0")
 [node name="GrenadeTarget" type="Marker2D" parent="." unique_id=621191420]
 position = Vector2(-1, -76)
 
+[node name="ShootLayer1" type="AudioStreamPlayer" parent="." unique_id=1926371466]
+stream = ExtResource("3_ft5c5")
+max_polyphony = 128
+
+[node name="ShootLayer2" type="AudioStreamPlayer" parent="." unique_id=1107709676]
+stream = ExtResource("3_ft5c5")
+max_polyphony = 128
+
+[node name="ShootLayer3" type="AudioStreamPlayer" parent="." unique_id=687776480]
+stream = ExtResource("3_ft5c5")
+max_polyphony = 128
+
 [connection signal="timeout" from="WalkDelay" to="." method="_on_walkdelay_timeout"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

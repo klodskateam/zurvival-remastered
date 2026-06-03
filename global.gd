@@ -65,6 +65,7 @@ var WEAPONS = [
 		"sound": "res://Sound/pistol.wav",
 		"reloadsound": "res://Sound/pistol-reload.wav",
 		"weaponswitch_sound": "res://Sound/weaponswitch_light",
+		"layered_shootsounds": false,
 	},
 	{
 		"name": "$startermp",
@@ -93,6 +94,10 @@ var WEAPONS = [
 		"sound": "res://Sound/pistol-03.wav",
 		"reloadsound": "res://Sound/pistol-reload.wav",
 		"weaponswitch_sound": "res://Sound/weaponswitch_medium",
+		"layered_shootsounds": true,
+		"shootlayer_1": "res://Sound/mp5_main",
+		"shootlayer_2": "res://Sound/mp5_tail",
+		"shootlayer_3": "res://Sound/mp5_click",
 	},
 	{
 		"name": "$hegrenade",
@@ -120,6 +125,7 @@ var WEAPONS = [
 		"sound": "",
 		"reloadsound": "res://Sound/pickup_01.wav",
 		"weaponswitch_sound": "res://Sound/weaponswitch_light",
+		"layered_shootsounds": false,
 	},
 	{
 		"name": "$basicshotgun",
@@ -148,6 +154,7 @@ var WEAPONS = [
 		"sound": "res://Sound/shotgun.wav",
 		"reloadsound": "res://Sound/pistol-reload.wav",
 		"weaponswitch_sound": "res://Sound/weaponswitch_medium",
+		"layered_shootsounds": false,
 	},
 	{
 		"name": "$highcal_atrifle",
@@ -176,6 +183,7 @@ var WEAPONS = [
 		"sound": "res://Sound/highcal-gun.wav",
 		"reloadsound": "res://Sound/highcal-reload.wav",
 		"weaponswitch_sound": "res://Sound/weaponswitch_heavy",
+		"layered_shootsounds": false,
 	},
 ]
 var ALLWEAPONS = []

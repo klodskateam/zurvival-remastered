@@ -584,9 +584,20 @@ func shoot():
 				get_parent().add_child(bullet)
 			WEAPONS[SELECTED_WEAPON]["left_bullets"] -= 1
 			WEAPONS[SELECTED_WEAPON]["left_bullets"] = max(0, WEAPONS[SELECTED_WEAPON]["left_bullets"])
-			$ShootSound.pitch_scale = randf_range(0.93, 1.06)
-			$ShootSound.stream = load(WEAPONS[SELECTED_WEAPON]["sound"])
-			$ShootSound.play()
+			if WEAPONS[SELECTED_WEAPON]["layered_shootsounds"]:
+				$ShootLayer1.stream = load(str(WEAPONS[SELECTED_WEAPON]["shootlayer_1"] + "_" + str(randi_range(1,2)).pad_zeros(2)) + ".wav")
+				$ShootLayer1.pitch_scale = randf_range(0.93, 1.06)
+				$ShootLayer2.stream = load(str(WEAPONS[SELECTED_WEAPON]["shootlayer_2"] + "_" + str(randi_range(1,2)).pad_zeros(2)) + ".wav")
+				$ShootLayer2.pitch_scale = randf_range(0.93, 1.06)
+				$ShootLayer3.stream = load(str(WEAPONS[SELECTED_WEAPON]["shootlayer_3"] + "_" + str(randi_range(1,2)).pad_zeros(2)) + ".wav")
+				$ShootLayer3.pitch_scale = randf_range(0.93, 1.06)
+				$ShootLayer1.play()
+				$ShootLayer2.play()
+				$ShootLayer3.play()
+			else:
+				$ShootSound.pitch_scale = randf_range(0.93, 1.06)
+				$ShootSound.stream = load(WEAPONS[SELECTED_WEAPON]["sound"])
+				$ShootSound.play()
 			DELAY = 0
 			#print(DELAY)
 	else:
