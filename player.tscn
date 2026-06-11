@@ -12,127 +12,6 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_7ksh0"]
 radius = 39.0
 
-[sub_resource type="Animation" id="Animation_b26j0"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:position:x")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/3/type = "bezier"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".:position:y")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="Animation" id="Animation_dw050"]
-resource_name = "shake"
-length = 2.487
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = false
-tracks/0/keys = {
-"times": PackedFloat32Array(0.06666667, 0.18333334, 0.31666666, 0.45, 0.6166667, 0.75, 1.1, 1.4700001, 1.8700001, 2.2000003),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(-4, -3), Vector2(-6, 4), Vector2(1, -5), Vector2(-1, 6), Vector2(-6, -3), Vector2(4, 8), Vector2(-2, -1), Vector2(1, 3), Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:rotation")
-tracks/1/interp = 2
-tracks/1/loop_wrap = false
-tracks/1/keys = {
-"times": PackedFloat32Array(0.06666667, 0.18333334, 0.31666666, 0.45, 0.65, 0.87, 1.1666669, 1.536667, 1.8366668, 2.166667),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-}
-
-[sub_resource type="Animation" id="Animation_n7ghd"]
-resource_name = "shotgun_recoil"
-length = 0.272
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0, 2, 0, 2, 0, 0, 2, 0, 2, 2, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -5, -0.009398529, 0.8333334, 0, 0, 1.0000001, -0.0035175614, -0.76810807, 0.0018252048, 0.39855865, 2, -0.136, 0, 0.136, 0, -6.9999995, -0.001318009, 0.30180427, 0.002314765, -0.5300464, -2.991104, -0.136, 0, 0.136, 0, -3, -0.009807162, 1.8333334, 0, 0, 7, -0.0059882365, 0.6402604, 0.0018057749, -0.1930729, -8, -0.136, 0, 0.136, 0, 12, -0.0029672533, -0.27420843, 0.01146096, 1.059125, -12, -0.0055103255, 0.9615818, 0.005950635, -1.0384182, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0.019428907, 0.033333335, 0.054438703, 0.06538993, 0.073297985, 0.087186575, 0.1, 0.13592942, 0.14676407, 0.16456759, 0.19762954, 0.23333335)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0, 2, 0, 2, 0, 0, 2, 0, 2, 2, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -3, -0.009398529, 0.50000006, 0, 0, 27, -0.0035175614, 0.21945944, 0.0018252048, -0.1138739, -5, -0.136, 0, 0.136, 0, 19, -0.001318009, -0.66267425, 0.002314765, 1.1638275, 5.95901, -0.136, 0, 0.136, 0, -2, -0.009807162, -0.33333334, 0, 0, 13.999999, -0.0059882365, 0.38415626, 0.0018057749, -0.11584374, -5, -0.136, 0, 0.136, 0, 9, -0.0029672533, -0.17138027, 0.01146096, 0.6619531, 9, -0.0055103255, 0.7211864, 0.005950635, -0.77881366, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0.019428907, 0.033333335, 0.054438703, 0.06538993, 0.073297985, 0.087186575, 0.1, 0.13592942, 0.14676407, 0.16456759, 0.19762954, 0.23333335)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0, 0, 2, 0, 2, 0, 0, 2, 0, 2, 2, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.009398529, 0, 0, 0, 0, -0.0035175614, 0, 0.0018252048, 0, 0, -0.136, 0, 0.136, 0, 0, -0.001318009, 0, 0.002314765, 0, 0, -0.136, 0, 0.136, 0, 0, -0.009807162, 0, 0, 0, 0, -0.0059882365, 0, 0.0018057749, 0, 0, -0.136, 0, 0.136, 0, 0, -0.0029672533, 0, 0.01146096, 0, 0, -0.0055103255, 0, 0.005950635, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0.019428907, 0.033333335, 0.054438703, 0.06538993, 0.073297985, 0.087186575, 0.1, 0.13592942, 0.14676407, 0.16456759, 0.19762954, 0.23333335)
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_n7ghd"]
-_data = {
-&"RESET": SubResource("Animation_b26j0"),
-&"shake": SubResource("Animation_dw050"),
-&"shotgun_recoil": SubResource("Animation_n7ghd")
-}
-
 [node name="player" type="CharacterBody2D" unique_id=532043823 groups=["player"]]
 position = Vector2(1, 0)
 script = ExtResource("1_16hic")
@@ -145,7 +24,7 @@ position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_7ksh0")
 
 [node name="Marker2D" type="Marker2D" parent="." unique_id=446653702]
-position = Vector2(-3, -57)
+position = Vector2(0, -63)
 
 [node name="ShootSound" type="AudioStreamPlayer" parent="." unique_id=1583636328]
 stream = ExtResource("3_ft5c5")
@@ -174,9 +53,6 @@ limit_smoothed = true
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D" unique_id=1655898463]
-libraries/ = SubResource("AnimationLibrary_n7ghd")
-
 [node name="WalkDelay" type="Timer" parent="." unique_id=94864849]
 wait_time = 0.2
 autostart = true
@@ -194,6 +70,8 @@ max_polyphony = 128
 [node name="WeaponSwitch" type="AudioStreamPlayer" parent="." unique_id=505261429]
 volume_db = -5.0
 
+[node name="ZoomTarget" type="Marker2D" parent="." unique_id=1582887916]
+
 [node name="Area2D" type="Area2D" parent="." unique_id=805093526]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=848152030]
@@ -201,7 +79,7 @@ position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_7ksh0")
 
 [node name="GrenadeTarget" type="Marker2D" parent="." unique_id=621191420]
-position = Vector2(-1, -76)
+position = Vector2(0, -69)
 
 [node name="ShootLayer1" type="AudioStreamPlayer" parent="." unique_id=1926371466]
 stream = ExtResource("3_ft5c5")

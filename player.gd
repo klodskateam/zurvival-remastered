@@ -58,6 +58,7 @@ var zondrespleasesaveusall = false
 var weightaccum = 0
 var accum2 = 0
 var dmgblur = false
+var ZOOMING = false
 @export var ded: bool = false
 
 @export var REGULAR_SPEED = 300
@@ -147,33 +148,9 @@ func _ready() -> void:
 			WEAPONS[0]["left_bullets"] = 1
 			WEAPONS[0]["zapas_bullets"] = 40
 		elif rngnum2 == 9 or rngnum4 == 12:
-			WEAPONS = [
-	{
-		"name": tr("$hegrenade"),
-		"delay": 1,
-		"damage": 100,
-		"bullet_speed": 1450,
-		"automatic": false,
-		"bullets": 1,
-		"left_bullets": 1,
-		"zapas_bullets": 16,
-		"icon": "res://Resources/ui_stuff_lol/weapon_hegrenade.png",
-		"incremental_reload": false,
-		"increment_sound": "res://Sound/shotgun_increment",
-		"incremental_minusroundonreload": false,
-		"increment_delay": 0,
-		"type": "grenade",
-		"sway": 0,
-		"weight": 0.17,
-		"shake": 0,
-		"penthrough": false,
-		"bulletdespawn_dist": 1000,
-		"soundondelay": false,
-		"delaysound": "res://Sound/shotgun_cycle.wav",
-		"sound": "res://Sound/pistol.wav",
-		"reloadsound": "res://Sound/pickup_01.wav"
-	},
-			].duplicate(true)
+			WEAPONS = []
+			WEAPONS.append(Global.WEAPONS[2].duplicate(true))
+			WEAPONS[0]["zapas_bullets"] = 16
 		elif rngnum2 == 5 or rngnum2 == 8:
 			for weapon in WEAPONS.size():
 				WEAPONS[weapon]["delay"] *= 3
@@ -235,6 +212,26 @@ func _physics_process(delta: float):
 	move_and_slide()	
 	
 	score.text = str(SCORE)
+	
+	if ZOOMING:
+		$ZoomTarget.position = lerp($ZoomTarget.position, get_local_mouse_position(), 0.5)
+		if Vector2.ZERO.distance_to($ZoomTarget.position) >= WEAPONS[SELECTED_WEAPON]["scope_maxzoom"]*300: # беги щас тракторист тебя застрелит
+			pass
+		else:
+			if get_local_mouse_position().length() <= 100:
+				$Camera2D.position = $Camera2D.position.lerp($ZoomTarget.position, 0.02)
+			else:
+				$Camera2D.position = $Camera2D.position.lerp($ZoomTarget.position, 0.04)
+		
+		#var scopeidk = (WEAPONS[SELECTED_WEAPON]["scope_focuswidth"])**4/(Vector2.ZERO.distance_to($ZoomTarget.position)**2)
+		#$SubViewport/Polygon2D.polygon[1].x = clamp(-scopeidk, -70, 0)
+		#$SubViewport/Polygon2D.polygon[2].x = clamp(scopeidk, 0, 70)
+	
+		#$SubViewport/Polygon2D.polygon[1].y = -Vector2.ZERO.distance_to($ZoomTarget.position)
+		#$SubViewport/Polygon2D.polygon[2].y = -Vector2.ZERO.distance_to($ZoomTarget.position)
+		#$SubViewport/Camera2D.position = $Camera2D.position
+	else:
+		$Camera2D.position = Vector2.ZERO
 	
 	if kaktameto_bar:
 		kaktameto.text = tr("$stamina") + ": " + str(round(int(VINOSLIVOST))) + "/" + str(MAX_VINOSLIVOST)
@@ -428,7 +425,7 @@ func ratata():
 		shoot()
 	
 func _input(event):
-	if event.is_action_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["type"] != "grenade":
+	if event.is_action_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["type"] != "grenade" and !WEAPONS[SELECTED_WEAPON]["harmless"]:
 		if RELOADING:
 			RELOADING = false
 		else:
@@ -442,13 +439,18 @@ func _input(event):
 		$Pickup01.stream = GRENADE_PREPARE
 		$Pickup01.pitch_scale = randf_range(0.83, 1.06)
 		$Pickup01.play()
-	if Input.is_action_just_released("shoot") and inthehall and WEAPONS[SELECTED_WEAPON]["type"] == "grenade":
+	if Input.is_action_just_released("shoot") and inthehall and WEAPONS[SELECTED_WEAPON]["type"] == "grenade" and !WEAPONS[SELECTED_WEAPON]["harmless"]:
 		throw()
 		pass
+	if event.is_action_pressed("ads_zoom") and WEAPONS[SELECTED_WEAPON]["scope"]:
+		if ZOOMING:
+			ZOOMING = false
+		else:
+			ZOOMING = true 
 
 
 
-	if event.is_action_pressed("reload"):
+	if event.is_action_pressed("reload") and !WEAPONS[SELECTED_WEAPON]["harmless"]:
 		bullets_reload()
 	if pickedup:
 		$Pickup01.pitch_scale = randf_range(0.97, 1.12)
@@ -531,7 +533,12 @@ func changeweapon(number: int = 0):
 			$WeaponSwitch.play()
 		SELECTED_WEAPON = number
 		weaponhint_show()
+		if WEAPONS[SELECTED_WEAPON]["harmless"]:
+			bullets_bar.visible = false
+		else:
+			bullets_bar.visible = true
 		RELOADING = false
+		ZOOMING = false
 		#print(SELECTED_WEAPON)
 
 		
