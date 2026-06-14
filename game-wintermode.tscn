@@ -116,8 +116,11 @@ tonemap_white = 0.44
 glow_enabled = true
 glow_levels/1 = 7.0
 glow_levels/2 = 14.5
-glow_levels/4 = 5.8
+glow_levels/3 = 1.6
+glow_levels/4 = 42.05
+glow_levels/5 = 1.45
 glow_levels/6 = 0.65
+glow_levels/7 = 0.45
 glow_normalized = true
 glow_intensity = 1.74
 glow_bloom = 0.79
@@ -156,7 +159,7 @@ offset_bottom = 4999.0
 visible = false
 navigation_polygon = SubResource("NavigationPolygon_kwlxl")
 
-[node name="grass" type="Sprite2D" parent="." unique_id=369204190]
+[node name="snow" type="Sprite2D" parent="." unique_id=369204190]
 z_index = -3
 texture_repeat = 2
 scale = Vector2(0.5, 0.5)
@@ -171,7 +174,7 @@ autostart = true
 script = ExtResource("3_ar85b")
 
 [node name="clouds" type="TextureRect" parent="." unique_id=484328646]
-modulate = Color(1.7009393, 1.7009393, 1.7009393, 0.5137255)
+modulate = Color(1.5390089, 1.5390089, 1.5390089, 0.5137255)
 self_modulate = Color(0.8732979, 0.87329865, 0.873298, 1)
 material = SubResource("CanvasItemMaterial_m5m7k")
 offset_right = 21006.0

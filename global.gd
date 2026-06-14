@@ -201,7 +201,7 @@ var WEAPONS = [
 		"class": "primary",
 		"delay": 1.7,
 		"damage": 100,
-		"bullet_speed": 2050,
+		"bullet_speed": 1660,
 		"automatic": false,
 		"bullets": 10,
 		"left_bullets": 10,

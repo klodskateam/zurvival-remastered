@@ -90,7 +90,7 @@ func _ready() -> void:
 		damageblur.material.set_shader_parameter("blur_type", 6)
 	else:
 		damageblur.material.set_shader_parameter("blur_type", 2)
-	if GamemodeManager.GAMEMODE == 2 or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"] and (month >= 12 or month <= 01)) or ((GamemodeManager.GAMEMODE != -1 and GamemodeManager.GAMEMODE != 2)  and (month >= 12 or month <= 01)):
+	if get_node_or_null("../snow") != null or GamemodeManager.GAMEMODE == 2 or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"] and (month >= 12 or month <= 01)) or ((GamemodeManager.GAMEMODE != -1 and GamemodeManager.GAMEMODE != 2)  and (month >= 12 or month <= 01)):
 		stepmaterial = "snow"
 	else:
 		stepmaterial = "grass"
@@ -548,8 +548,8 @@ func shoot():
 		if DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]:
 			# bullet.add_constant_force(get_global_mouse_position() - bullet.global_position)
 			if WEAPONS[SELECTED_WEAPON]["type"] == "shotgun":
-				$Camera2D/AnimationPlayer.stop()
-				$Camera2D/AnimationPlayer.play("shotgun_recoil")	
+				#$Camera2D/AnimationPlayer.stop()
+				#$Camera2D/AnimationPlayer.play("shotgun_recoil")	
 				for i in 9:
 					var bullet = P_BULLET.instantiate()
 					bullet.shotgunbullet = true
