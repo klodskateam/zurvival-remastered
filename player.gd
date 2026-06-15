@@ -320,14 +320,14 @@ func _physics_process(delta: float):
 			pass
 		2:
 			if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
-				SPEED = clamp(RUN_SPEED - (INVENTORY_FILLED*4), 150, 400)
+				SPEED = clamp(RUN_SPEED - ((INVENTORY_FILLED**1.55)/4), 150, 400)
 			else:
-				SPEED = clamp(REGULAR_SPEED - (INVENTORY_FILLED*3.5), 150, 400)
+				SPEED = clamp(REGULAR_SPEED - ((INVENTORY_FILLED**1.65)/4), 150, 400)
 		3:
 			if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
-				SPEED = clamp(RUN_SPEED - (INVENTORY_FILLED*4), 150, 400)
+				SPEED = clamp(RUN_SPEED - ((INVENTORY_FILLED**1.55)/4), 150, 400)
 			else:
-				SPEED = clamp(REGULAR_SPEED - (INVENTORY_FILLED*3.5), 150, 400)
+				SPEED = clamp(REGULAR_SPEED - ((INVENTORY_FILLED**1.65)/4), 150, 400)
 		_:
 			pass
 	
