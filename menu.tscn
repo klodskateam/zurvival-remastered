@@ -6,6 +6,13 @@
 [ext_resource type="Script" uid="uid://beg25d2qybjtl" path="res://transitionmenu.gd" id="3_l48gv"]
 [ext_resource type="Script" uid="uid://deyhfds4n3ph0" path="res://create_mod_buttons.gd" id="3_ytr4m"]
 [ext_resource type="Theme" uid="uid://oprukw2tpf3d" path="res://default.tres" id="4_l48gv"]
+[ext_resource type="Script" uid="uid://paxq4dmntri8" path="res://update.gd" id="7_ecwwl"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_l48gv"]
+font_size = 36
+
+[sub_resource type="LabelSettings" id="LabelSettings_ecwwl"]
+font_size = 24
 
 [sub_resource type="Gradient" id="Gradient_ytr4m"]
 interpolation_mode = 2
@@ -90,6 +97,136 @@ theme = ExtResource("2_i4evy")
 text = "$quit"
 script = ExtResource("1_814jb")
 
+[node name="update" type="Panel" parent="Control" unique_id=921440461]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -352.0
+offset_top = -250.0
+offset_right = 352.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_ecwwl")
+
+[node name="Label" type="Label" parent="Control/update" unique_id=2026234178]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -299.0
+offset_right = 299.0
+offset_bottom = 50.0
+grow_horizontal = 2
+text = "$newupdate"
+label_settings = SubResource("LabelSettings_l48gv")
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="Control/update/Label" unique_id=2069697080]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -299.0
+offset_top = 49.0
+offset_right = 299.0
+offset_bottom = 82.0
+grow_horizontal = 2
+text = "$newupdate"
+label_settings = SubResource("LabelSettings_ecwwl")
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/update" unique_id=1899510498]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -43.0
+offset_right = -8.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="update" type="Button" parent="Control/update/HBoxContainer" unique_id=1449383105]
+layout_mode = 2
+text = "$update"
+
+[node name="ignoreThis" type="Button" parent="Control/update/HBoxContainer" unique_id=437574278]
+layout_mode = 2
+text = "$ignorethisupdate"
+
+[node name="close" type="Button" parent="Control/update/HBoxContainer" unique_id=692192167]
+layout_mode = 2
+text = "$close"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/update" unique_id=1957701095]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = 82.0
+offset_right = -17.0
+offset_bottom = -54.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "[img]https://github.com/user-attachments/assets/4b1460ca-0dbe-41d4-8e17-b517134b210c[/img]
+[b]Не забудьте сообщить о найденных багах![/b]
+Тут бета будущего обновления ZR2.0, кратко:
+    [list]
+        [*]Дробовики
+        [*]Челленджы
+        [*]В ZR2.0 можно теперь играть с геймпадом
+        [*]Можно также теперь выбирать оружия циферками на клавиатуре
+        [*]У оружия появилось много новых параметров
+    [/list]
+        Новые параметры
+        [code]
+[code]\"id\": 1,
+\"class\": \"sidearm\",
+\"incremental_reload\": false,
+\"increment_sound\": \"res://Sound/shotgun_increment\",
+\"incremental_minusroundonreload\": false,
+\"increment_delay\": 0,
+\"type\": \"gun\",
+\"sway\": 0.09,    
+\"weight\": 0.34,
+\"soundondelay\": false,
+\"delaysound\": \"res://Sound/shotgun_cycle.wav\",
+\"sound\": \"res://Sound/pistol.wav\",
+# DEPRECATED: параметр \"grenade\" был заменён на \"type\": \"grenade\".
+# INFO: \"id\" и \"class\" не требуются для работы оружия, они исключительно для меню выбора оружий.[/code]
+        [/code]
+[b]What's Changed[/b]
+    [list]
+        [*]improve gamepad compatibility by [url=https://github.com/NORTCHOT]@NORTCHOT[/url]
+        [*]улучшил совместимость с геймпадами, добавил кнопку \"заново\", заделал плейсхолдеры в переводах by [url=https://github.com/NORTCHOT]@NORTCHOT[/url]
+        [*]Выбирать оружие циферками на клаве by [url=https://github.com/TRB-Exe]@TRB-Exe[/url]
+        [*]ZR2.0.288-dev // выход публичной беты ZR2.0.2xx by [url=https://github.com/martinrokidomino]@martinrokidomino[/url]
+    [/list]
+[b]New Contributors[/b]
+    [list]
+        [*][url=https://github.com/NORTCHOT]@NORTCHOT[/url] made their first contribution.
+        [*][url=https://github.com/TRB-Exe]@TRB-Exe[/url] made their first contribution.
+    [/list]
+[b]Full Changelog:[/b] 
+        [url=https://github.com/klodskateam/zurvival-remastered/compare/v2.0.4-Demo-zondreidio...v2.0.5-Demo-prerelease01]
+            Compare changes
+        [/url]"
+context_menu_enabled = true
+selection_enabled = true
+
+[node name="HTTPRequest" type="HTTPRequest" parent="Control/update" unique_id=1378205517]
+
 [node name="TransitionBlock" type="TextureRect" parent="." unique_id=2086181202]
 visible = false
 offset_right = 1280.0
@@ -105,3 +242,8 @@ texture = SubResource("GradientTexture2D_l48gv")
 [connection signal="pressed" from="Control/Panel/ScrollContainer/VBoxContainer/Settings" to="Control/Panel/ScrollContainer/VBoxContainer/Play" method="_on_settings_pressed"]
 [connection signal="pressed" from="Control/Panel/ScrollContainer/VBoxContainer/Mods" to="Control/Panel/ScrollContainer/VBoxContainer/Mods" method="_on_mods_pressed"]
 [connection signal="pressed" from="Control/Panel/ScrollContainer/VBoxContainer/Exit" to="Control/Panel/ScrollContainer/VBoxContainer/Exit" method="_on_exit_pressed"]
+[connection signal="pressed" from="Control/update/HBoxContainer/update" to="Control/update" method="_on_update_pressed"]
+[connection signal="pressed" from="Control/update/HBoxContainer/ignoreThis" to="Control/update" method="_on_ignore_this_pressed"]
+[connection signal="pressed" from="Control/update/HBoxContainer/close" to="Control/update" method="_on_close_pressed"]
+[connection signal="meta_clicked" from="Control/update/RichTextLabel" to="Control/update" method="_on_rich_text_label_meta_clicked"]
+[connection signal="request_completed" from="Control/update/HTTPRequest" to="Control/update" method="_on_http_request_request_completed"]

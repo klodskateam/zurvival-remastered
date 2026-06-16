@@ -1,0 +1,115 @@
+[gd_scene format=3 uid="uid://cev8dxarjt0k6"]
+
+[ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="1_b0g3x"]
+[ext_resource type="Texture2D" uid="uid://bqmmq22i5svdr" path="res://_IMPORTANT_IMAGE_DONT_DELETE_INACHE_PISEC!!.jpg" id="2_ltapm"]
+[ext_resource type="Script" uid="uid://bxcre062tdqm7" path="res://Elements/achiv.gd" id="2_qo5uu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_qo5uu"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_5jy4h"]
+
+[sub_resource type="Animation" id="Animation_mcqmi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-109.0]
+}
+
+[sub_resource type="Animation" id="Animation_1vl0j"]
+resource_name = "in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:y")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-109.0, 25.0]
+}
+
+[sub_resource type="Animation" id="Animation_enhl8"]
+resource_name = "out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:y")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [25.0, -109.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ysdsf"]
+_data = {
+&"RESET": SubResource("Animation_mcqmi"),
+&"in": SubResource("Animation_1vl0j"),
+&"out": SubResource("Animation_enhl8")
+}
+
+[node name="Panel" type="Panel" unique_id=1945631866]
+custom_minimum_size = Vector2(400, 70)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -227.0
+offset_top = -109.0
+offset_right = 227.0
+offset_bottom = -24.0
+grow_horizontal = 2
+mouse_filter = 2
+theme = ExtResource("1_b0g3x")
+script = ExtResource("2_qo5uu")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1353767877]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = -3.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer" unique_id=11237520]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("2_ltapm")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=2024779637]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=1787090531]
+layout_mode = 2
+text = "Достижение!"
+label_settings = SubResource("LabelSettings_qo5uu")
+
+[node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=1985281635]
+layout_mode = 2
+text = "Вы добились чего-либо в жизни! Похвально!!"
+label_settings = SubResource("LabelSettings_5jy4h")
+autowrap_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=874437503]
+libraries/ = SubResource("AnimationLibrary_ysdsf")

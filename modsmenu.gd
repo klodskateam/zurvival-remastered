@@ -12,24 +12,25 @@ func _ready() -> void:
 		$Control/Panel/SettingsSave.position = Vector2(6, 7)
 	
 	for sus in ModLoader.MODSLIST.size():
-		var filepath = "user://mods/" + ModLoader.MODSLIST[sus]
-		var file = FileAccess.open(filepath, FileAccess.READ)
-		var json = JSON.new()
-		var tmp_mod = json.parse_string(file.get_as_text())
-		
-		print(str(tmp_mod))
-		
-		var ModItem = MOD_ITEM.instantiate()
-		if "name" in tmp_mod:
-			ModItem.NAME = tmp_mod["name"]
-		if "description" in tmp_mod:
-			ModItem.DESC = tmp_mod["description"]
-		if "icon" in tmp_mod:
-			ModItem.IMG = ModLoader.get_mod_img(tmp_mod["icon"])
-		if "website" in tmp_mod:
-			ModItem.URL = tmp_mod["website"]
-		
-		$Control/Panel/VBoxContainer/VBoxContainer.add_child(ModItem)
+		if ModLoader.MODSLIST[sus].ends_with(".json"):
+			var filepath = "user://mods/" + ModLoader.MODSLIST[sus]
+			var file = FileAccess.open(filepath, FileAccess.READ)
+			var json = JSON.new()
+			var tmp_mod = json.parse_string(file.get_as_text())
+			
+			#print(str(tmp_mod))
+			
+			var ModItem = MOD_ITEM.instantiate()
+			if "name" in tmp_mod:
+				ModItem.NAME = tmp_mod["name"]
+			if "description" in tmp_mod:
+				ModItem.DESC = tmp_mod["description"]
+			if "icon" in tmp_mod:
+				ModItem.IMG = ModLoader.get_mod_img(tmp_mod["icon"])
+			if "website" in tmp_mod:
+				ModItem.URL = tmp_mod["website"]
+			
+			$Control/Panel/VBoxContainer/VBoxContainer.add_child(ModItem)
 	if not transition.imfinished.is_connected(Global.got_finishedsign):
 		transition.imfinished.connect(Global.got_finishedsign)
 

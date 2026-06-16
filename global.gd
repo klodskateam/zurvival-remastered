@@ -8,9 +8,12 @@
 # [*] добавьте больше TODO🤪🤪🤪 
 # [ ] добавить автомобильный режим
 # [ ] сделать ЕЩЁ больше TODO tm
+# [ ] Добавить дешёвый блюр 
 
 # INFO самые важные песни зр 2.0 это:
 # бутырка метеорит
+# бутырка икона
+# михаил круг исповедь
 
 # чтооо годот подсветка комментариев😨
 # ALERT, ATTENTION, CAUTION, CRITICAL, DANGER, SECURITY
@@ -24,9 +27,11 @@ var VERSION = ProjectSettings.get_setting("application/config/version")
 var FULLSCREEN = false
 var SmoothTransitions = false
 var WEAPONHINTS = true
+var CheapEffects = false
 @onready var GAME = "res://gamemode.tscn"
 @onready var SETTINGS = "res://settings.tscn"
 const isDEMO = true # Данная настройка отключает магазин, склад и список модов Онлайн, так-как оно не готово (онлайн моды я ещё апи не сделал ну я и лох вообще)
+var devMode = false
 
 #Конфиги
 const SAVE_PATH = "user://save.cfg"
@@ -34,10 +39,12 @@ var CONFIG = ConfigFile.new()
 var KT_URL = "https://kteam.veliona.no/"
 var WEAPONS = [
 	{
-		"name": tr("$starterpistol"),
+		"name": "$starterpistol",
 		"id": 1,
 		"class": "sidearm",
 		"delay": 1,
+		"damage": 100,
+		"bullet_speed": 1450,
 		"automatic": false,
 		"bullets": 12,
 		"left_bullets": 12,
@@ -47,39 +54,62 @@ var WEAPONS = [
 		"increment_sound": "res://Sound/shotgun_increment",
 		"incremental_minusroundonreload": false,
 		"increment_delay": 0,
+		"harmless": false,
 		"type": "gun",
 		"sway": 0.07,
 		"weight": 0.26,
+		"shake": 6,
 		"soundondelay": false,
+		"penthrough": false,
+		"bulletdespawn_dist": 900,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
 		"sound": "res://Sound/pistol.wav",
+		"reloadsound": "res://Sound/pistol-reload.wav",
+		"weaponswitch_sound": "res://Sound/weaponswitch_light",
+		"layered_shootsounds": false,
+		"scope": false,
 	},
 	{
-		"name": tr("$startermp"),
+		"name": "$startermp",
 		"id": 2,
 		"class": "primary",
 		"delay": 0.35,
+		"damage": 50,
+		"bullet_speed": 1450,
 		"automatic": true,
 		"bullets": 30,
 		"left_bullets": 30,
-		"zapas_bullets": 30,
+		"zapas_bullets": 60,
 		"icon": "res://Resources/ui_stuff_lol/weapon_startermp.png",
 		"incremental_reload": false,
 		"increment_sound": "res://Sound/shotgun_increment",
 		"incremental_minusroundonreload": false,
 		"increment_delay": 0,
+		"harmless": false,
 		"type": "gun",
-		"sway": 0.09,
+		"sway": 0.06,
 		"weight": 0.34,
+		"shake": 8,
 		"soundondelay": false,
+		"penthrough": false,
+		"bulletdespawn_dist": 1200,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
-		"sound": "res://Sound/pistol.wav",
+		"sound": "res://Sound/pistol-03.wav",
+		"reloadsound": "res://Sound/pistol-reload.wav",
+		"weaponswitch_sound": "res://Sound/weaponswitch_medium",
+		"layered_shootsounds": true,
+		"shootlayer_1": "res://Sound/mp5_main",
+		"shootlayer_2": "res://Sound/mp5_tail",
+		"shootlayer_3": "res://Sound/mp5_click",
+		"scope": false,
 	},
 	{
-		"name": tr("$hegrenade"),
+		"name": "$hegrenade",
 		"id": 3,
 		"class": "utility",
 		"delay": 1,
+		"damage": 100,
+		"bullet_speed": 1450,
 		"automatic": false,
 		"bullets": 1,
 		"left_bullets": 1,
@@ -89,18 +119,27 @@ var WEAPONS = [
 		"increment_sound": "res://Sound/shotgun_increment",
 		"incremental_minusroundonreload": false,
 		"increment_delay": 0,
+		"harmless": false,
 		"type": "grenade",
 		"sway": 0,
 		"weight": 0.08,
+		"penthrough": false,
+		"bulletdespawn_dist": 1000,
 		"soundondelay": false,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
 		"sound": "",
+		"reloadsound": "res://Sound/pickup_01.wav",
+		"weaponswitch_sound": "res://Sound/weaponswitch_light",
+		"layered_shootsounds": false,
+		"scope": false,
 	},
 	{
-		"name": tr("$basicshotgun"),
+		"name": "$basicshotgun",
 		"id": 4,
 		"class": "primary",
 		"delay": 2.5,
+		"damage": 100,
+		"bullet_speed": 1550,
 		"automatic": false,
 		"bullets": 6,
 		"left_bullets": 6,
@@ -110,12 +149,120 @@ var WEAPONS = [
 		"increment_sound": "res://Sound/shotgun_increment",
 		"incremental_minusroundonreload": false,
 		"increment_delay": 0.35,
+		"harmless": false,
 		"type": "shotgun",
 		"sway": 0.15,
-		"weight": 0.40,
+		"weight": 0.37,
+		"penthrough": false, # у ~~дробовика отдельный код для этого, мб стоит убрать~~ ладно я просто реюзанул код
+		"bulletdespawn_dist": 700,
+		"shake": 15,
 		"soundondelay": true,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
 		"sound": "res://Sound/shotgun.wav",
+		"reloadsound": "res://Sound/pistol-reload.wav",
+		"weaponswitch_sound": "res://Sound/weaponswitch_medium",
+		"layered_shootsounds": false,
+		"scope": false,
+	},
+	{
+		"name": "$highcal_atrifle",
+		"id": 5,
+		"class": "primary",
+		"delay": 3,
+		"damage": 300, # выбор трактористов!
+		"bullet_speed": 2050,
+		"automatic": false,
+		"bullets": 5,
+		"left_bullets": 5,
+		"zapas_bullets": 20,
+		"icon": "res://Resources/ui_stuff_lol/weapon_highcalrifle.png",
+		"incremental_reload": false,
+		"increment_sound": "res://Sound/shotgun_increment",
+		"incremental_minusroundonreload": false,
+		"increment_delay": 0,
+		"harmless": false,
+		"type": "gun",
+		"sway": 0.12,
+		"shake": 45,
+		"weight": 0.46,
+		"penthrough": true,
+		"bulletdespawn_dist": 1600,
+		"soundondelay": false,
+		"delaysound": "res://Sound/shotgun_cycle.wav",
+		"sound": "res://Sound/highcal-gun.wav",
+		"reloadsound": "res://Sound/highcal-reload.wav",
+		"weaponswitch_sound": "res://Sound/weaponswitch_heavy",
+		"layered_shootsounds": false,
+		"scope": false,
+	},
+	{
+		"name": "$sarifle",
+		"id": 6,
+		"class": "primary",
+		"delay": 1.7,
+		"damage": 100,
+		"bullet_speed": 1660,
+		"automatic": false,
+		"bullets": 10,
+		"left_bullets": 10,
+		"zapas_bullets": 50,
+		"icon": "res://Resources/ui_stuff_lol/weapon_sarifle.png",
+		"incremental_reload": false,
+		"increment_sound": "res://Sound/shotgun_increment",
+		"incremental_minusroundonreload": false,
+		"increment_delay": 0,
+		"harmless": false,
+		"type": "gun",
+		"sway": 0.04,
+		"shake": 15,
+		"weight": 0.31,
+		"penthrough": false,
+		"bulletdespawn_dist": 2000,
+		"soundondelay": false,
+		"delaysound": "res://Sound/shotgun_cycle.wav",
+		"sound": "res://Sound/sarifle.wav",
+		"reloadsound": "res://Sound/sarifle-reload.wav",
+		"weaponswitch_sound": "res://Sound/weaponswitch_medium",
+		"layered_shootsounds": true,
+		"shootlayer_1": "res://Sound/sarifle_main",
+		"shootlayer_2": "res://Sound/sarifle_tail",
+		"shootlayer_3": "res://Sound/silence",
+		"scope": true,
+		"scope_maxzoom": 2, # 1x = 300px
+		#"scope_focuswidth": 50,
+	},
+	{
+		"name": "$binoculars",
+		"id": 7,
+		"class": "utility",
+		"delay": 0,
+		"damage": 0,
+		"bullet_speed": 0,
+		"automatic": false,
+		"bullets": 0,
+		"left_bullets": 0,
+		"zapas_bullets": 0,
+		"icon": "res://Resources/ui_stuff_lol/weapon_binoculars.png",
+		"incremental_reload": false,
+		"increment_sound": "res://Sound/shotgun_increment",
+		"incremental_minusroundonreload": false,
+		"increment_delay": 0,
+		"harmless": true,
+		"type": "",
+		"sway": 0,
+		"shake": 0,
+		"weight": 0.11,
+		"penthrough": false,
+		"bulletdespawn_dist": 0,
+		"soundondelay": false,
+		"delaysound": "res://Sound/shotgun_cycle.wav",
+		"sound": "",
+		"reloadsound": "",
+		"weaponswitch_sound": "res://Sound/weaponswitch_light",
+		"layered_shootsounds": false,
+		"scope": true,
+		"scope_maxzoom": 3,
+		#"scope_focuswidth": 50,
 	},
 ]
 var ALLWEAPONS = []
@@ -140,6 +287,13 @@ func _input(event: InputEvent) -> void:
 		else:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 			FULLSCREEN = false
+	if event.is_action_pressed("devToggle"):
+		devMode = !devMode
+		CONFIG.set_value("developer", "enabled", devMode)
+		CONFIG.save(SAVE_PATH)
+		OS.alert("DevMode Enabled: " + str(devMode))
+			
+			
 	
 func _ready() -> void:
 	CONFIG.load(SAVE_PATH)
@@ -179,7 +333,8 @@ func _ready() -> void:
 			if SAVED_WEAPONS[weapon]["id"] == WEAPONS[allweapons]["id"]:
 				#print("yeee" + str(weapon)+ " " + str(allweapons))
 				EQUIPPED_WEAPONS.append(WEAPONS[allweapons])
-			
+	
+	devMode = CONFIG.get_value("developer", "enabled", false)
 	# tf2 reference ALERT
 	# NOTE: я скомпилированную игру не могу запустить, надо закомментировать rsiughdsugjh
 #	if !FileAccess.file_exists("res://_IMPORTANT_IMAGE_DONT_DELETE_INACHE_PISEC!!.jpg"):

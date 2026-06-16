@@ -8,6 +8,7 @@ var GMCHANGE_TO = null
 var GMNAME = null
 var GMDESC = null
 var GAMEMODE = null
+var CHALLENGESELECTOR = false
 
 # для удобства
 var CHALLENGE = {
@@ -59,6 +60,7 @@ func _ready() -> void:
 	newchallengebtn.CHALLENGE = true
 	newchallengebtn.MODGAME = null
 	newchallengebtn.size_flags_horizontal = 3
+	
 	$Control/Panel/ScrollContainer/VBoxContainer/ChallengeContainer.add_child(newchallengebtn)
 	
 	
@@ -71,6 +73,7 @@ func _ready() -> void:
 		newbtn.GMODE = GAMEMODES[sus]["gamemode"]
 		newbtn.CHALLENGE = false
 		newbtn.MODGAME = null
+		
 		$Control/Panel/ScrollContainer/VBoxContainer.add_child(newbtn)
 		
 	for susgame in MODDED_GAMEMODES.size():
@@ -82,12 +85,17 @@ func _ready() -> void:
 		newbtn.MODGAME = susgame
 		newbtn.CHALLENGE = false
 		newbtn.GMODE = -1
+		
 		$Control/Panel/ScrollContainer/VBoxContainer.add_child(newbtn)
 	if not transition.imfinished.is_connected(Global.got_finishedsign):
 		transition.imfinished.connect(Global.got_finishedsign)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if CHALLENGESELECTOR:
+		$Control/Panel/ChallengeSelector.visible = true
+	else:
+		$Control/Panel/ChallengeSelector.visible = false
 	if GMCHANGE_TO == null:
 		$Control/Panel/PlayButton.disabled = true
 	else:
@@ -107,14 +115,9 @@ func _on_play_button_pressed() -> void:
 		pass
 	else:
 		GamemodeManager.MODGAME = MODDED_GAMEMODES[MODGAME].duplicate(true)
-	# HACK -- 31/01/26
-	GamemodeManager.GAMEMODEINFO = {
-			"scene": GMCHANGE_TO,
-			"gamemode": GamemodeManager.GAMEMODE,
-		}
-
-	
-	#print("gamemode info: " + str(GamemodeManager.GAMEMODEINFO))	
+	# HACK -- 31/01/26 -- убрано :D -- 23/04/26
+	#print("gamemode info: " + str(GamemodeManager.GAMEMODEINFO))
+	GamemodeManager.CHALLENGEID = $Control/Panel/ChallengeSelector.get_selected_id()
 	get_tree().change_scene_to_file(GMCHANGE_TO)
 	
 func change_info():

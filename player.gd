@@ -21,17 +21,7 @@ extends CharacterBody2D
 @onready var weapon_icon: Sprite2D = $"../UI/WeaponText/WeaponIcon"
 
 @onready var vignette_red = $"../UI/VignetteRed"
-
-
-
-const GRASS_STEP_01 = preload("res://Sound/grass_step_01.wav")
-const GRASS_STEP_02 = preload("res://Sound/grass_step_02.wav")
-const GRASS_STEP_03 = preload("res://Sound/grass_step_03.wav")
-const GRASS_STEP_04 = preload("res://Sound/grass_step_04.wav")
-const SNOW_STEP_01 = preload("res://Sound/snow_step_01.wav")
-const SNOW_STEP_02 = preload("res://Sound/snow_step_02.wav")
-const SNOW_STEP_03 = preload("res://Sound/snow_step_03.wav")
-const SNOW_STEP_04 = preload("res://Sound/snow_step_04.wav")
+@onready var damageblur = $"../UI/DMGBlur"
 
 const PICKUP_01 = preload("res://Sound/pickup_01.wav")
 const PICKUP_02 = preload("res://Sound/pickup_02.wav")
@@ -66,6 +56,9 @@ var FORCE_RUNLOCK = false
 var shake = false
 var zondrespleasesaveusall = false
 var weightaccum = 0
+var accum2 = 0
+var dmgblur = false
+var ZOOMING = false
 @export var ded: bool = false
 
 @export var REGULAR_SPEED = 300
@@ -76,35 +69,37 @@ var weightaccum = 0
 @export var max_range = 420
 var max_range2 = 0
 var inthehall = false
+var steptimer = 0
+var stepmaterial = "grass"
+var dir2 = Vector2()
+
+var shakeamount = 0
+var shaketimer = 0
+var shakedelay = 0.07
+var weaponshakeamount = 0
+var fastshakeamount = 0
+var totalshakeamount = 0
+
 @export var SELECTED_WEAPON = 0
 
 var WEAPONS = []
 
 func _ready() -> void:
 	WEAPONS = Global.EQUIPPED_WEAPONS.duplicate(true)
-	
+	if Global.CheapEffects:
+		damageblur.material.set_shader_parameter("blur_type", 6)
+	else:
+		damageblur.material.set_shader_parameter("blur_type", 2)
+	if get_node_or_null("../snow") != null or GamemodeManager.GAMEMODE == 2 or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["snowinwinter"] and (month >= 12 or month <= 01)) or ((GamemodeManager.GAMEMODE != -1 and GamemodeManager.GAMEMODE != 2)  and (month >= 12 or month <= 01)):
+		stepmaterial = "snow"
+	else:
+		stepmaterial = "grass"
 	if GamemodeManager.GAMEMODE == 1 or (GamemodeManager.GAMEMODE == -1 and !GamemodeManager.MODGAME["allow_weapons"]):
-		WEAPONS = [{
-		"name": tr("$starterpistol"),
-		"id": 1,
-		"class": "sidearm",
-		"delay": 1,
-		"automatic": false,
-		"bullets": 12,
-		"left_bullets": 12,
-		"zapas_bullets": 48,
-		"icon": "res://Resources/ui_stuff_lol/weapon_starterpistol.png",
-		"incremental_reload": false,
-		"increment_sound": "res://Sound/shotgun_increment",
-		"incremental_minusroundonreload": false,
-		"increment_delay": 0,
-		"type": "gun",
-		"sway": 0.07,
-		"weight": 0.26,
-		"soundondelay": false,
-		"delaysound": "res://Sound/shotgun_cycle.wav",
-		"sound": "res://Sound/pistol.wav",
-	}]
+		WEAPONS = []
+		WEAPONS.append(Global.WEAPONS[0])
+		WEAPONS[0]["sway"] = 0
+		WEAPONS[0]["shake"] = 0
+		WEAPONS[0]["bulletdespawn_dist"] = 10000
 	if GamemodeManager.GAMEMODE == -1:
 		print("forcesnow: " + str(GamemodeManager.MODGAME["force_snow"]))
 		print("snowinwinter: " + str(GamemodeManager.MODGAME["snowinwinter"]))
@@ -121,7 +116,12 @@ func _ready() -> void:
 		var RNG2 = RandomNumberGenerator.new()
 		DATE = int(str(DATE).replace("-", ""))
 		#print("date:" + str(hash(int(DATE/64))))
-		RNG.seed = hash(DATE^15631)
+		if GamemodeManager.CHALLENGEID == 0:
+			RNG.seed = hash(DATE^65454)
+		elif GamemodeManager.CHALLENGEID == 1:
+			RNG.seed = hash(DATE^23775)
+		elif GamemodeManager.CHALLENGEID == 2:
+			RNG.seed = hash(DATE^85263)
 		var rngnum = RNG.randi_range(0, 10)
 		var rngnum2 = RNG.randi_range(0, 14)
 		var rngnum3 = RNG.randi_range(0, 23)
@@ -137,50 +137,20 @@ func _ready() -> void:
 			REGULAR_SPEED = 250
 			RUN_SPEED = 375	
 		if rngnum2 == 7 or rngnum4 == 3:
-			WEAPONS = [
-		{
-			"name": tr("$starterpistol"),
-			"delay": 3,
-			"automatic": false,
-			"bullets": 1,
-			"left_bullets": 1,
-			"zapas_bullets": 40,
-			"icon": "res://Resources/ui_stuff_lol/weapon_starterpistol.png",
-			"incremental_reload": false,
-			"increment_sound": "res://Sound/shotgun_increment",
-			"incremental_minusroundonreload": false,
-			"increment_delay": 0,
-			"type": "gun",
-			"sway": 0.15,
-			"weight": 0.30,
-			"soundondelay": false,
-			"delaysound": "res://Sound/shotgun_cycle.wav",
-			"sound": "res://Sound/pistol-02.wav",
-		},
-			]
-			zondrespleasesaveusall = true
+			WEAPONS = []
+			WEAPONS.append(Global.WEAPONS[0].duplicate(true))
+			WEAPONS[0]["sway"] = 0
+			WEAPONS[0]["shake"] = 0
+			WEAPONS[0]["bulletdespawn_dist"] = 10000
+			WEAPONS[0]["sound"] = "res://Sound/pistol-02.wav"
+			WEAPONS[0]["damage"] = 200
+			WEAPONS[0]["bullets"] = 1
+			WEAPONS[0]["left_bullets"] = 1
+			WEAPONS[0]["zapas_bullets"] = 40
 		elif rngnum2 == 9 or rngnum4 == 12:
-			WEAPONS = [
-	{
-		"name": tr("$hegrenade"),
-		"delay": 1,
-		"automatic": false,
-		"bullets": 1,
-		"left_bullets": 1,
-		"zapas_bullets": 16,
-		"icon": "res://Resources/ui_stuff_lol/weapon_hegrenade.png",
-		"incremental_reload": false,
-		"increment_sound": "res://Sound/shotgun_increment",
-		"incremental_minusroundonreload": false,
-		"increment_delay": 0,
-		"type": "grenade",
-		"sway": 0,
-		"weight": 0.17,
-		"soundondelay": false,
-		"delaysound": "res://Sound/shotgun_cycle.wav",
-		"sound": "res://Sound/pistol.wav",
-	},
-			]	
+			WEAPONS = []
+			WEAPONS.append(Global.WEAPONS[2].duplicate(true))
+			WEAPONS[0]["zapas_bullets"] = 16
 		elif rngnum2 == 5 or rngnum2 == 8:
 			for weapon in WEAPONS.size():
 				WEAPONS[weapon]["delay"] *= 3
@@ -228,19 +198,40 @@ func _ready() -> void:
 	
 	weaponhint_show()
 
-
 func _physics_process(delta: float):
 	#TranslationServer.set_locale("be")
-	if Input.is_action_pressed("left"):
-		position.x -= SPEED * delta
-	if Input.is_action_pressed("right"):
-		position.x += SPEED * delta
-	if Input.is_action_pressed("up"):
-		position.y -= SPEED * delta
-	if Input.is_action_pressed("down"):
-		position.y += SPEED * delta
-		
+	var direction = get_input()
+	if direction.length() > 0:
+		if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
+			dir2 = direction.lerp(direction.normalized(), 0.9)
+		else:
+			dir2 = direction.lerp(direction.normalized(), 0.35)
+		velocity = velocity.lerp(dir2 * SPEED, 0.3)
+	else:
+		velocity = velocity.lerp(Vector2.ZERO, 0.2)
+	move_and_slide()	
+	
 	score.text = str(SCORE)
+	
+	if ZOOMING:
+		$ZoomTarget.position = lerp($ZoomTarget.position, get_local_mouse_position(), 0.5)
+		if Vector2.ZERO.distance_to($ZoomTarget.position) >= WEAPONS[SELECTED_WEAPON]["scope_maxzoom"]*300: # беги щас тракторист тебя застрелит
+			pass
+		else:
+			if get_local_mouse_position().length() <= 100:
+				$Camera2D.position = $Camera2D.position.lerp($ZoomTarget.position, 0.02)
+			else:
+				$Camera2D.position = $Camera2D.position.lerp($ZoomTarget.position, 0.04)
+		
+		#var scopeidk = (WEAPONS[SELECTED_WEAPON]["scope_focuswidth"])**4/(Vector2.ZERO.distance_to($ZoomTarget.position)**2)
+		#$SubViewport/Polygon2D.polygon[1].x = clamp(-scopeidk, -70, 0)
+		#$SubViewport/Polygon2D.polygon[2].x = clamp(scopeidk, 0, 70)
+	
+		#$SubViewport/Polygon2D.polygon[1].y = -Vector2.ZERO.distance_to($ZoomTarget.position)
+		#$SubViewport/Polygon2D.polygon[2].y = -Vector2.ZERO.distance_to($ZoomTarget.position)
+		#$SubViewport/Camera2D.position = $Camera2D.position
+	else:
+		$Camera2D.position = Vector2.ZERO
 	
 	if kaktameto_bar:
 		kaktameto.text = tr("$stamina") + ": " + str(round(int(VINOSLIVOST))) + "/" + str(MAX_VINOSLIVOST)
@@ -290,14 +281,13 @@ func _physics_process(delta: float):
 			if WEAPONS[maybeselectedweapon]["zapas_bullets"] <= 0 or WEAPONS[SELECTED_WEAPON]["left_bullets"] == WEAPONS[SELECTED_WEAPON]["bullets"]:
 				RELOADING = false
 			if WEAPONS[SELECTED_WEAPON]["left_bullets"]	== WEAPONS[SELECTED_WEAPON]["bullets"] and !RELOADING and ogroundamount == 0:
-				DELAY = WEAPONS[SELECTED_WEAPON]["delay"]	
+				DELAY = WEAPONS[SELECTED_WEAPON]["delay"]
+		
 	match GamemodeManager.GAMEMODE:
 		1:
 			pass
 		_:	
 			if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
-				print(SPEED)
-				print(VINOSLIVOST)
 				if (VINOSLIVOST >= 40):
 					SPEED = RUN_SPEED 
 					fov_up()
@@ -312,7 +302,7 @@ func _physics_process(delta: float):
 				else:
 					SPEED = REGULAR_SPEED
 					fov_down()
-		#					$Camera2D.zoom = Vector2(1, 1)
+		#			$Camera2D.zoom = Vector2(1, 1)
 					RUNLOCK = 1
 			else:
 				SPEED = REGULAR_SPEED
@@ -330,18 +320,35 @@ func _physics_process(delta: float):
 			pass
 		2:
 			if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
-				SPEED = clamp(RUN_SPEED - (INVENTORY_FILLED*4), 150, 400)
+				SPEED = clamp(RUN_SPEED - ((INVENTORY_FILLED**1.55)/4), 150, 400)
 			else:
-				SPEED = clamp(REGULAR_SPEED - (INVENTORY_FILLED*3.5), 150, 400)
+				SPEED = clamp(REGULAR_SPEED - ((INVENTORY_FILLED**1.65)/4), 150, 400)
 		3:
 			if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
-				SPEED = clamp(RUN_SPEED - (INVENTORY_FILLED*4), 150, 400)
+				SPEED = clamp(RUN_SPEED - ((INVENTORY_FILLED**1.55)/4), 150, 400)
 			else:
-				SPEED = clamp(REGULAR_SPEED - (INVENTORY_FILLED*3.5), 150, 400)
+				SPEED = clamp(REGULAR_SPEED - ((INVENTORY_FILLED**1.65)/4), 150, 400)
 		_:
 			pass
 	
+	if steptimer <= 4:
+		steptimer += Vector2(velocity.x, velocity.y).length()/20 * delta
+		
+	if Vector2(velocity.x, velocity.y).length() > 0:
+		if steptimer >= 4:
+			$GrassStep01.stream = load("res://Sound/" + stepmaterial + "_step_" + str(randi_range(1,4)).pad_zeros(2) + ".wav")
+			$GrassStep01.pitch_scale = randf_range(0.9, 1.06)
+			$GrassStep01.play()
+			steptimer = 0
+		pass
 	
+	
+	damageblur.hp_bluramount = (MAX_HEALTH-HEALTH)/2.3
+	if dmgblur:
+		damageblur.bluramount += 20
+		damageblur.bluramount = clamp(damageblur.bluramount, 0, 60)
+		fastshakeamount += 10
+		dmgblur = false
 		
 	if (OS.get_name() != "Android"):
 		look_at(get_global_mouse_position())
@@ -355,17 +362,29 @@ func _physics_process(delta: float):
 		#print("DELAY:" + str(DELAY))
 	if INCREMENT_DELAY <= WEAPONS[SELECTED_WEAPON]["increment_delay"]:
 		INCREMENT_DELAY += 1 * delta
+	if shaketimer <= shakedelay:
+		shaketimer += 1 * delta
+	if shakeamount > 0:
+		shakeamount = abs(shakeamount)-(19*delta)
+	if fastshakeamount > 0:
+		fastshakeamount = abs(fastshakeamount)-(40*delta)	
+	if weaponshakeamount > 0:
+		weaponshakeamount = abs(weaponshakeamount)-(23*delta)
 
 func fov_up():
 	var tween = $Camera2D.create_tween()
-	tween.tween_property($Camera2D, "zoom", Vector2(0.907, 0.907), 0.8)
+	tween.parallel().tween_property($Camera2D, "zoom", Vector2(0.907, 0.907), 0.8)
 func fov_half_up():
 	var tween = $Camera2D.create_tween()
-	tween.tween_property($Camera2D, "zoom", Vector2(0.954, 0.954), 2)
+	tween.parallel().tween_property($Camera2D, "zoom", Vector2(0.954, 0.954), 2)
 func fov_down():
 	var tween = $Camera2D.create_tween()
-	tween.tween_property($Camera2D, "zoom", Vector2(1, 1), 1.4)
-		
+	tween.parallel().tween_property($Camera2D, "zoom", Vector2(1, 1), 1.4)
+func tween_shake():
+	var tween = $Camera2D.create_tween()
+	tween.parallel().tween_property($Camera2D, "offset", Vector2(0+(randf_range(-1, 1))*totalshakeamount, 0+(randf_range(-1, 1))*totalshakeamount), 0.2).set_trans(Tween.TRANS_SINE)
+	
+
 	
 func _process(delta: float):
 	if (OS.get_name() == "Android"):
@@ -387,10 +406,15 @@ func _process(delta: float):
 	else:
 		vignette_red.lowhealth = false	
 		
-	if shake:
-		$Camera2D/AnimationPlayer.play("shake")
-		shake = false
+	#if shake:
+		#$Camera2D/AnimationPlayer.play("shake")
+		#shake = false
 		
+	if shaketimer >= shakedelay:
+		tween_shake()
+		shaketimer = 0	
+	shakedelay = 1/(totalshakeamount+10)
+	totalshakeamount = shakeamount + weaponshakeamount + fastshakeamount	
 	if Input.is_action_pressed("shoot"):
 		ratata()	
 
@@ -401,7 +425,7 @@ func ratata():
 		shoot()
 	
 func _input(event):
-	if event.is_action_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["type"] != "grenade":
+	if event.is_action_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["type"] != "grenade" and !WEAPONS[SELECTED_WEAPON]["harmless"]:
 		if RELOADING:
 			RELOADING = false
 		else:
@@ -415,13 +439,18 @@ func _input(event):
 		$Pickup01.stream = GRENADE_PREPARE
 		$Pickup01.pitch_scale = randf_range(0.83, 1.06)
 		$Pickup01.play()
-	if Input.is_action_just_released("shoot") and inthehall and WEAPONS[SELECTED_WEAPON]["type"] == "grenade":
+	if Input.is_action_just_released("shoot") and inthehall and WEAPONS[SELECTED_WEAPON]["type"] == "grenade" and !WEAPONS[SELECTED_WEAPON]["harmless"]:
 		throw()
 		pass
+	if event.is_action_pressed("ads_zoom") and WEAPONS[SELECTED_WEAPON]["scope"]:
+		if ZOOMING:
+			ZOOMING = false
+		else:
+			ZOOMING = true 
 
 
 
-	if event.is_action_pressed("reload"):
+	if event.is_action_pressed("reload") and !WEAPONS[SELECTED_WEAPON]["harmless"]:
 		bullets_reload()
 	if pickedup:
 		$Pickup01.pitch_scale = randf_range(0.97, 1.12)
@@ -498,9 +527,18 @@ func changeweapon(number: int = 0):
 	if number > WEAPONS.size() - 1:
 		pass
 	else:
+		if number != SELECTED_WEAPON:
+			$WeaponSwitch.stream = load(str(WEAPONS[number]["weaponswitch_sound"] + "_" + str(randi_range(1,3)).pad_zeros(2)) + ".wav")
+			$WeaponSwitch.pitch_scale = randf_range(0.89, 1.07)
+			$WeaponSwitch.play()
 		SELECTED_WEAPON = number
 		weaponhint_show()
+		if WEAPONS[SELECTED_WEAPON]["harmless"]:
+			bullets_bar.visible = false
+		else:
+			bullets_bar.visible = true
 		RELOADING = false
+		ZOOMING = false
 		#print(SELECTED_WEAPON)
 
 		
@@ -508,15 +546,21 @@ func changeweapon(number: int = 0):
 func shoot():
 	if WEAPONS[SELECTED_WEAPON]["left_bullets"] != 0:
 		if DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]:
-			
 			# bullet.add_constant_force(get_global_mouse_position() - bullet.global_position)
 			if WEAPONS[SELECTED_WEAPON]["type"] == "shotgun":
-				$Camera2D/AnimationPlayer.stop()
-				$Camera2D/AnimationPlayer.play("shotgun_recoil")	
+				#$Camera2D/AnimationPlayer.stop()
+				#$Camera2D/AnimationPlayer.play("shotgun_recoil")	
 				for i in 9:
 					var bullet = P_BULLET.instantiate()
 					bullet.shotgunbullet = true
 					bullet.global_position = $Marker2D.global_position
+					bullet.markerpos = $Marker2D.global_position
+					bullet.despawn_dist = WEAPONS[SELECTED_WEAPON]["bulletdespawn_dist"]
+					bullet.PIERCETHRU = WEAPONS[SELECTED_WEAPON]["penthrough"]
+					bullet.DAMAGE = WEAPONS[SELECTED_WEAPON]["damage"]
+					bullet.SPEED = WEAPONS[SELECTED_WEAPON]["bullet_speed"]
+					shaketimer = shakedelay+1
+					weaponshakeamount = WEAPONS[SELECTED_WEAPON]["shake"]
 					if GamemodeManager.GAMEMODE == 3 and unreliableweapon:
 						bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)) )/2.3
 					else:
@@ -528,11 +572,14 @@ func shoot():
 			else:
 				var bullet = P_BULLET.instantiate()
 				bullet.global_position = $Marker2D.global_position
+				bullet.markerpos = $Marker2D.global_position
+				bullet.despawn_dist = WEAPONS[SELECTED_WEAPON]["bulletdespawn_dist"]
+				bullet.PIERCETHRU = WEAPONS[SELECTED_WEAPON]["penthrough"]
+				bullet.SPEED = WEAPONS[SELECTED_WEAPON]["bullet_speed"]
+				bullet.DAMAGE = WEAPONS[SELECTED_WEAPON]["damage"]
+				shaketimer = shakedelay
+				weaponshakeamount = WEAPONS[SELECTED_WEAPON]["shake"]
 				bullet.shotgunbullet = false
-				if GamemodeManager.GAMEMODE == 3 and zondrespleasesaveusall:
-					bullet.magnum = true
-				else:
-					bullet.magnum = false
 				if GamemodeManager.GAMEMODE == 3 and unreliableweapon:
 					bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)) )/2.3
 				else:
@@ -544,9 +591,20 @@ func shoot():
 				get_parent().add_child(bullet)
 			WEAPONS[SELECTED_WEAPON]["left_bullets"] -= 1
 			WEAPONS[SELECTED_WEAPON]["left_bullets"] = max(0, WEAPONS[SELECTED_WEAPON]["left_bullets"])
-			$ShootSound.pitch_scale = randf_range(0.93, 1.06)
-			$ShootSound.stream = load(WEAPONS[SELECTED_WEAPON]["sound"])
-			$ShootSound.play()
+			if WEAPONS[SELECTED_WEAPON]["layered_shootsounds"]:
+				$ShootLayer1.stream = load(str(WEAPONS[SELECTED_WEAPON]["shootlayer_1"] + "_" + str(randi_range(1,2)).pad_zeros(2)) + ".wav")
+				$ShootLayer1.pitch_scale = randf_range(0.93, 1.06)
+				$ShootLayer2.stream = load(str(WEAPONS[SELECTED_WEAPON]["shootlayer_2"] + "_" + str(randi_range(1,2)).pad_zeros(2)) + ".wav")
+				$ShootLayer2.pitch_scale = randf_range(0.93, 1.06)
+				$ShootLayer3.stream = load(str(WEAPONS[SELECTED_WEAPON]["shootlayer_3"] + "_" + str(randi_range(1,2)).pad_zeros(2)) + ".wav")
+				$ShootLayer3.pitch_scale = randf_range(0.93, 1.06)
+				$ShootLayer1.play()
+				$ShootLayer2.play()
+				$ShootLayer3.play()
+			else:
+				$ShootSound.pitch_scale = randf_range(0.93, 1.06)
+				$ShootSound.stream = load(WEAPONS[SELECTED_WEAPON]["sound"])
+				$ShootSound.play()
 			DELAY = 0
 			#print(DELAY)
 	else:
@@ -606,57 +664,15 @@ func bullets_reload():
 					DELAY = 0
 					WEAPONS[SELECTED_WEAPON]["zapas_bullets"] -= WEAPONS[SELECTED_WEAPON]["bullets"]
 					WEAPONS[SELECTED_WEAPON]["zapas_bullets"] = max(0, WEAPONS[SELECTED_WEAPON]["zapas_bullets"])
-					if WEAPONS[SELECTED_WEAPON]["type"] == "grenade":
-						$ReloadSound.pitch_scale = randf_range(1.2, 1.35)
-						$ReloadSound.stream = PICKUP_01
-						$ReloadSound.play()
-					else:
-						$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
-						$ReloadSound.stream = load("res://Sound/pistol-reload.wav")
-						$ReloadSound.play()
-			
-func _on_walkdelay_timeout() -> void:
-	if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
-		$WalkDelay.wait_time = randf_range((clamp(0.20 + (INVENTORY_FILLED*0.0025), 0.10, 0.60)),(clamp(0.24 + (INVENTORY_FILLED*0.0035), 0.10, 0.60)))
-		if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) and month >= 12 or month <= 01):
-			$GrassStep01.pitch_scale = randf_range(0.93, 1.04)
-		else:
-			$GrassStep01.pitch_scale = randf_range(0.96, 1.02)
-		step_sound()
-		$GrassStep01.play()
-	elif (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")):
-		$WalkDelay.wait_time = randf_range((clamp(0.24 + (INVENTORY_FILLED*0.0045), 0.10, 0.60)),(clamp(0.27 + (INVENTORY_FILLED*0.0050), 0.10, 0.60)))
-		if GamemodeManager.GAMEMODE == 2 or ((GamemodeManager.GAMEMODE == 0 or GamemodeManager.GAMEMODE == 1) and month >= 12 or month <= 01):
-			$GrassStep01.pitch_scale = randf_range(0.99, 1.09)
-			$GrassStep01.volume_db = randf_range(-1, 1)
-		else:
-			$GrassStep01.pitch_scale = randf_range(0.91, 1.06)
-			$GrassStep01.volume_db = randf_range(-5, -3)
-		step_sound()
-		$GrassStep01.play()
+					$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
+					$ReloadSound.stream = load(WEAPONS[SELECTED_WEAPON]["reloadsound"])
+					$ReloadSound.play()
 
-func step_sound():
-	match randi_range(1,4):
-		1:
-			if GamemodeManager.GAMEMODE == 2 or ((month >= 12 or month <= 1) and (GamemodeManager.GAMEMODE != -1 or GamemodeManager.MODGAME["snowinwinter"])) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
-				$GrassStep01.stream = SNOW_STEP_01
-			else:
-				$GrassStep01.stream = GRASS_STEP_01
-		2:
-			if GamemodeManager.GAMEMODE == 2 or ((month >= 12 or month <= 1) and (GamemodeManager.GAMEMODE != -1 or GamemodeManager.MODGAME["snowinwinter"])) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
-				$GrassStep01.stream = SNOW_STEP_02
-			else:
-				$GrassStep01.stream = GRASS_STEP_02
-		3:
-			if GamemodeManager.GAMEMODE == 2 or ((month >= 12 or month <= 1) and (GamemodeManager.GAMEMODE != -1 or GamemodeManager.MODGAME["snowinwinter"])) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
-				$GrassStep01.stream = SNOW_STEP_03
-			else:
-				$GrassStep01.stream = GRASS_STEP_03
-		4:
-			if GamemodeManager.GAMEMODE == 2 or ((month >= 12 or month <= 1) and (GamemodeManager.GAMEMODE != -1 or GamemodeManager.MODGAME["snowinwinter"])) or (GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["force_snow"]):
-				$GrassStep01.stream = SNOW_STEP_04
-			else:
-				$GrassStep01.stream = GRASS_STEP_04	
+func get_input():
+	var vertical = Input.get_axis("up", "down")
+	var horizontal = Input.get_axis("left", "right")
+	return Vector2(horizontal, vertical)
+			
 func weaponhint_show():
 	match GamemodeManager.GAMEMODE:
 		-1:

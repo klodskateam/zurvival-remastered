@@ -15,13 +15,17 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Zurvival Remastered"
-config/version="2.0.288 Demo!"
+config/version="2.0.329 Demo!"
 run/main_scene="res://menu.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 boot_splash/stretch_mode=0
 boot_splash/use_filter=false
 boot_splash/image="uid://crqpy6n5f8ekg"
 config/icon="uid://bq517y5c4o7dw"
+
+[audio]
+
+buses/default_bus_layout="uid://ch5ki26oyxin4"
 
 [autoload]
 
@@ -31,6 +35,7 @@ MouseController="res://gamepad_ctrls.gd"
 ModLoader="*res://mod_loader.gd"
 ErrorManager="*res://error_manager.gd"
 GamemodeManager="*res://gamemode_manager.gd"
+AchivManager="*uid://d0lhn41uqseor"
 
 [display]
 
@@ -48,6 +53,7 @@ version_control/autoload_on_startup=true
 
 thisisamedkit=""
 thesearebullets=""
+zondre=""
 
 [input]
 
@@ -147,6 +153,22 @@ previousweapon={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":9,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
+devGetAchiv={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":true,"shift_pressed":false,"ctrl_pressed":true,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":65,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+devToggle={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":true,"shift_pressed":false,"ctrl_pressed":true,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":96,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+ads_zoom={
+"deadzone": 0.2,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":2,"position":Vector2(215, 29),"global_position":Vector2(224, 77),"factor":1.0,"button_index":2,"canceled":false,"pressed":true,"double_click":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":1,"pressure":0.0,"pressed":true,"script":null)
+]
+}
 
 [input_devices]
 
@@ -154,7 +176,7 @@ pointing/emulate_touch_from_mouse=true
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://Translation/translations.be.translation", "res://Translation/translations.zh.translation", "res://Translation/translations.en.translation", "res://Translation/translations.ru.translation", "res://Translation/translations.sp.translation", "res://Translation/translations.fi.translation", "res://Translation/translations.bel.translation", "res://Translation/translations.pl.translation", "res://Translation/translations.emoji.translation", "res://Translation/translations.lv.translation", "res://Translation/translations.kl.translation")
+locale/translations=PackedStringArray("res://Translation/translations.be.translation", "res://Translation/translations.zh.translation", "res://Translation/translations.en.translation", "res://Translation/translations.ru.translation", "res://Translation/translations.sp.translation", "res://Translation/translations.fi.translation", "res://Translation/translations.bel.translation", "res://Translation/translations.pl.translation", "res://Translation/translations.emoji.translation", "res://Translation/translations.lv.translation", "res://Translation/translations.kl.translation", "res://Translation/translations.ltg.translation")
 
 [layer_names]
 
@@ -171,9 +193,8 @@ common/physics_ticks_per_second=90
 
 [rendering]
 
-textures/canvas_textures/default_texture_filter=2
 renderer/rendering_method="mobile"
-textures/vram_compression/import_etc2_astc=true
-anti_aliasing/quality/msaa_2d=1
 anti_aliasing/quality/use_debanding=true
+textures/default_filters/texture_mipmap_bias=-0.06999999999999984
+environment/glow/upscale_mode=0
 anti_aliasing/quality/screen_space_aa=1

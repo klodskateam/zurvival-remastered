@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bydlcebl2loll"]
+[gd_scene format=3 uid="uid://bydlcebl2loll"]
 
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="1_d4dmh"]
 [ext_resource type="Script" uid="uid://d1vonxsj1nt4h" path="res://modded_button.gd" id="2_okql6"]
 
-[node name="modded_button" type="Button"]
+[node name="modded_button" type="Button" unique_id=797743700]
 theme = ExtResource("1_d4dmh")
 text = "Модная кнопка😎"
 expand_icon = true

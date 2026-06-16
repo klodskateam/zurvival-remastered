@@ -51,7 +51,12 @@ func _ready() -> void:
 		var RNG = RandomNumberGenerator.new()
 		DATE = int(str(DATE).replace("-", ""))
 		#print("date:" + str(hash(int(DATE/64))))
-		RNG.seed = hash(DATE^8357)
+		if GamemodeManager.CHALLENGEID == 0:
+			RNG.seed = hash(DATE^15863)
+		elif GamemodeManager.CHALLENGEID == 1:
+			RNG.seed = hash(DATE^8931)
+		elif GamemodeManager.CHALLENGEID == 2:
+			RNG.seed = hash(DATE^95372)
 		rngnum = RNG.randi_range(0, 4)
 		rngnum2 = RNG.randi_range(0, 6)
 		rngnum3 = RNG.randi_range(0, 8)
@@ -74,13 +79,16 @@ func _physics_process(delta: float) -> void:
 	
 	look_at($"../player".position)
 	nav(delta)
+	move_and_slide()
 	
 func nav(delta: float) -> void:
 	if navagent.is_navigation_finished():
-		return
-	var nextpath: Vector2 = navagent.get_next_path_position()
-	var newvelocity: Vector2 = (global_position.direction_to(nextpath) * SPEED)
-	position += newvelocity * delta
+		velocity = velocity.lerp(Vector2.ZERO, 0.2)
+	else:
+		var nextpath: Vector2 = navagent.get_next_path_position()
+		var newvelocity: Vector2 = (global_position.direction_to(nextpath) * SPEED)
+		velocity = newvelocity
+	
 
 
 func _on_timer_timeout() -> void:
@@ -95,14 +103,15 @@ func _on_timer_timeout() -> void:
 #	return Vector2.ZERO
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	print(body)
+	#print(body)
 	if body.name == "player":
 		body.HEALTH -= DAMAGE
+		body.dmgblur = true
 	if body.is_in_group("danger_zombie"):
 		if GamemodeManager.GAMEMODE != 3 or !twotapkill:
 			HP -= body.DAMAGE
-			if body.PIERCETHRU:
-				body.PIERCETHRU = false
+			if body.PIERCETHRU and body.DAMAGE >= HP:
+				body.DAMAGE /= 2
 				pass
 			else:
 				body.queue_free()

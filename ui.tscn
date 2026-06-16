@@ -2,14 +2,27 @@
 
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="1_3mkkl"]
 [ext_resource type="Texture2D" uid="uid://ccrwp3ybxv88m" path="res://Resources/vignette_black.png" id="1_ibotj"]
+[ext_resource type="Texture2D" uid="uid://wsirr6dshtnh" path="res://Resources/blurmask.png" id="1_n5rqp"]
 [ext_resource type="Texture2D" uid="uid://duplt3pxkstqo" path="res://Resources/vignette_red.png" id="1_y4yjw"]
+[ext_resource type="Shader" uid="uid://4e5td3doxjwy" path="res://blur.gdshader" id="2_gs482"]
 [ext_resource type="Texture2D" uid="uid://nnwpet7egxrr" path="res://Resources/ui_stuff_lol/speed.png" id="2_iev70"]
 [ext_resource type="Script" uid="uid://1tecp1t17agd" path="res://vignette.gd" id="2_waa4j"]
+[ext_resource type="Script" uid="uid://cypcm8ng2wlnv" path="res://dmgblur.gd" id="3_gs482"]
 [ext_resource type="Texture2D" uid="uid://66com61wgllf" path="res://Resources/ui_stuff_lol/bullets.png" id="3_qg45p"]
 [ext_resource type="Texture2D" uid="uid://nmdal2gs2k1d" path="res://Resources/ui_stuff_lol/health.png" id="4_4pw5h"]
 [ext_resource type="Texture2D" uid="uid://cu64qf2fknrj0" path="res://Resources/ui_stuff_lol/inventory.png" id="8_ok7cu"]
 [ext_resource type="Texture2D" uid="uid://22rpyi6muyu6" path="res://Resources/ui_stuff_lol/cold.png" id="9_irxef"]
 [ext_resource type="Texture2D" uid="uid://1nevn5xi2jek" path="res://Resources/ui_stuff_lol/weapon_starterpistol.png" id="10_irxef"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cxd00"]
+shader = ExtResource("2_gs482")
+shader_parameter/blur_type = 6
+shader_parameter/blur_amount = 12
+shader_parameter/blur_radius = 2.085
+shader_parameter/masktexture = ExtResource("1_n5rqp")
+shader_parameter/blur_direction = Vector2(1, 1)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_gs482"]
 
 [sub_resource type="Animation" id="Animation_waa4j"]
 length = 0.001
@@ -55,6 +68,14 @@ _data = {
 font_size = 48
 
 [node name="UI" type="CanvasLayer" unique_id=301266695]
+
+[node name="DMGBlur" type="TextureRect" parent="." unique_id=728824457]
+material = SubResource("ShaderMaterial_cxd00")
+clip_contents = true
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = SubResource("CanvasTexture_gs482")
+script = ExtResource("3_gs482")
 
 [node name="VignetteBlack" type="Sprite2D" parent="." unique_id=590658195]
 z_index = -5

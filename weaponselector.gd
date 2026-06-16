@@ -6,17 +6,19 @@ extends Panel
 var deployed = false
 
 func _ready() -> void:
+	position = Vector2(161.0, 68)
+	visible = false
 	for i in Global.ALLWEAPONS.size():
 		for i2 in Global.WEAPONS.size():
 			if Global.ALLWEAPONS[i]["class"] == "primary":
 				if Global.ALLWEAPONS[i]["id"] == Global.WEAPONS[i2]["id"]:
-					primary.add_item(Global.WEAPONS[i2]["name"], Global.ALLWEAPONS[i]["id"])
+					primary.add_item(tr(Global.WEAPONS[i2]["name"]), Global.ALLWEAPONS[i]["id"])
 			if Global.ALLWEAPONS[i]["class"] == "sidearm":
 				if Global.ALLWEAPONS[i]["id"] == Global.WEAPONS[i2]["id"]:
-					sidearm.add_item(Global.WEAPONS[i2]["name"], Global.ALLWEAPONS[i]["id"])
+					sidearm.add_item(tr(Global.WEAPONS[i2]["name"]), Global.ALLWEAPONS[i]["id"])
 			if Global.ALLWEAPONS[i]["class"] == "utility":
 				if Global.ALLWEAPONS[i]["id"] == Global.WEAPONS[i2]["id"]:
-					utility.add_item(Global.WEAPONS[i2]["name"], Global.ALLWEAPONS[i]["id"])	
+					utility.add_item(tr(Global.WEAPONS[i2]["name"]), Global.ALLWEAPONS[i]["id"])	
 					
 	for i in Global.SAVED_WEAPONS.size():
 		if Global.SAVED_WEAPONS[i]["class"] == "primary":
@@ -35,6 +37,12 @@ func _ready() -> void:
 					utility.select(i2)		
 					break
 
+func _process(delta: float) -> void:
+	if Vector3(primary.get_selected_id(), sidearm.get_selected_id(), utility.get_selected_id()).length() <= 0:
+		$EquipButton.disabled = true
+	else:
+		$EquipButton.disabled = false
+	pass
 
 func _on_equip_button_pressed() -> void:
 	Global.EQUIPPED_WEAPONS = []
@@ -53,11 +61,11 @@ func _on_weapons_button_pressed() -> void:
 	if !deployed:
 		visible = true
 		var tween = create_tween()
-		tween.tween_property(self, "position", Vector2(421.0, position.y), 0.5).set_trans(Tween.TRANS_QUINT)
+		tween.tween_property(self, "position", Vector2(421.0, 68), 0.5).set_trans(Tween.TRANS_QUINT)
 		deployed = true
 	elif deployed:
 		var tween = create_tween()
-		tween.tween_property(self, "position", Vector2(161.0, position.y), 0.5).set_trans(Tween.TRANS_QUINT)
+		tween.tween_property(self, "position", Vector2(161.0, 68), 0.5).set_trans(Tween.TRANS_QUINT)
 		await tween.finished
 		visible = false	
 		deployed = false

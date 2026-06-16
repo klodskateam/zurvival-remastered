@@ -17,48 +17,53 @@ func load_mods() -> void:
 	MODSLIST = DirAccess.get_files_at("user://mods/")
 	
 	for sus in MODSLIST.size():
-		var filepath = "user://mods/" + MODSLIST[sus]
-		var file = FileAccess.open(filepath, FileAccess.READ)
-		var json = JSON.new()
-		var tmp_mod = json.parse_string(file.get_as_text())
-		
-		#print(str(tmp_mod))
-		
-		if tmp_mod == null:
-			var modpath = "user://mods/" + MODSLIST[sus]
-			ErrorManager.moderror("Error in " + modpath)
-		else:
-			for sussy in tmp_mod["adds"].size():
-				if tmp_mod["adds"][sussy]["type"] == "aim":
-					MODCOSMICITEMS.insert(MODCOSMICITEMS.size(), tmp_mod["adds"][sussy])
-				if tmp_mod["adds"][sussy]["type"] == "bgimage":
-					MODBGIMAGES.insert(MODBGIMAGES.size(), tmp_mod["adds"][sussy])
-				if tmp_mod["adds"][sussy]["type"] == "gamemode":
-					MODGAMEMODES.insert(MODGAMEMODES.size(), tmp_mod["adds"][sussy].duplicate(true))
-#		print("MOD COSMETIC:")
-#		print(MODCOSMICITEMS)
-		
-#		print("MOD BGs:")
-#		print(MODBGIMAGES)
-		
-		# 03/12/25 - когда там в последний раз модлоадер обновлялся? 
-		
-		#print("MOD GAMEMODES:")
-		#print(MODGAMEMODES)
-		
-		print("--")
-		
-		for img in ModLoader.MODBGIMAGES:
-			var imgg = ModLoader.get_mod_img(img["image"])
+		if MODSLIST[sus].ends_with(".json"):
+			var filepath = "user://mods/" + MODSLIST[sus]
+			var file = FileAccess.open(filepath, FileAccess.READ)
+			var json = JSON.new()
+			var tmp_mod = json.parse_string(file.get_as_text())
 			
-			BGs.insert(BGs.size(), {
-				"image": imgg,
-				"author": img["author"]
-			})
-		
-		for gamesus in ModLoader.MODGAMEMODES:
+			#print(str(tmp_mod))
 			
-			pass
+			if tmp_mod == null:
+				var modpath = "user://mods/" + MODSLIST[sus]
+				ErrorManager.moderror("Error in " + modpath)
+			else:
+				for sussy in tmp_mod["adds"].size():
+					if tmp_mod["adds"][sussy]["type"] == "aim":
+						MODCOSMICITEMS.insert(MODCOSMICITEMS.size(), tmp_mod["adds"][sussy])
+					if tmp_mod["adds"][sussy]["type"] == "bgimage":
+						MODBGIMAGES.insert(MODBGIMAGES.size(), tmp_mod["adds"][sussy])
+					if tmp_mod["adds"][sussy]["type"] == "gamemode":
+						MODGAMEMODES.insert(MODGAMEMODES.size(), tmp_mod["adds"][sussy].duplicate(true))
+					if tmp_mod["adds"][sussy]["type"] == "pck":
+						var success = ProjectSettings.load_resource_pack(tmp_mod["adds"][sussy]["path"])
+						if !success:
+							ErrorManager.alert(tr("$failedtoloadpck") % [tmp_mod["adds"][sussy]["path"], tmp_mod["name"]])
+	#		print("MOD COSMETIC:")
+	#		print(MODCOSMICITEMS)
+			
+	#		print("MOD BGs:")
+	#		print(MODBGIMAGES)
+			
+			# 03/12/25 - когда там в последний раз модлоадер обновлялся? 
+			
+			#print("MOD GAMEMODES:")
+			#print(MODGAMEMODES)
+			
+			#print("--")
+			
+			for img in ModLoader.MODBGIMAGES:
+				var imgg = ModLoader.get_mod_img(img["image"])
+				
+				BGs.insert(BGs.size(), {
+					"image": imgg,
+					"author": img["author"]
+				})
+			
+			for gamesus in ModLoader.MODGAMEMODES:
+				
+				pass
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

@@ -1,0 +1,18 @@
+[gd_resource type="AudioBusLayout" format=3 uid="uid://ch5ki26oyxin4"]
+
+[sub_resource type="AudioEffectCompressor" id="AudioEffectCompressor_j3pel"]
+resource_name = "Compressor"
+gain = 7.5
+release_ms = 1105.0
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_j3pel"]
+resource_name = "LowPassFilter"
+cutoff_hz = 725.0
+resonance = 0.45
+
+[resource]
+bus/0/volume_db = -0.32825565
+bus/0/effect/0/effect = SubResource("AudioEffectCompressor_j3pel")
+bus/0/effect/0/enabled = true
+bus/0/effect/1/effect = SubResource("AudioEffectLowPassFilter_j3pel")
+bus/0/effect/1/enabled = false

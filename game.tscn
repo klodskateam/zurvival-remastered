@@ -14,19 +14,20 @@
 [ext_resource type="Script" uid="uid://oer2u1m0p56i" path="res://aim-ingame.gd" id="10_hve3p"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_iotsf"]
-vertices = PackedVector2Array(5518.9297, -454.03125, 5482.0625, 5479.9766, -409.04688, 5474.008, -441.9375, -475.96094)
+vertices = PackedVector2Array(5478.6797, -414.1797, 5442.297, 5439.9375, -369.27344, 5434.047, -401.71875, -435.8125)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(5492, 5490, -419, 5484, -452, -486, 5529, -464)])
-sample_partition_type = 1
+cell_size = 64.0
+agent_radius = 50.0
 
 [sub_resource type="Environment" id="Environment_iotsf"]
 background_mode = 3
 glow_enabled = true
 glow_levels/2 = 0.36
-glow_levels/3 = 0.52
+glow_levels/3 = 0.22
 glow_normalized = true
 glow_bloom = 0.56
-glow_map_strength = 0.75
+glow_blend_mode = 2
 adjustment_enabled = true
 
 [node name="game" type="Node2D" unique_id=243920902]
@@ -84,6 +85,7 @@ position = Vector2(5202, -228)
 position = Vector2(-90, -92)
 
 [node name="player" parent="." unique_id=103684790 instance=ExtResource("1_thl6f")]
+z_index = 1
 position = Vector2(2494, 1858)
 
 [node name="Aim" type="Sprite2D" parent="." unique_id=1833816385]
