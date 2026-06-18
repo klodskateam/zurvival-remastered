@@ -17,7 +17,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 config/name="Zurvival Remastered"
 config/version="2.0.329 Demo!"
 run/main_scene="res://menu.tscn"
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.7", "Forward Plus")
 boot_splash/stretch_mode=0
 boot_splash/use_filter=false
 boot_splash/image="uid://crqpy6n5f8ekg"
@@ -193,6 +193,7 @@ common/physics_ticks_per_second=90
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=2
 renderer/rendering_method="mobile"
 anti_aliasing/quality/use_debanding=true
 textures/default_filters/texture_mipmap_bias=-0.06999999999999984

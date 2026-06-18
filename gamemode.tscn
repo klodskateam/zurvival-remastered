@@ -213,6 +213,7 @@ offset_top = 50.0
 offset_right = 208.0
 offset_bottom = 75.0
 size_flags_horizontal = 3
+theme = ExtResource("2_7rmfm")
 text_overrun_behavior = 1
 clip_text = true
 expand_icon = true
