@@ -206,7 +206,7 @@ func _physics_process(delta: float) -> void:
 		if updatetimer >= updatespeed:
 			if statedebug:
 				print("STATE: " + str(AIStates.keys()[State]))
-			if MOVEORDERS.size() < 1:
+			if MOVEORDERS.size() < 1 or !ray.is_colliding():
 				if stress >= 4 and !TARGET.is_empty():
 					lostcontacttimer += 1 * delta
 					go((TARGET[0] + (TARGET[1] * lostcontacttimer)) + Vector2(randf_range(-350, 500), randf_range(-350, 500)))
@@ -216,7 +216,7 @@ func _physics_process(delta: float) -> void:
 					go(randpoint)
 					targetrotation = global_rotation + randf_range(-1.5, 1.5)
 					
-			if stress <= 0 or TARGET.is_empty():
+			if stress <= 0 or TARGET.is_empty() or (Vector2(velocity.x, velocity.y).length() >= 2 and !TARGET.is_empty()):
 				TARGET.clear()
 				lostcontacttimer = 0
 				inactivetimer = 0

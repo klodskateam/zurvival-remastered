@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bf2kyjf2ksnwg"]
+
+[ext_resource type="Script" uid="uid://dxctm2k7yo0sh" path="res://vehicle.gd" id="1_5ofnf"]
+[ext_resource type="Texture2D" uid="uid://du8a5ir77aehd" path="res://Resources/Vehicles/vehicle01_body.png" id="1_kp204"]
+
+[node name="Node2D" type="CharacterBody2D" unique_id=961654888]
+motion_mode = 1
+script = ExtResource("1_5ofnf")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1381067679]
+scale = Vector2(0.92, 0.92)
+texture = ExtResource("1_kp204")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1469801730]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" unique_id=1664224221]
+scale = Vector2(0.92, 0.92)
+polygon = PackedVector2Array(-106, -254, -106, -252, -110, -249, -110, -247.8, -125.2, -246, -128, -246, -128, -206.3, -116, -204.3, -116, -188, -161.1, -186, -164, -186, -162, -72, -140, -72, -140, 88.100006, -164, 90.20001, -164, 200.79999, -160.8, 204, -127.8, 204, -126, 225.20001, -126, 228, 128.79999, 228, 132, 224.79999, 132, 203.79999, 165.1, 202, 168, 202, 166, 88, 144, 88, 144, -72.2, 168, -74.2, 168, -184.8, 164.79999, -188, 120, -188, 120, -204.3, 132, -206.3, 132, -244.8, 128.79999, -248, 117, -248, 114, -251.7, 114, -254, 85.20001, -254, 80, -248.8, 80, -248, -71, -248, -74, -251.7, -74, -254)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1155468806]
+scale = Vector2(0.92, 0.92)
+polygon = PackedVector2Array(-106, -254, -106, -252, -110, -249, -110, -247.8, -125.2, -246, -128, -246, -128, -206.3, -116, -204.3, -116, -188, -161.1, -186, -164, -186, -162, -72, -140, -72, -140, 88.100006, -164, 90.20001, -164, 200.79999, -160.8, 204, -127.8, 204, -126, 225.20001, -126, 228, 128.79999, 228, 132, 224.79999, 132, 203.79999, 165.1, 202, 168, 202, 166, 88, 144, 88, 144, -72.2, 168, -74.2, 168, -184.8, 164.79999, -188, 120, -188, 120, -204.3, 132, -206.3, 132, -244.8, 128.79999, -248, 117, -248, 114, -251.7, 114, -254, 85.20001, -254, 80, -248.8, 80, -248, -71, -248, -74, -251.7, -74, -254)
+one_way_collision = true

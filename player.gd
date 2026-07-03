@@ -80,6 +80,8 @@ var weaponshakeamount = 0
 var fastshakeamount = 0
 var totalshakeamount = 0
 
+var driving = false
+
 @export var SELECTED_WEAPON = 0
 
 var WEAPONS = []
@@ -201,15 +203,16 @@ func _ready() -> void:
 func _physics_process(delta: float):
 	#TranslationServer.set_locale("be")
 	var direction = get_input()
-	if direction.length() > 0:
-		if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
-			dir2 = direction.lerp(direction.normalized(), 0.9)
+	if !driving:
+		if direction.length() > 0:
+			if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
+				dir2 = direction.lerp(direction.normalized(), 0.9)
+			else:
+				dir2 = direction.lerp(direction.normalized(), 0.35)
+			velocity = velocity.lerp(dir2 * SPEED, 0.3)
 		else:
-			dir2 = direction.lerp(direction.normalized(), 0.35)
-		velocity = velocity.lerp(dir2 * SPEED, 0.3)
-	else:
-		velocity = velocity.lerp(Vector2.ZERO, 0.2)
-	move_and_slide()	
+			velocity = velocity.lerp(Vector2.ZERO, 0.2)
+		move_and_slide()	
 	
 	score.text = str(SCORE)
 	
@@ -331,6 +334,34 @@ func _physics_process(delta: float):
 		_:
 			pass
 	
+	if pickedup:
+		$Pickup01.pitch_scale = randf_range(0.97, 1.12)
+		match randi_range(1,2):
+			1:
+				$Pickup01.stream = PICKUP_01
+			2:
+				$Pickup01.stream = PICKUP_02
+		$Pickup01.play()
+	pickedup = false
+	if pickedup_medkit:
+		$PickupMedkit01.pitch_scale = randf_range(0.96, 1.12)
+		match randi_range(1,2):
+			1:
+				$PickupMedkit01.stream = PICKUP_MEDKIT_01
+			2:
+				$PickupMedkit01.stream = PICKUP_MEDKIT_02
+		$PickupMedkit01.play()
+	pickedup_medkit = false
+	if pickedup_plank:
+		$Pickup01.pitch_scale = randf_range(0.81, 0.98)
+		match randi_range(1,2):
+			1:
+				$Pickup01.stream = PICKUP_01
+			2:
+				$Pickup01.stream = PICKUP_02
+		$Pickup01.play()
+	pickedup_plank = false
+	
 	if steptimer <= 4:
 		steptimer += Vector2(velocity.x, velocity.y).length()/20 * delta
 		
@@ -350,9 +381,16 @@ func _physics_process(delta: float):
 		fastshakeamount += 10
 		dmgblur = false
 		
-	if (OS.get_name() != "Android"):
+	if driving:
+		$CollisionShape2D.disabled = true
+	else:
+		$CollisionShape2D.disabled = false
+	if (OS.get_name() != "Android") and !driving:
 		look_at(get_global_mouse_position())
 		rotate(PI / 2)
+	else:
+		pass
+		
 	if DELAY <= WEAPONS[SELECTED_WEAPON]["delay"]:
 		DELAY += 5.3 * delta
 		if DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]/3.4 and WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0 and WEAPONS[SELECTED_WEAPON]["soundondelay"]:
@@ -452,33 +490,6 @@ func _input(event):
 
 	if event.is_action_pressed("reload") and !WEAPONS[SELECTED_WEAPON]["harmless"]:
 		bullets_reload()
-	if pickedup:
-		$Pickup01.pitch_scale = randf_range(0.97, 1.12)
-		match randi_range(1,2):
-			1:
-				$Pickup01.stream = PICKUP_01
-			2:
-				$Pickup01.stream = PICKUP_02
-		$Pickup01.play()
-	pickedup = false
-	if pickedup_medkit:
-		$PickupMedkit01.pitch_scale = randf_range(0.96, 1.12)
-		match randi_range(1,2):
-			1:
-				$PickupMedkit01.stream = PICKUP_MEDKIT_01
-			2:
-				$PickupMedkit01.stream = PICKUP_MEDKIT_02
-		$PickupMedkit01.play()
-	pickedup_medkit = false
-	if pickedup_plank:
-		$Pickup01.pitch_scale = randf_range(0.81, 0.98)
-		match randi_range(1,2):
-			1:
-				$Pickup01.stream = PICKUP_01
-			2:
-				$Pickup01.stream = PICKUP_02
-		$Pickup01.play()
-	pickedup_plank = false
 	
 	match GamemodeManager.GAMEMODE:
 		-1:

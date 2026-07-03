@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cbybcj5ptpq0p"]
+[gd_scene format=3 uid="uid://cbybcj5ptpq0p"]
 
 [ext_resource type="Script" uid="uid://dluxful5cb5b8" path="res://bullet.gd" id="1_3cfm8"]
 [ext_resource type="Texture2D" uid="uid://cox6fvw581qif" path="res://Resources/bullet.png" id="1_vc2jq"]
@@ -6,23 +6,23 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_58xte"]
 radius = 8.0
 
-[node name="bullet" type="RigidBody2D" groups=["danger_zombie"]]
+[node name="bullet" type="RigidBody2D" unique_id=895692764 groups=["danger_zombie"]]
 collision_layer = 8
 collision_mask = 0
 mass = 0.001
 gravity_scale = 0.0
 script = ExtResource("1_3cfm8")
 
-[node name="Bullet" type="Sprite2D" parent="."]
+[node name="Bullet" type="Sprite2D" parent="." unique_id=1824289247]
 texture = ExtResource("1_vc2jq")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1751243133]
 shape = SubResource("CircleShape2D_58xte")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1040151892]
 collision_layer = 8
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=193223594]
 scale = Vector2(1.1, 1.1)
 shape = SubResource("CircleShape2D_58xte")

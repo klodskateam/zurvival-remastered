@@ -134,7 +134,7 @@ _data = {
 }
 
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_jxjos"]
-points = PackedVector2Array(0, 29.535, -240, -830, 240, -830)
+points = PackedVector2Array(-160, 0, -370, -830, 370, -830, 160, 0, 0, 38.21)
 
 [node name="player" type="CharacterBody2D" unique_id=532043823 groups=["player"]]
 z_index = 1
