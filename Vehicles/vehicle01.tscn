@@ -2,8 +2,16 @@
 
 [ext_resource type="Script" uid="uid://dxctm2k7yo0sh" path="res://vehicle.gd" id="1_5ofnf"]
 [ext_resource type="Texture2D" uid="uid://du8a5ir77aehd" path="res://Resources/Vehicles/vehicle01_body.png" id="1_kp204"]
+[ext_resource type="AudioStream" uid="uid://b3qjbso0o7dbg" path="res://Sound/vehicle01_idle.wav" id="3_f3pth"]
+[ext_resource type="AudioStream" uid="uid://befnh80ifa24h" path="res://Sound/vehicle01_medium.wav" id="4_ch437"]
+[ext_resource type="AudioStream" uid="uid://bj4n863mij8tv" path="res://Sound/vehicle01_high.wav" id="5_nwjs6"]
+[ext_resource type="AudioStream" uid="uid://dgbpocsdhlsu8" path="res://Sound/tire_rolling.wav" id="6_ch437"]
+[ext_resource type="AudioStream" uid="uid://cb1xl5o24yard" path="res://Sound/tire_skid.wav" id="7_nwjs6"]
 
-[node name="Node2D" type="CharacterBody2D" unique_id=961654888]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g4v7s"]
+size = Vector2(275, 450)
+
+[node name="Vehicle" type="CharacterBody2D" unique_id=961654888]
 motion_mode = 1
 script = ExtResource("1_5ofnf")
 
@@ -13,11 +21,34 @@ texture = ExtResource("1_kp204")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1469801730]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" unique_id=1664224221]
-scale = Vector2(0.92, 0.92)
-polygon = PackedVector2Array(-106, -254, -106, -252, -110, -249, -110, -247.8, -125.2, -246, -128, -246, -128, -206.3, -116, -204.3, -116, -188, -161.1, -186, -164, -186, -162, -72, -140, -72, -140, 88.100006, -164, 90.20001, -164, 200.79999, -160.8, 204, -127.8, 204, -126, 225.20001, -126, 228, 128.79999, 228, 132, 224.79999, 132, 203.79999, 165.1, 202, 168, 202, 166, 88, 144, 88, 144, -72.2, 168, -74.2, 168, -184.8, 164.79999, -188, 120, -188, 120, -204.3, 132, -206.3, 132, -244.8, 128.79999, -248, 117, -248, 114, -251.7, 114, -254, 85.20001, -254, 80, -248.8, 80, -248, -71, -248, -74, -251.7, -74, -254)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1008044248]
+visible = false
+shape = SubResource("RectangleShape2D_g4v7s")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1155468806]
-scale = Vector2(0.92, 0.92)
-polygon = PackedVector2Array(-106, -254, -106, -252, -110, -249, -110, -247.8, -125.2, -246, -128, -246, -128, -206.3, -116, -204.3, -116, -188, -161.1, -186, -164, -186, -162, -72, -140, -72, -140, 88.100006, -164, 90.20001, -164, 200.79999, -160.8, 204, -127.8, 204, -126, 225.20001, -126, 228, 128.79999, 228, 132, 224.79999, 132, 203.79999, 165.1, 202, 168, 202, 166, 88, 144, 88, 144, -72.2, 168, -74.2, 168, -184.8, 164.79999, -188, 120, -188, 120, -204.3, 132, -206.3, 132, -244.8, 128.79999, -248, 117, -248, 114, -251.7, 114, -254, 85.20001, -254, 80, -248.8, 80, -248, -71, -248, -74, -251.7, -74, -254)
-one_way_collision = true
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1971430611]
+shape = SubResource("RectangleShape2D_g4v7s")
+
+[node name="IdleEngine" type="AudioStreamPlayer2D" parent="." unique_id=869742812]
+stream = ExtResource("3_f3pth")
+autoplay = true
+max_polyphony = 4
+
+[node name="MediumEngine" type="AudioStreamPlayer2D" parent="." unique_id=2127779753]
+stream = ExtResource("4_ch437")
+autoplay = true
+max_polyphony = 4
+
+[node name="HighEngine" type="AudioStreamPlayer2D" parent="." unique_id=1561850435]
+stream = ExtResource("5_nwjs6")
+autoplay = true
+max_polyphony = 4
+
+[node name="TiresRolling" type="AudioStreamPlayer2D" parent="." unique_id=987486077]
+stream = ExtResource("6_ch437")
+autoplay = true
+max_polyphony = 4
+
+[node name="TireSkid" type="AudioStreamPlayer2D" parent="." unique_id=1146127044]
+stream = ExtResource("7_nwjs6")
+autoplay = true
+max_polyphony = 4

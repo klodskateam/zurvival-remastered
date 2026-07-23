@@ -96,9 +96,18 @@ func _ready() -> void:
 		stepmaterial = "snow"
 	else:
 		stepmaterial = "grass"
+	if get_node_or_null("../grass") != null:
+		$Camera2D.limit_right = $"../grass".region_rect.size.x/2
+		$Camera2D.limit_bottom = $"../grass".region_rect.size.y/2
+	elif get_node_or_null("../snow") != null:
+		$Camera2D.limit_right = $"../snow".region_rect.size.x/2
+		$Camera2D.limit_bottom = $"../snow".region_rect.size.y/2
+		
+	if GamemodeManager.GAMEMODE == 1:
+		FORCE_RUNLOCK = true
 	if GamemodeManager.GAMEMODE == 1 or (GamemodeManager.GAMEMODE == -1 and !GamemodeManager.MODGAME["allow_weapons"]):
 		WEAPONS = []
-		WEAPONS.append(Global.WEAPONS[0])
+		WEAPONS.append(Global.WEAPONS[0].duplicate(true))
 		WEAPONS[0]["sway"] = 0
 		WEAPONS[0]["shake"] = 0
 		WEAPONS[0]["bulletdespawn_dist"] = 10000
@@ -286,37 +295,33 @@ func _physics_process(delta: float):
 			if WEAPONS[SELECTED_WEAPON]["left_bullets"]	== WEAPONS[SELECTED_WEAPON]["bullets"] and !RELOADING and ogroundamount == 0:
 				DELAY = WEAPONS[SELECTED_WEAPON]["delay"]
 		
-	match GamemodeManager.GAMEMODE:
-		1:
-			pass
-		_:	
-			if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
-				if (VINOSLIVOST >= 40):
-					SPEED = RUN_SPEED 
-					fov_up()
-				#	$Camera2D.zoom = Vector2(0.98, 0.98)
-				else:
-					SPEED = RUN_SPEED - 65
-					fov_half_up()
-				#	$Camera2D.zoom = Vector2(0.987, 0.987)
-				if (VINOSLIVOST >= 0):
-					SPEED = RUN_SPEED
-					VINOSLIVOST -= (9.5 + (weightaccum**2)*15.6) * delta
-				else:
-					SPEED = REGULAR_SPEED
-					fov_down()
-		#			$Camera2D.zoom = Vector2(1, 1)
-					RUNLOCK = 1
-			else:
-				SPEED = REGULAR_SPEED
-				if (VINOSLIVOST <= MAX_VINOSLIVOST) and (SPEED != RUN_SPEED):
-					VINOSLIVOST += (3.5 / (1+(weightaccum**2)*0.6)) * delta
-					fov_down()
-		#					$Camera2D.zoom = Vector2(1, 1)
-			if (VINOSLIVOST <= 35) and !Input.is_action_pressed("run") or FORCE_RUNLOCK:
-				RUNLOCK = 1
-			if (VINOSLIVOST >= 35) and !FORCE_RUNLOCK:
-				RUNLOCK = 0
+	if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1 and !driving:
+		if (VINOSLIVOST >= 40):
+			SPEED = RUN_SPEED 
+			fov_up()
+		#	$Camera2D.zoom = Vector2(0.98, 0.98)
+		else:
+			SPEED = RUN_SPEED - 65
+			fov_half_up()
+		#	$Camera2D.zoom = Vector2(0.987, 0.987)
+		if (VINOSLIVOST >= 0):
+			SPEED = RUN_SPEED
+			VINOSLIVOST -= (9.5 + (weightaccum**2)*15.6) * delta
+		else:
+			SPEED = REGULAR_SPEED
+			fov_down()
+#			$Camera2D.zoom = Vector2(1, 1)
+			RUNLOCK = 1
+	else:
+		SPEED = REGULAR_SPEED
+		if (VINOSLIVOST <= MAX_VINOSLIVOST) and (SPEED != RUN_SPEED):
+			VINOSLIVOST += (3.5 / (1+(weightaccum**2)*0.6)) * delta
+			fov_down()
+#					$Camera2D.zoom = Vector2(1, 1)
+	if (VINOSLIVOST <= 35) and !Input.is_action_pressed("run") or FORCE_RUNLOCK:
+		RUNLOCK = 1
+	if (VINOSLIVOST >= 35) and !FORCE_RUNLOCK:
+		RUNLOCK = 0
 		
 	match GamemodeManager.GAMEMODE:
 		1:
@@ -388,8 +393,8 @@ func _physics_process(delta: float):
 	if (OS.get_name() != "Android") and !driving:
 		look_at(get_global_mouse_position())
 		rotate(PI / 2)
-	else:
-		pass
+	elif driving:
+		rotation = 0
 		
 	if DELAY <= WEAPONS[SELECTED_WEAPON]["delay"]:
 		DELAY += 5.3 * delta
@@ -451,10 +456,22 @@ func _process(delta: float):
 	if shaketimer >= shakedelay:
 		tween_shake()
 		shaketimer = 0	
-	shakedelay = 1/(totalshakeamount+10)
+	shakedelay = 2/(totalshakeamount+11)
 	totalshakeamount = shakeamount + weaponshakeamount + fastshakeamount	
 	if Input.is_action_pressed("shoot"):
 		ratata()	
+
+func driving_ui():
+	if driving:
+		var tween = create_tween()
+		tween.parallel().tween_property(bullets_bar, "modulate:a", 0.0, 0.9).set_trans(Tween.TRANS_SINE)
+		tween.parallel().tween_property(kaktameto_bar, "modulate:a", 0.0, 0.9).set_trans(Tween.TRANS_SINE)
+		weapon_text.visible = false
+	else:
+		var tween = create_tween()
+		tween.parallel().tween_property(bullets_bar, "modulate:a", 1.0, 0.9).set_trans(Tween.TRANS_SINE)
+		tween.parallel().tween_property(kaktameto_bar, "modulate:a", 1.0, 0.9).set_trans(Tween.TRANS_SINE)
+		weapon_text.visible = true
 
 func ratata():
 	if !WEAPONS[SELECTED_WEAPON]["automatic"] or WEAPONS[SELECTED_WEAPON]["type"] == "grenade" or RELOADING:
@@ -470,7 +487,7 @@ func _input(event):
 			if (OS.get_name() != "Android"):
 				shoot()
 			
-	if Input.is_action_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["type"] == "grenade":
+	if Input.is_action_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["type"] == "grenade" and !driving:
 		grenade_target.global_position = get_global_mouse_position()
 		inthehall = true # (-all +ole)
 	if Input.is_action_just_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["type"] == "grenade" and WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0:
@@ -480,7 +497,7 @@ func _input(event):
 	if Input.is_action_just_released("shoot") and inthehall and WEAPONS[SELECTED_WEAPON]["type"] == "grenade" and !WEAPONS[SELECTED_WEAPON]["harmless"]:
 		throw()
 		pass
-	if event.is_action_pressed("ads_zoom") and WEAPONS[SELECTED_WEAPON]["scope"]:
+	if event.is_action_pressed("ads_zoom") and WEAPONS[SELECTED_WEAPON]["scope"] and !driving:
 		if ZOOMING:
 			ZOOMING = false
 		else:
@@ -488,7 +505,7 @@ func _input(event):
 
 
 
-	if event.is_action_pressed("reload") and !WEAPONS[SELECTED_WEAPON]["harmless"]:
+	if event.is_action_pressed("reload") and !WEAPONS[SELECTED_WEAPON]["harmless"] and !driving:
 		bullets_reload()
 	
 	match GamemodeManager.GAMEMODE:
@@ -535,7 +552,7 @@ func _input(event):
 					changeweapon(SELECTED_WEAPON-1)
 					
 func changeweapon(number: int = 0):
-	if number > WEAPONS.size() - 1:
+	if number > WEAPONS.size() - 1 or driving:
 		pass
 	else:
 		if number != SELECTED_WEAPON:
@@ -545,9 +562,13 @@ func changeweapon(number: int = 0):
 		SELECTED_WEAPON = number
 		weaponhint_show()
 		if WEAPONS[SELECTED_WEAPON]["harmless"]:
-			bullets_bar.visible = false
+			bullets.visible = false
+			var tween = bullets_bar.create_tween()
+			tween.parallel().tween_property(bullets_bar, "modulate:a", 0.0, 0.3).set_trans(Tween.TRANS_SINE)
 		else:
-			bullets_bar.visible = true
+			bullets.visible = true
+			var tween = bullets_bar.create_tween()
+			tween.parallel().tween_property(bullets_bar, "modulate:a", 1.0, 0.3).set_trans(Tween.TRANS_SINE)
 		RELOADING = false
 		ZOOMING = false
 		#print(SELECTED_WEAPON)
@@ -555,7 +576,7 @@ func changeweapon(number: int = 0):
 		
 	
 func shoot():
-	if WEAPONS[SELECTED_WEAPON]["left_bullets"] != 0:
+	if WEAPONS[SELECTED_WEAPON]["left_bullets"] != 0 and !driving:
 		if DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]:
 			# bullet.add_constant_force(get_global_mouse_position() - bullet.global_position)
 			if WEAPONS[SELECTED_WEAPON]["type"] == "shotgun":

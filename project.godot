@@ -189,7 +189,7 @@ locale/translations=PackedStringArray("res://Translation/translations.be.transla
 
 [physics]
 
-common/physics_ticks_per_second=90
+common/physics_interpolation=true
 
 [rendering]
 

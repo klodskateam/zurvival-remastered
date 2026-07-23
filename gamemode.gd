@@ -37,6 +37,12 @@ var GAMEMODES = [
 		"scene": "res://game-wintermode.tscn",
 		"gamemode": 2,
 	},
+	{
+		"name": tr("$carmodename"),
+		"description": tr("$carmodedesc"),
+		"scene": "res://game-carmode.tscn",
+		"gamemode": 4,
+	},
 ]
 
 var MODDED_GAMEMODES = []
