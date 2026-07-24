@@ -124,15 +124,14 @@ func _ready() -> void:
 		# весело
 		var DATE = Time.get_date_string_from_system()
 		var RNG = RandomNumberGenerator.new()
-		var RNG2 = RandomNumberGenerator.new()
 		DATE = int(str(DATE).replace("-", ""))
 		#print("date:" + str(hash(int(DATE/64))))
 		if GamemodeManager.CHALLENGEID == 0:
-			RNG.seed = hash(DATE^65454)
+			RNG.seed = hash(DATE^ChallengeManager.CHALLENGES[0]["xorhash"])
 		elif GamemodeManager.CHALLENGEID == 1:
-			RNG.seed = hash(DATE^23775)
+			RNG.seed = hash(DATE^ChallengeManager.CHALLENGES[1]["xorhash"])
 		elif GamemodeManager.CHALLENGEID == 2:
-			RNG.seed = hash(DATE^85263)
+			RNG.seed = hash(DATE^ChallengeManager.CHALLENGES[2]["xorhash"])
 		var rngnum = RNG.randi_range(0, 10)
 		var rngnum2 = RNG.randi_range(0, 14)
 		var rngnum3 = RNG.randi_range(0, 23)

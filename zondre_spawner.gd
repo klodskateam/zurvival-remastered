@@ -12,16 +12,16 @@ func _on_timeout() -> void:
 		DATE = int(str(DATE).replace("-", ""))
 		#print("date:" + str(hash(int(DATE/64))))
 		if GamemodeManager.CHALLENGEID == 0:
-			RNG.seed = hash(DATE^6489)
+			RNG.seed = hash(DATE^ChallengeManager.CHALLENGES[0]["xorhash"])
 		elif GamemodeManager.CHALLENGEID == 1:
-			RNG.seed = hash(DATE^563)
+			RNG.seed = hash(DATE^ChallengeManager.CHALLENGES[1]["xorhash"])
 		elif GamemodeManager.CHALLENGEID == 2:
-			RNG.seed = hash(DATE^9173)
+			RNG.seed = hash(DATE^ChallengeManager.CHALLENGES[2]["xorhash"])
 		rngnum = RNG.randi_range(0, 19)
 		rngnum2 = RNG.randi_range(0,6)
 		if rngnum == 16 or rngnum2 == 4:
 			wait_time = randf_range(1.4, 3.8)
-	elif GamemodeManager.GAMEMODE != 3 or rngnum != 16:
+	elif GamemodeManager.GAMEMODE != 3:
 		wait_time = randf_range(2.5, 5)			
 		
 	if GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["zondre_donotspawn"]:

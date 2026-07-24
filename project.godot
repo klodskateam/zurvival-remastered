@@ -36,6 +36,7 @@ ModLoader="*res://mod_loader.gd"
 ErrorManager="*res://error_manager.gd"
 GamemodeManager="*res://gamemode_manager.gd"
 AchivManager="*uid://d0lhn41uqseor"
+ChallengeManager="*uid://vdsjriskuvce"
 
 [display]
 
@@ -186,10 +187,6 @@ locale/translations=PackedStringArray("res://Translation/translations.be.transla
 2d_physics/layer_4="bullet"
 2d_physics/layer_5="system"
 2d_physics/layer_6="grenade"
-
-[physics]
-
-common/physics_interpolation=true
 
 [rendering]
 

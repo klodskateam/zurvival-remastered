@@ -13,11 +13,11 @@ func _ready() -> void:
 		DATE = int(str(DATE).replace("-", ""))
 		#print("date:" + str(hash(int(DATE/64))))
 		if GamemodeManager.CHALLENGEID == 0:
-			RNG.seed = hash(DATE^27)
+			RNG.seed = hash(DATE^ChallengeManager.CHALLENGES[0]["xorhash"])
 		elif GamemodeManager.CHALLENGEID == 1:
-			RNG.seed = hash(DATE^185)
+			RNG.seed = hash(DATE^ChallengeManager.CHALLENGES[1]["xorhash"])
 		elif GamemodeManager.CHALLENGEID == 2:
-			RNG.seed = hash(DATE^938)
+			RNG.seed = hash(DATE^ChallengeManager.CHALLENGES[2]["xorhash"])
 		rngnum = RNG.randi_range(0, 12)
 		if rngnum == 2:
 			medkitsbanned = true
