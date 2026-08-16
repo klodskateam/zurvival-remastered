@@ -7,6 +7,10 @@
 [ext_resource type="AudioStream" uid="uid://bj4n863mij8tv" path="res://Sound/vehicle01_high.wav" id="5_nwjs6"]
 [ext_resource type="AudioStream" uid="uid://dgbpocsdhlsu8" path="res://Sound/tire_rolling.wav" id="6_ch437"]
 [ext_resource type="AudioStream" uid="uid://cb1xl5o24yard" path="res://Sound/tire_skid.wav" id="7_nwjs6"]
+[ext_resource type="Texture2D" uid="uid://q31gifi04vi" path="res://Resources/Vehicles/vehicle01_mg108.png" id="8_40dfk"]
+[ext_resource type="AudioStream" uid="uid://b5mni24787o6i" path="res://Sound/pistol.wav" id="9_4xwmr"]
+[ext_resource type="AudioStream" uid="uid://d1h3atxwyd1p0" path="res://Sound/pistol-reload.wav" id="10_nllb8"]
+[ext_resource type="AudioStream" uid="uid://c6m8ni3m64iqm" path="res://Sound/no_ammo.wav" id="11_mkyng"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g4v7s"]
 size = Vector2(275, 450)
@@ -52,3 +56,34 @@ max_polyphony = 4
 stream = ExtResource("7_nwjs6")
 autoplay = true
 max_polyphony = 4
+
+[node name="MG" type="Sprite2D" parent="." unique_id=324165729]
+z_index = 2
+texture = ExtResource("8_40dfk")
+
+[node name="Marker2D" type="Marker2D" parent="MG" unique_id=1115412697]
+position = Vector2(1, -88)
+
+[node name="ShootSound" type="AudioStreamPlayer" parent="." unique_id=826170571]
+stream = ExtResource("9_4xwmr")
+max_polyphony = 128
+
+[node name="ReloadSound" type="AudioStreamPlayer" parent="." unique_id=1743184553]
+stream = ExtResource("10_nllb8")
+max_polyphony = 128
+
+[node name="EmptySound" type="AudioStreamPlayer" parent="." unique_id=45617327]
+stream = ExtResource("11_mkyng")
+max_polyphony = 128
+
+[node name="ShootLayer1" type="AudioStreamPlayer" parent="." unique_id=1660219528]
+stream = ExtResource("9_4xwmr")
+max_polyphony = 128
+
+[node name="ShootLayer2" type="AudioStreamPlayer" parent="." unique_id=1231715743]
+stream = ExtResource("9_4xwmr")
+max_polyphony = 128
+
+[node name="ShootLayer3" type="AudioStreamPlayer" parent="." unique_id=622998944]
+stream = ExtResource("9_4xwmr")
+max_polyphony = 128

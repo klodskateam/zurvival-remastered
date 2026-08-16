@@ -256,9 +256,14 @@ func _physics_process(delta: float):
 			bullets_bar.max_value = WEAPONS[SELECTED_WEAPON]["bullets"]
 			bullets_bar.value = WEAPONS[SELECTED_WEAPON]["left_bullets"]
 		_:	
-			bullets.text = tr("$bullets") + ": " + str(WEAPONS[SELECTED_WEAPON]["left_bullets"]) + "/" + str(WEAPONS[SELECTED_WEAPON]["zapas_bullets"])
-			bullets_bar.max_value = WEAPONS[SELECTED_WEAPON]["bullets"]
-			bullets_bar.value = WEAPONS[SELECTED_WEAPON]["left_bullets"]
+			if !driving:
+				bullets.text = tr("$bullets") + ": " + str(WEAPONS[SELECTED_WEAPON]["left_bullets"]) + "/" + str(WEAPONS[SELECTED_WEAPON]["zapas_bullets"])
+				bullets_bar.max_value = WEAPONS[SELECTED_WEAPON]["bullets"]
+				bullets_bar.value = WEAPONS[SELECTED_WEAPON]["left_bullets"]
+			else:
+				bullets.text = tr("$bullets") + ": " + str(get_parent().VEHICLE["weapon"]["left_bullets"]) + "/" + str(get_parent().VEHICLE["weapon"]["zapas_bullets"])
+				bullets_bar.max_value = get_parent().VEHICLE["weapon"]["bullets"]
+				bullets_bar.value =	get_parent().VEHICLE["weapon"]["left_bullets"]
 	
 	if health_bar:
 		health.text = tr("$health") + ": " + str(HEALTH) + "/" + str(MAX_HEALTH)
@@ -463,14 +468,12 @@ func _process(delta: float):
 func driving_ui():
 	if driving:
 		var tween = create_tween()
-		tween.parallel().tween_property(bullets_bar, "modulate:a", 0.0, 0.9).set_trans(Tween.TRANS_SINE)
+		tween.parallel().tween_property(bullets_bar, "position", Vector2(30,33), 0.9).set_trans(Tween.TRANS_SINE)
 		tween.parallel().tween_property(kaktameto_bar, "modulate:a", 0.0, 0.9).set_trans(Tween.TRANS_SINE)
-		weapon_text.visible = false
 	else:
 		var tween = create_tween()
-		tween.parallel().tween_property(bullets_bar, "modulate:a", 1.0, 0.9).set_trans(Tween.TRANS_SINE)
+		tween.parallel().tween_property(bullets_bar, "positiob", Vector2(30,66), 0.9).set_trans(Tween.TRANS_SINE)
 		tween.parallel().tween_property(kaktameto_bar, "modulate:a", 1.0, 0.9).set_trans(Tween.TRANS_SINE)
-		weapon_text.visible = true
 
 func ratata():
 	if !WEAPONS[SELECTED_WEAPON]["automatic"] or WEAPONS[SELECTED_WEAPON]["type"] == "grenade" or RELOADING:
@@ -638,6 +641,8 @@ func shoot():
 				$ShootSound.play()
 			DELAY = 0
 			#print(DELAY)
+	elif driving:
+		pass
 	else:
 		$EmptySound.play()
 		DELAY = 0
