@@ -8,7 +8,9 @@ radius = 38.0
 
 [node name="Zondre" type="CharacterBody2D" unique_id=1842026934 groups=["zondre", "zondre_juice"]]
 collision_layer = 34
-collision_mask = 0
+collision_mask = 64
+slide_on_ceiling = false
+floor_stop_on_slope = false
 script = ExtResource("1_kk7w6")
 
 [node name="Zondre" type="Sprite2D" parent="." unique_id=1224313490]
@@ -20,8 +22,8 @@ scale = Vector2(1.03544, 0.96786)
 shape = SubResource("CircleShape2D_t8bhi")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1077420930]
-collision_layer = 2
-collision_mask = 9
+collision_layer = 66
+collision_mask = 73
 priority = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1874270512]

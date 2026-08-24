@@ -55,6 +55,7 @@ version_control/autoload_on_startup=true
 thisisamedkit=""
 thesearebullets=""
 zondre=""
+vehicle=""
 
 [input]
 
@@ -187,6 +188,7 @@ locale/translations=PackedStringArray("res://Translation/translations.be.transla
 2d_physics/layer_4="bullet"
 2d_physics/layer_5="system"
 2d_physics/layer_6="grenade"
+2d_physics/layer_7="vehicle"
 
 [rendering]
 

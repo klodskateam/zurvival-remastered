@@ -32,6 +32,18 @@ glow_bloom = 0.56
 glow_map_strength = 0.75
 adjustment_enabled = true
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rn3ew"]
+friction = 0.55
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hev48"]
+size = Vector2(5000, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kfrf6"]
+size = Vector2(5000, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2rng7"]
+size = Vector2(32, 5056)
+
 [node name="game" type="Node2D" unique_id=243920902]
 
 [node name="UI" parent="." unique_id=216746193 instance=ExtResource("4_t63fs")]
@@ -109,5 +121,24 @@ position = Vector2(2401, 1478)
 [node name="player3" parent="." unique_id=1930702717 instance=ExtResource("13_lc2xo")]
 z_index = 2
 position = Vector2(2078, 1976)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1591067736]
+physics_material_override = SubResource("PhysicsMaterial_rn3ew")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=295090086]
+position = Vector2(2500, -14)
+shape = SubResource("RectangleShape2D_hev48")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=591742148]
+position = Vector2(2499, 5014)
+shape = SubResource("RectangleShape2D_kfrf6")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D" unique_id=1236126748]
+position = Vector2(-15, 2500)
+shape = SubResource("RectangleShape2D_2rng7")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D" unique_id=74155261]
+position = Vector2(5015, 2500)
+shape = SubResource("RectangleShape2D_2rng7")
 
 [connection signal="timeout" from="Timer" to="Timer" method="_on_timeout"]

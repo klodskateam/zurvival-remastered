@@ -127,6 +127,18 @@ glow_bloom = 0.79
 adjustment_enabled = true
 adjustment_brightness = 0.53
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kwlxl"]
+friction = 0.55
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7u8cg"]
+size = Vector2(5000, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ufyx"]
+size = Vector2(5000, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6oso3"]
+size = Vector2(32, 5056)
+
 [node name="game" type="Node2D" unique_id=494643166]
 
 [node name="UI" parent="." unique_id=273427744 instance=ExtResource("4_t63fs")]
@@ -493,6 +505,25 @@ max_distance = 4096.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=834258434]
 environment = SubResource("Environment_kwlxl")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1452007783]
+physics_material_override = SubResource("PhysicsMaterial_kwlxl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=888136472]
+position = Vector2(2500, -14)
+shape = SubResource("RectangleShape2D_7u8cg")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=1733356531]
+position = Vector2(2499, 5014)
+shape = SubResource("RectangleShape2D_1ufyx")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D" unique_id=794176563]
+position = Vector2(-15, 2500)
+shape = SubResource("RectangleShape2D_6oso3")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D" unique_id=1510541278]
+position = Vector2(5015, 2500)
+shape = SubResource("RectangleShape2D_6oso3")
 
 [connection signal="timeout" from="Timer" to="Timer" method="_on_timeout"]
 [connection signal="timeout" from="WinterTimer" to="Campfire" method="_on_timer_timeout"]

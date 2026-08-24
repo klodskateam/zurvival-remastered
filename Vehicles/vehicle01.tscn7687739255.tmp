@@ -13,10 +13,11 @@
 [ext_resource type="AudioStream" uid="uid://c6m8ni3m64iqm" path="res://Sound/no_ammo.wav" id="11_mkyng"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g4v7s"]
-size = Vector2(300, 480)
+size = Vector2(275, 450)
 
-[node name="Vehicle" type="CharacterBody2D" unique_id=961654888]
-collision_layer = 65
+[node name="Vehicle" type="CharacterBody2D" unique_id=961654888 groups=["vehicle"]]
+collision_layer = 3
+collision_mask = 3
 collision_priority = 3.0
 motion_mode = 1
 slide_on_ceiling = false
@@ -26,14 +27,10 @@ script = ExtResource("1_5ofnf")
 scale = Vector2(0.92, 0.92)
 texture = ExtResource("1_kp204")
 
-[node name="Area2D" type="Area2D" parent="." unique_id=1469801730 groups=["vehicle"]]
-collision_layer = 3
-collision_mask = 3
-priority = 1
-linear_damp_space_override = 1
-angular_damp_space_override = 1
+[node name="Area2D" type="Area2D" parent="." unique_id=1469801730]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1008044248]
+visible = false
 shape = SubResource("RectangleShape2D_g4v7s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1971430611]
@@ -94,5 +91,3 @@ max_polyphony = 128
 [node name="ShootLayer3" type="AudioStreamPlayer" parent="." unique_id=622998944]
 stream = ExtResource("9_4xwmr")
 max_polyphony = 128
-
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

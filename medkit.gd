@@ -7,3 +7,8 @@ func _on_body_entered(body: Node2D):
 			body.HEALTH += 10
 			body.pickedup_medkit = true
 			queue_free()
+	if body.is_in_group("vehicle"):
+		if body.HP <= body.MAX_HP-10:
+			body.HP += 10
+			body.driver.pickedup_medkit = true
+			queue_free()

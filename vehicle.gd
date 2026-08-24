@@ -10,6 +10,9 @@ extends CharacterBody2D
 @onready var MGMarker: Marker2D = $MG/Marker2D
 
 
+var HP = 200
+@export var MAX_HP = 200
+
 @export var driver : Node2D
 var driving = false
 var direction : Vector2
@@ -25,15 +28,17 @@ var RELOADING = false
 var VEHICLE =	{
 		"driver_position": [-64, -17],
 		"driver_hidden": false,	
-		"engine_power": 1.4,
-		"vehicle_maximumspeed": 800,
+		"engine_power": 2.1,
+		"vehicle_maximumspeed": 1000,
+		"vehicle_optimalspeed": 800,
 		"vehicle_maximumbackspeed": 210,
 		"vehicle_steermultiplier": 5,
 		"vehicle_maxsteer": 8, 
-		"vehicle_steerdamp": 3.7,
-		"vehicle_tiregrip": 0.7,
+		"vehicle_steerdamp": 3.8,
+		"vehicle_tiregrip": 0.73,
 		"vehicle_tiredriftbrake": 2.6,
-		"vehicle_tireslip": 1.2,
+		"vehicle_tireslip": 1.1,
+		"vehicle_physmass": 850,
 		
 		"weapon_available": true,
 		"weapon_turnmultiplier": 8,
@@ -63,11 +68,12 @@ var VEHICLE =	{
 	}
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("shoot") and VEHICLE["weapon"]["type"] != "grenade" and driving:
-		if (OS.get_name() != "Android"):
-			shoot()
-	if event.is_action_pressed("reload") and driving:
-		bullets_reload()
+	if VEHICLE["weapon_available"]:
+		if event.is_action_pressed("shoot") and VEHICLE["weapon"]["type"] != "grenade" and driving:
+			if (OS.get_name() != "Android"):
+				shoot()
+		if event.is_action_pressed("reload") and driving:
+			bullets_reload()
 
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("shoot") and driving:
@@ -77,12 +83,15 @@ func _physics_process(delta: float) -> void:
 	if driver != null and direction:
 		#print("auf")
 		throttle += VEHICLE["engine_power"] * direction.y * delta
-		STEERING_SPEED += clampf(direction.x * abs(clampf(pow(abs(CURRENT_SPEED)/VEHICLE["vehicle_maximumspeed"], 1.4), 0, 1.0)) * delta * VEHICLE["vehicle_steermultiplier"], -VEHICLE["vehicle_maxsteer"], VEHICLE["vehicle_maxsteer"])
+		if get_real_velocity().length() < VEHICLE["vehicle_optimalspeed"]:
+			STEERING_SPEED += clampf(direction.x * abs(clampf(pow(abs(get_real_velocity().length()/VEHICLE["vehicle_optimalspeed"]), 1.4), 0, 1.0)) * delta * VEHICLE["vehicle_steermultiplier"], -VEHICLE["vehicle_maxsteer"], VEHICLE["vehicle_maxsteer"])
+		else:
+			STEERING_SPEED += clampf(direction.x * abs(clampf(1-abs(abs(get_real_velocity().length() - VEHICLE["vehicle_optimalspeed"])/(VEHICLE["vehicle_maximumspeed"] - VEHICLE["vehicle_optimalspeed"])), 0.5, 1.0)) * delta * VEHICLE["vehicle_steermultiplier"], -VEHICLE["vehicle_maxsteer"], VEHICLE["vehicle_maxsteer"])
 	elif driver != null:
 		if abs(STEERING_SPEED) >= 30:
-			throttle = lerpf(throttle, 0, (delta/2) * (1-(abs(CURRENT_SPEED)/VEHICLE["vehicle_maximumspeed"])+0.05))
+			throttle = lerpf(throttle, 0, (delta/2) * (1-pow((get_real_velocity().length()/VEHICLE["vehicle_maximumspeed"]), 2)+0.05))
 		else:
-			throttle = lerpf(throttle, 0, 2 * delta * (1-(abs(CURRENT_SPEED)/VEHICLE["vehicle_maximumspeed"])+0.1))
+			throttle = lerpf(throttle, 0, 2 * delta * (1-pow((get_real_velocity().length()/VEHICLE["vehicle_maximumspeed"]), 2)+0.1))
 		
 	#print("THR: " + str(throttle))
 	
@@ -95,7 +104,7 @@ func _physics_process(delta: float) -> void:
 		driver.driving = true
 		driver.driving_ui()
 		driving = true
-		
+	
 	if driver != null and driving:
 		if VEHICLE["weapon_available"]:
 			MG.rotation = lerp_angle(MG.rotation, get_angle_to(get_global_mouse_position())+PI/2, delta*VEHICLE["weapon_turnmultiplier"])
@@ -109,17 +118,17 @@ func _physics_process(delta: float) -> void:
 			CURRENT_SPEED = 0
 		throttle = clampf(throttle, -1, 2)	
 		CURRENT_SPEED = clampf(CURRENT_SPEED, -VEHICLE["vehicle_maximumspeed"], VEHICLE["vehicle_maximumbackspeed"])
-		if abs(velocity.length()) >= 25 and abs(STEERING_SPEED) >= 0.05:
-			CURRENT_SPEED = lerpf(CURRENT_SPEED, 0, (1-abs(velocity.normalized().dot(Vector2.DOWN.rotated(rotation))))*VEHICLE["vehicle_tiredriftbrake"]*(delta/1.5))
-			STEERING_SPEED += sign(STEERING_SPEED)*pow((1-abs(velocity.normalized().dot(Vector2.DOWN.rotated(rotation)))), 2)*(VEHICLE["vehicle_tireslip"]*10)*delta
+		if abs(get_real_velocity().length()) >= 25 and abs(STEERING_SPEED) >= 0.05:
+			CURRENT_SPEED = lerpf(CURRENT_SPEED, 0, pow((1-abs(get_real_velocity().normalized().dot(Vector2.DOWN.rotated(rotation)))), 2)*VEHICLE["vehicle_tiredriftbrake"]*(delta/1.5))
+			STEERING_SPEED += (sign(STEERING_SPEED)*pow((1-abs(get_real_velocity().normalized().dot(Vector2.DOWN.rotated(rotation)))), 2)*(VEHICLE["vehicle_tireslip"]*10)*delta)*(abs(get_real_velocity().length())/VEHICLE["vehicle_maximumspeed"])
 		STEERING_SPEED = lerpf(STEERING_SPEED, 0, VEHICLE["vehicle_steerdamp"]*delta)
-		if velocity.length() > 0:
-			RPM = lerpf(RPM, clampf((abs(CURRENT_SPEED)/VEHICLE["vehicle_maximumspeed"])*(abs(throttle)), 0, 1), delta/2)
+		if get_real_velocity().length() > 0:
+			RPM = lerpf(RPM, clampf((abs(get_real_velocity().length())/VEHICLE["vehicle_maximumspeed"])*(abs(throttle)), 0, 1), delta/2)
 		else:
-			RPM = lerpf(RPM,clampf((abs(CURRENT_SPEED)/VEHICLE["vehicle_maximumbackspeed"]/2)*(abs(throttle)/2), 0, 1), delta/2)
+			RPM = lerpf(RPM,clampf((abs(get_real_velocity().length())/VEHICLE["vehicle_maximumbackspeed"]/2)*(abs(throttle)/2), 0, 1), delta/2)
 		
 		rotation += STEERING_SPEED * delta
-		velocity = velocity.lerp(Vector2.DOWN.rotated(rotation) * CURRENT_SPEED, VEHICLE["vehicle_tiregrip"]*delta)
+		velocity = get_real_velocity().lerp(Vector2.DOWN.rotated(rotation) * CURRENT_SPEED, VEHICLE["vehicle_tiregrip"]*delta)
 		
 	idle_engine.volume_linear = clampf(1- pow(absf(RPM), 2), 0, 1)
 	medium_engine.volume_linear = clampf(1- pow(absf(RPM - 0.5), 2), 0, 1)
@@ -129,87 +138,106 @@ func _physics_process(delta: float) -> void:
 	medium_engine.pitch_scale = clampf(lerpf(0.5, 1.5, RPM), 0.05, 1.5)
 	high_engine.pitch_scale = clampf(lerpf(0.7, 1.2, clampf((RPM-0.5)*2, 0, 1)), 0.05, 1.5)
 	
-	TireAudio.volume_linear = clampf((abs(CURRENT_SPEED)/VEHICLE["vehicle_maximumspeed"])*5, 0.05, 5)
-	TireAudio.pitch_scale = clampf(lerpf(0.2, 3.8, abs(CURRENT_SPEED/1.5)/VEHICLE["vehicle_maximumspeed"]), 0.05, 5)
+	TireAudio.volume_linear = clampf((abs(get_real_velocity().length())/VEHICLE["vehicle_maximumspeed"])*5, 0.05, 5)
+	TireAudio.pitch_scale = clampf(lerpf(0.2, 3.8, abs(get_real_velocity().length()/1.5)/VEHICLE["vehicle_maximumspeed"]), 0.05, 5)
 	
-	TireSkid.volume_linear = clampf((abs(CURRENT_SPEED*2)/VEHICLE["vehicle_maximumspeed"]) * (1-abs(velocity.normalized().dot(Vector2.DOWN.rotated(rotation)))), 0.01, 4)
-	TireSkid.pitch_scale = clampf(lerpf(0.7, 10.8, abs(CURRENT_SPEED/4)/VEHICLE["vehicle_maximumspeed"]), 0.05, 20)
+	TireSkid.volume_linear = clampf((abs(get_real_velocity().length()*2)/VEHICLE["vehicle_maximumspeed"]) * (1-abs(velocity.normalized().dot(Vector2.DOWN.rotated(rotation)))), 0.01, 4)
+	TireSkid.pitch_scale = clampf(lerpf(0.7, 10.8, abs(get_real_velocity().length()/4)/VEHICLE["vehicle_maximumspeed"]), 0.05, 20)
 	
+	if VEHICLE["weapon_available"]:
+		if DELAY <= VEHICLE["weapon"]["delay"]:
+			DELAY += 5.3 * delta
 	
-	if DELAY <= VEHICLE["weapon"]["delay"]:
-		DELAY += 5.3 * delta
+	for realzondre100p in $Area2D.get_overlapping_bodies():
+		if realzondre100p.is_in_group("zondre"):
+			var momentum = VEHICLE["vehicle_physmass"] * get_real_velocity().length() # "Говоря языком дилетанта, что быстро влетает, то быстро и вылетает."
+			print(momentum)
+			if momentum >= 730000:
+				realzondre100p.HP = 0
+			elif momentum >= 100000:
+				realzondre100p.HP -= (momentum/31250)*delta
+			print(realzondre100p.HP)
 	
 	move_and_slide()
 	
 func ratata():
-	if !VEHICLE["weapon"]["automatic"] or VEHICLE["weapon"]["type"] == "grenade":
-		return
-	if VEHICLE["weapon"]["left_bullets"] > 0 and DELAY >= VEHICLE["weapon"]["delay"]:
-		shoot()
+	if VEHICLE["weapon_available"]:
+		if !VEHICLE["weapon"]["automatic"] or VEHICLE["weapon"]["type"] == "grenade":
+			return
+		if VEHICLE["weapon"]["left_bullets"] > 0 and DELAY >= VEHICLE["weapon"]["delay"]:
+			shoot()
 		
 func shoot():
-	if VEHICLE["weapon"]["left_bullets"] != 0:
-		if DELAY >= VEHICLE["weapon"]["delay"]:
-			# bullet.add_constant_force(get_global_mouse_position() - bullet.global_position)
-			if VEHICLE["weapon"]["type"] == "shotgun":
-				#$Camera2D/AnimationPlayer.stop()
-				#$Camera2D/AnimationPlayer.play("shotgun_recoil")	
-				for i in 9:
+	if VEHICLE["weapon_available"]:
+		if VEHICLE["weapon"]["left_bullets"] != 0:
+			if DELAY >= VEHICLE["weapon"]["delay"]:
+				# bullet.add_constant_force(get_global_mouse_position() - bullet.global_position)
+				if VEHICLE["weapon"]["type"] == "shotgun":
+					#$Camera2D/AnimationPlayer.stop()
+					#$Camera2D/AnimationPlayer.play("shotgun_recoil")	
+					for i in 9:
+						var bullet = P_BULLET.instantiate()
+						bullet.shotgunbullet = true
+						bullet.global_position = MGMarker.global_position
+						bullet.markerpos = MGMarker.global_position
+						bullet.despawn_dist = VEHICLE["weapon"]["bulletdespawn_dist"]
+						bullet.PIERCETHRU = VEHICLE["weapon"]["penthrough"]
+						bullet.DAMAGE = VEHICLE["weapon"]["damage"]
+						bullet.SPEED = VEHICLE["weapon"]["bullet_speed"]
+						if VEHICLE["weapon"]["left_bullets"] == VEHICLE["weapon"]["bullets"]:
+							bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)))*VEHICLE["weapon"]["sway"]/1.5
+						else:
+							bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)))*VEHICLE["weapon"]["sway"]					
+						get_parent().add_child(bullet)
+				else:
 					var bullet = P_BULLET.instantiate()
-					bullet.shotgunbullet = true
 					bullet.global_position = MGMarker.global_position
 					bullet.markerpos = MGMarker.global_position
 					bullet.despawn_dist = VEHICLE["weapon"]["bulletdespawn_dist"]
 					bullet.PIERCETHRU = VEHICLE["weapon"]["penthrough"]
-					bullet.DAMAGE = VEHICLE["weapon"]["damage"]
 					bullet.SPEED = VEHICLE["weapon"]["bullet_speed"]
+					bullet.DAMAGE = VEHICLE["weapon"]["damage"]
 					if VEHICLE["weapon"]["left_bullets"] == VEHICLE["weapon"]["bullets"]:
-						bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)))*VEHICLE["weapon"]["sway"]/1.5
+						bullet.global_rotation = MG.global_rotation+(sin(randf_range(-64, 64)))*VEHICLE["weapon"]["sway"]/1.5
 					else:
-						bullet.global_rotation = global_rotation+(sin(randf_range(-64, 64)))*VEHICLE["weapon"]["sway"]					
+						bullet.global_rotation = MG.global_rotation+(sin(randf_range(-64, 64)))*VEHICLE["weapon"]["sway"]				
 					get_parent().add_child(bullet)
-			else:
-				var bullet = P_BULLET.instantiate()
-				bullet.global_position = MGMarker.global_position
-				bullet.markerpos = MGMarker.global_position
-				bullet.despawn_dist = VEHICLE["weapon"]["bulletdespawn_dist"]
-				bullet.PIERCETHRU = VEHICLE["weapon"]["penthrough"]
-				bullet.SPEED = VEHICLE["weapon"]["bullet_speed"]
-				bullet.DAMAGE = VEHICLE["weapon"]["damage"]
-				if VEHICLE["weapon"]["left_bullets"] == VEHICLE["weapon"]["bullets"]:
-					bullet.global_rotation = MG.global_rotation+(sin(randf_range(-64, 64)))*VEHICLE["weapon"]["sway"]/1.5
+				VEHICLE["weapon"]["left_bullets"] -= 1
+				VEHICLE["weapon"]["left_bullets"] = max(0, VEHICLE["weapon"]["left_bullets"])
+				if VEHICLE["weapon"]["layered_shootsounds"]:
+					$ShootLayer1.stream = load(str(VEHICLE["weapon"]["shootlayer_1"] + "_" + str(randi_range(1,2)).pad_zeros(2)) + ".wav")
+					$ShootLayer1.pitch_scale = randf_range(0.93, 1.06)
+					$ShootLayer2.stream = load(str(VEHICLE["weapon"]["shootlayer_2"] + "_" + str(randi_range(1,2)).pad_zeros(2)) + ".wav")
+					$ShootLayer2.pitch_scale = randf_range(0.93, 1.06)
+					$ShootLayer3.stream = load(str(VEHICLE["weapon"]["shootlayer_3"] + "_" + str(randi_range(1,2)).pad_zeros(2)) + ".wav")
+					$ShootLayer3.pitch_scale = randf_range(0.93, 1.06)
+					$ShootLayer1.play()
+					$ShootLayer2.play()
+					$ShootLayer3.play()
 				else:
-					bullet.global_rotation = MG.global_rotation+(sin(randf_range(-64, 64)))*VEHICLE["weapon"]["sway"]				
-				get_parent().add_child(bullet)
-			VEHICLE["weapon"]["left_bullets"] -= 1
-			VEHICLE["weapon"]["left_bullets"] = max(0, VEHICLE["weapon"]["left_bullets"])
-			if VEHICLE["weapon"]["layered_shootsounds"]:
-				$ShootLayer1.stream = load(str(VEHICLE["weapon"]["shootlayer_1"] + "_" + str(randi_range(1,2)).pad_zeros(2)) + ".wav")
-				$ShootLayer1.pitch_scale = randf_range(0.93, 1.06)
-				$ShootLayer2.stream = load(str(VEHICLE["weapon"]["shootlayer_2"] + "_" + str(randi_range(1,2)).pad_zeros(2)) + ".wav")
-				$ShootLayer2.pitch_scale = randf_range(0.93, 1.06)
-				$ShootLayer3.stream = load(str(VEHICLE["weapon"]["shootlayer_3"] + "_" + str(randi_range(1,2)).pad_zeros(2)) + ".wav")
-				$ShootLayer3.pitch_scale = randf_range(0.93, 1.06)
-				$ShootLayer1.play()
-				$ShootLayer2.play()
-				$ShootLayer3.play()
-			else:
-				$ShootSound.pitch_scale = randf_range(0.93, 1.06)
-				$ShootSound.stream = load(VEHICLE["weapon"]["sound"])
-				$ShootSound.play()
+					$ShootSound.pitch_scale = randf_range(0.93, 1.06)
+					$ShootSound.stream = load(VEHICLE["weapon"]["sound"])
+					$ShootSound.play()
+				DELAY = 0
+				#print(DELAY)
+		else:
+			$EmptySound.play()
 			DELAY = 0
-			#print(DELAY)
-	else:
-		$EmptySound.play()
-		DELAY = 0
-		print(DELAY)
+			print(DELAY)
 		
 func bullets_reload():
-	if (VEHICLE["weapon"]["left_bullets"] == 0) and (VEHICLE["weapon"]["zapas_bullets"] >= VEHICLE["weapon"]["bullets"]):
-		VEHICLE["weapon"]["left_bullets"] = VEHICLE["weapon"]["bullets"]
-		DELAY = 0
-		VEHICLE["weapon"]["zapas_bullets"] -= VEHICLE["weapon"]["bullets"]
-		VEHICLE["weapon"]["zapas_bullets"] = max(0, VEHICLE["weapon"]["zapas_bullets"])
-		$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
-		$ReloadSound.stream = load(VEHICLE["weapon"]["reloadsound"])
-		$ReloadSound.play()
+	if VEHICLE["weapon_available"]:
+		if (VEHICLE["weapon"]["left_bullets"] == 0) and (VEHICLE["weapon"]["zapas_bullets"] >= VEHICLE["weapon"]["bullets"]):
+			VEHICLE["weapon"]["left_bullets"] = VEHICLE["weapon"]["bullets"]
+			DELAY = 0
+			VEHICLE["weapon"]["zapas_bullets"] -= VEHICLE["weapon"]["bullets"]
+			VEHICLE["weapon"]["zapas_bullets"] = max(0, VEHICLE["weapon"]["zapas_bullets"])
+			$ReloadSound.pitch_scale = randf_range(0.94, 1.05)
+			$ReloadSound.stream = load(VEHICLE["weapon"]["reloadsound"])
+			$ReloadSound.play()
+
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body.is_in_group("zondre"):
+		HP -= 10

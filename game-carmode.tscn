@@ -12,11 +12,12 @@
 [ext_resource type="Texture2D" uid="uid://bnoiah2jgxblr" path="res://Resources/aims/default.png" id="9_vef74"]
 [ext_resource type="Script" uid="uid://oer2u1m0p56i" path="res://aim-ingame.gd" id="10_hve3p"]
 [ext_resource type="PackedScene" uid="uid://bf2kyjf2ksnwg" path="res://Vehicles/vehicle01.tscn" id="12_jhbkd"]
+[ext_resource type="PackedScene" uid="uid://cow6451posxft" path="res://spawner.tscn" id="14_07vmf"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_iotsf"]
-vertices = PackedVector2Array(5478.6797, -414.1797, 5442.297, 5439.9375, -369.27344, 5434.047, -401.71875, -435.8125)
+vertices = PackedVector2Array(24949, 24950.992, 49, 24949, 49.992188, 50.992188, 24953.977, 46.007813)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(5492, 5490, -419, 5484, -452, -486, 5529, -464)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(24999, 25001, -1, 24999, 0, 1, 25004, -4)])
 cell_size = 64.0
 agent_radius = 50.0
 
@@ -30,6 +31,15 @@ glow_bloom = 0.56
 glow_blend_mode = 2
 adjustment_enabled = true
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jhbkd"]
+friction = 0.55
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yf5fn"]
+size = Vector2(25000, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jhbkd"]
+size = Vector2(32, 25057.5)
+
 [node name="game" type="Node2D" unique_id=243920902]
 
 [node name="UI" parent="." unique_id=216746193 instance=ExtResource("4_t63fs")]
@@ -39,7 +49,6 @@ process_mode = 3
 script = ExtResource("1_6olua")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=98038227]
-visible = false
 navigation_polygon = SubResource("NavigationPolygon_iotsf")
 
 [node name="grass" type="Sprite2D" parent="." unique_id=638621766]
@@ -86,8 +95,51 @@ script = ExtResource("10_hve3p")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=464358751]
 environment = SubResource("Environment_iotsf")
 
-[node name="Node2D" parent="." unique_id=2054443469 node_paths=PackedStringArray("driver") instance=ExtResource("12_jhbkd")]
+[node name="Vehicle" parent="." unique_id=2054443469 node_paths=PackedStringArray("driver") groups=["vehicle"] instance=ExtResource("12_jhbkd")]
 position = Vector2(12296, 8203)
 driver = NodePath("../player")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=680493311]
+physics_material_override = SubResource("PhysicsMaterial_jhbkd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=109940250]
+position = Vector2(12500, -14.5)
+shape = SubResource("RectangleShape2D_yf5fn")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=622039103]
+position = Vector2(12500, 25015)
+shape = SubResource("RectangleShape2D_yf5fn")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D" unique_id=2081653344]
+position = Vector2(-16, 12499.25)
+shape = SubResource("RectangleShape2D_jhbkd")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D" unique_id=701658343]
+position = Vector2(25016, 12499)
+shape = SubResource("RectangleShape2D_jhbkd")
+
+[node name="Spawner7" parent="." unique_id=1362707104 instance=ExtResource("14_07vmf")]
+position = Vector2(-92, 25086)
+
+[node name="Spawner5" parent="." unique_id=1859902800 instance=ExtResource("14_07vmf")]
+position = Vector2(25161, 25158)
+
+[node name="Spawner4" parent="." unique_id=1982575125 instance=ExtResource("14_07vmf")]
+position = Vector2(25179, -159)
+
+[node name="Spawner" parent="." unique_id=1639310025 instance=ExtResource("14_07vmf")]
+position = Vector2(-90, -92)
+
+[node name="Spawner2" parent="." unique_id=192150396 instance=ExtResource("14_07vmf")]
+position = Vector2(12547, -297)
+
+[node name="Spawner3" parent="." unique_id=805722881 instance=ExtResource("14_07vmf")]
+position = Vector2(12496, 25176)
+
+[node name="Spawner6" parent="." unique_id=65912025 instance=ExtResource("14_07vmf")]
+position = Vector2(-124, 12275)
+
+[node name="Spawner8" parent="." unique_id=137003407 instance=ExtResource("14_07vmf")]
+position = Vector2(25105, 12390)
 
 [connection signal="timeout" from="Timer" to="Timer" method="_on_timeout"]

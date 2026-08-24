@@ -5,8 +5,8 @@ var receivedzc = 0
 func _ready() -> void:
 	hide()
 
-func set_scores():
-	$Panel/VBoxContainer/scores.text = tr("$score") + ": " + str($"../player".SCORE)+", " + tr("$received") + " " + str(receivedzc) + " Z$"
+func set_scores(score):
+	$Panel/VBoxContainer/scores.text = tr("$score") + ": " + str(score)+", " + tr("$received") + " " + str(receivedzc) + " Z$"
 
 
 func _on_go_to_menu_pressed() -> void:

@@ -97,9 +97,11 @@ func _ready() -> void:
 	else:
 		stepmaterial = "grass"
 	if get_node_or_null("../grass") != null:
+		$Camera2D.limit_enabled = true
 		$Camera2D.limit_right = $"../grass".region_rect.size.x/2
 		$Camera2D.limit_bottom = $"../grass".region_rect.size.y/2
 	elif get_node_or_null("../snow") != null:
+		$Camera2D.limit_enabled = true
 		$Camera2D.limit_right = $"../snow".region_rect.size.x/2
 		$Camera2D.limit_bottom = $"../snow".region_rect.size.y/2
 		
@@ -261,14 +263,24 @@ func _physics_process(delta: float):
 				bullets_bar.max_value = WEAPONS[SELECTED_WEAPON]["bullets"]
 				bullets_bar.value = WEAPONS[SELECTED_WEAPON]["left_bullets"]
 			else:
-				bullets.text = tr("$bullets") + ": " + str(get_parent().VEHICLE["weapon"]["left_bullets"]) + "/" + str(get_parent().VEHICLE["weapon"]["zapas_bullets"])
-				bullets_bar.max_value = get_parent().VEHICLE["weapon"]["bullets"]
-				bullets_bar.value =	get_parent().VEHICLE["weapon"]["left_bullets"]
+				if get_parent().VEHICLE["weapon_available"]:
+					bullets.text = tr("$bullets") + ": " + str(get_parent().VEHICLE["weapon"]["left_bullets"]) + "/" + str(get_parent().VEHICLE["weapon"]["zapas_bullets"])
+					bullets_bar.max_value = get_parent().VEHICLE["weapon"]["bullets"]
+					bullets_bar.value =	get_parent().VEHICLE["weapon"]["left_bullets"]
+				else:
+					bullets.text = tr("$bullets") + ": " + "0/0"
+					bullets_bar.max_value = 0
+					bullets_bar.value =	0
 	
 	if health_bar:
-		health.text = tr("$health") + ": " + str(HEALTH) + "/" + str(MAX_HEALTH)
-		health_bar.max_value = MAX_HEALTH
-		health_bar.value = HEALTH
+		if !driving:
+			health.text = tr("$health") + ": " + str(HEALTH) + "/" + str(MAX_HEALTH)
+			health_bar.max_value = MAX_HEALTH
+			health_bar.value = HEALTH
+		else:
+			health.text = tr("$health") + ": " + str(get_parent().HP) + "/" + str(get_parent().MAX_HP)
+			health_bar.max_value = get_parent().MAX_HP
+			health_bar.value = get_parent().HP
 	else:
 		pass
 		
@@ -447,11 +459,30 @@ func _process(delta: float):
 		Global.CONFIG.set_value("save", "zcoins", Global.ZCOINS)
 		Global.CONFIG.save(Global.SAVE_PATH)
 		$"../GameOver".receivedzc = (SCORE/5)
-		$"../GameOver".set_scores()
-	if (HEALTH <= 20):
-		vignette_red.lowhealth = true
+		$"../GameOver".set_scores(SCORE)
+	elif driving and get_parent().HP <= 0:
+		$"../../PauseManager".PAUSE = true
+		$"../../PauseManager".PAUSELOCK = true
+		$Person.queue_free()
+		$"../../GameOver".show()
+		Global.ZCOINS += (SCORE/5)
+		Global.CONFIG.set_value("save", "zcoins", Global.ZCOINS)
+		Global.CONFIG.save(Global.SAVE_PATH)
+		$"../../GameOver".receivedzc = (SCORE/5)
+		$"../../GameOver".set_scores(SCORE)
+		
+		
+		
+	if !driving:
+		if (HEALTH <= 20):
+			vignette_red.lowhealth = true
+		else:
+			vignette_red.lowhealth = false	
 	else:
-		vignette_red.lowhealth = false	
+		if get_parent().HP <= 20:
+			vignette_red.lowhealth = true
+		else:
+			vignette_red.lowhealth = false
 		
 	#if shake:
 		#$Camera2D/AnimationPlayer.play("shake")

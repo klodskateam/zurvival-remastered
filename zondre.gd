@@ -19,13 +19,15 @@ const DEFAULT_SPEED = 217
 var SPEED = 217
 var HP = 100
 var DAMAGE = 10
-var rngnum
-var rngnum2
-var rngnum3
+var TARGET
+var rngnum = 0
+var rngnum2 = 0
+var rngnum3 = 0
 
 var twotapkill = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _ready() -> void:
+	_on_timer_timeout()
 	match GamemodeManager.GAMEMODE:
 		-1:
 			pass
@@ -74,10 +76,14 @@ func _ready() -> void:
 			
 func _physics_process(delta: float) -> void:
 	if HP <= 0:
-		player.SCORE += 1
+		if TARGET.is_in_group("vehicle"):
+			TARGET.driver.SCORE += 1
+		else:
+			player.SCORE += 1
 		$".".queue_free()
 	
-	look_at($"../player".position)
+	if TARGET != null:
+		look_at(TARGET.global_position)
 	nav(delta)
 	move_and_slide()
 	
@@ -92,8 +98,13 @@ func nav(delta: float) -> void:
 
 
 func _on_timer_timeout() -> void:
-	if player != null:
-		navagent.target_position = player.global_position
+	if get_tree().get_nodes_in_group("vehicle").size() > 0 and get_tree().get_nodes_in_group("vehicle")[0] != null:
+		TARGET = get_tree().get_nodes_in_group("vehicle")[0]
+	elif player != null:
+		TARGET = player
+	if TARGET != null:
+		navagent.target_position = TARGET.global_position
+	
 
 #func get_direction_to_player():
 #	var player = get_tree().get_first_node_in_group("player") as Node2D
@@ -118,4 +129,4 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		if GamemodeManager.GAMEMODE == 3 and twotapkill:
 			HP -= body.DAMAGE/2
 			body.queue_free()
-			
+	

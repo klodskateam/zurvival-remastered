@@ -45,6 +45,7 @@ max_polyphony = 128
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1789102826]
 scale = Vector2(1, 1.6)
+limit_enabled = false
 limit_left = 0
 limit_top = 0
 limit_right = 5000

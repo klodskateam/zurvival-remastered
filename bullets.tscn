@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bc4n5mdjaodea"]
+[gd_scene format=3 uid="uid://bc4n5mdjaodea"]
 
 [ext_resource type="Script" uid="uid://rk0ca7kjuwm5" path="res://bullets.gd" id="1_bnpoj"]
 [ext_resource type="Texture2D" uid="uid://coberi7xm4w6t" path="res://Resources/bullets.png" id="1_g7lvf"]
@@ -6,15 +6,16 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_yui1s"]
 radius = 19.0263
 
-[node name="bullets" type="Area2D" groups=["thesearebullets"]]
+[node name="bullets" type="Area2D" unique_id=1320675212 groups=["thesearebullets"]]
 collision_layer = 4
+collision_mask = 65
 script = ExtResource("1_bnpoj")
 
-[node name="Bullets" type="Sprite2D" parent="."]
+[node name="Bullets" type="Sprite2D" parent="." unique_id=674170302]
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_g7lvf")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=936558201]
 shape = SubResource("CircleShape2D_yui1s")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
