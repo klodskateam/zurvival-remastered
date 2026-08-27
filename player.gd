@@ -386,7 +386,7 @@ func _physics_process(delta: float):
 	if steptimer <= 4:
 		steptimer += Vector2(velocity.x, velocity.y).length()/20 * delta
 		
-	if Vector2(velocity.x, velocity.y).length() > 0:
+	if Vector2(velocity.x, velocity.y).length() > 0 and !driving:
 		if steptimer >= 4:
 			$GrassStep01.stream = load("res://Sound/" + stepmaterial + "_step_" + str(randi_range(1,4)).pad_zeros(2) + ".wav")
 			$GrassStep01.pitch_scale = randf_range(0.9, 1.06)
@@ -402,10 +402,10 @@ func _physics_process(delta: float):
 		fastshakeamount += 10
 		dmgblur = false
 		
-	if driving:
-		$CollisionShape2D.disabled = true
-	else:
-		$CollisionShape2D.disabled = false
+	#if driving:
+		#$CollisionShape2D.disabled = true
+	#else:
+		#$CollisionShape2D.disabled = false
 	if (OS.get_name() != "Android") and !driving:
 		look_at(get_global_mouse_position())
 		rotate(PI / 2)

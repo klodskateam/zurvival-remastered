@@ -96,7 +96,9 @@ func _physics_process(delta: float) -> void:
 	#print("THR: " + str(throttle))
 	
 	if driver != null and !driving:
-		await get_tree().process_frame
+		#await get_tree().process_fram
+		driver.get_node("CollisionShape2D").disabled = true
+		driver.get_node("Camera2D").reset_smoothing()
 		driver.reparent(self)
 		driver.position = Vector2(VEHICLE["driver_position"][0], VEHICLE["driver_position"][1])
 		if VEHICLE["driver_hidden"]:
@@ -113,7 +115,7 @@ func _physics_process(delta: float) -> void:
 		direction = driver.get_input()
 		CURRENT_SPEED += throttle * 100 * delta
 		if abs(throttle) < 0.65:
-			CURRENT_SPEED = lerp(CURRENT_SPEED, 0.0, 0.001)
+			CURRENT_SPEED = move_toward(CURRENT_SPEED, 0, delta/4)
 		if abs(CURRENT_SPEED) <= 10 and !direction:
 			CURRENT_SPEED = 0
 		throttle = clampf(throttle, -1, 2)	
@@ -151,12 +153,12 @@ func _physics_process(delta: float) -> void:
 	for realzondre100p in $Area2D.get_overlapping_bodies():
 		if realzondre100p.is_in_group("zondre"):
 			var momentum = VEHICLE["vehicle_physmass"] * get_real_velocity().length() # "Говоря языком дилетанта, что быстро влетает, то быстро и вылетает."
-			print(momentum)
+			#print(momentum)
 			if momentum >= 730000:
 				realzondre100p.HP = 0
 			elif momentum >= 100000:
 				realzondre100p.HP -= (momentum/31250)*delta
-			print(realzondre100p.HP)
+			#print(realzondre100p.HP)
 	
 	move_and_slide()
 	
@@ -240,4 +242,8 @@ func bullets_reload():
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("zondre"):
-		HP -= 10
+		var momentum = VEHICLE["vehicle_physmass"] * get_real_velocity().length()
+		if momentum >= 550000:
+			HP -= 5
+		else:
+			HP -= 10

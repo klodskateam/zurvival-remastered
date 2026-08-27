@@ -81,7 +81,23 @@ func _on_timeout():
 				medkit_new.position.x = randi_range(50, 9950)
 				medkit_new.position.y = randi_range(50, 9950)
 				get_parent().add_child(medkit_new)
-				#print(medkit_new)				
+				#print(medkit_new)		
+		4:
+			wait_time = randf_range(1, 1.7)
+			# пульки хуюльки
+			var bullets_new = P_BULLETS.instantiate()
+			bullets_new.position.x = randi_range(250, 49750)
+			bullets_new.position.y = randi_range(250, 49750)
+			get_parent().add_child(bullets_new)
+			#print(bullets_new)
+			
+			# оптечки
+			var medkit_new = P_MEDKIT.instantiate()
+			medkit_new.position.x = randi_range(50, 49950)
+			medkit_new.position.y = randi_range(50, 49950)
+			get_parent().add_child(medkit_new)
+			#print(medkit_new)		
+			
 		_:
 			wait_time = randf_range(1, 2)
 			# пульки хуюльки

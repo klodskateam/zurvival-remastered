@@ -68,8 +68,8 @@ horizontal_scroll_mode = 0
 vertical_scroll_mode = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel/ScrollContainer" unique_id=288236604]
-clip_contents = true
 custom_minimum_size = Vector2(0, 230)
+clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
