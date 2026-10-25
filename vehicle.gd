@@ -20,13 +20,14 @@ var throttle = 0
 var STEERING_SPEED = 0
 var CURRENT_SPEED = 0
 var RPM = 0
+var momentum = 0
 
 var DELAY = 0
 var RELOADING = false
 
 
 var VEHICLE =	{
-		"driver_position": [-64, -17],
+		"driver_position": [-55, -12],
 		"driver_hidden": false,	
 		"engine_power": 2.1,
 		"vehicle_maximumspeed": 1000,
@@ -36,19 +37,19 @@ var VEHICLE =	{
 		"vehicle_maxsteer": 8, 
 		"vehicle_steerdamp": 3.8,
 		"vehicle_tiregrip": 0.73,
-		"vehicle_tiredriftbrake": 2.6,
+		"vehicle_tiredriftbrake": 2.45,
 		"vehicle_tireslip": 1.1,
 		"vehicle_physmass": 850,
 		
 		"weapon_available": true,
-		"weapon_turnmultiplier": 8,
+		"weapon_turnmultiplier": 10,
 		
 		"weapon": {
 			"name": "TEST_MG108",
 			"id": 8,
 			"delay": 0.52,
 			"damage": 100,
-			"bullet_speed": 1520,
+			"bullet_speed": 2020,
 			"automatic": true,
 			"bullets": 50,
 			"left_bullets": 50,
@@ -80,7 +81,7 @@ func _process(delta: float) -> void:
 		ratata()
 
 func _physics_process(delta: float) -> void:
-	if driver != null and direction:
+	if driver != null and direction != Vector2.ZERO:
 		#print("auf")
 		throttle += VEHICLE["engine_power"] * direction.y * delta
 		if get_real_velocity().length() < VEHICLE["vehicle_optimalspeed"]:
@@ -96,11 +97,11 @@ func _physics_process(delta: float) -> void:
 	#print("THR: " + str(throttle))
 	
 	if driver != null and !driving:
-		#await get_tree().process_fram
+		#await get_tree().process_frame
 		driver.get_node("CollisionShape2D").disabled = true
-		driver.get_node("Camera2D").reset_smoothing()
 		driver.reparent(self)
 		driver.position = Vector2(VEHICLE["driver_position"][0], VEHICLE["driver_position"][1])
+		driver.get_node("Camera2D").reset_smoothing()
 		if VEHICLE["driver_hidden"]:
 			driver.visible = false
 		driver.driving = true
@@ -112,11 +113,12 @@ func _physics_process(delta: float) -> void:
 			MG.rotation = lerp_angle(MG.rotation, get_angle_to(get_global_mouse_position())+PI/2, delta*VEHICLE["weapon_turnmultiplier"])
 		else:
 			MG.visible = false
+		momentum = VEHICLE["vehicle_physmass"] * get_real_velocity().length() # "Говоря языком дилетанта, что быстро влетает, то быстро и вылетает."
 		direction = driver.get_input()
 		CURRENT_SPEED += throttle * 100 * delta
-		if abs(throttle) < 0.65:
-			CURRENT_SPEED = move_toward(CURRENT_SPEED, 0, delta/4)
-		if abs(CURRENT_SPEED) <= 10 and !direction:
+		if abs(throttle) < 0.8:
+			CURRENT_SPEED = lerp(CURRENT_SPEED, 0.0, delta/6)
+		if abs(CURRENT_SPEED) <= 10 and direction == Vector2.ZERO:
 			CURRENT_SPEED = 0
 		throttle = clampf(throttle, -1, 2)	
 		CURRENT_SPEED = clampf(CURRENT_SPEED, -VEHICLE["vehicle_maximumspeed"], VEHICLE["vehicle_maximumbackspeed"])
@@ -137,8 +139,8 @@ func _physics_process(delta: float) -> void:
 	high_engine.volume_linear = clampf(absf(RPM - 0.1)*2, 0, 1)
 		
 	idle_engine.pitch_scale = clampf(lerpf(0.9, 1.4, clampf(RPM*2, 0, 1)), 0.05, 1.5)
-	medium_engine.pitch_scale = clampf(lerpf(0.5, 1.5, RPM), 0.05, 1.5)
-	high_engine.pitch_scale = clampf(lerpf(0.7, 1.2, clampf((RPM-0.5)*2, 0, 1)), 0.05, 1.5)
+	medium_engine.pitch_scale = clampf(lerpf(0.5, 1.4, RPM), 0.05, 1.5)
+	high_engine.pitch_scale = clampf(lerpf(0.7, 1.1, clampf((RPM-0.5)*2, 0, 1)), 0.05, 1.5)
 	
 	TireAudio.volume_linear = clampf((abs(get_real_velocity().length())/VEHICLE["vehicle_maximumspeed"])*5, 0.05, 5)
 	TireAudio.pitch_scale = clampf(lerpf(0.2, 3.8, abs(get_real_velocity().length()/1.5)/VEHICLE["vehicle_maximumspeed"]), 0.05, 5)
@@ -152,7 +154,6 @@ func _physics_process(delta: float) -> void:
 	
 	for realzondre100p in $Area2D.get_overlapping_bodies():
 		if realzondre100p.is_in_group("zondre"):
-			var momentum = VEHICLE["vehicle_physmass"] * get_real_velocity().length() # "Говоря языком дилетанта, что быстро влетает, то быстро и вылетает."
 			#print(momentum)
 			if momentum >= 730000:
 				realzondre100p.HP = 0
@@ -242,8 +243,9 @@ func bullets_reload():
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("zondre"):
-		var momentum = VEHICLE["vehicle_physmass"] * get_real_velocity().length()
-		if momentum >= 550000:
+		if momentum >= 780000:
+			pass
+		elif momentum >= 550000:
 			HP -= 5
 		else:
 			HP -= 10

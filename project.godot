@@ -190,10 +190,16 @@ locale/translations=PackedStringArray("res://Translation/translations.be.transla
 2d_physics/layer_6="grenade"
 2d_physics/layer_7="vehicle"
 
+[physics]
+
+common/physics_interpolation=true
+common/snap/snap_2d_transforms_to_pixel=false
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=2
 renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true
 anti_aliasing/quality/use_debanding=true
 textures/default_filters/texture_mipmap_bias=-0.06999999999999984
 environment/glow/upscale_mode=0

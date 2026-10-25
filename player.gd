@@ -298,7 +298,7 @@ func _physics_process(delta: float):
 	else:
 		pass
 	
-	if RELOADING and WEAPONS[SELECTED_WEAPON]["incremental_reload"]:
+	if RELOADING and WEAPONS[SELECTED_WEAPON]["incremental_reload"] and !driving:
 		if INCREMENT_DELAY >= WEAPONS[maybeselectedweapon]["increment_delay"]:
 			INCREMENT_DELAY = 0
 			$ReloadSound.stream = load(str(WEAPONS[maybeselectedweapon]["increment_sound"] + "_" + str(randi_range(1,5)).pad_zeros(2)) + ".wav")
@@ -414,7 +414,7 @@ func _physics_process(delta: float):
 		
 	if DELAY <= WEAPONS[SELECTED_WEAPON]["delay"]:
 		DELAY += 5.3 * delta
-		if DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]/3.4 and WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0 and WEAPONS[SELECTED_WEAPON]["soundondelay"]:
+		if DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]/3.4 and WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0 and WEAPONS[SELECTED_WEAPON]["soundondelay"] and !driving:
 			$ReloadSound.stream = load(WEAPONS[SELECTED_WEAPON]["delaysound"])
 			$ReloadSound.pitch_scale = randf_range(0.96, 1.04)
 			$ReloadSound.play()
@@ -498,10 +498,12 @@ func _process(delta: float):
 
 func driving_ui():
 	if driving:
+		weapon_text.visible = false
 		var tween = create_tween()
 		tween.parallel().tween_property(bullets_bar, "position", Vector2(30,33), 0.9).set_trans(Tween.TRANS_SINE)
 		tween.parallel().tween_property(kaktameto_bar, "modulate:a", 0.0, 0.9).set_trans(Tween.TRANS_SINE)
 	else:
+		weapon_text.visible = true
 		var tween = create_tween()
 		tween.parallel().tween_property(bullets_bar, "positiob", Vector2(30,66), 0.9).set_trans(Tween.TRANS_SINE)
 		tween.parallel().tween_property(kaktameto_bar, "modulate:a", 1.0, 0.9).set_trans(Tween.TRANS_SINE)

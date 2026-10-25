@@ -8,4 +8,4 @@ func _process(delta: float) -> void:
 	if bluramount > 0:
 		bluramount -= 10*delta
 	finalbluramount = clamp(bluramount + hp_bluramount, 0, 70)
-	material.set_shader_parameter("blur_amount", finalbluramount)
+	material.set_shader_parameter("blur_amount", finalbluramount/1.2)

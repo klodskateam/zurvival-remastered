@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c0gku65b6ujhb" path="res://Resources/grass.png" id="1_ictw6"]
 [ext_resource type="PackedScene" uid="uid://bgd4is08hm4yv" path="res://player.tscn" id="1_thl6f"]
 [ext_resource type="Script" uid="uid://c0mpd1abcunko" path="res://timer.gd" id="3_ar85b"]
+[ext_resource type="Script" uid="uid://b8jrfiwtv6j4r" path="res://shadows.gd" id="4_ar0jx"]
 [ext_resource type="Script" uid="uid://dir1l8p8gewnq" path="res://grass-winter.gd" id="4_mfdv2"]
 [ext_resource type="PackedScene" uid="uid://bshfbsu15v3v1" path="res://ui.tscn" id="4_t63fs"]
 [ext_resource type="AudioStream" uid="uid://cp1ttpcdxuts1" path="res://Sound/ambience_02.mp3" id="5_iotsf"]
@@ -13,6 +14,7 @@
 [ext_resource type="Script" uid="uid://oer2u1m0p56i" path="res://aim-ingame.gd" id="10_hve3p"]
 [ext_resource type="PackedScene" uid="uid://bf2kyjf2ksnwg" path="res://Vehicles/vehicle01.tscn" id="12_jhbkd"]
 [ext_resource type="PackedScene" uid="uid://cow6451posxft" path="res://spawner.tscn" id="14_07vmf"]
+[ext_resource type="Shader" uid="uid://wh61y1m8g841" path="res://shadows.gdshader" id="14_ar0jx"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_iotsf"]
 vertices = PackedVector2Array(24949, 24950.992, 49, 24949, 49.992188, 50.992188, 24953.977, 46.007813)
@@ -20,6 +22,23 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(24999, 25001, -1, 24999, 0, 1, 25004, -4)])
 cell_size = 64.0
 agent_radius = 50.0
+
+[sub_resource type="Gradient" id="Gradient_07vmf"]
+interpolation_mode = 2
+interpolation_color_space = 2
+offsets = PackedFloat32Array(0, 0.25903615)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3nnj0"]
+gradient = SubResource("Gradient_07vmf")
+fill = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g4v7s"]
+shader = ExtResource("14_ar0jx")
+shader_parameter/color = Color(0.015686275, 0.09019608, 0.19607843, 0.5137255)
+shader_parameter/angle = 223.5450106183875
+shader_parameter/max_dist = 128.090006084275
+shader_parameter/gradientTexture = SubResource("GradientTexture2D_3nnj0")
 
 [sub_resource type="Environment" id="Environment_iotsf"]
 background_mode = 3
@@ -50,6 +69,11 @@ script = ExtResource("1_6olua")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=98038227]
 navigation_polygon = SubResource("NavigationPolygon_iotsf")
+
+[node name="Shadows" type="Polygon2D" parent="." unique_id=922888190]
+material = SubResource("ShaderMaterial_g4v7s")
+polygon = PackedVector2Array(0, 0, 25000, -44, 25043, 24957, 0, 25000)
+script = ExtResource("4_ar0jx")
 
 [node name="grass" type="Sprite2D" parent="." unique_id=638621766]
 z_index = -3

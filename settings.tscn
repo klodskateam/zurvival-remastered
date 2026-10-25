@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://ciusdkgamja88" path="res://settings_hints_check.gd" id="7_3lj6o"]
 [ext_resource type="Script" uid="uid://ucyjt6h016gj" path="res://settings_cheapeffects_check.gd" id="9_1k4ii"]
 [ext_resource type="Script" uid="uid://obmpy46c8l5k" path="res://check_updates.gd" id="9_ohexs"]
+[ext_resource type="Script" uid="uid://4b5g5ha7a3du" path="res://settings_shadows_check.gd" id="10_82xqq"]
 
 [node name="Settings" type="Node2D" unique_id=2085219545]
 
@@ -118,6 +119,13 @@ alignment = 2
 autowrap_mode = 3
 script = ExtResource("9_1k4ii")
 
+[node name="SettingsShadowsCheck" type="CheckButton" parent="Control/Panel/VBoxContainer" unique_id=1068539878]
+layout_mode = 2
+text = "$disableshadows"
+alignment = 2
+autowrap_mode = 3
+script = ExtResource("10_82xqq")
+
 [node name="Sep1" type="HSeparator" parent="Control/Panel/VBoxContainer" unique_id=909149285]
 layout_mode = 2
 
@@ -157,5 +165,6 @@ offset_bottom = 720.0
 [connection signal="toggled" from="Control/Panel/VBoxContainer/SettingsFullscreenCheck" to="Control/Panel/VBoxContainer/SettingsFullscreenCheck" method="_on_toggled"]
 [connection signal="toggled" from="Control/Panel/VBoxContainer/SettingsHintsCheck" to="Control/Panel/VBoxContainer/SettingsHintsCheck" method="_on_toggled"]
 [connection signal="toggled" from="Control/Panel/VBoxContainer/SettingsCheapEffectsCheck" to="Control/Panel/VBoxContainer/SettingsCheapEffectsCheck" method="_on_toggled"]
+[connection signal="toggled" from="Control/Panel/VBoxContainer/SettingsShadowsCheck" to="Control/Panel/VBoxContainer/SettingsShadowsCheck" method="_on_toggled"]
 [connection signal="toggled" from="Control/Panel/VBoxContainer/checkUpdates" to="Control/Panel/VBoxContainer/checkUpdates" method="_on_toggled"]
 [connection signal="item_selected" from="Control/Panel/VBoxContainer/SettingsLang" to="Control/Panel/VBoxContainer/SettingsLang" method="_on_item_selected"]

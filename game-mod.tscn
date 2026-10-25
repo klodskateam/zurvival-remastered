@@ -4,8 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://c0gku65b6ujhb" path="res://Resources/grass.png" id="1_ictw6"]
 [ext_resource type="PackedScene" uid="uid://bgd4is08hm4yv" path="res://player.tscn" id="1_thl6f"]
 [ext_resource type="Script" uid="uid://c0mpd1abcunko" path="res://timer.gd" id="3_ar85b"]
+[ext_resource type="Shader" uid="uid://wh61y1m8g841" path="res://shadows.gdshader" id="3_w3anl"]
 [ext_resource type="Script" uid="uid://dir1l8p8gewnq" path="res://grass-winter.gd" id="4_mfdv2"]
 [ext_resource type="PackedScene" uid="uid://bshfbsu15v3v1" path="res://ui.tscn" id="4_t63fs"]
+[ext_resource type="Script" uid="uid://b8jrfiwtv6j4r" path="res://shadows.gd" id="4_yc14e"]
 [ext_resource type="AudioStream" uid="uid://cp1ttpcdxuts1" path="res://Sound/ambience_02.mp3" id="5_iotsf"]
 [ext_resource type="PackedScene" uid="uid://rk6x2yf4sydr" path="res://pause.tscn" id="6_5dskx"]
 [ext_resource type="PackedScene" uid="uid://cow6451posxft" path="res://spawner.tscn" id="7_8yshx"]
@@ -19,6 +21,23 @@ vertices = PackedVector2Array(5518.9297, -454.03125, 5482.0625, 5479.9766, -409.
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(5492, 5490, -419, 5484, -452, -486, 5529, -464)])
 sample_partition_type = 1
+
+[sub_resource type="Gradient" id="Gradient_yc14e"]
+interpolation_mode = 2
+interpolation_color_space = 2
+offsets = PackedFloat32Array(0, 0.25903615)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3nnj0"]
+gradient = SubResource("Gradient_yc14e")
+fill = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cj4sm"]
+shader = ExtResource("3_w3anl")
+shader_parameter/color = Color(0.015686275, 0.09019608, 0.19607843, 0.5137255)
+shader_parameter/angle = 223.5450106183875
+shader_parameter/max_dist = 128.090006084275
+shader_parameter/gradientTexture = SubResource("GradientTexture2D_3nnj0")
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_v4flc"]
 blend_mode = 3
@@ -56,6 +75,12 @@ script = ExtResource("1_6olua")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=665654134]
 navigation_polygon = SubResource("NavigationPolygon_fn4k2")
+
+[node name="Shadows" type="Polygon2D" parent="." unique_id=1789507042]
+material = SubResource("ShaderMaterial_cj4sm")
+position = Vector2(0, -1)
+polygon = PackedVector2Array(0, 0, 5000, 0, 5000, 5000, 0, 5000)
+script = ExtResource("4_yc14e")
 
 [node name="grass" type="Sprite2D" parent="." unique_id=711850198]
 z_index = -3

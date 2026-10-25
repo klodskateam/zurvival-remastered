@@ -1,16 +1,14 @@
-# TODO - 26.08.2026
+# TODO - 25.10.2026
 # [1/2] Доделать прицелы
-# [*] Сделать кнопки открытия сайта мода в списке модов
-# [*] Добавить больше режимов в игру
+# [ ] Добавить больше режимов в игру
 # [1/4] Доделать магазин и инвентарь (склад)
-# [*] Добавить режимы в модлоадер
 # [-] Вернуть Discord Rich Preference (или как его) из 1.3 и ниже
 # [*] добавьте больше TODO🤪🤪🤪 
-# [*] добавить автомобильный режим
 # [ ] сделать ЕЩЁ больше TODO tm
-# [*] Добавить дешёвый блюр 
+# [ ] Выпустить обновление
 # [ ] Добавить пустынный режим
 # [?] Сделать апгрейды для машин
+# [*] Добавить тени 
 
 
 # INFO самые важные песни зр 2.0 это:
@@ -28,9 +26,10 @@ extends Node
 # Настройки и служебное
 var VERSION = ProjectSettings.get_setting("application/config/version")
 var FULLSCREEN = false
-var SmoothTransitions = false
+var SmoothTransitions = true
 var WEAPONHINTS = true
 var CheapEffects = false
+var SHADOWS = true
 @onready var GAME = "res://gamemode.tscn"
 @onready var SETTINGS = "res://settings.tscn"
 const isDEMO = true # Данная настройка отключает магазин, склад и список модов Онлайн, так-как оно не готово (онлайн моды я ещё апи не сделал ну я и лох вообще)
@@ -313,8 +312,16 @@ func _ready() -> void:
 	if CONFIG.get_value("settings", "smoothtransitions"):
 		SmoothTransitions = CONFIG.get_value("settings", "smoothtransitions")
 	
-	if CONFIG.get_value("save", "disableweaponhints"):
-		WEAPONHINTS = CONFIG.get_value("save", "disableweaponhints")
+	# ah scheisse!
+	
+	if CONFIG.get_value("settings", "disableweaponhints"):
+		WEAPONHINTS = !CONFIG.get_value("settings", "disableweaponhints")
+		
+	if CONFIG.get_value("settings", "cheapeffects"):
+		CheapEffects = CONFIG.get_value("settings", "cheapeffects")
+	
+	if CONFIG.get_value("settings", "disableshadows"):
+		SHADOWS = !CONFIG.get_value("settings", "disableshadows")
 		
 	if CONFIG.get_value("settings", "fullscreen"):
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)

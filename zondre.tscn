@@ -3,6 +3,15 @@
 [ext_resource type="Texture2D" uid="uid://bwomm7xxvmngu" path="res://Resources/zondre.png" id="1_ch0u4"]
 [ext_resource type="Script" uid="uid://cyak5r4dne40" path="res://zondre.gd" id="1_kk7w6"]
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_wyxx8"]
+polygon = PackedVector2Array(50.1, -18.400002, 50.1, -17.400002, 48.1, -17.400002, 48.1, -16.400002, 47.1, -16.400002, 47.1, -12.599998, 48.1, -12.599998, 48.1, -11.599998, 52.9, -11.599998, 52.9, -12.599998, 53.9, -12.599998, 53.9, -16.400002, 52.9, -16.400002, 52.9, -17.400002, 51.9, -17.400002, 51.9, -18.400002)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_843t2"]
+polygon = PackedVector2Array(49.1, 1.5999985, 49.1, 2.5999985, 48.1, 2.5999985, 48.1, 6.4000015, 49.1, 6.4000015, 49.1, 7.4000015, 53.9, 7.4000015, 53.9, 6.4000015, 54.9, 6.4000015, 54.9, 2.5999985, 53.9, 2.5999985, 53.9, 1.5999985)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_px13v"]
+polygon = PackedVector2Array(-10, -32, -10, -29.7, -26.8, -19, -29.2, -19, -33.2, -6, -35, -6, -35, 17.900002, -22, 36.9, -22, 39.300003, 0.5999985, 45, 2.5, 45, 21.5, 38, 25.5, 38, 38.5, 21, 40.800003, 21, 41.800003, 8, 43.5, 8, 42, -1.5, 42, -8, 32, -21.099998, 32, -23.2, 11, -30.2, 11, -32)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_t8bhi"]
 radius = 38.0
 
@@ -12,6 +21,16 @@ collision_mask = 64
 slide_on_ceiling = false
 floor_stop_on_slope = false
 script = ExtResource("1_kk7w6")
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="." unique_id=1386447548]
+occluder = SubResource("OccluderPolygon2D_wyxx8")
+
+[node name="LightOccluder2D3" type="LightOccluder2D" parent="." unique_id=749523924]
+occluder = SubResource("OccluderPolygon2D_843t2")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="." unique_id=1987433489]
+position = Vector2(4, -7)
+occluder = SubResource("OccluderPolygon2D_px13v")
 
 [node name="Zondre" type="Sprite2D" parent="." unique_id=1224313490]
 texture = ExtResource("1_ch0u4")

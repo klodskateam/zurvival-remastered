@@ -83,7 +83,7 @@ func _on_timeout():
 				get_parent().add_child(medkit_new)
 				#print(medkit_new)		
 		4:
-			wait_time = randf_range(1, 1.7)
+			wait_time = randf_range(0.5, 1.4)
 			# пульки хуюльки
 			var bullets_new = P_BULLETS.instantiate()
 			bullets_new.position.x = randi_range(250, 49750)

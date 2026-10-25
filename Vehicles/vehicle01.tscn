@@ -13,7 +13,10 @@
 [ext_resource type="AudioStream" uid="uid://c6m8ni3m64iqm" path="res://Sound/no_ammo.wav" id="11_mkyng"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g4v7s"]
-size = Vector2(300, 480)
+size = Vector2(300, 476.205)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_4xwmr"]
+polygon = PackedVector2Array(-91, -249, -91, -247.7, -96, -245.7, -96, -245, -100, -245, -100, -244.2, -107, -244.9, -107, -246, -112.600006, -246, -113.600006, -244, -115, -244, -115, -219.7, -111.5, -215, -110.899994, -215, -109.8, -209, -111, -203.1, -111, -201.7, -119, -199, -139.5, -199, -141.5, -196, -142.7, -196, -145, -190.2, -145, -187.2, -149.5, -180, -151, -180, -151, -74.2, -154, -68.2, -154, -66.600006, -161.2, -63, -163.5, -63, -165.5, -60, -167, -60, -167, -52.5, -164, -50.5, -164, -48.899994, -146.9, -50, -145.2, -50, -141.2, -48, -139.6, -48, -136.6, -42, -136, -42, -136, -38, -135, -38, -135, 29.799988, -138, 35.799988, -138, 37.399994, -145.5, 44, -147, 44, -147, 95, -151, 106.79999, -151, 203.5, -147, 206.5, -147, 208, -142.4, 208, -140.4, 210, -138.6, 210, -135, 217.20001, -135, 219.5, -132, 221.5, -132, 222.70001, -126.2, 225, -123.3, 225, -119.3, 228, -117.399994, 228, -116, 229.4, -116, 231.5, -108, 237.5, -108, 239, -76.600006, 239, -74, 236.4, -74, 235.6, -64.8, 232, -60.199997, 232, -54.199997, 235, -52.399994, 235, -48, 239.4, -48, 241, 51.399994, 241, 57, 235.4, 57, 234.6, 63, 232.70001, 63, 232, 67, 232, 67, 231.20001, 73.899994, 233, 76.70001, 233, 80.70001, 236, 82.5, 236, 84.5, 239, 119.5, 239, 124.5, 233, 126, 233, 126, 229.4, 128, 227.4, 128, 226.6, 137.20001, 223, 139.5, 223, 141.5, 220, 142.6, 220, 144, 217.20001, 144, 214.4, 146, 212.4, 146, 210.6, 153.20001, 207, 155.5, 207, 157.5, 204, 159, 204, 159, 106.79999, 157.70001, 103, 156.9, 103, 155.9, 94, 155, 94, 155, 44.600006, 151.4, 41, 149.5, 41, 146.5, 37, 145.70001, 37, 143, 29.799988, 143, -37.800003, 146, -43.800003, 146, -45.399994, 151, -47.300003, 151, -48.199997, 154.20001, -49, 171.5, -49, 173.5, -52, 175, -52, 175, -59.5, 172, -61.600006, 172, -62.600006, 169.20001, -64, 166.4, -64, 164.4, -66, 162.6, -66, 159, -74.2, 159, -179.4, 156.4, -182, 155.70001, -182, 151, -193.2, 151, -195.5, 148, -197.6, 148, -199, 127.20001, -199, 120.20001, -202, 118.70001, -202, 117, -207, 117, -209.8, 121.600006, -219, 123, -219, 123, -243.6, 121, -244.6, 121, -246.3, 115.79999, -245, 110.100006, -245, 103, -247.7, 103, -249)
 
 [node name="Vehicle" type="CharacterBody2D" unique_id=961654888]
 collision_layer = 65
@@ -34,25 +37,30 @@ linear_damp_space_override = 1
 angular_damp_space_override = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1008044248]
+visible = false
 shape = SubResource("RectangleShape2D_g4v7s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1971430611]
+visible = false
 shape = SubResource("RectangleShape2D_g4v7s")
 
 [node name="IdleEngine" type="AudioStreamPlayer2D" parent="." unique_id=869742812]
 stream = ExtResource("3_f3pth")
 autoplay = true
 max_polyphony = 4
+bus = &"engine"
 
 [node name="MediumEngine" type="AudioStreamPlayer2D" parent="." unique_id=2127779753]
 stream = ExtResource("4_ch437")
 autoplay = true
 max_polyphony = 4
+bus = &"engine"
 
 [node name="HighEngine" type="AudioStreamPlayer2D" parent="." unique_id=1561850435]
 stream = ExtResource("5_nwjs6")
 autoplay = true
 max_polyphony = 4
+bus = &"engine"
 
 [node name="TiresRolling" type="AudioStreamPlayer2D" parent="." unique_id=987486077]
 stream = ExtResource("6_ch437")
@@ -74,6 +82,7 @@ position = Vector2(1, -88)
 [node name="ShootSound" type="AudioStreamPlayer" parent="." unique_id=826170571]
 stream = ExtResource("9_4xwmr")
 max_polyphony = 128
+bus = &"weapons"
 
 [node name="ReloadSound" type="AudioStreamPlayer" parent="." unique_id=1743184553]
 stream = ExtResource("10_nllb8")
@@ -86,13 +95,19 @@ max_polyphony = 128
 [node name="ShootLayer1" type="AudioStreamPlayer" parent="." unique_id=1660219528]
 stream = ExtResource("9_4xwmr")
 max_polyphony = 128
+bus = &"weapons"
 
 [node name="ShootLayer2" type="AudioStreamPlayer" parent="." unique_id=1231715743]
 stream = ExtResource("9_4xwmr")
 max_polyphony = 128
+bus = &"weapons"
 
 [node name="ShootLayer3" type="AudioStreamPlayer" parent="." unique_id=622998944]
 stream = ExtResource("9_4xwmr")
 max_polyphony = 128
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="." unique_id=1820279533]
+scale = Vector2(0.92, 0.92)
+occluder = SubResource("OccluderPolygon2D_4xwmr")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
