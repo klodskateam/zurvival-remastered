@@ -226,6 +226,9 @@ func _physics_process(delta: float):
 			velocity = velocity.lerp(Vector2.ZERO, 0.2)
 		move_and_slide()	
 	
+	if driving:
+		tween_driving()
+	
 	if deaftime > 0 and AudioServer.get_bus_effect(0,1).cutoff_hz >= 20050:
 		var tween := create_tween()
 		tween.tween_property(AudioServer.get_bus_effect(0,1), "cutoff_hz", 800.0, 1)
@@ -447,18 +450,23 @@ func _physics_process(delta: float):
 		weaponshakeamount = abs(weaponshakeamount)-(23*delta)
 
 func fov_up():
-	var tween = $Camera2D.create_tween()
-	tween.parallel().tween_property($Camera2D, "zoom", Vector2(0.907, 0.907), 0.8)
+	if !driving:
+		var tween = $Camera2D.create_tween()
+		tween.parallel().tween_property($Camera2D, "zoom", Vector2(0.907, 0.907), 0.8)
 func fov_half_up():
-	var tween = $Camera2D.create_tween()
-	tween.parallel().tween_property($Camera2D, "zoom", Vector2(0.954, 0.954), 2)
+	if !driving:
+		var tween = $Camera2D.create_tween()
+		tween.parallel().tween_property($Camera2D, "zoom", Vector2(0.954, 0.954), 2)
 func fov_down():
-	var tween = $Camera2D.create_tween()
-	tween.parallel().tween_property($Camera2D, "zoom", Vector2(1, 1), 1.4)
+	if !driving:
+		var tween = $Camera2D.create_tween()
+		tween.parallel().tween_property($Camera2D, "zoom", Vector2(1, 1), 1.4)
 func tween_shake():
 	var tween = $Camera2D.create_tween()
 	tween.parallel().tween_property($Camera2D, "offset", Vector2(0+(randf_range(-1, 1))*totalshakeamount, 0+(randf_range(-1, 1))*totalshakeamount), 0.2).set_trans(Tween.TRANS_SINE)
-	
+func tween_driving():
+	var tween = $Camera2D.create_tween()
+	tween.parallel().tween_property($Camera2D, "zoom", Vector2(0.78, 0.78), 1.2)
 
 	
 func _process(delta: float):
