@@ -1,8 +1,8 @@
 extends Window
 
 var URL = "https://kteam.veliona.no/secret.html"
-var STR = "Вы хотите открыть ссылку \"%s\"?"
-# var STR = tr("$openlink")
+#var STR = "Вы хотите открыть ссылку \"%s\"?"
+var STR = tr("$openlink")
 
 func _ready() -> void:
 	$Panel/VBoxContainer/ScrollContainer/desc.text = STR % URL

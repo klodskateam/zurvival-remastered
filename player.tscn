@@ -12,6 +12,12 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_7ksh0"]
 radius = 39.0
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_b26j0"]
+polygon = PackedVector2Array(-2, -55, -2, -39, 3, -39, 3, -55)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_n7ghd"]
+polygon = PackedVector2Array(-9, -36, -9, -34.3, -21.3, -29, -24, -29, -32, -19, -33.4, -19, -36.4, -10, -38, -10, -38, 11.599998, -34, 17.599998, -34, 20.800003, -25, 29.800003, -25, 31.300003, -16, 35.199997, -16, 36.800003, -6, 37.800003, -6, 39.300003, 10.300003, 37, 13.699997, 37, 24.699997, 29, 27.300003, 29, 36.300003, 10, 38, 10, 38, -6.5, 33, -16.5, 33, -18.8, 25, -26.8, 25, -28.400002, 10, -34.4, 10, -36)
+
 [node name="player" type="CharacterBody2D" unique_id=532043823 groups=["player"]]
 position = Vector2(1, 0)
 script = ExtResource("1_16hic")
@@ -45,6 +51,7 @@ max_polyphony = 128
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1789102826]
 scale = Vector2(1, 1.6)
+limit_enabled = false
 limit_left = 0
 limit_top = 0
 limit_right = 5000
@@ -84,14 +91,22 @@ position = Vector2(0, -69)
 [node name="ShootLayer1" type="AudioStreamPlayer" parent="." unique_id=1926371466]
 stream = ExtResource("3_ft5c5")
 max_polyphony = 128
+bus = &"weapons"
 
 [node name="ShootLayer2" type="AudioStreamPlayer" parent="." unique_id=1107709676]
 stream = ExtResource("3_ft5c5")
 max_polyphony = 128
+bus = &"weapons"
 
 [node name="ShootLayer3" type="AudioStreamPlayer" parent="." unique_id=687776480]
 stream = ExtResource("3_ft5c5")
 max_polyphony = 128
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="." unique_id=1566219025]
+occluder = SubResource("OccluderPolygon2D_b26j0")
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="." unique_id=1662285571]
+occluder = SubResource("OccluderPolygon2D_n7ghd")
 
 [connection signal="timeout" from="WalkDelay" to="." method="_on_walkdelay_timeout"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

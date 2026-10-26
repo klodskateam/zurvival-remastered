@@ -18,11 +18,11 @@ func _ready() -> void:
 		DATE = int(str(DATE).replace("-", ""))
 		#print("date:" + str(hash(int(DATE/64))))
 		if GamemodeManager.CHALLENGEID == 0:
-			RNG.seed = hash(DATE^4263)
+			RNG.seed = hash(DATE^ChallengeManager.CHALLENGES[0]["xorhash"])
 		elif GamemodeManager.CHALLENGEID == 1:
-			RNG.seed = hash(DATE^75419)
+			RNG.seed = hash(DATE^ChallengeManager.CHALLENGES[1]["xorhash"])
 		elif GamemodeManager.CHALLENGEID == 2:
-			RNG.seed = hash(DATE^93426)
+			RNG.seed = hash(DATE^ChallengeManager.CHALLENGES[2]["xorhash"])
 		rngnum = RNG.randi_range(0, 7)
 		rngnum2 = RNG.randi_range(0, 9)
 		

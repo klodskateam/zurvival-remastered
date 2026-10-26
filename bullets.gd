@@ -12,5 +12,12 @@ func _on_body_entered(body: Node2D):
 				body.WEAPONS[body.SELECTED_WEAPON]["zapas_bullets"] += body.WEAPONS[body.SELECTED_WEAPON]["bullets"]
 			body.pickedup = true
 			queue_free()
+	elif body.is_in_group("vehicle"):
+		if body.VEHICLE["weapon"]["bullets"] == 0:
+			pass
+		else:
+			body.VEHICLE["weapon"]["zapas_bullets"] += body.VEHICLE["weapon"]["bullets"]
+			body.driver.pickedup = true
+			queue_free()
 
 	

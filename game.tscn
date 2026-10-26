@@ -12,6 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://uo6qjyv0h20n" path="res://game_over.tscn" id="8_nlu6b"]
 [ext_resource type="Texture2D" uid="uid://bnoiah2jgxblr" path="res://Resources/aims/default.png" id="9_vef74"]
 [ext_resource type="Script" uid="uid://oer2u1m0p56i" path="res://aim-ingame.gd" id="10_hve3p"]
+[ext_resource type="Shader" uid="uid://wh61y1m8g841" path="res://shadows.gdshader" id="13_lc2xo"]
+[ext_resource type="Script" uid="uid://b8jrfiwtv6j4r" path="res://shadows.gd" id="14_215e1"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_iotsf"]
 vertices = PackedVector2Array(5478.6797, -414.1797, 5442.297, 5439.9375, -369.27344, 5434.047, -401.71875, -435.8125)
@@ -29,6 +31,35 @@ glow_normalized = true
 glow_bloom = 0.56
 glow_blend_mode = 2
 adjustment_enabled = true
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_iotsf"]
+friction = 0.55
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lc2xo"]
+size = Vector2(5000, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_215e1"]
+size = Vector2(5000, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7sc4i"]
+size = Vector2(32, 5056)
+
+[sub_resource type="Gradient" id="Gradient_215e1"]
+interpolation_mode = 2
+interpolation_color_space = 2
+offsets = PackedFloat32Array(0, 0.25903615)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7sc4i"]
+gradient = SubResource("Gradient_215e1")
+fill = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_80cx4"]
+shader = ExtResource("13_lc2xo")
+shader_parameter/color = Color(0.015686275, 0.09019608, 0.19607843, 0.5137255)
+shader_parameter/angle = 223.5450106183875
+shader_parameter/max_dist = 128.090006084275
+shader_parameter/gradientTexture = SubResource("GradientTexture2D_7sc4i")
 
 [node name="game" type="Node2D" unique_id=243920902]
 
@@ -97,5 +128,30 @@ script = ExtResource("10_hve3p")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=464358751]
 environment = SubResource("Environment_iotsf")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=315911422]
+physics_material_override = SubResource("PhysicsMaterial_iotsf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=870853550]
+position = Vector2(2500, -14)
+shape = SubResource("RectangleShape2D_lc2xo")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=223443632]
+position = Vector2(2499, 5014)
+shape = SubResource("RectangleShape2D_215e1")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D" unique_id=371312508]
+position = Vector2(-15, 2500)
+shape = SubResource("RectangleShape2D_7sc4i")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D" unique_id=1436526893]
+position = Vector2(5015, 2500)
+shape = SubResource("RectangleShape2D_7sc4i")
+
+[node name="Shadows" type="Polygon2D" parent="." unique_id=1385458001]
+material = SubResource("ShaderMaterial_80cx4")
+position = Vector2(0, -1)
+polygon = PackedVector2Array(0, 0, 5000, 0, 5000, 5000, 0, 5000)
+script = ExtResource("14_215e1")
 
 [connection signal="timeout" from="Timer" to="Timer" method="_on_timeout"]

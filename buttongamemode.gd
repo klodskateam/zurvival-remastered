@@ -16,14 +16,14 @@ func _on_pressed() -> void:
 		$"../../../../..".GMDESC = GMDESC
 		$"../../../../..".GMCHANGE_TO = SCENE
 		$"../../../../..".MODGAME = MODGAME
-		$"../../../../..".CHALLENGESELECTOR = false
+		$"../../../../..".isCHALLENGE = false
 		$"../../../../..".change_info()
 	else:
 		$"../../../../../..".GMNAME = GMNAME
 		$"../../../../../..".GMDESC = GMDESC
 		$"../../../../../..".GMCHANGE_TO = SCENE
 		$"../../../../../..".MODGAME = MODGAME
-		$"../../../../../..".CHALLENGESELECTOR = true
+		$"../../../../../..".isCHALLENGE = true
 		$"../../../../../..".change_info()
 	GamemodeManager.GAMEMODE = GMODE
 	

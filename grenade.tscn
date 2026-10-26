@@ -1,4 +1,4 @@
-[gd_scene load_steps=113 format=3 uid="uid://c52nnfwncwkti"]
+[gd_scene format=3 uid="uid://c52nnfwncwkti"]
 
 [ext_resource type="Script" uid="uid://cxt0p7ulaxnk4" path="res://grenade.gd" id="1_24g56"]
 [ext_resource type="Texture2D" uid="uid://dm5yb5vx2s1hb" path="res://Resources/grenade.png" id="2_ga5sg"]
@@ -718,7 +718,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fnhtg")
 }],
-"loop": false,
+"loop": 0,
 "name": &"explosion",
 "speed": 120.0
 }]
@@ -790,7 +790,7 @@ _data = {
 &"grenade_land": SubResource("Animation_o1udh")
 }
 
-[node name="Grenade" type="RigidBody2D" groups=["grenade_boom"]]
+[node name="Grenade" type="RigidBody2D" unique_id=608976418 groups=["grenade_boom"]]
 collision_layer = 33
 collision_mask = 0
 physics_material_override = SubResource("PhysicsMaterial_gju2f")
@@ -799,17 +799,17 @@ linear_damp = 3.675
 constant_torque = 0.205
 script = ExtResource("1_24g56")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=532493281]
 position = Vector2(1.1920929e-07, 0)
 scale = Vector2(0.031003647, 0.031003647)
 texture = ExtResource("2_ga5sg")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2034096953]
 position = Vector2(0.1360423, 0)
 scale = Vector2(0.45794475, 0.5887861)
 shape = SubResource("RectangleShape2D_o1udh")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=941476458]
 position = Vector2(-6, -3)
 scale = Vector2(1.4547503, 1.3495848)
 sprite_frames = SubResource("SpriteFrames_2yf1m")
@@ -817,44 +817,42 @@ animation = &"explosion"
 frame = 100
 frame_progress = 1.0
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1991655143]
 scale = Vector2(1, 0.98373866)
 stream = ExtResource("4_o1udh")
 max_polyphony = 5
 panning_strength = 1.88
 
-[node name="DamageArea" type="Area2D" parent="."]
+[node name="DamageArea" type="Area2D" parent="." unique_id=2011714819]
 scale = Vector2(0.8380955, 0.8380955)
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea" unique_id=2125142682]
 scale = Vector2(31.614319, 31.614319)
 shape = SubResource("CircleShape2D_o1udh")
 
-[node name="ShakeArea" type="Area2D" parent="."]
+[node name="ShakeArea" type="Area2D" parent="." unique_id=1678177806]
 scale = Vector2(0.79528135, 0.79528135)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ShakeArea"]
-scale = Vector2(56.930748, 56.930748)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShakeArea" unique_id=340511421]
+scale = Vector2(80, 80)
 shape = SubResource("CircleShape2D_o1udh")
 
-[node name="PlayerDamageArea" type="Area2D" parent="."]
+[node name="PlayerDamageArea" type="Area2D" parent="." unique_id=1630944882]
 scale = Vector2(0.27556524, 0.27556524)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDamageArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDamageArea" unique_id=1441634174]
 scale = Vector2(48.60178, 48.60178)
 shape = SubResource("CircleShape2D_o1udh")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=534775042]
 wait_time = 3.0
 one_shot = true
 autostart = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_f8sv0")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=903004587]
+libraries/ = SubResource("AnimationLibrary_f8sv0")
 
 [connection signal="body_entered" from="DamageArea" to="." method="_on_damage_area_body_entered"]
 [connection signal="body_entered" from="ShakeArea" to="." method="_on_shake_area_body_entered"]

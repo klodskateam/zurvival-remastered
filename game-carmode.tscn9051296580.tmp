@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://btomjm4kvxod4"]
+
+[ext_resource type="Script" uid="uid://ba1djtv0bo560" path="res://pause_manager.gd" id="1_6olua"]
+[ext_resource type="Texture2D" uid="uid://c0gku65b6ujhb" path="res://Resources/grass.png" id="1_ictw6"]
+[ext_resource type="PackedScene" uid="uid://bgd4is08hm4yv" path="res://player.tscn" id="1_thl6f"]
+[ext_resource type="Script" uid="uid://c0mpd1abcunko" path="res://timer.gd" id="3_ar85b"]
+[ext_resource type="Script" uid="uid://dir1l8p8gewnq" path="res://grass-winter.gd" id="4_mfdv2"]
+[ext_resource type="PackedScene" uid="uid://bshfbsu15v3v1" path="res://ui.tscn" id="4_t63fs"]
+[ext_resource type="AudioStream" uid="uid://cp1ttpcdxuts1" path="res://Sound/ambience_02.mp3" id="5_iotsf"]
+[ext_resource type="PackedScene" uid="uid://rk6x2yf4sydr" path="res://pause.tscn" id="6_5dskx"]
+[ext_resource type="PackedScene" uid="uid://uo6qjyv0h20n" path="res://game_over.tscn" id="8_nlu6b"]
+[ext_resource type="Texture2D" uid="uid://bnoiah2jgxblr" path="res://Resources/aims/default.png" id="9_vef74"]
+[ext_resource type="Script" uid="uid://oer2u1m0p56i" path="res://aim-ingame.gd" id="10_hve3p"]
+[ext_resource type="PackedScene" uid="uid://bf2kyjf2ksnwg" path="res://Vehicles/vehicle01.tscn" id="12_jhbkd"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_iotsf"]
+vertices = PackedVector2Array(5478.6797, -414.1797, 5442.297, 5439.9375, -369.27344, 5434.047, -401.71875, -435.8125)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(5492, 5490, -419, 5484, -452, -486, 5529, -464)])
+cell_size = 64.0
+agent_radius = 50.0
+
+[sub_resource type="Environment" id="Environment_iotsf"]
+background_mode = 3
+glow_enabled = true
+glow_levels/2 = 0.36
+glow_levels/3 = 0.22
+glow_normalized = true
+glow_bloom = 0.56
+glow_blend_mode = 2
+adjustment_enabled = true
+
+[node name="game" type="Node2D" unique_id=243920902]
+
+[node name="UI" parent="." unique_id=216746193 instance=ExtResource("4_t63fs")]
+
+[node name="PauseManager" type="Node" parent="." unique_id=1485920899]
+process_mode = 3
+script = ExtResource("1_6olua")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=98038227]
+visible = false
+navigation_polygon = SubResource("NavigationPolygon_iotsf")
+
+[node name="grass" type="Sprite2D" parent="." unique_id=638621766]
+z_index = -3
+texture_repeat = 2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_ictw6")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 50000, 50000)
+script = ExtResource("4_mfdv2")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1546402194]
+position = Vector2(2472, 2437)
+stream = ExtResource("5_iotsf")
+volume_db = -2.537
+autoplay = true
+max_distance = 4096.0
+
+[node name="Timer" type="Timer" parent="." unique_id=212828666]
+wait_time = 1.5
+autostart = true
+script = ExtResource("3_ar85b")
+
+[node name="GameOver" parent="." unique_id=2097028840 instance=ExtResource("8_nlu6b")]
+process_mode = 2
+visible = false
+
+[node name="Pause" parent="." unique_id=1476152788 instance=ExtResource("6_5dskx")]
+process_mode = 2
+visible = false
+
+[node name="player" parent="." unique_id=103684790 instance=ExtResource("1_thl6f")]
+z_index = 1
+position = Vector2(2494, 1858)
+
+[node name="Aim" type="Sprite2D" parent="." unique_id=1833816385]
+z_index = 10
+position = Vector2(338, 331)
+scale = Vector2(0.257215, 0.255968)
+texture = ExtResource("9_vef74")
+script = ExtResource("10_hve3p")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=464358751]
+environment = SubResource("Environment_iotsf")
+
+[node name="Node2D" parent="." unique_id=2054443469 node_paths=PackedStringArray("driver") instance=ExtResource("12_jhbkd")]
+position = Vector2(2692, 1843)
+driver = NodePath("../player")
+
+[connection signal="timeout" from="Timer" to="Timer" method="_on_timeout"]

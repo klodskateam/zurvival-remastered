@@ -1,14 +1,15 @@
-# TODO
+# TODO - 25.10.2026
 # [1/2] Доделать прицелы
-# [*] Сделать кнопки открытия сайта мода в списке модов
-# [*] Добавить больше режимов в игру
+# [ ] Добавить больше режимов в игру
 # [1/4] Доделать магазин и инвентарь (склад)
-# [*] Добавить режимы в модлоадер
 # [-] Вернуть Discord Rich Preference (или как его) из 1.3 и ниже
 # [*] добавьте больше TODO🤪🤪🤪 
-# [ ] добавить автомобильный режим
 # [ ] сделать ЕЩЁ больше TODO tm
-# [ ] Добавить дешёвый блюр 
+# [ ] Выпустить обновление
+# [ ] Добавить пустынный режим
+# [?] Сделать апгрейды для машин
+# [*] Добавить тени 
+
 
 # INFO самые важные песни зр 2.0 это:
 # бутырка метеорит
@@ -25,9 +26,10 @@ extends Node
 # Настройки и служебное
 var VERSION = ProjectSettings.get_setting("application/config/version")
 var FULLSCREEN = false
-var SmoothTransitions = false
+var SmoothTransitions = true
 var WEAPONHINTS = true
 var CheapEffects = false
+var SHADOWS = true
 @onready var GAME = "res://gamemode.tscn"
 @onready var SETTINGS = "res://settings.tscn"
 const isDEMO = true # Данная настройка отключает магазин, склад и список модов Онлайн, так-как оно не готово (онлайн моды я ещё апи не сделал ну я и лох вообще)
@@ -44,7 +46,7 @@ var WEAPONS = [
 		"class": "sidearm",
 		"delay": 1,
 		"damage": 100,
-		"bullet_speed": 1450,
+		"bullet_speed": 1250,
 		"automatic": false,
 		"bullets": 12,
 		"left_bullets": 12,
@@ -58,7 +60,7 @@ var WEAPONS = [
 		"type": "gun",
 		"sway": 0.07,
 		"weight": 0.26,
-		"shake": 6,
+		"shake": 7,
 		"soundondelay": false,
 		"penthrough": false,
 		"bulletdespawn_dist": 900,
@@ -155,7 +157,7 @@ var WEAPONS = [
 		"weight": 0.37,
 		"penthrough": false, # у ~~дробовика отдельный код для этого, мб стоит убрать~~ ладно я просто реюзанул код
 		"bulletdespawn_dist": 700,
-		"shake": 15,
+		"shake": 16,
 		"soundondelay": true,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
 		"sound": "res://Sound/shotgun.wav",
@@ -183,7 +185,7 @@ var WEAPONS = [
 		"harmless": false,
 		"type": "gun",
 		"sway": 0.12,
-		"shake": 45,
+		"shake": 37,
 		"weight": 0.46,
 		"penthrough": true,
 		"bulletdespawn_dist": 1600,
@@ -192,7 +194,10 @@ var WEAPONS = [
 		"sound": "res://Sound/highcal-gun.wav",
 		"reloadsound": "res://Sound/highcal-reload.wav",
 		"weaponswitch_sound": "res://Sound/weaponswitch_heavy",
-		"layered_shootsounds": false,
+		"layered_shootsounds": true,
+		"shootlayer_1": "res://Sound/highcal_main",
+		"shootlayer_2": "res://Sound/mg108_tail",
+		"shootlayer_3": "res://Sound/silence",
 		"scope": false,
 	},
 	{
@@ -214,7 +219,7 @@ var WEAPONS = [
 		"harmless": false,
 		"type": "gun",
 		"sway": 0.04,
-		"shake": 15,
+		"shake": 12,
 		"weight": 0.31,
 		"penthrough": false,
 		"bulletdespawn_dist": 2000,
@@ -310,8 +315,16 @@ func _ready() -> void:
 	if CONFIG.get_value("settings", "smoothtransitions"):
 		SmoothTransitions = CONFIG.get_value("settings", "smoothtransitions")
 	
-	if CONFIG.get_value("save", "disableweaponhints"):
-		WEAPONHINTS = CONFIG.get_value("save", "disableweaponhints")
+	# ah scheisse!
+	
+	if CONFIG.get_value("settings", "disableweaponhints"):
+		WEAPONHINTS = !CONFIG.get_value("settings", "disableweaponhints")
+		
+	if CONFIG.get_value("settings", "cheapeffects"):
+		CheapEffects = CONFIG.get_value("settings", "cheapeffects")
+	
+	if CONFIG.get_value("settings", "disableshadows"):
+		SHADOWS = !CONFIG.get_value("settings", "disableshadows")
 		
 	if CONFIG.get_value("settings", "fullscreen"):
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)

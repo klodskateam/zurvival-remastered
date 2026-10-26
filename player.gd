@@ -73,12 +73,16 @@ var steptimer = 0
 var stepmaterial = "grass"
 var dir2 = Vector2()
 
+var deaftime = 0
 var shakeamount = 0
 var shaketimer = 0
 var shakedelay = 0.07
 var weaponshakeamount = 0
 var fastshakeamount = 0
 var totalshakeamount = 0
+
+
+var driving = false
 
 @export var SELECTED_WEAPON = 0
 
@@ -94,9 +98,20 @@ func _ready() -> void:
 		stepmaterial = "snow"
 	else:
 		stepmaterial = "grass"
+	if get_node_or_null("../grass") != null:
+		$Camera2D.limit_enabled = true
+		$Camera2D.limit_right = $"../grass".region_rect.size.x/2
+		$Camera2D.limit_bottom = $"../grass".region_rect.size.y/2
+	elif get_node_or_null("../snow") != null:
+		$Camera2D.limit_enabled = true
+		$Camera2D.limit_right = $"../snow".region_rect.size.x/2
+		$Camera2D.limit_bottom = $"../snow".region_rect.size.y/2
+		
+	if GamemodeManager.GAMEMODE == 1:
+		FORCE_RUNLOCK = true
 	if GamemodeManager.GAMEMODE == 1 or (GamemodeManager.GAMEMODE == -1 and !GamemodeManager.MODGAME["allow_weapons"]):
 		WEAPONS = []
-		WEAPONS.append(Global.WEAPONS[0])
+		WEAPONS.append(Global.WEAPONS[0].duplicate(true))
 		WEAPONS[0]["sway"] = 0
 		WEAPONS[0]["shake"] = 0
 		WEAPONS[0]["bulletdespawn_dist"] = 10000
@@ -113,15 +128,14 @@ func _ready() -> void:
 		# весело
 		var DATE = Time.get_date_string_from_system()
 		var RNG = RandomNumberGenerator.new()
-		var RNG2 = RandomNumberGenerator.new()
 		DATE = int(str(DATE).replace("-", ""))
 		#print("date:" + str(hash(int(DATE/64))))
 		if GamemodeManager.CHALLENGEID == 0:
-			RNG.seed = hash(DATE^65454)
+			RNG.seed = hash(DATE^ChallengeManager.CHALLENGES[0]["xorhash"])
 		elif GamemodeManager.CHALLENGEID == 1:
-			RNG.seed = hash(DATE^23775)
+			RNG.seed = hash(DATE^ChallengeManager.CHALLENGES[1]["xorhash"])
 		elif GamemodeManager.CHALLENGEID == 2:
-			RNG.seed = hash(DATE^85263)
+			RNG.seed = hash(DATE^ChallengeManager.CHALLENGES[2]["xorhash"])
 		var rngnum = RNG.randi_range(0, 10)
 		var rngnum2 = RNG.randi_range(0, 14)
 		var rngnum3 = RNG.randi_range(0, 23)
@@ -201,15 +215,31 @@ func _ready() -> void:
 func _physics_process(delta: float):
 	#TranslationServer.set_locale("be")
 	var direction = get_input()
-	if direction.length() > 0:
-		if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
-			dir2 = direction.lerp(direction.normalized(), 0.9)
+	if !driving:
+		if direction.length() > 0:
+			if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
+				dir2 = direction.lerp(direction.normalized(), 0.9)
+			else:
+				dir2 = direction.lerp(direction.normalized(), 0.35)
+			velocity = velocity.lerp(dir2 * SPEED, 0.3)
 		else:
-			dir2 = direction.lerp(direction.normalized(), 0.35)
-		velocity = velocity.lerp(dir2 * SPEED, 0.3)
-	else:
-		velocity = velocity.lerp(Vector2.ZERO, 0.2)
-	move_and_slide()	
+			velocity = velocity.lerp(Vector2.ZERO, 0.2)
+		move_and_slide()	
+	
+	if driving:
+		tween_driving()
+	
+	if deaftime > 0 and AudioServer.get_bus_effect(0,1).cutoff_hz >= 20050:
+		var tween := create_tween()
+		tween.tween_property(AudioServer.get_bus_effect(0,1), "cutoff_hz", 800.0, 1)
+		tween.parallel().tween_property(AudioServer.get_bus_effect(0,2), "dry", 0, 0.7)
+		tween.parallel().tween_property(AudioServer.get_bus_effect(0,2), "wet", 0.14, 0.7)
+	if deaftime < 0.4 and AudioServer.get_bus_effect(0,1).cutoff_hz < 20050:
+		var tween := create_tween()
+		tween.tween_property(AudioServer.get_bus_effect(0,1), "cutoff_hz", 20050.0, 1.4)
+		tween.parallel().tween_property(AudioServer.get_bus_effect(0,2), "dry", 1, 0.8)
+		tween.parallel().tween_property(AudioServer.get_bus_effect(0,2), "wet", 0, 0.8)
+		pass
 	
 	score.text = str(SCORE)
 	
@@ -245,14 +275,29 @@ func _physics_process(delta: float):
 			bullets_bar.max_value = WEAPONS[SELECTED_WEAPON]["bullets"]
 			bullets_bar.value = WEAPONS[SELECTED_WEAPON]["left_bullets"]
 		_:	
-			bullets.text = tr("$bullets") + ": " + str(WEAPONS[SELECTED_WEAPON]["left_bullets"]) + "/" + str(WEAPONS[SELECTED_WEAPON]["zapas_bullets"])
-			bullets_bar.max_value = WEAPONS[SELECTED_WEAPON]["bullets"]
-			bullets_bar.value = WEAPONS[SELECTED_WEAPON]["left_bullets"]
+			if !driving:
+				bullets.text = tr("$bullets") + ": " + str(WEAPONS[SELECTED_WEAPON]["left_bullets"]) + "/" + str(WEAPONS[SELECTED_WEAPON]["zapas_bullets"])
+				bullets_bar.max_value = WEAPONS[SELECTED_WEAPON]["bullets"]
+				bullets_bar.value = WEAPONS[SELECTED_WEAPON]["left_bullets"]
+			else:
+				if get_parent().VEHICLE["weapon_available"]:
+					bullets.text = tr("$bullets") + ": " + str(get_parent().VEHICLE["weapon"]["left_bullets"]) + "/" + str(get_parent().VEHICLE["weapon"]["zapas_bullets"])
+					bullets_bar.max_value = get_parent().VEHICLE["weapon"]["bullets"]
+					bullets_bar.value =	get_parent().VEHICLE["weapon"]["left_bullets"]
+				else:
+					bullets.text = tr("$bullets") + ": " + "0/0"
+					bullets_bar.max_value = 0
+					bullets_bar.value =	0
 	
 	if health_bar:
-		health.text = tr("$health") + ": " + str(HEALTH) + "/" + str(MAX_HEALTH)
-		health_bar.max_value = MAX_HEALTH
-		health_bar.value = HEALTH
+		if !driving:
+			health.text = tr("$health") + ": " + str(HEALTH) + "/" + str(MAX_HEALTH)
+			health_bar.max_value = MAX_HEALTH
+			health_bar.value = HEALTH
+		else:
+			health.text = tr("$health") + ": " + str(get_parent().HP) + "/" + str(get_parent().MAX_HP)
+			health_bar.max_value = get_parent().MAX_HP
+			health_bar.value = get_parent().HP
 	else:
 		pass
 		
@@ -270,7 +315,7 @@ func _physics_process(delta: float):
 	else:
 		pass
 	
-	if RELOADING and WEAPONS[SELECTED_WEAPON]["incremental_reload"]:
+	if RELOADING and WEAPONS[SELECTED_WEAPON]["incremental_reload"] and !driving:
 		if INCREMENT_DELAY >= WEAPONS[maybeselectedweapon]["increment_delay"]:
 			INCREMENT_DELAY = 0
 			$ReloadSound.stream = load(str(WEAPONS[maybeselectedweapon]["increment_sound"] + "_" + str(randi_range(1,5)).pad_zeros(2)) + ".wav")
@@ -283,37 +328,33 @@ func _physics_process(delta: float):
 			if WEAPONS[SELECTED_WEAPON]["left_bullets"]	== WEAPONS[SELECTED_WEAPON]["bullets"] and !RELOADING and ogroundamount == 0:
 				DELAY = WEAPONS[SELECTED_WEAPON]["delay"]
 		
-	match GamemodeManager.GAMEMODE:
-		1:
-			pass
-		_:	
-			if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1:
-				if (VINOSLIVOST >= 40):
-					SPEED = RUN_SPEED 
-					fov_up()
-				#	$Camera2D.zoom = Vector2(0.98, 0.98)
-				else:
-					SPEED = RUN_SPEED - 65
-					fov_half_up()
-				#	$Camera2D.zoom = Vector2(0.987, 0.987)
-				if (VINOSLIVOST >= 0):
-					SPEED = RUN_SPEED
-					VINOSLIVOST -= (9.5 + (weightaccum**2)*15.6) * delta
-				else:
-					SPEED = REGULAR_SPEED
-					fov_down()
-		#			$Camera2D.zoom = Vector2(1, 1)
-					RUNLOCK = 1
-			else:
-				SPEED = REGULAR_SPEED
-				if (VINOSLIVOST <= MAX_VINOSLIVOST) and (SPEED != RUN_SPEED):
-					VINOSLIVOST += (3.5 / (1+(weightaccum**2)*0.6)) * delta
-					fov_down()
-		#					$Camera2D.zoom = Vector2(1, 1)
-			if (VINOSLIVOST <= 35) and !Input.is_action_pressed("run") or FORCE_RUNLOCK:
-				RUNLOCK = 1
-			if (VINOSLIVOST >= 35) and !FORCE_RUNLOCK:
-				RUNLOCK = 0
+	if Input.is_action_pressed("run") and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")) and RUNLOCK != 1 and !driving:
+		if (VINOSLIVOST >= 40):
+			SPEED = RUN_SPEED 
+			fov_up()
+		#	$Camera2D.zoom = Vector2(0.98, 0.98)
+		else:
+			SPEED = RUN_SPEED - 65
+			fov_half_up()
+		#	$Camera2D.zoom = Vector2(0.987, 0.987)
+		if (VINOSLIVOST >= 0):
+			SPEED = RUN_SPEED
+			VINOSLIVOST -= (9.5 + (weightaccum**2)*15.6) * delta
+		else:
+			SPEED = REGULAR_SPEED
+			fov_down()
+#			$Camera2D.zoom = Vector2(1, 1)
+			RUNLOCK = 1
+	else:
+		SPEED = REGULAR_SPEED
+		if (VINOSLIVOST <= MAX_VINOSLIVOST) and (SPEED != RUN_SPEED):
+			VINOSLIVOST += (3.5 / (1+(weightaccum**2)*0.6)) * delta
+			fov_down()
+#					$Camera2D.zoom = Vector2(1, 1)
+	if (VINOSLIVOST <= 35) and !Input.is_action_pressed("run") or FORCE_RUNLOCK:
+		RUNLOCK = 1
+	if (VINOSLIVOST >= 35) and !FORCE_RUNLOCK:
+		RUNLOCK = 0
 		
 	match GamemodeManager.GAMEMODE:
 		1:
@@ -331,127 +372,6 @@ func _physics_process(delta: float):
 		_:
 			pass
 	
-	if steptimer <= 4:
-		steptimer += Vector2(velocity.x, velocity.y).length()/20 * delta
-		
-	if Vector2(velocity.x, velocity.y).length() > 0:
-		if steptimer >= 4:
-			$GrassStep01.stream = load("res://Sound/" + stepmaterial + "_step_" + str(randi_range(1,4)).pad_zeros(2) + ".wav")
-			$GrassStep01.pitch_scale = randf_range(0.9, 1.06)
-			$GrassStep01.play()
-			steptimer = 0
-		pass
-	
-	
-	damageblur.hp_bluramount = (MAX_HEALTH-HEALTH)/2.3
-	if dmgblur:
-		damageblur.bluramount += 20
-		damageblur.bluramount = clamp(damageblur.bluramount, 0, 60)
-		fastshakeamount += 10
-		dmgblur = false
-		
-	if (OS.get_name() != "Android"):
-		look_at(get_global_mouse_position())
-		rotate(PI / 2)
-	if DELAY <= WEAPONS[SELECTED_WEAPON]["delay"]:
-		DELAY += 5.3 * delta
-		if DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]/3.4 and WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0 and WEAPONS[SELECTED_WEAPON]["soundondelay"]:
-			$ReloadSound.stream = load(WEAPONS[SELECTED_WEAPON]["delaysound"])
-			$ReloadSound.pitch_scale = randf_range(0.96, 1.04)
-			$ReloadSound.play()
-		#print("DELAY:" + str(DELAY))
-	if INCREMENT_DELAY <= WEAPONS[SELECTED_WEAPON]["increment_delay"]:
-		INCREMENT_DELAY += 1 * delta
-	if shaketimer <= shakedelay:
-		shaketimer += 1 * delta
-	if shakeamount > 0:
-		shakeamount = abs(shakeamount)-(19*delta)
-	if fastshakeamount > 0:
-		fastshakeamount = abs(fastshakeamount)-(40*delta)	
-	if weaponshakeamount > 0:
-		weaponshakeamount = abs(weaponshakeamount)-(23*delta)
-
-func fov_up():
-	var tween = $Camera2D.create_tween()
-	tween.parallel().tween_property($Camera2D, "zoom", Vector2(0.907, 0.907), 0.8)
-func fov_half_up():
-	var tween = $Camera2D.create_tween()
-	tween.parallel().tween_property($Camera2D, "zoom", Vector2(0.954, 0.954), 2)
-func fov_down():
-	var tween = $Camera2D.create_tween()
-	tween.parallel().tween_property($Camera2D, "zoom", Vector2(1, 1), 1.4)
-func tween_shake():
-	var tween = $Camera2D.create_tween()
-	tween.parallel().tween_property($Camera2D, "offset", Vector2(0+(randf_range(-1, 1))*totalshakeamount, 0+(randf_range(-1, 1))*totalshakeamount), 0.2).set_trans(Tween.TRANS_SINE)
-	
-
-	
-func _process(delta: float):
-	if (OS.get_name() == "Android"):
-		if $"../../GlobalInterface/joysticks/VirtualJoystick2" and $"../../GlobalInterface/joysticks/VirtualJoystick2".is_pressed:
-			rotation = $"../../GlobalInterface/joysticks/VirtualJoystick2".output.angle()
-			rotate(PI / 2)
-	if (HEALTH <= 0) and ($Person != null) or (GamemodeManager.GAMEMODE == 2 and COLDNESS >= MAX_COLDNESS):
-		$"../PauseManager".PAUSE = true
-		$"../PauseManager".PAUSELOCK = true
-		$Person.queue_free()
-		$"../GameOver".show()
-		Global.ZCOINS += (SCORE/5)
-		Global.CONFIG.set_value("save", "zcoins", Global.ZCOINS)
-		Global.CONFIG.save(Global.SAVE_PATH)
-		$"../GameOver".receivedzc = (SCORE/5)
-		$"../GameOver".set_scores()
-	if (HEALTH <= 20):
-		vignette_red.lowhealth = true
-	else:
-		vignette_red.lowhealth = false	
-		
-	#if shake:
-		#$Camera2D/AnimationPlayer.play("shake")
-		#shake = false
-		
-	if shaketimer >= shakedelay:
-		tween_shake()
-		shaketimer = 0	
-	shakedelay = 1/(totalshakeamount+10)
-	totalshakeamount = shakeamount + weaponshakeamount + fastshakeamount	
-	if Input.is_action_pressed("shoot"):
-		ratata()	
-
-func ratata():
-	if !WEAPONS[SELECTED_WEAPON]["automatic"] or WEAPONS[SELECTED_WEAPON]["type"] == "grenade" or RELOADING:
-		return
-	if WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0 and DELAY >= WEAPONS[SELECTED_WEAPON]["delay"] and !RELOADING:
-		shoot()
-	
-func _input(event):
-	if event.is_action_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["type"] != "grenade" and !WEAPONS[SELECTED_WEAPON]["harmless"]:
-		if RELOADING:
-			RELOADING = false
-		else:
-			if (OS.get_name() != "Android"):
-				shoot()
-			
-	if Input.is_action_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["type"] == "grenade":
-		grenade_target.global_position = get_global_mouse_position()
-		inthehall = true # (-all +ole)
-	if Input.is_action_just_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["type"] == "grenade" and WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0:
-		$Pickup01.stream = GRENADE_PREPARE
-		$Pickup01.pitch_scale = randf_range(0.83, 1.06)
-		$Pickup01.play()
-	if Input.is_action_just_released("shoot") and inthehall and WEAPONS[SELECTED_WEAPON]["type"] == "grenade" and !WEAPONS[SELECTED_WEAPON]["harmless"]:
-		throw()
-		pass
-	if event.is_action_pressed("ads_zoom") and WEAPONS[SELECTED_WEAPON]["scope"]:
-		if ZOOMING:
-			ZOOMING = false
-		else:
-			ZOOMING = true 
-
-
-
-	if event.is_action_pressed("reload") and !WEAPONS[SELECTED_WEAPON]["harmless"]:
-		bullets_reload()
 	if pickedup:
 		$Pickup01.pitch_scale = randf_range(0.97, 1.12)
 		match randi_range(1,2):
@@ -480,6 +400,173 @@ func _input(event):
 		$Pickup01.play()
 	pickedup_plank = false
 	
+	if steptimer <= 4:
+		steptimer += Vector2(velocity.x, velocity.y).length()/20 * delta
+		
+	if Vector2(velocity.x, velocity.y).length() > 0 and !driving:
+		if steptimer >= 4:
+			$GrassStep01.stream = load("res://Sound/" + stepmaterial + "_step_" + str(randi_range(1,4)).pad_zeros(2) + ".wav")
+			$GrassStep01.pitch_scale = randf_range(0.9, 1.06)
+			$GrassStep01.play()
+			steptimer = 0
+		pass
+	
+	
+	damageblur.hp_bluramount = (MAX_HEALTH-HEALTH)/2.3
+	if dmgblur:
+		damageblur.bluramount += 20
+		damageblur.bluramount = clamp(damageblur.bluramount, 0, 60)
+		fastshakeamount += 10
+		dmgblur = false
+		
+	#if driving:
+		#$CollisionShape2D.disabled = true
+	#else:
+		#$CollisionShape2D.disabled = false
+	if (OS.get_name() != "Android") and !driving:
+		look_at(get_global_mouse_position())
+		rotate(PI / 2)
+	elif driving:
+		rotation = 0
+		
+	if DELAY <= WEAPONS[SELECTED_WEAPON]["delay"]:
+		DELAY += 5.3 * delta
+		if DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]/3.4 and WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0 and WEAPONS[SELECTED_WEAPON]["soundondelay"] and !driving:
+			$ReloadSound.stream = load(WEAPONS[SELECTED_WEAPON]["delaysound"])
+			$ReloadSound.pitch_scale = randf_range(0.96, 1.04)
+			$ReloadSound.play()
+		#print("DELAY:" + str(DELAY))
+	if INCREMENT_DELAY <= WEAPONS[SELECTED_WEAPON]["increment_delay"]:
+		INCREMENT_DELAY += 1 * delta
+	if deaftime > 0:
+		deaftime -= 1 * delta
+	if shaketimer <= shakedelay:
+		shaketimer += 1 * delta
+	if shakeamount > 0:
+		shakeamount = abs(shakeamount)-(19*delta)
+	if fastshakeamount > 0:
+		fastshakeamount = abs(fastshakeamount)-(40*delta)	
+	if weaponshakeamount > 0:
+		weaponshakeamount = abs(weaponshakeamount)-(23*delta)
+
+func fov_up():
+	if !driving:
+		var tween = $Camera2D.create_tween()
+		tween.parallel().tween_property($Camera2D, "zoom", Vector2(0.907, 0.907), 0.8)
+func fov_half_up():
+	if !driving:
+		var tween = $Camera2D.create_tween()
+		tween.parallel().tween_property($Camera2D, "zoom", Vector2(0.954, 0.954), 2)
+func fov_down():
+	if !driving:
+		var tween = $Camera2D.create_tween()
+		tween.parallel().tween_property($Camera2D, "zoom", Vector2(1, 1), 1.4)
+func tween_shake():
+	var tween = $Camera2D.create_tween()
+	tween.parallel().tween_property($Camera2D, "offset", Vector2(0+(randf_range(-1, 1))*totalshakeamount, 0+(randf_range(-1, 1))*totalshakeamount), 0.2).set_trans(Tween.TRANS_SINE)
+func tween_driving():
+	var tween = $Camera2D.create_tween()
+	tween.parallel().tween_property($Camera2D, "zoom", Vector2(0.78, 0.78), 1.2)
+
+	
+func _process(delta: float):
+	if (OS.get_name() == "Android"):
+		if $"../../GlobalInterface/joysticks/VirtualJoystick2" and $"../../GlobalInterface/joysticks/VirtualJoystick2".is_pressed:
+			rotation = $"../../GlobalInterface/joysticks/VirtualJoystick2".output.angle()
+			rotate(PI / 2)
+	if (HEALTH <= 0) and ($Person != null) or (GamemodeManager.GAMEMODE == 2 and COLDNESS >= MAX_COLDNESS):
+		$"../PauseManager".PAUSE = true
+		$"../PauseManager".PAUSELOCK = true
+		$Person.queue_free()
+		$"../GameOver".show()
+		Global.ZCOINS += (SCORE/5)
+		Global.CONFIG.set_value("save", "zcoins", Global.ZCOINS)
+		Global.CONFIG.save(Global.SAVE_PATH)
+		$"../GameOver".receivedzc = (SCORE/5)
+		$"../GameOver".set_scores(SCORE)
+	elif driving and get_parent().HP <= 0:
+		$"../../PauseManager".PAUSE = true
+		$"../../PauseManager".PAUSELOCK = true
+		$Person.queue_free()
+		$"../../GameOver".show()
+		Global.ZCOINS += (SCORE/5)
+		Global.CONFIG.set_value("save", "zcoins", Global.ZCOINS)
+		Global.CONFIG.save(Global.SAVE_PATH)
+		$"../../GameOver".receivedzc = (SCORE/5)
+		$"../../GameOver".set_scores(SCORE)
+		
+		
+		
+	if !driving:
+		if (HEALTH <= 20):
+			vignette_red.lowhealth = true
+		else:
+			vignette_red.lowhealth = false	
+	else:
+		if get_parent().HP <= 20:
+			vignette_red.lowhealth = true
+		else:
+			vignette_red.lowhealth = false
+		
+	#if shake:
+		#$Camera2D/AnimationPlayer.play("shake")
+		#shake = false
+		
+	if shaketimer >= shakedelay:
+		tween_shake()
+		shaketimer = 0	
+	shakedelay = 2/(totalshakeamount+11)
+	totalshakeamount = shakeamount + weaponshakeamount + fastshakeamount	
+	if Input.is_action_pressed("shoot"):
+		ratata()	
+
+func driving_ui():
+	if driving:
+		weapon_text.visible = false
+		var tween = create_tween()
+		tween.parallel().tween_property(bullets_bar, "position", Vector2(30,33), 0.9).set_trans(Tween.TRANS_SINE)
+		tween.parallel().tween_property(kaktameto_bar, "modulate:a", 0.0, 0.9).set_trans(Tween.TRANS_SINE)
+	else:
+		weapon_text.visible = true
+		var tween = create_tween()
+		tween.parallel().tween_property(bullets_bar, "positiob", Vector2(30,66), 0.9).set_trans(Tween.TRANS_SINE)
+		tween.parallel().tween_property(kaktameto_bar, "modulate:a", 1.0, 0.9).set_trans(Tween.TRANS_SINE)
+
+func ratata():
+	if !WEAPONS[SELECTED_WEAPON]["automatic"] or WEAPONS[SELECTED_WEAPON]["type"] == "grenade" or RELOADING:
+		return
+	if WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0 and DELAY >= WEAPONS[SELECTED_WEAPON]["delay"] and !RELOADING:
+		shoot()
+	
+func _input(event):
+	if event.is_action_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["type"] != "grenade" and !WEAPONS[SELECTED_WEAPON]["harmless"]:
+		if RELOADING:
+			RELOADING = false
+		else:
+			if (OS.get_name() != "Android"):
+				shoot()
+			
+	if Input.is_action_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["type"] == "grenade" and !driving:
+		grenade_target.global_position = get_global_mouse_position()
+		inthehall = true # (-all +ole)
+	if Input.is_action_just_pressed("shoot") and WEAPONS[SELECTED_WEAPON]["type"] == "grenade" and WEAPONS[SELECTED_WEAPON]["left_bullets"] > 0:
+		$Pickup01.stream = GRENADE_PREPARE
+		$Pickup01.pitch_scale = randf_range(0.83, 1.06)
+		$Pickup01.play()
+	if Input.is_action_just_released("shoot") and inthehall and WEAPONS[SELECTED_WEAPON]["type"] == "grenade" and !WEAPONS[SELECTED_WEAPON]["harmless"]:
+		throw()
+		pass
+	if event.is_action_pressed("ads_zoom") and WEAPONS[SELECTED_WEAPON]["scope"] and !driving:
+		if ZOOMING:
+			ZOOMING = false
+		else:
+			ZOOMING = true 
+
+
+
+	if event.is_action_pressed("reload") and !WEAPONS[SELECTED_WEAPON]["harmless"] and !driving:
+		bullets_reload()
+	
 	match GamemodeManager.GAMEMODE:
 		-1:
 			if GamemodeManager.MODGAME["allow_weapons"]:
@@ -498,9 +585,9 @@ func _input(event):
 						
 				if event.is_action_pressed("previousweapon"):
 					if SELECTED_WEAPON - 1 < 0:
-						changeweapon(SELECTED_WEAPON-1)
+						changeweapon(WEAPONS.size()-1)
 					else:
-						changeweapon(0)
+						changeweapon(SELECTED_WEAPON-1)
 			else:
 				pass
 		1: 
@@ -524,7 +611,7 @@ func _input(event):
 					changeweapon(SELECTED_WEAPON-1)
 					
 func changeweapon(number: int = 0):
-	if number > WEAPONS.size() - 1:
+	if number > WEAPONS.size() - 1 or driving:
 		pass
 	else:
 		if number != SELECTED_WEAPON:
@@ -534,9 +621,13 @@ func changeweapon(number: int = 0):
 		SELECTED_WEAPON = number
 		weaponhint_show()
 		if WEAPONS[SELECTED_WEAPON]["harmless"]:
-			bullets_bar.visible = false
+			bullets.visible = false
+			var tween = bullets_bar.create_tween()
+			tween.parallel().tween_property(bullets_bar, "modulate:a", 0.0, 0.3).set_trans(Tween.TRANS_SINE)
 		else:
-			bullets_bar.visible = true
+			bullets.visible = true
+			var tween = bullets_bar.create_tween()
+			tween.parallel().tween_property(bullets_bar, "modulate:a", 1.0, 0.3).set_trans(Tween.TRANS_SINE)
 		RELOADING = false
 		ZOOMING = false
 		#print(SELECTED_WEAPON)
@@ -544,7 +635,7 @@ func changeweapon(number: int = 0):
 		
 	
 func shoot():
-	if WEAPONS[SELECTED_WEAPON]["left_bullets"] != 0:
+	if WEAPONS[SELECTED_WEAPON]["left_bullets"] != 0 and !driving:
 		if DELAY >= WEAPONS[SELECTED_WEAPON]["delay"]:
 			# bullet.add_constant_force(get_global_mouse_position() - bullet.global_position)
 			if WEAPONS[SELECTED_WEAPON]["type"] == "shotgun":
@@ -607,6 +698,8 @@ func shoot():
 				$ShootSound.play()
 			DELAY = 0
 			#print(DELAY)
+	elif driving:
+		pass
 	else:
 		$EmptySound.play()
 		DELAY = 0

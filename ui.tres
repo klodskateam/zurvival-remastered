@@ -1,20 +1,23 @@
 [gd_resource type="Theme" format=3 uid="uid://d2wr8qi0mdxxq"]
 
 [ext_resource type="FontFile" uid="uid://iqm5lhjmux6c" path="res://Resources/Montserrat-Bold.ttf" id="1_3s7v7"]
+[ext_resource type="StyleBox" uid="uid://du6tcdcnc8n3b" path="res://ui_panel.tres" id="1_nr8cx"]
 [ext_resource type="FontFile" uid="uid://mol2p0edntwv" path="res://Resources/Montserrat-Regular.ttf" id="1_r3vpi"]
 [ext_resource type="FontFile" uid="uid://b017clmvssiq2" path="res://Resources/Montserrat-BoldItalic.ttf" id="2_nr8cx"]
 [ext_resource type="FontFile" uid="uid://cphvfnriqknso" path="res://Resources/Montserrat-Italic.ttf" id="3_onyq1"]
 [ext_resource type="FontFile" uid="uid://dguvreqepx2px" path="res://Resources/NotoSansMono-Regular.ttf" id="4_epijf"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3va1a"]
-bg_color = Color(0.29964, 0.520377, 0.218746, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-shadow_color = Color(0, 0, 0, 0.341176)
-shadow_size = 20
-anti_aliasing = false
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nr8cx"]
+bg_color = Color(0.29798245, 0.5209517, 0.21380872, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m6tf4"]
+bg_color = Color(0.24214211, 0.4298756, 0.17630586, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.14870763, 0.27515882, 0.10553234, 1)
+anti_aliasing_size = 8.7
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3uw5e"]
 bg_color = Color(0.25633, 0.441406, 0.191391, 1)
@@ -59,7 +62,9 @@ shadow_offset = Vector2(5, 5)
 
 [resource]
 default_font = ExtResource("1_r3vpi")
-Panel/styles/panel = SubResource("StyleBoxFlat_3va1a")
+Panel/styles/panel = ExtResource("1_nr8cx")
+PopupMenu/styles/hover = SubResource("StyleBoxFlat_nr8cx")
+PopupMenu/styles/panel = SubResource("StyleBoxFlat_m6tf4")
 RichTextLabel/colors/table_border = Color(0.0686131, 0.246094, 0.0432587, 1)
 RichTextLabel/colors/table_even_row_bg = Color(0.252853, 0.44, 0.1848, 1)
 RichTextLabel/colors/table_odd_row_bg = Color(0.350547, 0.61, 0.2562, 1)

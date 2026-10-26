@@ -1,4 +1,4 @@
-class_name VirtualJoystick
+class_name VirtualJoystick2
 
 extends Control
 

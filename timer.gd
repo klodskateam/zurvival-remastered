@@ -13,18 +13,22 @@ func _ready() -> void:
 		DATE = int(str(DATE).replace("-", ""))
 		#print("date:" + str(hash(int(DATE/64))))
 		if GamemodeManager.CHALLENGEID == 0:
-			RNG.seed = hash(DATE^27)
+			RNG.seed = hash(DATE^ChallengeManager.CHALLENGES[0]["xorhash"])
 		elif GamemodeManager.CHALLENGEID == 1:
-			RNG.seed = hash(DATE^185)
+			RNG.seed = hash(DATE^ChallengeManager.CHALLENGES[1]["xorhash"])
 		elif GamemodeManager.CHALLENGEID == 2:
-			RNG.seed = hash(DATE^938)
+			RNG.seed = hash(DATE^ChallengeManager.CHALLENGES[2]["xorhash"])
 		rngnum = RNG.randi_range(0, 12)
 		if rngnum == 2:
 			medkitsbanned = true
 func _on_timeout():
 	match GamemodeManager.GAMEMODE:
 		-1:
-			wait_time = randf_range(1, 2)
+			if !GamemodeManager.MODGAME.has("zondre_spawntime") or str(GamemodeManager.MODGAME["zondre_spawntime"]) == "default":
+				wait_time = randf_range(1, 2)
+			else:
+				wait_time = randf_range(float(GamemodeManager.MODGAME["zondre_spawntime"][0]), float(GamemodeManager.MODGAME["zondre_spawntime"][1]))
+			
 			# пульки хуюльки
 			if GamemodeManager.MODGAME["spawn_bullets"]:
 				var bullets_new = P_BULLETS.instantiate()
@@ -81,7 +85,23 @@ func _on_timeout():
 				medkit_new.position.x = randi_range(50, 9950)
 				medkit_new.position.y = randi_range(50, 9950)
 				get_parent().add_child(medkit_new)
-				#print(medkit_new)				
+				#print(medkit_new)		
+		4:
+			wait_time = randf_range(0.5, 1.4)
+			# пульки хуюльки
+			var bullets_new = P_BULLETS.instantiate()
+			bullets_new.position.x = randi_range(250, 49750)
+			bullets_new.position.y = randi_range(250, 49750)
+			get_parent().add_child(bullets_new)
+			#print(bullets_new)
+			
+			# оптечки
+			var medkit_new = P_MEDKIT.instantiate()
+			medkit_new.position.x = randi_range(50, 49950)
+			medkit_new.position.y = randi_range(50, 49950)
+			get_parent().add_child(medkit_new)
+			#print(medkit_new)		
+			
 		_:
 			wait_time = randf_range(1, 2)
 			# пульки хуюльки

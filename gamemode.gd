@@ -8,6 +8,7 @@ var GMCHANGE_TO = null
 var GMNAME = null
 var GMDESC = null
 var GAMEMODE = null
+var isCHALLENGE = false
 var CHALLENGESELECTOR = false
 
 # для удобства
@@ -36,6 +37,12 @@ var GAMEMODES = [
 		"description": tr("$wintermodedesc"),
 		"scene": "res://game-wintermode.tscn",
 		"gamemode": 2,
+	},
+	{
+		"name": tr("$carmodename"),
+		"description": tr("$carmodedesc"),
+		"scene": "res://game-carmode.tscn",
+		"gamemode": 4,
 	},
 ]
 
@@ -92,10 +99,6 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if CHALLENGESELECTOR:
-		$Control/Panel/ChallengeSelector.visible = true
-	else:
-		$Control/Panel/ChallengeSelector.visible = false
 	if GMCHANGE_TO == null:
 		$Control/Panel/PlayButton.disabled = true
 	else:
@@ -117,7 +120,8 @@ func _on_play_button_pressed() -> void:
 		GamemodeManager.MODGAME = MODDED_GAMEMODES[MODGAME].duplicate(true)
 	# HACK -- 31/01/26 -- убрано :D -- 23/04/26
 	#print("gamemode info: " + str(GamemodeManager.GAMEMODEINFO))
-	GamemodeManager.CHALLENGEID = $Control/Panel/ChallengeSelector.get_selected_id()
+	if isCHALLENGE:
+		GamemodeManager.CHALLENGEID = ChallengeManager.pickbestchallenge()
 	get_tree().change_scene_to_file(GMCHANGE_TO)
 	
 func change_info():
