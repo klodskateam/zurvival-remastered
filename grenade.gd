@@ -52,6 +52,7 @@ func _on_shake_area_body_entered(body: Node2D) -> void:
 	if exploded and $AnimatedSprite2D.is_playing():
 		if body.name == "player":
 			body.shakeamount += 40*(1-global_position.distance_to(body.global_position)/($ShakeArea/CollisionShape2D.global_scale.x*$ShakeArea/CollisionShape2D.shape.radius))
+			body.deaftime += 7*(1-global_position.distance_to(body.global_position)/($ShakeArea/CollisionShape2D.global_scale.x*$ShakeArea/CollisionShape2D.shape.radius))
 
 func _on_player_damage_area_body_entered(body: Node2D) -> void:
 	if exploded and $AnimatedSprite2D.is_playing():

@@ -24,7 +24,11 @@ func _ready() -> void:
 func _on_timeout():
 	match GamemodeManager.GAMEMODE:
 		-1:
-			wait_time = randf_range(1, 2)
+			if !GamemodeManager.MODGAME.has("zondre_spawntime") or str(GamemodeManager.MODGAME["zondre_spawntime"]) == "default":
+				wait_time = randf_range(1, 2)
+			else:
+				wait_time = randf_range(float(GamemodeManager.MODGAME["zondre_spawntime"][0]), float(GamemodeManager.MODGAME["zondre_spawntime"][1]))
+			
 			# пульки хуюльки
 			if GamemodeManager.MODGAME["spawn_bullets"]:
 				var bullets_new = P_BULLETS.instantiate()

@@ -158,7 +158,7 @@ size = Vector2(5000, 29)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6oso3"]
 size = Vector2(32, 5056)
 
-[node name="game2" type="Node2D" unique_id=494643166]
+[node name="game" type="Node2D" unique_id=494643166]
 
 [node name="UI" parent="." unique_id=273427744 instance=ExtResource("4_t63fs")]
 

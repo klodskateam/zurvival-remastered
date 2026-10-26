@@ -194,7 +194,10 @@ var WEAPONS = [
 		"sound": "res://Sound/highcal-gun.wav",
 		"reloadsound": "res://Sound/highcal-reload.wav",
 		"weaponswitch_sound": "res://Sound/weaponswitch_heavy",
-		"layered_shootsounds": false,
+		"layered_shootsounds": true,
+		"shootlayer_1": "res://Sound/highcal_main",
+		"shootlayer_2": "res://Sound/mg108_tail",
+		"shootlayer_3": "res://Sound/silence",
 		"scope": false,
 	},
 	{

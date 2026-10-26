@@ -46,6 +46,10 @@ func _ready() -> void:
 			SPEED = DEFAULT_SPEED
 		else:
 			SPEED = int(GamemodeManager.MODGAME["zondre_speed"])
+		if !GamemodeManager.MODGAME.has("zondre_health") or GamemodeManager.MODGAME["zondre_health"] == "default":
+			HP = 100
+		else:
+			HP = int(GamemodeManager.MODGAME["zondre_health"])	
 			
 	if GamemodeManager.GAMEMODE == 3:
 		# дважды весело

@@ -73,12 +73,14 @@ var steptimer = 0
 var stepmaterial = "grass"
 var dir2 = Vector2()
 
+var deaftime = 0
 var shakeamount = 0
 var shaketimer = 0
 var shakedelay = 0.07
 var weaponshakeamount = 0
 var fastshakeamount = 0
 var totalshakeamount = 0
+
 
 var driving = false
 
@@ -223,6 +225,18 @@ func _physics_process(delta: float):
 		else:
 			velocity = velocity.lerp(Vector2.ZERO, 0.2)
 		move_and_slide()	
+	
+	if deaftime > 0 and AudioServer.get_bus_effect(0,1).cutoff_hz >= 20050:
+		var tween := create_tween()
+		tween.tween_property(AudioServer.get_bus_effect(0,1), "cutoff_hz", 800.0, 1)
+		tween.parallel().tween_property(AudioServer.get_bus_effect(0,2), "dry", 0, 0.7)
+		tween.parallel().tween_property(AudioServer.get_bus_effect(0,2), "wet", 0.14, 0.7)
+	if deaftime < 0.4 and AudioServer.get_bus_effect(0,1).cutoff_hz < 20050:
+		var tween := create_tween()
+		tween.tween_property(AudioServer.get_bus_effect(0,1), "cutoff_hz", 20050.0, 1.4)
+		tween.parallel().tween_property(AudioServer.get_bus_effect(0,2), "dry", 1, 0.8)
+		tween.parallel().tween_property(AudioServer.get_bus_effect(0,2), "wet", 0, 0.8)
+		pass
 	
 	score.text = str(SCORE)
 	
@@ -421,6 +435,8 @@ func _physics_process(delta: float):
 		#print("DELAY:" + str(DELAY))
 	if INCREMENT_DELAY <= WEAPONS[SELECTED_WEAPON]["increment_delay"]:
 		INCREMENT_DELAY += 1 * delta
+	if deaftime > 0:
+		deaftime -= 1 * delta
 	if shaketimer <= shakedelay:
 		shaketimer += 1 * delta
 	if shakeamount > 0:
@@ -561,9 +577,9 @@ func _input(event):
 						
 				if event.is_action_pressed("previousweapon"):
 					if SELECTED_WEAPON - 1 < 0:
-						changeweapon(SELECTED_WEAPON-1)
+						changeweapon(WEAPONS.size()-1)
 					else:
-						changeweapon(0)
+						changeweapon(SELECTED_WEAPON-1)
 			else:
 				pass
 		1: 

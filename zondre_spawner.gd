@@ -21,8 +21,15 @@ func _on_timeout() -> void:
 		rngnum2 = RNG.randi_range(0,6)
 		if rngnum == 16 or rngnum2 == 4:
 			wait_time = randf_range(1.4, 3.8)
-	elif GamemodeManager.GAMEMODE != 3:
-		wait_time = randf_range(2.5, 5)			
+	elif GamemodeManager.GAMEMODE == -1:
+		if !GamemodeManager.MODGAME.has("zondre_spawntime") or str(GamemodeManager.MODGAME["zondre_spawntime"]) == "default":
+			wait_time = randf_range(2.5, 5)
+		else:
+			wait_time = randf_range(float(GamemodeManager.MODGAME["zondre_spawntime"][0]), float(GamemodeManager.MODGAME["zondre_spawntime"][1]))
+		
+	else:
+		wait_time = randf_range(2.5, 5)
+				
 		
 	if GamemodeManager.GAMEMODE == -1 and GamemodeManager.MODGAME["zondre_donotspawn"]:
 		pass
