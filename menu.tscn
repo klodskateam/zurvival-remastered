@@ -2,8 +2,6 @@
 
 [ext_resource type="Script" uid="uid://2bvrwha2lhlt" path="res://buttonsmenu.gd" id="1_814jb"]
 [ext_resource type="Theme" uid="uid://d2wr8qi0mdxxq" path="res://ui.tres" id="2_i4evy"]
-[ext_resource type="PackedScene" uid="uid://db8yny8uiwun1" path="res://background.tscn" id="2_xh8be"]
-[ext_resource type="Script" uid="uid://beg25d2qybjtl" path="res://transitionmenu.gd" id="3_l48gv"]
 [ext_resource type="Script" uid="uid://deyhfds4n3ph0" path="res://create_mod_buttons.gd" id="3_ytr4m"]
 [ext_resource type="Theme" uid="uid://oprukw2tpf3d" path="res://default.tres" id="4_l48gv"]
 [ext_resource type="Script" uid="uid://paxq4dmntri8" path="res://update.gd" id="7_ecwwl"]
@@ -14,18 +12,7 @@ font_size = 36
 [sub_resource type="LabelSettings" id="LabelSettings_ecwwl"]
 font_size = 24
 
-[sub_resource type="Gradient" id="Gradient_ytr4m"]
-interpolation_mode = 2
-offsets = PackedFloat32Array(0.309211, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_l48gv"]
-gradient = SubResource("Gradient_ytr4m")
-fill_from = Vector2(1, 1)
-
 [node name="menu" type="Node2D" unique_id=27415172]
-
-[node name="Background" parent="." unique_id=429343208 instance=ExtResource("2_xh8be")]
 
 [node name="Control" type="Control" parent="." unique_id=244607891]
 layout_mode = 3
@@ -39,7 +26,6 @@ offset_bottom = 360.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_i4evy")
-script = ExtResource("3_l48gv")
 
 [node name="Panel" type="Panel" parent="Control" unique_id=1238073283]
 custom_minimum_size = Vector2(0, 230)
@@ -49,9 +35,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -110.0
+offset_left = -110.04
 offset_top = -117.5
-offset_right = 110.0
+offset_right = 109.96
 offset_bottom = 117.5
 grow_horizontal = 2
 grow_vertical = 2
@@ -226,17 +212,6 @@ context_menu_enabled = true
 selection_enabled = true
 
 [node name="HTTPRequest" type="HTTPRequest" parent="Control/update" unique_id=1378205517]
-
-[node name="TransitionBlock" type="TextureRect" parent="." unique_id=2086181202]
-visible = false
-offset_right = 1280.0
-offset_bottom = 720.0
-
-[node name="BlackScreen" type="TextureRect" parent="." unique_id=1234650180]
-offset_top = 720.0
-offset_right = 1280.0
-offset_bottom = 2448.0
-texture = SubResource("GradientTexture2D_l48gv")
 
 [connection signal="pressed" from="Control/Panel/ScrollContainer/VBoxContainer/Play" to="Control/Panel/ScrollContainer/VBoxContainer/Play" method="_on_play_pressed"]
 [connection signal="pressed" from="Control/Panel/ScrollContainer/VBoxContainer/Settings" to="Control/Panel/ScrollContainer/VBoxContainer/Play" method="_on_settings_pressed"]

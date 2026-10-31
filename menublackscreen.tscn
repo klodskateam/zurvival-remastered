@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://ccixfhef08lmk"]
+
+[sub_resource type="Gradient" id="Gradient_ytr4m"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.309211, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_12ooq"]
+gradient = SubResource("Gradient_ytr4m")
+fill_from = Vector2(1, 1)
+
+[node name="MenuBlackScreen" type="Node2D" unique_id=1745069749]
+
+[node name="Control" type="Control" parent="." unique_id=1672242432]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 640.0
+offset_top = 360.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="TextureRect" parent="Control" unique_id=1296510996]
+layout_mode = 0
+offset_left = -640.0
+offset_top = 360.0
+offset_right = 640.0
+offset_bottom = 2087.9995
+texture = SubResource("GradientTexture2D_12ooq")

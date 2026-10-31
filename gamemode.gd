@@ -2,8 +2,8 @@ extends Node2D
 
 const BUTTONGAMEMODE = preload("res://buttongamemode.tscn")
 
-@onready var transition = get_tree().current_scene.get_node("Control")
-@onready var background = get_tree().current_scene.get_node("Background/Sprite2D")
+@onready var transition = get_tree().current_scene
+#@onready var background = get_tree().current_scene.get_node("Background/Sprite2D")
 var GMCHANGE_TO = null
 var GMNAME = null
 var GMDESC = null
@@ -94,8 +94,8 @@ func _ready() -> void:
 		newbtn.GMODE = -1
 		
 		$Control/Panel/ScrollContainer/VBoxContainer.add_child(newbtn)
-	if not transition.imfinished.is_connected(Global.got_finishedsign):
-		transition.imfinished.connect(Global.got_finishedsign)
+	#if not transition.imfinished.is_connected(Global.got_finishedsign):
+		#transition.imfinished.connect(Global.got_finishedsign)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -107,9 +107,9 @@ func _process(delta: float) -> void:
 
 func _on_button_pressed() -> void:
 #	get_tree().change_scene_to_file("res://menu.tscn")
-	background.save_id()	
-	Global.FROM = 2
-	transition.up(6)
+	#background.save_id()	
+	#Global.FROM = 2
+	transition.doit(Vector2(0, 1), "menu", Vector2(0,-1))
 	pass
 
 

@@ -26,7 +26,7 @@ extends Node
 # Настройки и служебное
 var VERSION = ProjectSettings.get_setting("application/config/version")
 var FULLSCREEN = false
-var SmoothTransitions = true
+var SmoothTransitions = false
 var WEAPONHINTS = true
 var CheapEffects = false
 var SHADOWS = true
@@ -283,6 +283,7 @@ var CURRENT_AIM = preload("res://Resources/aims/default.png")
 var GAYPAD_AIDS = 1 # причем тут aids? ну, типа короче типа я хотел сначала gaypad_speed, ну типа спид, а спид по английски это aids вот типа шутка да хазвъзахвзахвзахвза
 var CONTROLLER_CONNECTED = false
 var weap_chng_btn
+var arrNewVer : Array = [0,0,0]
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("fullscreenkey"):
@@ -367,19 +368,19 @@ func got_finishedsign(value):
 	match value:
 		1:
 			await get_tree().process_frame
-			get_tree().change_scene_to_file(GAME)
+			#get_tree().change_scene_to_file(GAME)
 		2:
 			await get_tree().process_frame
-			get_tree().change_scene_to_file(SETTINGS)
+			#get_tree().change_scene_to_file(SETTINGS)
 		3:
 			await get_tree().process_frame
-			get_tree().change_scene_to_file("res://mods.tscn")
+			#get_tree().change_scene_to_file("res://mods.tscn")
 		4:
-			
-			get_tree().quit()
+			pass
+			#get_tree().quit()
 		5:
 			await get_tree().process_frame
-			get_tree().change_scene_to_file("res://modsinternet.tscn")
+			#get_tree().change_scene_to_file("res://modsinternet.tscn")
 		6:
 			await get_tree().process_frame
-			get_tree().change_scene_to_file("res://menu.tscn")
+			#get_tree().change_scene_to_file("res://menu.tscn")

@@ -1,8 +1,7 @@
 extends Control
 
 @onready var internet: HTTPRequest = $HTTPRequest
-@onready var transition = get_tree().current_scene.get_node("Control")
-@onready var background = get_tree().current_scene.get_node("Background/Sprite2D")
+@onready var transition = get_tree().current_scene
 
 # временный URL
 var API_URL = "http://127.0.0.1/_api/zrapi/api/v1"
@@ -15,8 +14,6 @@ var mods_info
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if not transition.imfinished.is_connected(Global.got_finishedsign):
-		transition.imfinished.connect(Global.got_finishedsign)
 	internet.request(API_URL + "/getmods.php")
 	# INFO ↓↓↓ что это делает? Зачем оно? Мы не знаем, lol ↓↓↓
 	# download("https://kteam.veliona.no/_game_services/zr2.0/mods/files/sus.zip", "user://sus.zip")
@@ -173,6 +170,7 @@ func _on_mod_dl_request_completed(result: int, response_code: int, headers: Pack
 
 func _on_quitmodsinternet_pressed() -> void:
 #	get_tree().change_scene_to_file("res://mods.tscn")
-	background.save_id()
-	Global.FROM = 2
-	transition.up(3)
+	#background.save_id()
+	#Global.FROM = 2
+	#transition.up(3)
+	transition.doit(Vector2(0, 1), "mods", Vector2(0,-1))

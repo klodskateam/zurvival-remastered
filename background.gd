@@ -63,13 +63,13 @@ var BGs = [
 		"author": "mw10b1909" 
 	},
 ]
-var current_image
+var current_image = -1
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	
 	BGs.append_array(ModLoader.BGs)
 	
-	change_image(0)
+	change_image()
 
 	
 	
@@ -77,25 +77,13 @@ func _process(delta: float) -> void:
 	BGTIME += delta # люблю костыли
 	if BGTIME >= 5:
 		BGTIME -= 5
-		change_image(current_image)
+		change_image()
 
 
-func change_image(current):
+func change_image():
 	var bgid = randi_range(0, BGs.size())-1
-	while bgid == current:
+	while bgid == current_image:
 		bgid = randi_range(0, BGs.size())-1
-	texture = BGs[bgid]["image"]
-	imageres = BGs[bgid]["image"].get_size()
-	scale2 = max((1280.0/imageres.x), (720.0/imageres.y))
-	scale = Vector2(scale2, scale2)
-	$"../Label".text = tr("$createdby") + " " + BGs[bgid]["author"]
-	current_image = bgid
-	
-func save_id():
-	Global.BGID = current_image
-	
-func set_id(id):
-	var bgid = id
 	texture = BGs[bgid]["image"]
 	imageres = BGs[bgid]["image"].get_size()
 	scale2 = max((1280.0/imageres.x), (720.0/imageres.y))

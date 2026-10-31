@@ -72,6 +72,7 @@ theme = ExtResource("3_g44lh")
 text = "$quit"
 
 [node name="Label" type="Label" parent="CanvasLayer/Control" unique_id=1273777539]
+oversampling_with_scale = 2
 layout_mode = 0
 offset_left = 22.0
 offset_top = 5.0
@@ -83,7 +84,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.643137)
 theme_override_constants/shadow_outline_size = 5
 theme_override_fonts/font = ExtResource("5_6lah5")
 theme_override_font_sizes/font_size = 20
-text = "0 Z$"
+text = "0 ZC"
 justification_flags = 162
 script = ExtResource("6_gmb2m")
 

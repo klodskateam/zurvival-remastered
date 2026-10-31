@@ -7,4 +7,4 @@ func _on_pressed() -> void:
 	Global.ZCOINS += (player.SCORE/4)
 	Global.CONFIG.set_value("save", "zcoins", Global.ZCOINS)
 	Global.CONFIG.save(Global.SAVE_PATH)
-	get_tree().change_scene_to_file("res://menu.tscn")
+	get_tree().change_scene_to_file("res://lemenu.tscn")
