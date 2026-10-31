@@ -25,8 +25,9 @@ grow_vertical = 2
 
 [node name="Panel" type="TextureRect" parent="Control" unique_id=1296510996]
 layout_mode = 0
-offset_left = -640.0
+offset_left = -1590.0
 offset_top = 360.0
-offset_right = 640.0
+offset_right = -310.0
 offset_bottom = 2087.9995
+scale = Vector2(2.5, 1)
 texture = SubResource("GradientTexture2D_12ooq")

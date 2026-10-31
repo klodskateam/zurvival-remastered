@@ -7,7 +7,8 @@
 [node name="LeMenu" type="Node2D" unique_id=111175399]
 script = ExtResource("1_rbm7p")
 
-[node name="Background" parent="." unique_id=429680660 instance=ExtResource("2_ox8nd")]
-z_index = -2
+[node name="Control" type="CanvasGroup" parent="." unique_id=1854483864]
+
+[node name="Background" parent="Control" unique_id=429680660 instance=ExtResource("2_ox8nd")]
 
 [node name="menu" parent="." unique_id=27415172 instance=ExtResource("3_7e38g")]

@@ -54,7 +54,6 @@ var ogroundamount = 0
 var maybeselectedweapon = 0
 var FORCE_RUNLOCK = false
 var shake = false
-var zondrespleasesaveusall = false
 var weightaccum = 0
 var accum2 = 0
 var dmgblur = false

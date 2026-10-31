@@ -1,4 +1,4 @@
-extends Sprite2D
+extends TextureRect
 
 # тут был костыль HACK HACK HACK (kteam.veliona.no/korzina/index.php?file=paste_683c3701ef2285.34850194.txt)
 
@@ -85,9 +85,9 @@ func change_image():
 	while bgid == current_image:
 		bgid = randi_range(0, BGs.size())-1
 	texture = BGs[bgid]["image"]
-	imageres = BGs[bgid]["image"].get_size()
-	scale2 = max((1280.0/imageres.x), (720.0/imageres.y))
-	scale = Vector2(scale2, scale2)
-	$"../Label".text = tr("$createdby") + " " + BGs[bgid]["author"]
+	#imageres = BGs[bgid]["image"].get_size()
+	#scale2 = max((1280.0/imageres.x), (720.0/imageres.y))
+	#scale = Vector2(scale2, scale2)
+	$"../../Control/Label".text = tr("$createdby") + " " + BGs[bgid]["author"]
 	current_image = bgid
 	

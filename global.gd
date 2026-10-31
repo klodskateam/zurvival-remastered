@@ -297,8 +297,13 @@ func _input(event: InputEvent) -> void:
 		devMode = !devMode
 		CONFIG.set_value("developer", "enabled", devMode)
 		CONFIG.save(SAVE_PATH)
-		OS.alert("DevMode Enabled: " + str(devMode))
-			
+		OS.alert("DevMode Enabled: " + str(devMode))		
+	if event.is_action_pressed("devEnableCanvasExpand"):
+		if get_window().content_scale_aspect == Window.CONTENT_SCALE_ASPECT_KEEP:
+			get_window().content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND
+		else:
+			get_window().content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
+		
 			
 	
 func _ready() -> void:

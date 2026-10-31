@@ -1,11 +1,16 @@
 extends Node2D
 
-@onready var background: Node2D = $Background/Sprite2D
+@onready var background: Node2D = $Background/CanvasLayer/Sprite2D
 @onready var current_scene = $menu
 @onready var next_scene
 
 # хотел долгое время переделать переходы
 # rip старый transitionmenu.gd 13.07.2025-31.10.2026
+
+func _ready() -> void:
+	current_scene.get_node("Control").position = Vector2(get_viewport().get_visible_rect().size.x/2,get_viewport().get_visible_rect().size.y/2)
+	get_tree().root.size_changed.connect(movepanel)
+	pass
 
 func doit(where: Vector2, nextscene: String, nextfrom: Vector2):
 	if Global.SmoothTransitions:
@@ -48,3 +53,8 @@ func doit(where: Vector2, nextscene: String, nextfrom: Vector2):
 			get_tree().quit()
 		current_scene = next_scene
 		next_scene = null
+
+func movepanel():
+	if current_scene != null:
+		current_scene.get_node("Control").position = Vector2(get_viewport().get_visible_rect().size.x/2,get_viewport().get_visible_rect().size.y/2)
+	pass

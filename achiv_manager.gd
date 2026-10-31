@@ -8,6 +8,12 @@ var achivs = [
 		"description": "Вы достигли чего-то, это, вроде, круто.",
 		"icon": preload("res://Resources/i_knew_it.jpg"),
 		"completed": false
+	},
+	{
+		"name": "Не идите в лес ночью",
+		"description": "Потяряться в лесу",
+		"icon": preload("res://Resources/i_knew_it.jpg"),
+		"completed": false
 	}
 ]
 

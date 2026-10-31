@@ -7,19 +7,44 @@
 [sub_resource type="LabelSettings" id="LabelSettings_i7s6n"]
 font_size = 11
 
-[node name="Background" type="Node2D" unique_id=429680660]
+[node name="Background" type="CanvasLayer" unique_id=1598394004]
+layer = -1
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2024160677]
-position = Vector2(640, 360)
-scale = Vector2(0.666667, 0.666667)
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1255681089]
+layer = -2
+
+[node name="Sprite2D" type="TextureRect" parent="CanvasLayer" unique_id=224733020]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("1_vrd3a")
+expand_mode = 5
+stretch_mode = 6
 script = ExtResource("2_pv48m")
 
-[node name="Label" type="Label" parent="." unique_id=548527698]
-offset_left = 954.0
-offset_top = 703.0
-offset_right = 1277.0
-offset_bottom = 717.0
+[node name="Control" type="Control" parent="." unique_id=628350224]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Control" unique_id=548527698]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -325.305
+offset_top = -16.794983
+offset_right = -2.305664
+offset_bottom = -2.794983
+grow_horizontal = 0
+grow_vertical = 0
 theme = ExtResource("3_d4myy")
 text = "AUTHOR228"
 label_settings = SubResource("LabelSettings_i7s6n")
