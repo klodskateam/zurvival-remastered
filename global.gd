@@ -63,6 +63,7 @@ var WEAPONS = [
 		"shake": 7,
 		"soundondelay": false,
 		"penthrough": false,
+		"move_recoil": 0.03,
 		"bulletdespawn_dist": 900,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
 		"sound": "res://Sound/pistol.wav",
@@ -75,12 +76,12 @@ var WEAPONS = [
 		"name": "$startermp",
 		"id": 2,
 		"class": "primary",
-		"delay": 0.35,
+		"delay": 0.38,
 		"damage": 50,
 		"bullet_speed": 1450,
 		"automatic": true,
 		"bullets": 30,
-		"left_bullets": 30,
+		"left_bullets": 63530,
 		"zapas_bullets": 60,
 		"icon": "res://Resources/ui_stuff_lol/weapon_startermp.png",
 		"incremental_reload": false,
@@ -94,6 +95,7 @@ var WEAPONS = [
 		"shake": 8,
 		"soundondelay": false,
 		"penthrough": false,
+		"move_recoil": 0.025,
 		"bulletdespawn_dist": 1200,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
 		"sound": "res://Sound/pistol-03.wav",
@@ -156,6 +158,7 @@ var WEAPONS = [
 		"sway": 0.15,
 		"weight": 0.37,
 		"penthrough": false, # у ~~дробовика отдельный код для этого, мб стоит убрать~~ ладно я просто реюзанул код
+		"move_recoil": 1,
 		"bulletdespawn_dist": 700,
 		"shake": 16,
 		"soundondelay": true,
@@ -188,6 +191,7 @@ var WEAPONS = [
 		"shake": 37,
 		"weight": 0.46,
 		"penthrough": true,
+		"move_recoil": 0.47,
 		"bulletdespawn_dist": 1600,
 		"soundondelay": false,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
@@ -222,6 +226,7 @@ var WEAPONS = [
 		"shake": 12,
 		"weight": 0.31,
 		"penthrough": false,
+		"move_recoil": 0.27,
 		"bulletdespawn_dist": 2000,
 		"soundondelay": false,
 		"delaysound": "res://Sound/shotgun_cycle.wav",
@@ -298,7 +303,7 @@ func _input(event: InputEvent) -> void:
 		CONFIG.set_value("developer", "enabled", devMode)
 		CONFIG.save(SAVE_PATH)
 		OS.alert("DevMode Enabled: " + str(devMode))		
-	if event.is_action_pressed("devEnableCanvasExpand"):
+	if event.is_action_pressed("devEnableCanvasExpand") and devMode:
 		if get_window().content_scale_aspect == Window.CONTENT_SCALE_ASPECT_KEEP:
 			get_window().content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND
 		else:
