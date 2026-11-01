@@ -32,13 +32,13 @@ var CheapEffects = false
 var SHADOWS = true
 @onready var GAME = "res://gamemode.tscn"
 @onready var SETTINGS = "res://settings.tscn"
-const isDEMO = true # Данная настройка отключает магазин, склад и список модов Онлайн, так-как оно не готово (онлайн моды я ещё апи не сделал ну я и лох вообще)
+var isDEMO = true # Данная настройка отключает магазин, склад и список модов Онлайн, так-как оно не готово (онлайн моды я ещё апи не сделал ну я и лох вообще)
 var devMode = false
 
 #Конфиги
 const SAVE_PATH = "user://save.cfg"
 var CONFIG = ConfigFile.new()
-var KT_URL = "https://kteam.veliona.no/"
+var KT_URL = "http://kteam" # тестовый URL
 var WEAPONS = [
 	{
 		"name": "$starterpistol",
@@ -302,7 +302,12 @@ func _input(event: InputEvent) -> void:
 		devMode = !devMode
 		CONFIG.set_value("developer", "enabled", devMode)
 		CONFIG.save(SAVE_PATH)
-		OS.alert("DevMode Enabled: " + str(devMode))		
+		OS.alert("DevMode Enabled: " + str(devMode))
+	if event.is_action_pressed("devIsDemoToggle") and devMode:
+		isDEMO = !isDEMO
+		CONFIG.set_value("developer", "isdemo", isDEMO)
+		CONFIG.save(SAVE_PATH)
+		OS.alert("isDEMO Enabled: " + str(isDEMO))
 	if event.is_action_pressed("devEnableCanvasExpand") and devMode:
 		if get_window().content_scale_aspect == Window.CONTENT_SCALE_ASPECT_KEEP:
 			get_window().content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND
@@ -359,6 +364,7 @@ func _ready() -> void:
 				EQUIPPED_WEAPONS.append(WEAPONS[allweapons])
 	
 	devMode = CONFIG.get_value("developer", "enabled", false)
+	isDEMO = CONFIG.get_value("developer", "isdemo", true)
 	# tf2 reference ALERT
 	# NOTE: я скомпилированную игру не могу запустить, надо закомментировать rsiughdsugjh
 #	if !FileAccess.file_exists("res://_IMPORTANT_IMAGE_DONT_DELETE_INACHE_PISEC!!.jpg"):

@@ -1,10 +1,12 @@
 extends Control
 
 @onready var internet: HTTPRequest = $HTTPRequest
+@onready var modscontainer: VBoxContainer = $Control/Panel/HSplitContainer/ScrollContainer/VBoxContainer
+
 @onready var transition = get_tree().current_scene
 
 # временный URL
-var API_URL = "http://127.0.0.1/_api/zrapi/api/v1"
+var API_URL = Global.KT_URL + "/_api"
 const MOD_ITEM_INTERNET = preload("res://mod_item_internet.tscn")
 const LOAD_IMG = preload("res://Resources/loading_img.png")
 const MOD_IMG_ERROR = preload("res://image_not_found.png")
@@ -14,7 +16,7 @@ var mods_info
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	internet.request(API_URL + "/getmods.php")
+	load_mods(1)
 	# INFO ↓↓↓ что это делает? Зачем оно? Мы не знаем, lol ↓↓↓
 	# download("https://kteam.veliona.no/_game_services/zr2.0/mods/files/sus.zip", "user://sus.zip")
 
@@ -28,16 +30,15 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 		mods_info = JSON.parse_string(body.get_string_from_utf8())
 		$Control/Panel/HSplitContainer/ScrollContainer/VBoxContainer/Label.queue_free()
 		
-		for mod in mods_info:
+		for mod in mods_info["mods"]:
 			var new_mod_item = MOD_ITEM_INTERNET.instantiate()
 			new_mod_item.IMG = LOAD_IMG
-			new_mod_item.NAME = mod["name"]
-			new_mod_item.DESC = mod["description"]
-			new_mod_item.MOD_ID = mod_idid
-			mod_idid += 1
+			new_mod_item.NAME = mod["title"]
+			new_mod_item.DESC = mod["content"]
+			new_mod_item.MOD_ID = mod["id"]
 
 		
-			load_image(mod["icon"], new_mod_item, "moditem")
+			load_image(mod["iconurl"], new_mod_item, "moditem")
 				
 		
 			$Control/Panel/HSplitContainer/ScrollContainer/VBoxContainer.add_child(new_mod_item)
@@ -167,6 +168,17 @@ func _on_mod_dl_request_completed(result: int, response_code: int, headers: Pack
 	ModLoader.load_mods()
 	dir.remove("user://mods/temp/temp" + modname + ".zip")
 
+func load_mods(page: int = 1, clear: bool = false):
+	if clear:
+		for c in modscontainer.get_children():
+			c.queue_free()
+		
+	var limit = 10 # поставил единицу, потому-что щас только 4 тестовых записи. Не забыть поменять на 10 ОЧЕНЬ СРОЧНО НЕ ЗАБЫТЬ
+	var offset: int = (page - 1) * limit
+	var url = "/mods?limit=%d&offset=%d&game=%s" % [
+		limit, offset, "zr".uri_encode()
+	]
+	internet.request(API_URL + url)
 
 func _on_quitmodsinternet_pressed() -> void:
 #	get_tree().change_scene_to_file("res://mods.tscn")
