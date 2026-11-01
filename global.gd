@@ -81,7 +81,7 @@ var WEAPONS = [
 		"bullet_speed": 1450,
 		"automatic": true,
 		"bullets": 30,
-		"left_bullets": 63530,
+		"left_bullets": 30,
 		"zapas_bullets": 60,
 		"icon": "res://Resources/ui_stuff_lol/weapon_startermp.png",
 		"incremental_reload": false,
