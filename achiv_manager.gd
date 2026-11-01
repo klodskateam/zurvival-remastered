@@ -12,7 +12,7 @@ var achivs = [
 	{
 		"name": "Не идите в лес ночью",
 		"description": "Потяряться в лесу",
-		"icon": preload("res://Resources/i_knew_it.jpg"),
+		"icon": preload("res://Resources/campfire_burning.png"),
 		"completed": false
 	}
 ]
