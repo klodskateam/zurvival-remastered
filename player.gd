@@ -54,7 +54,6 @@ var ogroundamount = 0
 var maybeselectedweapon = 0
 var FORCE_RUNLOCK = false
 var shake = false
-var zondrespleasesaveusall = false
 var weightaccum = 0
 var accum2 = 0
 var dmgblur = false
@@ -115,6 +114,7 @@ func _ready() -> void:
 		WEAPONS[0]["sway"] = 0
 		WEAPONS[0]["shake"] = 0
 		WEAPONS[0]["bulletdespawn_dist"] = 10000
+		WEAPONS[0]["move_recoil"] = 0
 	if GamemodeManager.GAMEMODE == -1:
 		print("forcesnow: " + str(GamemodeManager.MODGAME["force_snow"]))
 		print("snowinwinter: " + str(GamemodeManager.MODGAME["snowinwinter"]))
@@ -155,6 +155,7 @@ func _ready() -> void:
 			WEAPONS.append(Global.WEAPONS[0].duplicate(true))
 			WEAPONS[0]["sway"] = 0
 			WEAPONS[0]["shake"] = 0
+			WEAPONS[0]["move_recoil"] = 5
 			WEAPONS[0]["bulletdespawn_dist"] = 10000
 			WEAPONS[0]["sound"] = "res://Sound/pistol-02.wav"
 			WEAPONS[0]["damage"] = 200
@@ -642,6 +643,9 @@ func shoot():
 				#$Camera2D/AnimationPlayer.stop()
 				#$Camera2D/AnimationPlayer.play("shotgun_recoil")	
 				for i in 9:
+					await get_tree().create_timer(randf_range(0.001, 0.003)).timeout
+					var direction = Vector2.DOWN.rotated(rotation)
+					velocity += direction * WEAPONS[SELECTED_WEAPON]["move_recoil"]*100
 					var bullet = P_BULLET.instantiate()
 					bullet.shotgunbullet = true
 					bullet.global_position = $Marker2D.global_position
@@ -697,6 +701,10 @@ func shoot():
 				$ShootSound.stream = load(WEAPONS[SELECTED_WEAPON]["sound"])
 				$ShootSound.play()
 			DELAY = 0
+			for i in 18:
+					await get_tree().create_timer(randf_range(0.001, 0.003)).timeout
+					var direction = Vector2.DOWN.rotated(rotation)
+					velocity += direction * WEAPONS[SELECTED_WEAPON]["move_recoil"]*100
 			#print(DELAY)
 	elif driving:
 		pass

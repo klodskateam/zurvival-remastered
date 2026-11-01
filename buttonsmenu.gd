@@ -2,27 +2,23 @@ extends Button
 
 @onready var GAME = "res://gamemode.tscn"
 @onready var SETTINGS = "res://settings.tscn"
-@onready var transition = get_tree().current_scene.get_node("Control")
-@onready var background = get_tree().current_scene.get_node("Background/Sprite2D")
+@onready var transition = get_tree().current_scene
 var config = ConfigFile.new()
-
-func _ready() -> void:
-	if not transition.imfinished.is_connected(Global.got_finishedsign):
-		transition.imfinished.connect(Global.got_finishedsign)
 
 func _on_play_pressed():
 	print("GAME1")
 #	get_tree().change_scene_to_file(GAME)
-	background.save_id()	
-	Global.FROM = 1
-	transition.down(1)
+	#background.save_id()	
+	#Global.FROM = 1
+	#transition.down(1)
+	transition.doit(Vector2(0, -1), "gamemode", Vector2(0,1))
 
 func _on_settings_pressed():
 	print("SETTINGS")
 #	get_tree().change_scene_to_file(SETTINGS)
-	background.save_id()
-	Global.FROM = 3
-	transition.right(2)
+	#background.save_id()
+	#Global.FROM = 3
+	transition.doit(Vector2(-1, 0), "settings", Vector2(1,0))
 	
 func _on_settings_back_pressed():
 	config.load(Global.SAVE_PATH)
@@ -38,21 +34,21 @@ func _on_settings_back_pressed():
 	config.set_value("items", "aims", tmp_aims)
 	config.save(Global.SAVE_PATH)
 	#get_tree().change_scene_to_file("res://menu.tscn")
-	background.save_id()
+	#background.save_id()
 	Global.FROM = 4
-	transition.left(6)
+	transition.doit(Vector2(1, 0), "menu", Vector2(-1,0))
 	
 func _on_exit_pressed():
 #	get_tree().quit()
-	background.save_id()
-	transition.up(4)
+	#background.save_id()
+	transition.doit(Vector2(0, 1), "menublackscreen", Vector2(0,-1))
 	pass
 
 
 func _on_mods_pressed() -> void:
 #	get_tree().change_scene_to_file("res://mods.tscn")
-	background.save_id()
-	Global.FROM = 4
-	transition.left(3)
+	#background.save_id()
+	#Global.FROM = 4
+	transition.doit(Vector2(1, 0), "mods", Vector2(-1,0))
 	pass
 	

@@ -1,102 +1,60 @@
-extends Control
-signal imfinished
-var to = 0
-@onready var background = get_tree().current_scene.get_node("Background/Sprite2D")
-@onready var transitionblock = get_tree().current_scene.get_node("TransitionBlock")
-func up(to: int):
-	if !Global.SmoothTransitions:
-		imfinished.emit(to)
-	else:
-		if to == 4: 
-		# следует использовать ТОЛЬКО при выходе из игры в главном меню
-			var blackscreen = get_tree().current_scene.get_node("BlackScreen")
-			var tween = create_tween()
-			tween.tween_property(blackscreen, "position", Vector2(0, -1008.0), 0.58).set_trans(Tween.TRANS_QUINT)
-			tween.connect("finished", func(): up_done(to))
-		var tween = create_tween()
-		tween.tween_property(self, "position", Vector2(640.0, -520), 0.58).set_trans(Tween.TRANS_QUINT)
-		transitionblock.visible = true
-		if to == 4:
-			pass 
-		else:
-			tween.connect("finished", func(): up_done(to))
-	
-	
-func up_done(to: int):
-	transitionblock.visible = false
-	imfinished.emit(to)
+extends Node2D
 
-func down(to: int):
-	if !Global.SmoothTransitions:
-		imfinished.emit(to)
-	else:
-		var tween = create_tween()
-		tween.tween_property(self, "position", Vector2(640.0, 1000), 0.58).set_trans(Tween.TRANS_QUINT)
-		transitionblock.visible = true
-		tween.connect("finished", func(): down_done(to))
-	
-func down_done(to: int):
-	transitionblock.visible = false
-	imfinished.emit(to)
+@onready var background: Node2D = $Background/CanvasLayer/Sprite2D
+@onready var current_scene = $menu
+@onready var next_scene
 
-func left(to: int):
-	if !Global.SmoothTransitions:
-		imfinished.emit(to)
-	else:
-		var tween = create_tween()
-		transitionblock.visible = true
-		tween.tween_property(self, "position", Vector2(-400, 360), 0.58).set_trans(Tween.TRANS_QUINT)
-		tween.connect("finished", func(): left_done(to))
-		
-func left_done(to: int):
-	transitionblock.visible = false
-	imfinished.emit(to)
+# хотел долгое время переделать переходы
+# rip старый transitionmenu.gd 13.07.2025-31.10.2026
 
-func right(to: int):
-	if !Global.SmoothTransitions:
-		imfinished.emit(to)
-	else:
-		var tween = create_tween()
-		transitionblock.visible = true
-		tween.tween_property(self, "position", Vector2(1500, 360), 0.58).set_trans(Tween.TRANS_QUINT)
-		tween.connect("finished", func(): right_done(to))
-		
-func right_done(to: int):
-	transitionblock.visible = false
-	imfinished.emit(to)
-	
-func center():
-	if !Global.SmoothTransitions:
-		imfinished.emit()
-		transitionblock.visible = false
-	else:
-		var tween = create_tween()
-		transitionblock.visible = true
-		tween.tween_property(self, "position", Vector2(640, 360), 0.58).set_trans(Tween.TRANS_QUINT)
-		tween.connect("finished", func(): center_done())
-	
-func center_done():
-	transitionblock.visible = false
-	imfinished.emit()
-	
-func from(where: int):
-	if where == 1:
-		position = Vector2(640.0, -520.0)
-	elif where == 2:
-		position = Vector2(640.0, 1000.0)
-	elif where == 3:
-		position = Vector2(-400.0, 360.0)
-	elif where == 4:
-		position = Vector2(1500.0, 360.0)
-	
 func _ready() -> void:
-	if Global.BGID and Global.SmoothTransitions:
-		background.set_id(Global.BGID)
-	else:
-		pass
-	if Global.FROM != 0 and Global.SmoothTransitions:
-		from(Global.FROM)
-		center()
-		Global.FROM = 0
-	else:
-		position = Vector2(640.0, 360.0)
+	current_scene.get_node("Control").position = Vector2(get_viewport().get_visible_rect().size.x/2,get_viewport().get_visible_rect().size.y/2)
+	get_tree().root.size_changed.connect(movepanel)
+	pass
+
+func doit(where: Vector2, nextscene: String, nextfrom: Vector2):
+	if Global.SmoothTransitions:
+		get_viewport().gui_disable_input = true
+		var tween = create_tween()
+		var x_transition = (get_viewport().get_visible_rect().size.x/2) - where.x * ((get_viewport().get_visible_rect().size.x+current_scene.get_node("Control/Panel").size.x+30)/2)
+		var y_transition = (get_viewport().get_visible_rect().size.y/2) - where.y * ((get_viewport().get_visible_rect().size.y+current_scene.get_node("Control/Panel").size.y+30)/2)
+		tween.tween_property(current_scene.get_node("Control"), "position", Vector2(x_transition, y_transition), 0.58).set_trans(Tween.TRANS_QUINT)
+		#await tween.finished
+		var nextpanel = load("res://" + nextscene + ".tscn").instantiate()
+		next_scene = nextpanel
+		x_transition = (get_viewport().get_visible_rect().size.x/2) - nextfrom.x * ((get_viewport().get_visible_rect().size.x+nextpanel.get_node("Control/Panel").size.x+30)/2)
+		y_transition = (get_viewport().get_visible_rect().size.y/2) - nextfrom.y * ((get_viewport().get_visible_rect().size.y+nextpanel.get_node("Control/Panel").size.y+30)/2)
+		nextpanel.get_node("Control").position = Vector2(x_transition, y_transition)
+		add_child(nextpanel)
+		if nextscene != "menublackscreen":
+			var nexttween = create_tween()
+			nexttween.tween_property(next_scene.get_node("Control"), "position", Vector2(get_viewport().get_visible_rect().size.x/2,get_viewport().get_visible_rect().size.y/2), 0.58).set_trans(Tween.TRANS_QUINT)
+			await tween.finished
+			current_scene.queue_free()
+			await nexttween.finished
+			get_viewport().gui_disable_input = false
+			current_scene = next_scene
+			next_scene = null
+		else:
+			var nexttween = create_tween()
+			nexttween.tween_property(next_scene.get_node("Control"), "position", Vector2(640, -1368), 0.58).set_trans(Tween.TRANS_QUINT)
+			await tween.finished
+			current_scene.queue_free()
+			get_tree().quit()
+	elif !Global.SmoothTransitions:
+		current_scene.queue_free()
+		if nextscene != "menublackscreen":
+			background.change_image()
+		var nextpanel = load("res://" + nextscene + ".tscn").instantiate()
+		add_child(nextpanel)
+		#nextpanel.position = Vector2(get_viewport().get_visible_rect().size.x/2,get_viewport().get_visible_rect().size.y/2)
+		next_scene = nextpanel
+		if nextscene == "menublackscreen":
+			get_tree().quit()
+		current_scene = next_scene
+		next_scene = null
+
+func movepanel():
+	if current_scene != null:
+		current_scene.get_node("Control").position = Vector2(get_viewport().get_visible_rect().size.x/2,get_viewport().get_visible_rect().size.y/2)
+	pass

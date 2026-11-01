@@ -13,27 +13,43 @@ shader_parameter/blur_amount = 0
 shader_parameter/blur_radius = 1.0
 shader_parameter/blur_direction = Vector2(1, 1)
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_ccer4"]
+[sub_resource type="CanvasTexture" id="CanvasTexture_ftari"]
 
 [node name="GameOver" type="CanvasLayer" unique_id=1294667639]
 process_mode = 1
 script = ExtResource("1_ji23y")
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=258808914]
+[node name="Control2" type="Control" parent="." unique_id=1200912455]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="Control2" unique_id=852238420]
 material = SubResource("ShaderMaterial_8u835")
-anchors_preset = -1
-anchor_left = -0.132902
-anchor_top = -0.548341
-anchor_right = 0.837411
-anchor_bottom = 0.396103
-offset_left = 170.115
-offset_top = 394.806
-offset_right = 208.114
-offset_bottom = 434.806
-texture = SubResource("CanvasTexture_ccer4")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_ftari")
 script = ExtResource("3_8u835")
 
-[node name="Panel" type="Panel" parent="." unique_id=2010315004]
+[node name="Control" type="Control" parent="." unique_id=1558070175]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Control" unique_id=2010315004]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -41,13 +57,13 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -176.0
 offset_top = -151.0
-offset_right = 176.0
+offset_right = 176.00012
 offset_bottom = 151.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_tclbe")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1973287026]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel" unique_id=1973287026]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -60,7 +76,7 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="title" type="Label" parent="Panel/VBoxContainer" unique_id=1177422372]
+[node name="title" type="Label" parent="Control/Panel/VBoxContainer" unique_id=1177422372]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.645551, 2.56296e-06, 4.81307e-07, 1)
 theme_override_font_sizes/font_size = 26
@@ -68,27 +84,27 @@ text = "$youdead"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer" unique_id=1583160481]
+[node name="HSeparator" type="HSeparator" parent="Control/Panel/VBoxContainer" unique_id=1583160481]
 layout_mode = 2
 
-[node name="scores" type="Label" parent="Panel/VBoxContainer" unique_id=732844677]
+[node name="scores" type="Label" parent="Control/Panel/VBoxContainer" unique_id=732844677]
 layout_mode = 2
 text = "ЫЫ"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="HSeparator2" type="HSeparator" parent="Panel/VBoxContainer" unique_id=1288348382]
+[node name="HSeparator2" type="HSeparator" parent="Control/Panel/VBoxContainer" unique_id=1288348382]
 layout_mode = 2
 
-[node name="GoToMenu" type="Button" parent="Panel/VBoxContainer" unique_id=1477677712]
+[node name="GoToMenu" type="Button" parent="Control/Panel/VBoxContainer" unique_id=1477677712]
 layout_mode = 2
 text = "$gotomenu"
 
-[node name="Retry" type="Button" parent="Panel/VBoxContainer" unique_id=398343723]
+[node name="Retry" type="Button" parent="Control/Panel/VBoxContainer" unique_id=398343723]
 layout_mode = 2
 text = "$retry"
 
-[connection signal="visibility_changed" from="TextureRect" to="TextureRect" method="_on_visibility_changed"]
-[connection signal="pressed" from="Panel/VBoxContainer/GoToMenu" to="." method="_on_go_to_menu_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/Retry" to="." method="_on_retry_pressed"]
+[connection signal="visibility_changed" from="Control2/TextureRect" to="Control2/TextureRect" method="_on_visibility_changed"]
+[connection signal="pressed" from="Control/Panel/VBoxContainer/GoToMenu" to="." method="_on_go_to_menu_pressed"]
+[connection signal="pressed" from="Control/Panel/VBoxContainer/Retry" to="." method="_on_retry_pressed"]

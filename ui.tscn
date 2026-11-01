@@ -72,19 +72,30 @@ font_size = 48
 [node name="DMGBlur" type="TextureRect" parent="." unique_id=728824457]
 material = SubResource("ShaderMaterial_cxd00")
 clip_contents = true
-offset_right = 1280.0
-offset_bottom = 720.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = SubResource("CanvasTexture_gs482")
 script = ExtResource("3_gs482")
 
-[node name="VignetteBlack" type="Sprite2D" parent="." unique_id=590658195]
+[node name="VignetteBlack" type="TextureRect" parent="." unique_id=1429905766]
 z_index = -5
-position = Vector2(640, 360)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("1_ibotj")
 
-[node name="VignetteRed" type="Sprite2D" parent="." unique_id=31154900]
+[node name="VignetteRed" type="TextureRect" parent="." unique_id=835122260]
 modulate = Color(1, 1, 1, 0)
-position = Vector2(640, 360)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("1_y4yjw")
 script = ExtResource("2_waa4j")
 

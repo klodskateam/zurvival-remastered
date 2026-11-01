@@ -1,4 +1,4 @@
-extends Sprite2D
+extends TextureRect
 @onready var vignettered = $"./VignetteRed"
 @onready var anim = $AnimationPlayer
 var lowhealth = false
